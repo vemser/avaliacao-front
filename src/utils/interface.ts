@@ -131,7 +131,6 @@ export interface IUserColaborador {
   nome: string,
   email: string,
   cargo: string
-
 }
 
 export interface IPegarColaborador {
@@ -183,4 +182,58 @@ export interface ICriarAvaliacao {
   descricao: string,
   tipo: string,
   dataCriacao: string
+}
+
+export interface IAlterarSenha {
+  senhaAntiga: string,
+  novaSenha: string,
+  confirmarNovaSenha: string
+}
+
+export interface IAvaliarAcompanhamento {
+  idAcompanhamento: string,
+  idAluno: string,
+  tipo: string,
+  descricao: string,
+  dataCriacao: string
+}
+
+export interface ICadastrarAcompanhamento{
+  idAcompanhamento: number,
+  titulo: string,
+  descricao: string,
+  dataInicio: string
+}
+
+export interface IColaborador{
+  nome: string,
+  email: string,
+  cargo: string,
+}
+
+export interface ICadastrarFeedbackForm {
+  idAluno: string,
+  descricao: string,
+  tipo: string
+}
+
+export interface IEditarFeedbackForm {
+  idAluno: string,
+  descricao: string,
+  tipo: string
+}
+
+export interface IEditarAvaliacaoForm {
+  idAluno: string,
+  idAcompanhamento: string,
+  descricao: string,
+  status: string
+}
+
+export interface IListarAlunos {
+  idAluno: number,
+  nome: string,
+  email: string,
+  stack: string,
+  foto: string | null
 }

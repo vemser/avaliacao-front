@@ -34,7 +34,7 @@ const columns: Column[] = [
 ];
 
 export const ListarFeedback = () => {
-  const { pegarFeedback, feedback} = useContext(InstrutorContext);
+  const { pegarFeedback, feedback } = useContext(InstrutorContext);
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -49,31 +49,31 @@ export const ListarFeedback = () => {
   useEffect(() => { pegarFeedback(); }, [])
 
   const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
-  if(infosUsuario.cargo !== "Instrutor") return <Navigate to="/"/>
+  if (infosUsuario.cargo !== "Instrutor") return <Navigate to="/" />
 
   return (
     <>
-      <Header/>
+      <Header />
 
-      <Box sx={{height:"calc(100vh - 64px)",display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",gap:5}}>
-        <Typography id="titulo-body" sx={{textAlign: "center", fontSize: { xs:30, md:44 },fontWeight:"700",color:"white"}} variant="h3">Lista feedbacks</Typography>  
+      <Box sx={{ height: "calc(100vh - 64px)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: 5 }}>
+        <Typography id="titulo-body" sx={{ textAlign: "center", fontSize: { xs: 30, md: 44 }, fontWeight: "700", color: "white" }} variant="h3">Lista feedbacks</Typography>
 
-        <Paper sx={{ width: { xs:"95%", md:"65%" }, borderRadius: "10px", boxShadow: "10px 10px 10px #2f407ccf" }}>
-          <TableContainer sx={{ maxHeight:430 }}>
+        <Paper sx={{ width: { xs: "95%", md: "65%" }, borderRadius: "10px", boxShadow: "10px 10px 10px var(--azul-escuro-dbc)" }}>
+          <TableContainer sx={{ maxHeight: 430 }}>
             <Table stickyHeader aria-label="sticky table">
               <thead>
-                <TableRow sx={{ backgroundColor:"#090F27", color: "white" }}>
+                <TableRow sx={{ backgroundColor: "#090F27", color: "white" }}>
                   {columns.map((column) => (
-                    <TableCell key={column.id} align={column.align} style={{ top: 57, minWidth: column.minWidth,fontWeight:"700", fontSize:"1rem", textAlign: "center" }}>{column.label}</TableCell>
+                    <TableCell key={column.id} align={column.align} style={{ top: 57, minWidth: column.minWidth, fontWeight: "700", fontSize: "1rem", textAlign: "center" }}>{column.label}</TableCell>
                   ))}
                 </TableRow>
               </thead>
               <TableBody>
                 {feedback.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((data) => (
                   <StyledTableRow key={data.idFeedBack}>
-                    <StyledTableCell id={`idFeedback-${data.idFeedBack}`} sx={{textAlign:"center", fontWeight:"600", fontSize: "1rem"}} component="td" scope="row">{data.idFeedBack}</StyledTableCell>
-                    <StyledTableCell id={`nome-${data.idFeedBack}`} sx={{textAlign:"center", fontWeight:"600", fontSize: "1rem"}}>{data.alunoDTO.nome}</StyledTableCell> 
-                    <StyledTableCell id={`tipo-${data.idFeedBack}`} sx={{textAlign:"center", fontWeight:"600", fontSize: "1rem"}}>{data.tipo}</StyledTableCell> 
+                    <StyledTableCell id={`idFeedback-${data.idFeedBack}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row">{data.idFeedBack}</StyledTableCell>
+                    <StyledTableCell id={`nome-${data.idFeedBack}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }}>{data.alunoDTO.nome}</StyledTableCell>
+                    <StyledTableCell id={`tipo-${data.idFeedBack}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }}>{data.tipo}</StyledTableCell>
                   </StyledTableRow>
                 ))}
               </TableBody>
@@ -81,7 +81,7 @@ export const ListarFeedback = () => {
           </TableContainer>
 
           {/* Paginação */}
-          <Box sx={{display:"flex",alignItems:"center",justifyContent:"end",width:"100%",padding:"0 20px"}}>
+          <Box sx={{ display: "flex", alignItems: "center", justifyContent: "end", width: "100%", padding: "0 20px" }}>
             <TablePagination rowsPerPageOptions={[10, 20, 30]} component="div" count={feedback.length} rowsPerPage={rowsPerPage} page={page} onPageChange={handleChangePage} onRowsPerPageChange={handleChangeRowsPerPage} labelRowsPerPage="Linhas por página:" />
           </Box>
         </Paper>

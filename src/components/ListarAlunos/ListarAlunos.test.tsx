@@ -31,10 +31,10 @@ test("Verifica se existe a coluna Nome na tabela", () => {
   expect(colunaNome).toBeInTheDocument();
 })
 
-test("Verifica se existe a coluna Status na tabela", () => {
+test("Verifica se existe a coluna Stack na tabela", () => {
   render(<Router><ListarAlunos alunos={[{ idAluno: 1 }]} deletarAluno="" /></Router>);
 
-  const colunaStatus = screen.getByText('Status');
+  const colunaStatus = screen.getByText('Stack');
   expect(colunaStatus).toBeInTheDocument();
 })
 
@@ -45,9 +45,9 @@ test("Verifica se existe a coluna Ações na tabela", () => {
   expect(colunaAcoes).toBeInTheDocument();
 })
 
-test("Verifica se exite o paragrafo Rows per page na tabela", () => {
+test("Verifica se exite o paragrafo Linhas por página na tabela", () => {
   render(<Router><ListarAlunos alunos={[{ idAluno: 1 }]} deletarAluno="" /></Router>);
 
-  const rowsPerPage = screen.getByText("Rows per page:")
+  const rowsPerPage = screen.getByText("Linhas por página:")
   expect(rowsPerPage).toBeInTheDocument();
 })

@@ -1,24 +1,20 @@
-:root {
-  --text-color: #070f26;
-
-  --primary-color: #1e62fe;
-  --secondary-color: #080f25;
-  --background-color: #f5f5f5;
-
-  --button-active: #749eff;
-  --button-hover: #467eff;
-}
-
-* {
-  padding: 0;
+*{
   margin: 0;
+  padding: 0;
   box-sizing: border-box;
-  outline: none;
-  border: none;
-  text-decoration: none;
-  list-style: none;
 }
 
-*, textarea, button, input, select {
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: rgb(17,29,77);
+  background: linear-gradient(151deg, rgba(17,29,77,0.8631827731092436) 0%, rgba(28,88,248,0.938813025210084) 70%);
+  background-repeat: no-repeat;
+  height: 100vh;  
+}
+
+code {
   font-family: 'Inter', sans-serif;
 }

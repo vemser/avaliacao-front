@@ -1,30 +1,23 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
 
-import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Avatar, Tooltip, MenuItem, Divider, ListItemIcon } from "@mui/material";
-import { LockReset, ExitToApp, PersonPin } from "@mui/icons-material";
+import { AppBar, Box, Toolbar, IconButton, Typography, Menu, MenuItem, Divider } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 
 import logo from "../../assets/dbc-logo.webp";
+import { HeaderConfig } from "../HeaderConfig/HeaderConfig";
 
-export const Header = () => {
-  const { usuarioLogout } = useContext(AuthContext);
-  
+export const Header = () => { 
   const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
-  const primeiroNome = infosUsuario.nome.split(" ")[0];
   const primeiroCargo = infosUsuario.cargo.split(" ")[0].toLowerCase();
 
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
-  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
   // Funções Header
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => { setAnchorElNav(event.currentTarget); };
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => { setAnchorElUser(event.currentTarget); };
   const handleCloseNavMenu = () => { setAnchorElNav(null); };
-  const handleCloseUserMenu = () => { setAnchorElUser(null); };
 
   return (
     <>
@@ -42,12 +35,12 @@ export const Header = () => {
                 <MenuIcon />
               </IconButton>
               <Menu id="menu-responsivo-admin" anchorEl={anchorElNav} anchorOrigin={{ vertical: "bottom", horizontal: "left" }} keepMounted transformOrigin={{ vertical: "top", horizontal: "left" }} open={Boolean(anchorElNav)} onClose={handleCloseNavMenu} sx={{ display: { xs: "block", md: "none" } }}>
-                <MenuItem id="dashboard-responsivo-admin" onClick={handleCloseNavMenu}>
-                  <Typography onClick={() => navigate("/dashboard/admin")} textAlign="center">Dashboard</Typography>
+                <MenuItem id="dashboard-responsivo-admin" onClick={() => { handleCloseNavMenu(); navigate("/dashboard/admin") }}>
+                  <Typography textAlign="center">Dashboard</Typography>
                 </MenuItem>
                 <Divider />
-                <MenuItem id="cadastrar-colaborador-responsivo-admin" onClick={handleCloseNavMenu}>
-                  <Typography onClick={() => navigate("/cadastrar-colaborador")} textAlign="center">Cadastrar colaborador</Typography>
+                <MenuItem id="cadastrar-colaborador-responsivo-admin" onClick={() => { handleCloseNavMenu(); navigate("/cadastrar-colaborador") } }>
+                  <Typography textAlign="center">Cadastrar colaborador</Typography>
                 </MenuItem>
               </Menu>
             </Box>
@@ -63,46 +56,17 @@ export const Header = () => {
                 <MenuIcon />
               </IconButton>
               <Menu id="menu-visible-admin" anchorEl={anchorElNav} anchorOrigin={{ vertical: "bottom", horizontal: "left" }} keepMounted transformOrigin={{ vertical: "top", horizontal: "left" }} open={Boolean(anchorElNav)} onClose={handleCloseNavMenu} sx={{ display: { xs: "none", md: "flex" } }}>
-                <MenuItem id="dashboard-visible-admin" onClick={handleCloseNavMenu}>
-                  <Typography onClick={() => navigate("/dashboard/admin")} textAlign="center">Dashboard</Typography>
+                <MenuItem id="dashboard-visible-admin" onClick={() => { handleCloseNavMenu(); navigate("/dashboard/admin") }}>
+                  <Typography textAlign="center">Dashboard</Typography>
                 </MenuItem>
                 <Divider />
-                <MenuItem id="cadastrar-colaborador-visible-admin" onClick={handleCloseNavMenu}>
-                  <Typography onClick={() => navigate("/cadastrar-colaborador")} textAlign="center">Cadastrar colaborador</Typography>
+                <MenuItem id="cadastrar-colaborador-visible-admin" onClick={() => { handleCloseNavMenu(); navigate("/cadastrar-colaborador") }}>
+                  <Typography textAlign="center">Cadastrar colaborador</Typography>
                 </MenuItem>
               </Menu>
             </Box>
 
-            <Box sx={{ flexGrow: 0, display: "flex", alignItems: "center", gap: 2 }}>
-              <Typography id="boas-vindas-admin" sx={{ minWidth: 100, fontWeight: 600, color: "#090F27", textDecoration: "underline", display: { xs: "none", md: "flex" } }}>Seja bem-vindo(a) {primeiroNome}!</Typography>
-              <Tooltip title="Menu">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar id="menu-avatar-admin" alt="Foto Usuario" src={`data:image/jpeg;base64,${infosUsuario.foto}`} />
-                </IconButton>
-              </Tooltip>
-              <Menu sx={{ mt: "45px" }} id="menu-appbar" anchorEl={anchorElUser} anchorOrigin={{ vertical: "top", horizontal: "right" }} keepMounted transformOrigin={{ vertical: "top", horizontal: "right" }} open={Boolean(anchorElUser)} onClose={handleCloseUserMenu}>
-                <MenuItem onClick={() => { handleCloseUserMenu(); navigate("/alterar-senha"); }}>
-                  <ListItemIcon>
-                    <LockReset fontSize="medium" />
-                  </ListItemIcon>
-                  <Typography textAlign="center">Trocar senha</Typography>
-                </MenuItem>
-                <Divider />
-                <MenuItem onClick={() => { handleCloseUserMenu(); navigate("/editar-usuario"); }}>
-                  <ListItemIcon>
-                    <PersonPin fontSize="medium" />
-                  </ListItemIcon>
-                  <Typography textAlign="center">Editar</Typography>
-                </MenuItem>
-                <Divider />
-                <MenuItem onClick={() => { handleCloseUserMenu(); usuarioLogout(); }}>
-                  <ListItemIcon>
-                    <ExitToApp fontSize="medium" />
-                  </ListItemIcon>
-                  <Typography textAlign="center">Sair</Typography>
-                </MenuItem>
-              </Menu>
-            </Box>
+            <HeaderConfig />
           </Toolbar>
         </Box>
       </AppBar>
@@ -122,24 +86,24 @@ export const Header = () => {
                 <MenuIcon />
               </IconButton>
               <Menu id="menu-responsivo-gestor" anchorEl={anchorElNav} anchorOrigin={{ vertical: "bottom", horizontal: "left" }} keepMounted transformOrigin={{ vertical: "top", horizontal: "left" }} open={Boolean(anchorElNav)} onClose={handleCloseNavMenu} sx={{ display: { xs: "block", md: "none" } }}>
-                <MenuItem id="dashboard-responsivo-gestor" onClick={handleCloseNavMenu}>
-                  <Typography onClick={() => navigate("/dashboard/gestor")} textAlign="center">Dashboard</Typography>
+                <MenuItem id="dashboard-responsivo-gestor" onClick={() => { handleCloseNavMenu(); navigate("/dashboard/gestor") }}>
+                  <Typography textAlign="center">Dashboard</Typography>
                 </MenuItem>
                 <Divider />
-                <MenuItem id="lista-acompanhamento-responsivo-gestor" onClick={handleCloseNavMenu}>
-                  <Typography onClick={() => navigate("/lista-acompanhamento")} textAlign="center">Lista acompanhamentos</Typography>
+                <MenuItem id="lista-acompanhamento-responsivo-gestor" onClick={() => { handleCloseNavMenu(); navigate("/lista-acompanhamento") }}>
+                  <Typography textAlign="center">Lista acompanhamentos</Typography>
                 </MenuItem>
                 <Divider />
-                <MenuItem id="cadastrar-aluno-responsivo-gestor" onClick={handleCloseNavMenu}>
-                  <Typography onClick={() => navigate("/cadastrar-aluno")} textAlign="center">Cadastrar aluno</Typography>
+                <MenuItem id="cadastrar-aluno-responsivo-gestor" onClick={() => { handleCloseNavMenu(); navigate("/cadastrar-aluno") }}>
+                  <Typography textAlign="center">Cadastrar aluno</Typography>
                 </MenuItem>
                 <Divider />
-                <MenuItem id="cadastrar-acompanhamento-responsivo-gestor" onClick={handleCloseNavMenu}>
-                  <Typography onClick={() => navigate("/cadastrar-acompanhamento")}  textAlign="center">Cadastrar acompanhamento</Typography>
+                <MenuItem id="cadastrar-acompanhamento-responsivo-gestor" onClick={() => { handleCloseNavMenu(); navigate("/cadastrar-acompanhamento") }}>
+                  <Typography textAlign="center">Cadastrar acompanhamento</Typography>
                 </MenuItem>
                 <Divider />
-                <MenuItem id="avaliar-acompanhamento-responsivo-gestor" onClick={handleCloseNavMenu}>
-                  <Typography onClick={() => navigate("/avaliar-acompanhamento")}  textAlign="center">Avaliar acompanhamento</Typography>
+                <MenuItem id="avaliar-acompanhamento-responsivo-gestor" onClick={() => { handleCloseNavMenu(); navigate("/avaliar-acompanhamento") }}>
+                  <Typography textAlign="center">Avaliar acompanhamento</Typography>
                 </MenuItem>
               </Menu>
             </Box>
@@ -155,58 +119,29 @@ export const Header = () => {
                 <MenuIcon />
               </IconButton>
               <Menu id="menu-visible-gestor" anchorEl={anchorElNav} anchorOrigin={{ vertical: "bottom", horizontal: "left" }} keepMounted transformOrigin={{ vertical: "top", horizontal: "left" }} open={Boolean(anchorElNav)} onClose={handleCloseNavMenu} sx={{ display: { xs: "none", md: "flex" } }}>
-                <MenuItem id="dashboard-visible-gestor" onClick={handleCloseNavMenu}>
-                  <Typography onClick={() => navigate("/dashboard/gestor")} textAlign="center">Dashboard</Typography>
+                <MenuItem id="dashboard-visible-gestor" onClick={() => { handleCloseNavMenu(); navigate("/dashboard/gestor") }}>
+                  <Typography textAlign="center">Dashboard</Typography>
                 </MenuItem>
                 <Divider />
-                <MenuItem id="lista-acompanhamento-visible-gestor" onClick={handleCloseNavMenu}>
-                  <Typography onClick={() => navigate("/lista-acompanhamento")} textAlign="center">Lista acompanhamentos</Typography>
+                <MenuItem id="lista-acompanhamento-visible-gestor" onClick={() => { handleCloseNavMenu(); navigate("/lista-acompanhamento") }}>
+                  <Typography textAlign="center">Lista acompanhamentos</Typography>
                 </MenuItem>
                 <Divider />
-                <MenuItem id="cadastrar-aluno-visible-gestor" onClick={handleCloseNavMenu}>
-                  <Typography onClick={() => navigate("/cadastrar-aluno")} textAlign="center">Cadastrar aluno</Typography>
+                <MenuItem id="cadastrar-aluno-visible-gestor" onClick={() => { handleCloseNavMenu();  navigate("/cadastrar-aluno") }}>
+                  <Typography textAlign="center">Cadastrar aluno</Typography>
                 </MenuItem>
                 <Divider />
-                <MenuItem id="cadastrar-acompanhamento-visible-gestor" onClick={handleCloseNavMenu}>
-                  <Typography onClick={() => navigate("/cadastrar-acompanhamento")}  textAlign="center">Cadastrar acompanhamento</Typography>
+                <MenuItem id="cadastrar-acompanhamento-visible-gestor" onClick={() => { handleCloseNavMenu(); navigate("/cadastrar-acompanhamento") }}>
+                  <Typography textAlign="center">Cadastrar acompanhamento</Typography>
                 </MenuItem>
                 <Divider />
-                <MenuItem id="avaliar-acompanhamento-visible-gestor" onClick={handleCloseNavMenu}>
-                  <Typography onClick={() => navigate("/avaliar-acompanhamento")}  textAlign="center">Avaliar acompanhamento</Typography>
+                <MenuItem id="avaliar-acompanhamento-visible-gestor" onClick={() => { handleCloseNavMenu(); navigate("/avaliar-acompanhamento") }}>
+                  <Typography textAlign="center">Avaliar acompanhamento</Typography>
                 </MenuItem>
               </Menu>
             </Box>
 
-            <Box sx={{ flexGrow: 0, display: "flex", alignItems: "center", gap: 2 }}>
-              <Typography id="boas-vindas-gestor" sx={{ minWidth: 100, fontWeight: 600, color: "#090F27", textDecoration: "underline", display: { xs: "none", md: "flex" } }}>Seja bem-vindo(a) {primeiroNome}!</Typography>
-              <Tooltip title="Menu">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar id="menu-avatar-gestor" alt="Foto Usuario" src={`data:image/jpeg;base64,${infosUsuario.foto}`} />
-                </IconButton>
-              </Tooltip>
-              <Menu sx={{ mt: "45px" }} id="menu-appbar" anchorEl={anchorElUser} anchorOrigin={{ vertical: "top", horizontal: "right" }} keepMounted transformOrigin={{ vertical: "top", horizontal: "right" }} open={Boolean(anchorElUser)} onClose={handleCloseUserMenu}>
-                <MenuItem onClick={() => { handleCloseUserMenu(); navigate("/alterar-senha"); }}>
-                  <ListItemIcon>
-                    <LockReset fontSize="medium" />
-                  </ListItemIcon>
-                  <Typography textAlign="center">Trocar senha</Typography>
-                </MenuItem>
-                <Divider />
-                <MenuItem onClick={() => { handleCloseUserMenu(); navigate("/editar-usuario"); }}>
-                  <ListItemIcon>
-                    <PersonPin fontSize="medium" />
-                  </ListItemIcon>
-                  <Typography textAlign="center">Editar</Typography>
-                </MenuItem>
-                <Divider />
-                <MenuItem onClick={() => { handleCloseUserMenu(); usuarioLogout(); }}>
-                  <ListItemIcon>
-                    <ExitToApp fontSize="medium" />
-                  </ListItemIcon>
-                  <Typography textAlign="center">Sair</Typography>
-                </MenuItem>
-              </Menu>
-            </Box>
+            <HeaderConfig />
           </Toolbar>
         </Box>
       </AppBar>
@@ -226,20 +161,20 @@ export const Header = () => {
                 <MenuIcon />
               </IconButton>
               <Menu id="menu-responsivo-instrutor" anchorEl={anchorElNav} anchorOrigin={{ vertical: "bottom", horizontal: "left" }} keepMounted transformOrigin={{ vertical: "top", horizontal: "left" }} open={Boolean(anchorElNav)} onClose={handleCloseNavMenu} sx={{ display: { xs: "block", md: "none" } }}>
-                <MenuItem id="dashboard-responsivo-instrutor" onClick={handleCloseNavMenu}>
-                  <Typography onClick={() => navigate("/dashboard/instrutor")} textAlign="center">Dashboard</Typography>
+                <MenuItem id="dashboard-responsivo-instrutor" onClick={() => { handleCloseNavMenu(); navigate("/dashboard/instrutor") }}>
+                  <Typography textAlign="center">Dashboard</Typography>
                 </MenuItem>
                 <Divider />
-                <MenuItem id="dashboard-feedback-responsivo-instrutor" onClick={handleCloseNavMenu}>
-                  <Typography onClick={() => navigate("/lista-feedback")} textAlign="center">Lista feedbacks</Typography>
+                <MenuItem id="dashboard-feedback-responsivo-instrutor" onClick={() => { handleCloseNavMenu(); navigate("/lista-feedback") }}>
+                  <Typography textAlign="center">Lista feedbacks</Typography>
                 </MenuItem>
                 <Divider />
-                <MenuItem id="cadastrar-aluno-responsivo-instrutor" onClick={handleCloseNavMenu}>
-                  <Typography onClick={() => navigate("/cadastrar-aluno")} textAlign="center">Cadastrar aluno</Typography>
+                <MenuItem id="cadastrar-aluno-responsivo-instrutor" onClick={() => { handleCloseNavMenu(); navigate("/cadastrar-aluno") }}>
+                  <Typography textAlign="center">Cadastrar aluno</Typography>
                 </MenuItem>
                 <Divider />
-                <MenuItem id="cadastrar-feedback-responsivo-instrutor" onClick={handleCloseNavMenu}>
-                  <Typography onClick={()=>{navigate("/cadastrar-feedback")}} textAlign="center">Cadastrar feedback</Typography>
+                <MenuItem id="cadastrar-feedback-responsivo-instrutor" onClick={() => { handleCloseNavMenu(); navigate("/cadastrar-feedback") }}>
+                  <Typography textAlign="center">Cadastrar feedback</Typography>
                 </MenuItem>
               </Menu>
             </Box>
@@ -255,54 +190,25 @@ export const Header = () => {
                 <MenuIcon />
               </IconButton>
               <Menu id="menu-visible-instrutor" anchorEl={anchorElNav} anchorOrigin={{ vertical: "bottom", horizontal: "left" }} keepMounted transformOrigin={{ vertical: "top", horizontal: "left" }} open={Boolean(anchorElNav)} onClose={handleCloseNavMenu} sx={{ display: { xs: "none", md: "flex" } }}>
-                <MenuItem id="dashboard-visible-instrutor" onClick={handleCloseNavMenu}>
-                  <Typography onClick={() => navigate("/dashboard/instrutor")} textAlign="center">Dashboard</Typography>
+                <MenuItem id="dashboard-visible-instrutor" onClick={() => { handleCloseNavMenu(); navigate("/dashboard/instrutor") }}>
+                  <Typography textAlign="center">Dashboard</Typography>
                 </MenuItem>
                 <Divider />
-                <MenuItem id="dashboard-feedbacks-visible-instrutor" onClick={handleCloseNavMenu}>
-                  <Typography onClick={() => navigate("/lista-feedback")} textAlign="center">Lista feedbacks</Typography>
+                <MenuItem id="dashboard-feedbacks-visible-instrutor" onClick={() => { handleCloseNavMenu(); navigate("/lista-feedback") }}>
+                  <Typography textAlign="center">Lista feedbacks</Typography>
                 </MenuItem>
                 <Divider />
-                <MenuItem id="cadastrar-aluno-visible-instrutor" onClick={handleCloseNavMenu}>
-                  <Typography onClick={() => navigate("/cadastrar-aluno")} textAlign="center">Cadastrar aluno</Typography>
+                <MenuItem id="cadastrar-aluno-visible-instrutor" onClick={() => { handleCloseNavMenu(); navigate("/cadastrar-aluno") }}>
+                  <Typography textAlign="center">Cadastrar aluno</Typography>
                 </MenuItem>
                 <Divider />
-                <MenuItem id="cadastrar-feedback-visible-instrutor" onClick={handleCloseNavMenu}>
-                  <Typography onClick={()=>{navigate("/cadastrar-feedback")}} textAlign="center">Cadastrar feedback</Typography>
+                <MenuItem id="cadastrar-feedback-visible-instrutor" onClick={() => { handleCloseNavMenu(); navigate("/cadastrar-feedback") }}>
+                  <Typography textAlign="center">Cadastrar feedback</Typography>
                 </MenuItem>
               </Menu>
             </Box>
 
-            <Box sx={{ flexGrow: 0, display: "flex", alignItems: "center", gap: 2 }}>
-              <Typography id="boas-vindas-instrutor" sx={{ minWidth: 100, fontWeight: 600, color: "#090F27", textDecoration: "underline", display: { xs: "none", md: "flex" } }}>Seja bem-vindo(a) {primeiroNome}!</Typography>
-              <Tooltip title="Menu">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar id="menu-avatar-instrutor" alt="Foto Usuario" src={`data:image/jpeg;base64,${infosUsuario.foto}`} />
-                </IconButton>
-              </Tooltip>
-              <Menu sx={{ mt: "45px" }} id="menu-appbar" anchorEl={anchorElUser} anchorOrigin={{ vertical: "top", horizontal: "right" }} keepMounted transformOrigin={{ vertical: "top", horizontal: "right" }} open={Boolean(anchorElUser)} onClose={handleCloseUserMenu}>
-                <MenuItem onClick={() => { handleCloseUserMenu(); navigate("/alterar-senha"); }}>
-                  <ListItemIcon>
-                    <LockReset fontSize="medium" />
-                  </ListItemIcon>
-                  <Typography textAlign="center">Trocar senha</Typography>
-                </MenuItem>
-                <Divider />
-                <MenuItem onClick={() => { handleCloseUserMenu(); navigate("/editar-usuario"); }}>
-                  <ListItemIcon>
-                    <PersonPin fontSize="medium" />
-                  </ListItemIcon>
-                  <Typography textAlign="center">Editar</Typography>
-                </MenuItem>
-                <Divider />
-                <MenuItem onClick={() => { handleCloseUserMenu(); usuarioLogout(); }}>
-                  <ListItemIcon>
-                    <ExitToApp fontSize="medium" />
-                  </ListItemIcon>
-                  <Typography textAlign="center">Sair</Typography>
-                </MenuItem>
-              </Menu>
-            </Box>
+            <HeaderConfig />
           </Toolbar>
         </Box>
       </AppBar>

@@ -136,7 +136,7 @@ export const VerificarAluno = () => {
               {/* Paginação */}
               <Box sx={{ padding: 1, display: "flex", alignItems: "center", justifyContent: "end" }}>
                 <IconButton onClick={voltarFeedback}><NavigateBeforeIcon /></IconButton>
-                <span><strong>{feedbacks?.pagina + 1}/{feedbacks?.quantidadePaginas}</strong></span>
+                <span><strong>{feedbacks ? feedbacks.pagina + 1 : "0"}/{feedbacks ? feedbacks.quantidadePaginas : "0"}</strong></span>
                 <IconButton onClick={avancarFeedback}><NavigateNextIcon /></IconButton>
               </Box>
             </Paper>
@@ -172,7 +172,7 @@ export const VerificarAluno = () => {
               {/* Paginação */}
               <Box sx={{ padding: 1, display: "flex", alignItems: "center", justifyContent: "end" }}>
                 <IconButton onClick={voltarAvaliacao}><NavigateBeforeIcon /></IconButton>
-                <span><strong>{avaliacoes?.pagina + 1}/{avaliacoes?.quantidadePaginas}</strong></span>
+                <span><strong>{avaliacoes ? avaliacoes.pagina + 1 : "0"}/{avaliacoes ? avaliacoes.quantidadePaginas : "0"}</strong></span>
                 <IconButton onClick={avancarAvaliacao}><NavigateNextIcon /></IconButton>
               </Box>
             </Paper>

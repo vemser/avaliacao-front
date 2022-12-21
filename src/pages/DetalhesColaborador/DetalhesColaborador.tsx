@@ -1,7 +1,5 @@
-import { Box, Stack, FormControl, TextField, Typography, Avatar, Button } from '@mui/material';
-import React from 'react'
+import { Box, Stack, Typography, Avatar } from '@mui/material';
 import { Navigate, useLocation } from 'react-router-dom';
-import { BotaoVerde } from '../../components/BotaoVerde/BotaoVerde';
 import { Header } from '../../components/Header/Header';
 import { Titulo } from '../../components/Titulo/Titulo';
 

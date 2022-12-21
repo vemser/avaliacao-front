@@ -18,7 +18,6 @@ import { GestorContext } from "../../context/GestorContext";
 
 import { ICadastrarAcompanhamento } from "../../utils/interface";
 
-
 export const CadastrarAcompanhamento = () => {
   const { criarAcompanhamento } = useContext(GestorContext)
 

@@ -51,7 +51,12 @@ function AppRoutes() {
                 <Route path="/verificar-aluno" element={<Pages.VerificarAluno />} />
                 <Route path="/lista-feedback" element={<Pages.ListarFeedback />} />
                 <Route path="/editar-feedback" element={<Pages.EditarFeedback />} />
-
+                      
+                {/* Novas Rotas Gerais */}
+                <Route path="/lista-modulo" element={<Pages.ListarModulo />} />
+                <Route path="/cadastrar-modulo" element={<Pages.CadastrarModulo />} />
+                <Route path="/editar-modulo" element={<Pages.EditarModulo />} />
+                      
                 {/* Trocar senha logado e editar usuario logado */}
                 <Route path="/alterar-senha" element={<Pages.AlterarSenha />} />
                 <Route path="/editar-usuario" element={<Pages.EditarUsuario />} />

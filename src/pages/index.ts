@@ -19,3 +19,6 @@ export { ListarFeedback } from "./ListarFeedback/ListarFeedback";
 export { EditarAluno } from "./EditarAluno/EditarAluno";
 export { EditarAcompanhamento } from "./EditarAcompanhamento/EditarAcompanhamento";
 export { DetalhesColaborador } from "./DetalhesColaborador/DetalhesColaborador";
+export { ListarModulo } from './ListarModulo/ListarModulo';
+export { CadastrarModulo } from './CadastrarModulo/CadastrarModulo';
+export { EditarModulo } from './EditarModulo/EditarModulo';

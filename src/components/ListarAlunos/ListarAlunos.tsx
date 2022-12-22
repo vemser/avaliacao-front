@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 import { Paper, TableContainer, Table, TableRow, TableCell, TableBody, Button, TablePagination, tableCellClasses, Box, Typography, Modal, styled } from "@mui/material";
 
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: { backgroundColor: theme.palette.common.black, color: theme.palette.common.white },
@@ -66,11 +66,11 @@ export const ListarAlunos = ({ alunos, deletarAluno }: any) => {
 
   return (
     <>
-      <Box sx={{ height: "calc(100vh - 64px)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: 5 }}>
+      <Box sx={{ minHeight: "calc(100vh - 64px)", paddingTop: "50px", paddingBottom: "50px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: 5 }}>
         <Typography sx={{ textAlign: "center", fontWeight: "700", fontSize: { xs: 30, md: 44 }, color: "white" }} variant="h3">Dashboard Alunos</Typography>
 
         <Paper sx={{ width: { xs: "95%", md: "60%" }, borderRadius: "10px", boxShadow: "10px 10px 10px var(--azul-escuro-dbc)" }}>
-          <TableContainer sx={{ maxHeight: 430 }}>
+          <TableContainer sx={{ maxHeight: 430, borderRadius: "10px" }}>
             <Table component="table" stickyHeader aria-label="sticky table">
               <thead>
                 <TableRow sx={{ backgroundColor: "#090F27", color: "white" }}>

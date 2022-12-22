@@ -81,7 +81,7 @@ export const ListarAlunos: React.FC = () => {
                 </thead>
 
               <TableBody>
-                {alunos.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((data: any) => (
+                {alunos.map((data: any) => (
                   <StyledTableRow sx={{ ":hover": { opacity: "0.7", cursor: "pointer" } }} key={data.idAluno}>
                     <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: data })} id="codigo" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row">{data.idAluno}</StyledTableCell>
                     <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: data })} id="nome" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }}>{data.nome}</StyledTableCell>
@@ -97,7 +97,7 @@ export const ListarAlunos: React.FC = () => {
           </TableContainer>
 
           {/* Paginação */}
-          <TablePagination rowsPerPageOptions={[10, 20, 30]} component="div" count={alunos.length} rowsPerPage={rowsPerPage} page={page} onPageChange={handleChangePage} onRowsPerPageChange={handleChangeRowsPerPage} labelRowsPerPage="Linhas por página:" />
+          <TablePagination rowsPerPageOptions={[]} component="div" count={paginacaoAlunos.totalElementos} rowsPerPage={paginacaoAlunos.tamanho} page={paginacaoAlunos.pagina} onPageChange={handleChangePage}  />
 
             {/* Modal Confirmar Delete */}
             <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-titulo" aria-describedby="modal-modal-description" sx={{ backdropFilter: "blur(10px)" }}>

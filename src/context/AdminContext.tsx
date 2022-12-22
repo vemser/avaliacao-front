@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { toastConfig } from "../utils/toast";
 
 import { API } from "../utils/api";
-import { IAdmin, IChildren, IColaboradorEditado, IPegarColaborador, IUserColaborador } from "../utils/interface";
+import { IAdmin, IChildren, IColaboradorEditado, IPaginacao, IPegarColaborador, IUserColaborador } from "../utils/interface";
 import { useNavigate } from "react-router-dom";
 
 export const AdminContext = createContext({} as IAdmin);
@@ -14,6 +14,7 @@ export const AdminProvider = ({ children }: IChildren) =>{
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
 
+  const [paginacaoColaborador, setPaginacaoColaborador] = useState<IPaginacao>({pagina: 0, quantidadePagina: 0, tamanho: 0, totalElementos: 0});
   const [colaborador, setColaborador] = useState<IPegarColaborador[]>([])
   
   const criarColaborador = async (userColaborador: IUserColaborador, imagem: FormData) => {
@@ -63,12 +64,13 @@ export const AdminProvider = ({ children }: IChildren) =>{
     }
   }
 
-  const pegarColaborador = async () => {
+  const pegarColaborador = async (pagina?: number) => {
     try {
       nProgress.start();
       API.defaults.headers.common["Authorization"] = token;
-      const { data } = await API.get(`/administrador/listar-usuarios?page=0&size=1000`)
+      const { data } = await API.get(`/administrador/listar-usuarios?page=${pagina ? pagina: 0}&size=10`)
       setColaborador(data.elementos)
+      setPaginacaoColaborador({pagina: data.pagina, quantidadePagina: data.quantidadePaginas, tamanho: data.tamanho, totalElementos: data.totalElementos})
     } catch (error) {
       toast.error("Houve algum erro", toastConfig);
     } finally{
@@ -91,7 +93,7 @@ export const AdminProvider = ({ children }: IChildren) =>{
   }
 
   return (
-    <AdminContext.Provider value={{ criarColaborador, pegarColaborador, colaborador, deletarColaborador, editarColaborador }}>
+    <AdminContext.Provider value={{ criarColaborador, pegarColaborador, colaborador, deletarColaborador, editarColaborador, paginacaoColaborador }}>
       {children}
     </AdminContext.Provider>
   );

@@ -3,7 +3,7 @@ import { createContext, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { API } from "../utils/api";
-import { ICadastrarFeedback, IChildren, IEditarFeedback, IFeedbackPorId, IInstrutor } from "../utils/interface";
+import { ICadastrarFeedback, IChildren, IEditarFeedback, IFeedbackPorId, IInstrutor, IPaginacao } from "../utils/interface";
 import { toastConfig } from "../utils/toast";
 
 export const InstrutorContext = createContext({} as IInstrutor);
@@ -15,6 +15,7 @@ export const InstrutorProvider = ({children}: IChildren) => {
   const [feedback,setFeedback] = useState<ICadastrarFeedback[]>([])
   const [feedbackPorID, setFeedbackPorID] = useState<IFeedbackPorId[]>([])
   const [feedbacks, setFeedbacks] = useState<any | null>(null)
+  const [paginacaoFeedback, setPaginacaoFeedback] = useState<IPaginacao>({pagina: 0, quantidadePagina: 0, tamanho: 0, totalElementos: 0})
 
   const cadastrarFeedback = async (feedbacks: object) =>{
     try {
@@ -30,12 +31,13 @@ export const InstrutorProvider = ({children}: IChildren) => {
     }
   }
 
-  const pegarFeedback = async() =>{
+  const pegarFeedback = async (pagina?: number) =>{
     try {
       nProgress.start()
       API.defaults.headers.common["Authorization"] = token;
-      const {data} =await API.get("/feedback/listar-feedback?page=0&size=1000")
+      const { data } = await API.get(`/feedback/listar-feedback?page=${pagina ? pagina : 0}&size=10`)
       setFeedback(data.elementos)
+      setPaginacaoFeedback({pagina: data.pagina, quantidadePagina: data.quantidadePaginas, tamanho: data.tamanho, totalElementos: data.totalElementos})
     } catch (error) {
       toast.error("Você não possui credenciais para acessar essas informações.", toastConfig);
     } finally {
@@ -61,9 +63,10 @@ export const InstrutorProvider = ({children}: IChildren) => {
     try {
       nProgress.start()
       API.defaults.headers.common["Authorization"] = localStorage.getItem("token");
-      const { data } = await API.get(`/feedback/listar-feedback-por-id/${id}?page=${page}&size=10`)
+      const { data } = await API.get(`/feedback/listar-feedback-por-id/${id}?page=${page}&size=5`)
       setFeedbackPorID(data.elementos)
       setFeedbacks(data)
+      setPaginacaoFeedback({pagina: data.pagina, quantidadePagina: data.quantidadePaginas, tamanho: data.tamanho, totalElementos: data.totalElementos})
     } catch (error) {
       toast.error("Houve um erro inesperado.", toastConfig);
     } finally{
@@ -72,7 +75,7 @@ export const InstrutorProvider = ({children}: IChildren) => {
   }
   
   return (
-    <InstrutorContext.Provider value={{ cadastrarFeedback, pegarFeedback, feedback, editarFeedback, getFeedbackPorID, feedbackPorID, feedbacks }}>
+    <InstrutorContext.Provider value={{ cadastrarFeedback, pegarFeedback, feedback, editarFeedback, getFeedbackPorID, feedbackPorID, feedbacks, paginacaoFeedback }}>
       {children}
     </InstrutorContext.Provider>
   );

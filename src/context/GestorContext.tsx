@@ -1,6 +1,6 @@
 import { createContext, useState } from "react";
 import { API } from "../utils/api";
-import { ICriarAcompanhamento, IChildren, IGestor, ICriarAvaliacao, IEditarAcompanhamento, IAvaliacaoPorId, IEditarAvaliacao } from "../utils/interface";
+import { ICriarAcompanhamento, IChildren, IGestor, ICriarAvaliacao, IEditarAcompanhamento, IAvaliacaoPorId, IEditarAvaliacao, IPaginacao } from "../utils/interface";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { toastConfig } from "../utils/toast";
@@ -11,6 +11,8 @@ export const GestorContext = createContext({} as IGestor);
 export const GestorProvider = ({children} : IChildren) =>{
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
+  const [paginacaoAcompanhamento, setPaginacaoAcompanhamento] = useState<IPaginacao>({pagina: 0, quantidadePagina: 0, tamanho: 0, totalElementos: 0})
+  const [paginacaoAvaliacao, setPaginacaoAvaliacao] = useState<IPaginacao>({pagina: 0, quantidadePagina: 0, tamanho: 0, totalElementos: 0})
   const [acompanhamento,setAcompanhamento] = useState<ICriarAcompanhamento[]>([])
   const [avaliacoesPorID, setAvaliacoesPorID] = useState<IAvaliacaoPorId[]>([])
   const [avaliacoes, setAvaliacoes] = useState<any | null>(null)
@@ -29,12 +31,13 @@ export const GestorProvider = ({children} : IChildren) =>{
     }
   }
 
-  const pegarAcompanhamento = async () => {
+  const pegarAcompanhamento = async (pagina?: number) => {
     try {
       nProgress.start()
       API.defaults.headers.common["Authorization"] = token;
-      const {data} =await API.get("/acompanhamento/listar-acompanhamento?page=0&size=1000")
+      const {data} = await API.get(`/acompanhamento/listar-acompanhamento?page=${pagina ? pagina : 0}&size=10`)
       setAcompanhamento(data.elementos)
+      setPaginacaoAcompanhamento({pagina: data.pagina, quantidadePagina: data.quantidadePaginas, tamanho: data.tamanho, totalElementos: data.totalElementos})
     } catch (error) {
       toast.error("Você não possui credenciais para acessar essas informações.", toastConfig);
     } finally {
@@ -92,9 +95,10 @@ export const GestorProvider = ({children} : IChildren) =>{
     try {
       nProgress.start()
       API.defaults.headers.common["Authorization"] = localStorage.getItem("token");
-      const { data } = await API.get(`/avaliacao-acompanhamento/${id}?page=${page}&size=10`)
+      const { data } = await API.get(`/avaliacao-acompanhamento/${id}?page=${page}&size=5`)
       setAvaliacoesPorID(data.elementos)
       setAvaliacoes(data)
+      setPaginacaoAvaliacao({pagina: data.pagina, quantidadePagina: data.quantidadePaginas, tamanho: data.tamanho, totalElementos: data.totalElementos})
     } catch (error) {
       toast.error("Houve um erro inesperado.", toastConfig);
     } finally{
@@ -103,7 +107,7 @@ export const GestorProvider = ({children} : IChildren) =>{
   }
 
   return (
-    <GestorContext.Provider value={{ criarAcompanhamento, pegarAcompanhamento, acompanhamento, criarAvaliacao, editAcompanhamento, getAvaliacaoPorID, avaliacoesPorID, editarAvaliacao, avaliacoes }}>
+    <GestorContext.Provider value={{ criarAcompanhamento, pegarAcompanhamento, acompanhamento, criarAvaliacao, editAcompanhamento, getAvaliacaoPorID, avaliacoesPorID, editarAvaliacao, avaliacoes, paginacaoAcompanhamento, paginacaoAvaliacao }}>
       {children}
     </GestorContext.Provider>
   );

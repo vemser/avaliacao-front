@@ -13,6 +13,12 @@ export interface IEditarNome {
   nome: string
 }
 
+export interface IPaginacao {
+  pagina: number;
+  quantidadePagina: number;
+  tamanho: number;
+  totalElementos: number
+}
 export interface IAuth {
   usuarioLogin: (infoUser: IUsuario) => Promise<void>,
   redefinirSenha: (email: string) => Promise<void>,
@@ -27,39 +33,44 @@ export interface IAuth {
 export interface IAdmin {
   criarColaborador: (userColaborador: IUserColaborador, imagem: FormData) => Promise<void>,
   deletarColaborador: (id: number | undefined) => Promise<void>,
-  pegarColaborador: () => Promise<void>,
+  pegarColaborador: (pagina?: number) => Promise<void>,
   editarColaborador: (dadosEditados: IColaboradorEditado, id: number, imagem: FormData) => Promise<void>,
-  colaborador: IPegarColaborador[]
+  colaborador: IPegarColaborador[],
+  paginacaoColaborador: IPaginacao
 }
 
 export interface IAluno {
-  getAlunos: () => Promise<void>,
+  getAlunos: (pagina?: number) => Promise<void>,
   deletarAluno: (id: number | undefined) => Promise<void>,
   criarAluno: (infosAluno: ICadastroAluno, imagem: FormData) => Promise<void>,
   alunos: IAlunosCadastrados[],
+  paginacaoAlunos: IPaginacao,
   editarAluno: (dadosEditados: IEditarAluno, id: number, imagem: FormData) => Promise<void>
 }
 
 export interface IGestor {
   criarAcompanhamento: (acompanhamento: ICriarAcompanhamento) => Promise<void>,
   editAcompanhamento: (dadosEditados: IEditarAcompanhamento, id: number) => Promise<void>,
-  pegarAcompanhamento: () => Promise<void>,
+  pegarAcompanhamento: (pagina?: number) => Promise<void>,
   getAvaliacaoPorID: (id: number, page: number) => Promise<void>,
   criarAvaliacao: (avalicao: ICriarAvaliacao) => void,
   editarAvaliacao: (dadosEditados: IEditarAvaliacao, id: number) => Promise<void>,
   acompanhamento: ICriarAcompanhamento[],
   avaliacoesPorID: IAvaliacaoPorId[],
-  avaliacoes: any | null
+  avaliacoes: any | null, 
+  paginacaoAcompanhamento: IPaginacao
+  paginacaoAvaliacao: IPaginacao
 }
 
 export interface IInstrutor {
   cadastrarFeedback: (feedbacks: object) => Promise<void>,
-  pegarFeedback: () => Promise<void>,
+  pegarFeedback: (pagina?: number) => Promise<void>,
   getFeedbackPorID: (id: number, page: number) => Promise<void>,
   editarFeedback: (id: number, dadosEditados: IEditarFeedback) => Promise<void>,
   feedback: ICadastrarFeedback[],
   feedbackPorID: IFeedbackPorId[],
-  feedbacks: any | null
+  feedbacks: any | null,
+  paginacaoFeedback: IPaginacao
 }
 
 export interface IEditarAvaliacao {

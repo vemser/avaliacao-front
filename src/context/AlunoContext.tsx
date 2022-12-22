@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { toastConfig } from "../utils/toast";
 
 import { API } from "../utils/api";
-import { IAluno, IAlunosCadastrados, ICadastroAluno, IChildren, IEditarAluno } from "../utils/interface";
+import { IAluno, IAlunosCadastrados, ICadastroAluno, IChildren, IEditarAluno, IPaginacao } from "../utils/interface";
 import { useNavigate } from "react-router-dom";
 
 export const AlunoContext = createContext({} as IAluno);
@@ -13,6 +13,7 @@ export const AlunoContext = createContext({} as IAluno);
 export const AlunoProvider = ({ children }: IChildren) => {
   const navigate = useNavigate()
   const [alunos, setAlunos] = useState<IAlunosCadastrados[]>([]);
+  const [paginacaoAlunos, setPaginacaoAlunos] = useState<IPaginacao>({pagina: 0, quantidadePagina: 0, tamanho: 0, totalElementos: 0})
 
   const criarAluno = async (infosAluno: ICadastroAluno, imagem: FormData) => {
     try {
@@ -45,12 +46,15 @@ export const AlunoProvider = ({ children }: IChildren) => {
     }
   }
 
-  const getAlunos = async () => {
+  const getAlunos = async (pagina?: number) => {
     try {
       nProgress.start();
-      await API.get('/aluno/listar-alunos?page=0&size=1000', { 
+      await API.get(`/aluno/listar-alunos?page=${pagina ? pagina : 0}&size=10`, { 
         headers: { Authorization: localStorage.getItem("token") }
-       }).then((response) => { setAlunos(response.data.elementos); })
+       }).then((response) => { 
+        setAlunos(response.data.elementos);
+        setPaginacaoAlunos({pagina: response.data.pagina, quantidadePagina: response.data.quantidadePaginas, tamanho: response.data.tamanho, totalElementos: response.data.totalElementos}) 
+      })
     } catch (error) {
       toast.error("Houve algum erro", toastConfig);
     } finally{
@@ -99,7 +103,7 @@ export const AlunoProvider = ({ children }: IChildren) => {
   }
 
   return (
-    <AlunoContext.Provider value={{ criarAluno, getAlunos, alunos, deletarAluno, editarAluno }}>
+    <AlunoContext.Provider value={{ criarAluno, getAlunos, alunos, deletarAluno, editarAluno, paginacaoAlunos }}>
       {children}
     </AlunoContext.Provider>
   );

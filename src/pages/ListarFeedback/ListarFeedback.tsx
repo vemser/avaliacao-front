@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useEffect } from "react"
 
 import { Navigate } from "react-router-dom";
 
@@ -33,23 +33,17 @@ const columns: Column[] = [
   { id: "status", label: "Status", minWidth: 5, align: "right", format: (value: number) => value.toLocaleString("en-US") },
 ];
 
-export const ListarFeedback = () => {
-  const { pegarFeedback, feedback } = useContext(InstrutorContext);
+export const ListarFeedback: React.FC = () => {
+  const { pegarFeedback, feedback, paginacaoFeedback } = useContext(InstrutorContext);
 
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const handleChangePage = async (event: unknown, newPage: number) => { await pegarFeedback(newPage); };
 
-  const handleChangePage = (event: unknown, newPage: number) => { setPage(newPage); };
-
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
 
   useEffect(() => { pegarFeedback(); }, [])
 
   const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
   if (infosUsuario.cargo !== "Instrutor") return <Navigate to="/" />
+
 
   return (
     <>
@@ -69,7 +63,7 @@ export const ListarFeedback = () => {
                 </TableRow>
               </thead>
               <TableBody>
-                {feedback.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((data) => (
+                {feedback.map((data) => (
                   <StyledTableRow key={data.idFeedBack}>
                     <StyledTableCell id={`idFeedback-${data.idFeedBack}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row">{data.idFeedBack}</StyledTableCell>
                     <StyledTableCell id={`nome-${data.idFeedBack}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }}>{data.alunoDTO.nome}</StyledTableCell>
@@ -81,9 +75,8 @@ export const ListarFeedback = () => {
           </TableContainer>
 
           {/* Paginação */}
-          <Box sx={{ display: "flex", alignItems: "center", justifyContent: "end", width: "100%", padding: "0 20px" }}>
-            <TablePagination rowsPerPageOptions={[10, 20, 30]} component="div" count={feedback.length} rowsPerPage={rowsPerPage} page={page} onPageChange={handleChangePage} onRowsPerPageChange={handleChangeRowsPerPage} labelRowsPerPage="Linhas por página:" />
-          </Box>
+          <TablePagination rowsPerPageOptions={[]} component="div" count={paginacaoFeedback.totalElementos} rowsPerPage={paginacaoFeedback.tamanho} page={paginacaoFeedback.pagina} onPageChange={handleChangePage} />
+          
         </Paper>
       </Box>
     </>

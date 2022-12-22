@@ -1,11 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 
 import { Navigate, useLocation, useNavigate } from "react-router-dom"
 
-import { Box, Typography, Stack, Button, Paper, styled, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableRow, Avatar, IconButton } from "@mui/material";
+import { TablePagination, Box, Typography, Stack, Button, Paper, styled, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableRow, Avatar, IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 
 import { Header } from "../../components/Header/Header";
 
@@ -54,23 +52,18 @@ const columns: Column[] = [
   { id: "acoes", label: "Ações", minWidth: 5, align: "right", format: (value: number) => value.toLocaleString("en-US") }
 ];
 
-export const VerificarAluno = () => {
+export const VerificarAluno: React.FC = () => {
   const navigate = useNavigate()
   const { state } = useLocation();
 
-  const { getAvaliacaoPorID, avaliacoesPorID, avaliacoes } = useContext(GestorContext);
-  const { getFeedbackPorID, feedbackPorID, feedbacks } = useContext(InstrutorContext)
+  const { getAvaliacaoPorID, avaliacoesPorID, paginacaoAvaliacao } = useContext(GestorContext);
+  const { getFeedbackPorID, feedbackPorID,  paginacaoFeedback } = useContext(InstrutorContext)
 
-  // Paginação Avaliacao
-  const avancarAvaliacao = () => { if (avaliacoes.pagina !== avaliacoes.quantidadePaginas - 1) getAvaliacaoPorID(state.idAluno, avaliacoes.pagina + 1); }
-  const voltarAvaliacao = () => { if (avaliacoes.pagina !== 0) getAvaliacaoPorID(state.idAluno, avaliacoes.pagina - 1) }
+   // Paginação Avaliacao
+  const handleChangePageAvaliacao = async (event: unknown, newPage: number) => { await getAvaliacaoPorID(state.idAluno, newPage); }
 
   // Paginação Feedback
-  const avancarFeedback = () => { if (feedbacks.pagina !== feedbacks.quantidadePaginas - 1) getFeedbackPorID(state.idAluno, feedbacks.pagina + 1); }
-  const voltarFeedback = () => { if (feedbacks.pagina !== 0) getFeedbackPorID(state.idAluno, feedbacks.pagina - 1) }
-
-  const [page] = useState(0);
-  const [rowsPerPage] = useState(10);
+  const handleChangePageFeedBack = async (event: unknown, newPage: number) => { await getFeedbackPorID(state.idAluno, newPage); }
 
   useEffect(() => { getAvaliacaoPorID(state.idAluno, 0); getFeedbackPorID(state.idAluno, 0); }, [])
 
@@ -117,7 +110,7 @@ export const VerificarAluno = () => {
                     </TableRow>
                   </thead>
                   <TableBody>
-                    {feedbackPorID.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((feedback) => (
+                    {feedbackPorID.map((feedback) => (
                       <StyledTableRow key={feedback.idFeedBack}>
                         <StyledTableCell sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row">{feedback.idFeedBack}</StyledTableCell>
                         <StyledTableCell sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row">{feedback.descricao}</StyledTableCell>
@@ -134,11 +127,7 @@ export const VerificarAluno = () => {
               </TableContainer>
 
               {/* Paginação */}
-              <Box sx={{ padding: 1, display: "flex", alignItems: "center", justifyContent: "end" }}>
-                <IconButton onClick={voltarFeedback}><NavigateBeforeIcon /></IconButton>
-                <span><strong>{feedbacks ? feedbacks.pagina + 1 : "0"}/{feedbacks ? feedbacks.quantidadePaginas : "0"}</strong></span>
-                <IconButton onClick={avancarFeedback}><NavigateNextIcon /></IconButton>
-              </Box>
+              <TablePagination rowsPerPageOptions={[]} component="div" count={paginacaoFeedback.totalElementos} rowsPerPage={paginacaoFeedback.tamanho} page={paginacaoFeedback.pagina} onPageChange={handleChangePageFeedBack}  />
             </Paper>
 
             {/* Tabela Avaliações */}
@@ -154,7 +143,7 @@ export const VerificarAluno = () => {
                     </TableRow>
                   </thead>
                   <TableBody>
-                    {avaliacoesPorID.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((avaliacao) => (
+                    {avaliacoesPorID.map((avaliacao) => (
                       <StyledTableRow key={avaliacao.idAvaliacao}>
                         <StyledTableCell id={`idAvaliacao-${avaliacao.idAvaliacao}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row">{avaliacao.idAvaliacao}</StyledTableCell>
                         <StyledTableCell id={`dataInicio-${avaliacao.idAvaliacao}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100px" }}>{avaliacao.dataCriacao.replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")}</StyledTableCell>
@@ -170,11 +159,7 @@ export const VerificarAluno = () => {
               </TableContainer>
 
               {/* Paginação */}
-              <Box sx={{ padding: 1, display: "flex", alignItems: "center", justifyContent: "end" }}>
-                <IconButton onClick={voltarAvaliacao}><NavigateBeforeIcon /></IconButton>
-                <span><strong>{avaliacoes ? avaliacoes.pagina + 1 : "0"}/{avaliacoes ? avaliacoes.quantidadePaginas : "0"}</strong></span>
-                <IconButton onClick={avancarAvaliacao}><NavigateNextIcon /></IconButton>
-              </Box>
+              <TablePagination rowsPerPageOptions={[]} component="div" count={paginacaoAvaliacao.totalElementos} rowsPerPage={paginacaoAvaliacao.tamanho} page={paginacaoAvaliacao.pagina} onPageChange={handleChangePageAvaliacao}  />
             </Paper>
           </Stack>
 

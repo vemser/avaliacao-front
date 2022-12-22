@@ -49,19 +49,12 @@ const style = {
   p: 4,
 };
 
-export const DashboardAdmin = () => {
+export const DashboardAdmin: React.FC = () => {
   const navigate = useNavigate();
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const { colaborador, pegarColaborador, deletarColaborador } = useContext(AdminContext);
+  const { colaborador, pegarColaborador, deletarColaborador, paginacaoColaborador } = useContext(AdminContext);
 
-  const handleChangePage = (event: unknown, newPage: number) => { setPage(newPage); };
-
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
+  const handleChangePage = async (event: unknown, newPage: number) => await pegarColaborador(newPage)
 
   // Funções Modal
   const [idDelete, setIdDelete] = useState<number | undefined>();
@@ -94,7 +87,7 @@ export const DashboardAdmin = () => {
                 </TableRow>
               </thead>
               <TableBody>
-                {colaborador.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((data) => (
+                {colaborador.map((data) => (
                   <StyledTableRow sx={{ ":hover": { opacity: "0.7", cursor: "pointer" } }} key={data.idUsuario}>
                     <StyledTableCell onClick={() => navigate("/detalhes-colaborador", { state: data })} id="nome" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", width: { md: "340px" } }} scope="row">{data.nome}</StyledTableCell>
                     <StyledTableCell onClick={() => navigate("/detalhes-colaborador", { state: data })} id="email" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100px" }}>{data.email}</StyledTableCell>
@@ -110,7 +103,7 @@ export const DashboardAdmin = () => {
           </TableContainer>
 
           {/* Paginação */}
-          <TablePagination rowsPerPageOptions={[10, 20, 30]} component="div" count={colaborador.length} rowsPerPage={rowsPerPage} page={page} onPageChange={handleChangePage} onRowsPerPageChange={handleChangeRowsPerPage} labelRowsPerPage="Linhas por página:" />
+          <TablePagination rowsPerPageOptions={[]} component="div" count={paginacaoColaborador.totalElementos} rowsPerPage={paginacaoColaborador.tamanho} page={paginacaoColaborador.pagina} onPageChange={handleChangePage}  />
 
           {/* Modal Confirmar Delete */}
           <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-titulo" aria-describedby="modal-modal-description" sx={{ backdropFilter: "blur(10px)" }}>

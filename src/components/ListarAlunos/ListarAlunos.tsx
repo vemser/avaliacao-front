@@ -1,10 +1,11 @@
-import { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 
 import { Paper, TableContainer, Table, TableRow, TableCell, TableBody, Button, TablePagination, tableCellClasses, Box, Typography, Modal, styled } from "@mui/material";
 
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { AlunoContext } from "../../context/AlunoContext";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: { backgroundColor: theme.palette.common.black, color: theme.palette.common.white },
@@ -45,11 +46,11 @@ const style = {
   p: 4,
 };
 
-export const ListarAlunos = ({ alunos, deletarAluno }: any) => {
+export const ListarAlunos: React.FC = () => {
   const navigate = useNavigate();
+  const { getAlunos, alunos, deletarAluno, paginacaoAlunos } = useContext(AlunoContext);
 
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  useEffect(() => { getAlunos() } , [])
 
   // Funções Modal
   const [idDelete, setIdDelete] = useState<number | undefined>();
@@ -57,12 +58,7 @@ export const ListarAlunos = ({ alunos, deletarAluno }: any) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const handleChangePage = (event: unknown, newPage: number) => { setPage(newPage); };
-
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
+  const handleChangePage = async (event: unknown, newPage: number) => { await getAlunos(newPage); };
 
   return (
     <>
@@ -81,7 +77,7 @@ export const ListarAlunos = ({ alunos, deletarAluno }: any) => {
               </thead>
 
               <TableBody>
-                {alunos.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((data: any) => (
+                {alunos.map((data: any) => (
                   <StyledTableRow sx={{ ":hover": { opacity: "0.7", cursor: "pointer" } }} key={data.idAluno}>
                     <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: data })} id="codigo" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row">{data.idAluno}</StyledTableCell>
                     <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: data })} id="nome" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }}>{data.nome}</StyledTableCell>
@@ -97,7 +93,7 @@ export const ListarAlunos = ({ alunos, deletarAluno }: any) => {
           </TableContainer>
 
           {/* Paginação */}
-          <TablePagination rowsPerPageOptions={[10, 20, 30]} component="div" count={alunos.length} rowsPerPage={rowsPerPage} page={page} onPageChange={handleChangePage} onRowsPerPageChange={handleChangeRowsPerPage} labelRowsPerPage="Linhas por página:" />
+          <TablePagination rowsPerPageOptions={[]} component="div" count={paginacaoAlunos.totalElementos} rowsPerPage={paginacaoAlunos.tamanho} page={paginacaoAlunos.pagina} onPageChange={handleChangePage}  />
 
           {/* Modal Confirmar Delete */}
           <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-titulo" aria-describedby="modal-modal-description" sx={{ backdropFilter: "blur(10px)" }}>

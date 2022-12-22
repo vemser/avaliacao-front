@@ -104,6 +104,8 @@ export const CadastrarAluno = () => {
                 sx={{width: "100%"}}
                 id="descricao"
                 label="Descrição"
+                variant='filled'
+                focused
               />
             </FormControl>
           </Stack>
@@ -190,8 +192,11 @@ export const CadastrarAluno = () => {
             </FormControl>
 
             <Box sx={{display:"flex",alignItems:"end"}}>
+
               <Button onClick={()=>{navigate(-1)}} variant="contained"  sx={{backgroundColor:"#808080 ",":hover":{backgroundColor:"#5f5d5d "},textTransform: "capitalize", width:{ xs:"15ch", md:"25ch"}}} >Cancelar</Button>
+
               <BotaoVerde texto="Enviar" />
+              
             </Box>
           </Stack>
         </Box>

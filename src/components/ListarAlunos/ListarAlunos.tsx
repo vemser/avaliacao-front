@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 import { Paper, TableContainer, Table, TableRow, TableCell, TableBody, Button, TablePagination, tableCellClasses, Box, Typography, Modal, styled } from "@mui/material";
 
@@ -62,7 +63,7 @@ export const ListarAlunos: React.FC = () => {
 
   return (
     <>
-      <Box sx={{ height: "calc(100vh - 64px)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: 5 }}>
+      <Box sx={{ minHeight: "calc(100vh - 64px)", paddingTop: "50px", paddingBottom: "50px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: 5 }}>
         <Typography sx={{ textAlign: "center", fontWeight: "700", fontSize: { xs: 30, md: 44 }, color: "white" }} variant="h3">Dashboard Alunos</Typography>
 
         <Box sx={{width:"60%",display:"flex",alignItems:"end",flexDirection:"column",padding:"20px",background:"#f8f8fff8",borderRadius:"10px",boxShadow:"10px 10px 10px var(--azul-escuro-dbc)"}}>

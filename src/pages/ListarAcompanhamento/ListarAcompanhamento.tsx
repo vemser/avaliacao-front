@@ -77,7 +77,7 @@ export const ListarAcompanhamento = () => {
                   <StyledTableRow key={acompanhamentos.idAcompanhamento}>
                     <StyledTableCell sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row"> {acompanhamentos.idAcompanhamento}</StyledTableCell>
                     <StyledTableCell id={`titulo-${acompanhamentos.idAcompanhamento}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} >{acompanhamentos.titulo}</StyledTableCell>
-                    <StyledTableCell id={`dataInicio-${acompanhamentos.idAcompanhamento}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100px" }} >{acompanhamentos.dataInicio.replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")}</StyledTableCell>
+                    <StyledTableCell id={`dataInicio-${acompanhamentos.idAcompanhamento}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100px" }}>{acompanhamentos.dataInicio.replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")}</StyledTableCell>
                     <StyledTableCell id={`descricao-${acompanhamentos.idAcompanhamento}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100px" }} >{acompanhamentos.descricao}</StyledTableCell>
                     <StyledTableCell id={`cargo-${acompanhamentos.idAcompanhamento}`} sx={{ textAlign: "center" }}><Button id={`botao-avaliar-acompanhamento-${acompanhamentos.idAcompanhamento}`}
                       onClick={() => { navigate("/editar-acompanhamento", { state: acompanhamentos }) }}

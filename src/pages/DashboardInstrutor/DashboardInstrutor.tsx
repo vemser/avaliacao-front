@@ -12,8 +12,8 @@ export const DashboardInstrutor = () => {
   const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
 
   useEffect(() => { getAlunos(); }, [])
-  
-  if(infosUsuario.cargo !== "Instrutor") return <Navigate to="/"/>
+
+  if (infosUsuario.cargo !== "Instrutor") return <Navigate to="/" />
 
   return (
     <>

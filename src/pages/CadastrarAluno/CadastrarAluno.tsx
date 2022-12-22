@@ -104,6 +104,8 @@ export const CadastrarAluno = () => {
                 sx={{width: "100%"}}
                 id="descricao"
                 label="Descrição"
+                variant='filled'
+                focused
               />
             </FormControl>
           </Stack>

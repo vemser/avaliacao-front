@@ -19,9 +19,9 @@ import { Titulo } from "../../components/Titulo/Titulo";
 export const EditarColaborador = () => {
   const { editarColaborador } = useContext(AdminContext);
   const { state } = useLocation();
-  const [selectedImage, setSelectedImage] = useState();
+  const [selectedImage, setSelectedImage] = useState<File>();
 
-  const imageChange = (e: any): void => {
+  const imageChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     if (e.target.files && e.target.files.length > 0) {
       setSelectedImage(e.target.files[0]);
     }
@@ -32,47 +32,47 @@ export const EditarColaborador = () => {
   });
 
   const imagemAPI = new FormData();
-  if(selectedImage) {
+  if (selectedImage) {
     imagemAPI.append("file", selectedImage)
   }
 
   const editarColaboradores = (data: IColaboradorEditado) => { editarColaborador(data, state.idUsuario, imagemAPI); }
 
   const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
-  if(infosUsuario.cargo !== "Admin") return <Navigate to="/" />
+  if (infosUsuario.cargo !== "Admin") return <Navigate to="/" />
 
   return (
     <>
       <Header />
-      <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center",justifyContent: "center", height:"calc(100vh - 64px)" }}>
-        <Titulo texto="Editar colaborador"/>
+      <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "calc(100vh - 64px)" }}>
+        <Titulo texto="Editar colaborador" />
 
-        <Box component="form" onSubmit={handleSubmit(editarColaboradores)} sx={{ display: { xs:"block", md:"flex" }, justifyContent: "space-between", backgroundColor: "#fff", width: { xs:"90%", md:"50%" }, borderRadius: "10px", padding: { xs: 5, md: 5 }, boxShadow: "10px 10px 10px #2f407ccf" }}>
+        <Box component="form" onSubmit={handleSubmit(editarColaboradores)} sx={{ display: { xs: "block", md: "flex" }, justifyContent: "space-between", backgroundColor: "var(--branco)", width: { xs: "90%", md: "50%" }, borderRadius: "10px", padding: { xs: 5, md: 5 }, boxShadow: "10px 10px 10px var(--azul-escuro-dbc)" }}>
 
-          <Stack component="div" spacing={2} sx={{ width:{ xs:"100%", md:"50%" }, display: "flex", alignItems:{ xs:"start", md:"start" } }}>
+          <Stack component="div" spacing={2} sx={{ width: { xs: "100%", md: "50%" }, display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
-            <FormControl sx={{ width: { xs:"100%", md:"100%" } }}>
+            <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>
               <TextField id="nomeCompletoColaborador" defaultValue={state.nome} {...register("nome")} label="Nome Completo" placeholder="Fulano da Silva" variant="filled" focused />
-              {errors.nome && <Typography id="erro-nome" sx={{fontWeight:"500", display: "flex", marginTop: "5px"}} color="error">{errors.nome.message}</Typography>}
+              {errors.nome && <Typography id="erro-nome" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.nome.message}</Typography>}
             </FormControl>
-            <FormControl sx={{ width:  { xs:"100%", md:"100%" } }}>
+            <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>
               <TextField id="emailColaborador" defaultValue={state.email} {...register("email")} label="E-mail DBC" placeholder="fulano.silva@dbccompany.com.br" variant="filled" focused />
-              {errors.email && <Typography id="erro-email" sx={{fontWeight:"500", display: "flex", marginTop: "5px"}} color="error">{errors.email.message}</Typography>}
+              {errors.email && <Typography id="erro-email" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.email.message}</Typography>}
             </FormControl>
 
-            <Typography id="aviso-imagem" variant="body1" sx={{fontWeight:"700", display: "inline-block", marginTop: "10px", paddingBottom: 0, marginBottom: 0, color: "#ff9800"}} >*Imagens são opcionais</Typography>
-            <Typography id="aviso-extensao" variant="body1" sx={{fontWeight:"700", display: "inline-block", paddingTop: 0, marginTop: 0, color: "#ff9800"}}>*Só são aceitas imagens com extensão .jpg</Typography>
+            <Typography id="aviso-imagem" variant="body1" sx={{ fontWeight: "700", display: "inline-block", marginTop: "10px", paddingBottom: 0, marginBottom: 0, color: "#ff9800" }} >*Imagens são opcionais</Typography>
+            <Typography id="aviso-extensao" variant="body1" sx={{ fontWeight: "700", display: "inline-block", paddingTop: 0, marginTop: 0, color: "#ff9800" }}>*Só são aceitas imagens com extensão .jpg</Typography>
           </Stack>
 
-          <Stack component="div" spacing={2} sx={{ width: { xs:"100%", md:"50%" }, display: "flex", alignItems: "center",marginTop:{ xs:2, md:0 }}}>
+          <Stack component="div" spacing={2} sx={{ width: { xs: "100%", md: "50%" }, display: "flex", alignItems: "center", marginTop: { xs: 2, md: 0 } }}>
             <Avatar alt="Foto Enviada" id="foto-enviada" src={selectedImage ? URL.createObjectURL(selectedImage) : state.foto ? `data:image/jpeg;base64,${state.foto}` : ""} sx={{ width: 150, height: 150 }} />
-            
+
             <Button component="label" variant="contained">
               <input id="imagemAluno" type="file" hidden accept="image/jpeg" onChange={imageChange} />
               <Typography sx={{ textTransform: "capitalize" }} variant="body1">Inserir nova Foto</Typography>
             </Button>
 
-            <BotaoVerde texto="Editar"/>
+            <BotaoVerde texto="Editar" />
           </Stack>
         </Box>
       </Box>

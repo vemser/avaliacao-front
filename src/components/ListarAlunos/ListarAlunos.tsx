@@ -5,7 +5,6 @@ import EditIcon from "@mui/icons-material/Edit";
 import { Paper, TableContainer, Table, TableRow, TableCell, TableBody, Button, TablePagination, tableCellClasses, Box, Typography, Modal, styled } from "@mui/material";
 
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import React from "react";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: { backgroundColor: theme.palette.common.black, color: theme.palette.common.white },
@@ -48,7 +47,7 @@ const style = {
 
 export const ListarAlunos = ({ alunos, deletarAluno }: any) => {
   const navigate = useNavigate();
-  
+
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -57,21 +56,21 @@ export const ListarAlunos = ({ alunos, deletarAluno }: any) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  
+
   const handleChangePage = (event: unknown, newPage: number) => { setPage(newPage); };
-  
+
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-  
+
   return (
     <>
-      <Box sx={{height:"calc(100vh - 64px)",display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",gap:5}}>
-        <Typography sx={{textAlign: "center",fontWeight:"700",fontSize: { xs:30, md: 44 }, color:"white"}} variant="h3">Dashboard Alunos</Typography>
+      <Box sx={{ height: "calc(100vh - 64px)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: 5 }}>
+        <Typography sx={{ textAlign: "center", fontWeight: "700", fontSize: { xs: 30, md: 44 }, color: "white" }} variant="h3">Dashboard Alunos</Typography>
 
-        <Paper sx={{ width: { xs:"95%", md:"60%" }, borderRadius: "10px", boxShadow: "10px 10px 10px #2f407ccf" }}>
-          <TableContainer sx={{ maxHeight:430 }}>
+        <Paper sx={{ width: { xs: "95%", md: "60%" }, borderRadius: "10px", boxShadow: "10px 10px 10px var(--azul-escuro-dbc)" }}>
+          <TableContainer sx={{ maxHeight: 430 }}>
             <Table component="table" stickyHeader aria-label="sticky table">
               <thead>
                 <TableRow sx={{ backgroundColor: "#090F27", color: "white" }}>
@@ -87,8 +86,8 @@ export const ListarAlunos = ({ alunos, deletarAluno }: any) => {
                     <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: data })} id="codigo" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row">{data.idAluno}</StyledTableCell>
                     <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: data })} id="nome" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }}>{data.nome}</StyledTableCell>
                     <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: data })} id="stack" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }}>{data.stack}</StyledTableCell>
-                    <StyledTableCell id="acoes" sx={{textAlign:"center"}}>
-                      <Button id={`botao-editar-${data.idAluno}`} title="Deletar" onClick={() => navigate("/editar-aluno",{state: data})}><EditIcon /></Button>
+                    <StyledTableCell id="acoes" sx={{ textAlign: "center" }}>
+                      <Button id={`botao-editar-${data.idAluno}`} title="Deletar" onClick={() => navigate("/editar-aluno", { state: data })}><EditIcon /></Button>
                       <Button id={`botao-deletar-${data.idAluno}`} title="Deletar" onClick={() => { handleOpen(); setIdDelete(data.idAluno) }}><DeleteForeverIcon /></Button>
                     </StyledTableCell>
                   </StyledTableRow>
@@ -102,7 +101,7 @@ export const ListarAlunos = ({ alunos, deletarAluno }: any) => {
 
           {/* Modal Confirmar Delete */}
           <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-titulo" aria-describedby="modal-modal-description" sx={{ backdropFilter: "blur(10px)" }}>
-            <Box sx={style}> 
+            <Box sx={style}>
               <Typography id="modal-modal-titulo" variant="h6" component="h2" color="error">Você realmente deseja excluir?</Typography>
               <Box sx={{ display: "flex", gap: 2, alignItems: "center", justifyContent: "center" }}>
                 <Button id="botao-confirmar-modal" onClick={() => { deletarAluno(idDelete); handleClose(); }} size="medium" color="success" type="submit" sx={{ mt: 2 }} variant="contained">Confirmar</Button>

@@ -1,4 +1,10 @@
-*{
+:root {
+  --azul-claro-dbc: #1D58F9;
+  --azul-escuro-dbc: #2f407ccf;
+  --branco: #fff;
+}
+
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -9,10 +15,10 @@ body {
   font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: rgb(17,29,77);
-  background: linear-gradient(151deg, rgba(17,29,77,0.8631827731092436) 0%, rgba(28,88,248,0.938813025210084) 70%);
+  background: rgb(17, 29, 77);
+  background: linear-gradient(151deg, rgba(17, 29, 77, 0.8631827731092436) 0%, rgba(28, 88, 248, 0.938813025210084) 70%);
   background-repeat: no-repeat;
-  height: 100vh;  
+  height: 100vh;
 }
 
 code {

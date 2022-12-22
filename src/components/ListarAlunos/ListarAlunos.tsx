@@ -65,19 +65,23 @@ export const ListarAlunos: React.FC = () => {
       <Box sx={{ height: "calc(100vh - 64px)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: 5 }}>
         <Typography sx={{ textAlign: "center", fontWeight: "700", fontSize: { xs: 30, md: 44 }, color: "white" }} variant="h3">Dashboard Alunos</Typography>
 
-        <Paper sx={{ width: { xs: "95%", md: "60%" }, borderRadius: "10px", boxShadow: "10px 10px 10px var(--azul-escuro-dbc)" }}>
-          <TableContainer sx={{ maxHeight: 430 }}>
-            <Table component="table" stickyHeader aria-label="sticky table">
-              <thead>
-                <TableRow sx={{ backgroundColor: "#090F27", color: "white" }}>
-                  {columns.map((column) => (
-                    <TableCell key={column.id} align={column.align} style={{ top: 57, minWidth: column.minWidth, fontWeight: "700", fontSize: "1rem", textAlign: "center" }}>{column.label}</TableCell>
-                  ))}
-                </TableRow>
-              </thead>
+        <Box sx={{width:"60%",display:"flex",alignItems:"end",flexDirection:"column",padding:"20px",background:"#f8f8fff8",borderRadius:"10px",boxShadow:"10px 10px 10px var(--azul-escuro-dbc)"}}>
+
+          <Button onClick={() => navigate("/cadastrar-aluno")} variant="contained" sx={{width:"200px",whiteSpace:"nowrap",display:"flex",marginBottom:"10px"}}>Cadastrar Aluno</Button>
+
+          <Paper sx={{ width: { xs: "95%", md: "100%" }, borderRadius: "10px" }}>
+            <TableContainer sx={{ maxHeight: 430 }}>
+              <Table component="table" stickyHeader aria-label="sticky table">
+                <thead>
+                  <TableRow sx={{ backgroundColor: "#090F27", color: "white" }}>
+                    {columns.map((column) => (
+                      <TableCell key={column.id} align={column.align} style={{ top: 57, minWidth: column.minWidth, fontWeight: "700", fontSize: "1rem", textAlign: "center" }}>{column.label}</TableCell>
+                    ))}
+                  </TableRow>
+                </thead>
 
               <TableBody>
-                {alunos.map((data: any) => (
+                {alunos.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((data: any) => (
                   <StyledTableRow sx={{ ":hover": { opacity: "0.7", cursor: "pointer" } }} key={data.idAluno}>
                     <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: data })} id="codigo" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row">{data.idAluno}</StyledTableCell>
                     <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: data })} id="nome" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }}>{data.nome}</StyledTableCell>
@@ -93,19 +97,20 @@ export const ListarAlunos: React.FC = () => {
           </TableContainer>
 
           {/* Paginação */}
-          <TablePagination rowsPerPageOptions={[]} component="div" count={paginacaoAlunos.totalElementos} rowsPerPage={paginacaoAlunos.tamanho} page={paginacaoAlunos.pagina} onPageChange={handleChangePage}  />
+          <TablePagination rowsPerPageOptions={[10, 20, 30]} component="div" count={alunos.length} rowsPerPage={rowsPerPage} page={page} onPageChange={handleChangePage} onRowsPerPageChange={handleChangeRowsPerPage} labelRowsPerPage="Linhas por página:" />
 
-          {/* Modal Confirmar Delete */}
-          <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-titulo" aria-describedby="modal-modal-description" sx={{ backdropFilter: "blur(10px)" }}>
-            <Box sx={style}>
-              <Typography id="modal-modal-titulo" variant="h6" component="h2" color="error">Você realmente deseja excluir?</Typography>
-              <Box sx={{ display: "flex", gap: 2, alignItems: "center", justifyContent: "center" }}>
-                <Button id="botao-confirmar-modal" onClick={() => { deletarAluno(idDelete); handleClose(); }} size="medium" color="success" type="submit" sx={{ mt: 2 }} variant="contained">Confirmar</Button>
-                <Button id="botao-fechar-modal" onClick={handleClose} size="medium" type="submit" sx={{ mt: 2 }} variant="contained">Fechar</Button>
+            {/* Modal Confirmar Delete */}
+            <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-titulo" aria-describedby="modal-modal-description" sx={{ backdropFilter: "blur(10px)" }}>
+              <Box sx={style}>
+                <Typography id="modal-modal-titulo" variant="h6" component="h2" color="error">Você realmente deseja excluir?</Typography>
+                <Box sx={{ display: "flex", gap: 2, alignItems: "center", justifyContent: "center" }}>
+                  <Button id="botao-confirmar-modal" onClick={() => { deletarAluno(idDelete); handleClose(); }} size="medium" color="success" type="submit" sx={{ mt: 2 }} variant="contained">Confirmar</Button>
+                  <Button id="botao-fechar-modal" onClick={handleClose} size="medium" type="submit" sx={{ mt: 2 }} variant="contained">Fechar</Button>
+                </Box>
               </Box>
-            </Box>
-          </Modal>
-        </Paper>
+            </Modal>
+          </Paper>
+        </Box>
       </Box>
     </>
   )

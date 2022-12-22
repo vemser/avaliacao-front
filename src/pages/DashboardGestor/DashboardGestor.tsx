@@ -13,7 +13,7 @@ export const DashboardGestor = () => {
 
   useEffect(() => { getAlunos(); }, [])
 
-  if(infosUsuario.cargo !== "Gestor de Pessoas") return <Navigate to="/"/>
+  if (infosUsuario.cargo !== "Gestor de Pessoas") return <Navigate to="/" />
 
   return (
     <>

@@ -28,6 +28,12 @@ function AppRoutes() {
               <Route path="/redefinir-senha" element={<Pages.RedefinirSenha />} />
 
               <Route element={<Components.RotaPrivada />}>
+                <Route path="/dashboard/trilha-programa" element={<Pages.TrilhaPrograma />} />
+                <Route path="/cadastrar-trilha" element={<Pages.CadastrarTrilha />} />
+                <Route path="/cadastrar-programa" element={<Pages.CadastrarPrograma />} />
+                <Route path="/editar-trilha" element={<Pages.EditarTrilha />} />
+                <Route path="/editar-programa" element={<Pages.EditarPrograma />} />
+
                 {/* Rotas admin */}
                 <Route path="/dashboard/admin" element={<Pages.DashboardAdmin />} />
                 <Route path="/cadastrar-colaborador" element={<Pages.CadastrarColaborador />} />

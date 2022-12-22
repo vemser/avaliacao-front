@@ -1,3 +1,6 @@
+import { EditarModulo } from './EditarModulo/EditarModulo';
+import { CadastrarModulo } from './CadastrarModulo/CadastrarModulo';
+import { ListarModulo } from './ListarModulo/ListarModulo';
 export { Login } from "./Login/Login";
 export { DashboardAdmin } from "./DashboardAdmin/DashboardAdmin";
 export { DashboardGestor } from "./DashboardGestor/DashboardGestor";
@@ -24,3 +27,6 @@ export { CadastrarTrilha } from './CadastrarTrilhas/CadastrarTrilha';
 export { CadastrarPrograma } from './CadastrarProgramas/CadastrarPrograma';
 export { EditarTrilha } from './EditarTrilha/EditarTrilha';
 export { EditarPrograma } from './EditarPrograma/EditarPrograma';
+export { ListarModulo } from "./ListarModulo/ListarModulo";
+export { CadastrarModulo } from "./CadastrarModulo/CadastrarModulo";
+export { EditarModulo } from "./EditarModulo/EditarModulo";

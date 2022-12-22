@@ -1,12 +1,12 @@
 import { AuthContext } from '../../context/AuthContext';
-import { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
 import { LockReset, PersonPin, ExitToApp } from '@mui/icons-material';
 import { Box, Typography, Tooltip, IconButton, Avatar, Menu, MenuItem, ListItemIcon, Divider } from '@mui/material';
 
-export const HeaderConfig = () => {
+export const HeaderConfig: React.FC = () => {
   const { usuarioLogout } = useContext(AuthContext);
 
   const navigate = useNavigate();

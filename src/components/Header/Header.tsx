@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
@@ -8,7 +8,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import logo from "../../assets/dbc-logo.webp";
 import { HeaderConfig } from "../HeaderConfig/HeaderConfig";
 
-export const Header = () => { 
+export const Header: React.FC = () => { 
   const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
   const primeiroCargo = infosUsuario.cargo.split(" ")[0].toLowerCase();
 

@@ -2,12 +2,13 @@ import { useContext, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { IMaskInput } from 'react-imask';
 
 import { Header } from "../../components/Header/Header";
 import { BotaoVerde } from "../../components/BotaoVerde/BotaoVerde";
 import { Titulo } from "../../components/Titulo/Titulo";
 
-import { Box, FormControl, TextField, Stack, Typography, InputLabel, MenuItem, Select, Avatar, Button } from "@mui/material";
+import { Box, FormControl, TextField, Stack, Typography, InputLabel, MenuItem, Select, Button } from "@mui/material";
 
 import Autocomplete from '@mui/material/Autocomplete';
 
@@ -82,18 +83,15 @@ export const CadastrarAluno = () => {
             </FormControl>
 
             <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>
-              <TextField type="number" label="Telefone" placeholder='Digite o número de telefone' id='telefone' variant="filled" focused
-              />
+              <TextField label="Telefone" placeholder='Digite o número de telefone' id='telefone' variant="filled" focused />
             </FormControl>
 
             <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>
-              <TextField type="text" label="Cidade" placeholder='Digite sua cidade' id='cidade' variant="filled" focused
-              />
+              <TextField type="text" label="Cidade" placeholder='Digite sua cidade' id='cidade' variant="filled" focused />
             </FormControl>
 
             <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>
-              <TextField type="text" label="Estado" placeholder='Digite seu estado' id='estado' variant="filled" focused
-              />
+              <TextField type="text" label="Estado" placeholder='Digite seu estado' id='estado' variant="filled" focused />
             </FormControl>
 
             <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>

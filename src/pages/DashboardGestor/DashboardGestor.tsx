@@ -12,7 +12,6 @@ export const DashboardGestor: React.FC = () => {
 
   return (
     <>
-      <Header />
       <ListarAlunos />
     </>
   );

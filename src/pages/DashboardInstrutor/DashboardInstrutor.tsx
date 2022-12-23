@@ -12,7 +12,6 @@ export const DashboardInstrutor: React.FC = () => {
 
   return (
     <>
-      <Header />
       <ListarAlunos  />
     </>
   );

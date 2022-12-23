@@ -71,7 +71,6 @@ export const ListarModulo = () => {
 
     return (
         <>
-            <Header />
             <Box sx={{ minHeight: "calc(100vh - 64px)", paddingTop: "50px", paddingBottom: "50px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: 5 }}>
                 <Typography id="titulo-body" sx={{ textAlign: "center", fontSize: { xs: 30, md: 44 }, fontWeight: "700", color: "white" }} variant="h3">Lista de Módulos</Typography>
 

@@ -49,8 +49,6 @@ export const AvaliarAcompanhamento = () => {
 
   return (
     <>
-      <Header />
-
       <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "calc(100vh - 64px)" }}>
         <Typography id="titulo-body" sx={{ textAlign: "center", marginBottom: "20px", fontSize: { xs: "35px", md: "40px" }, fontWeight: "700", color: "white" }} variant="h3">Avaliar acompanhamento</Typography>
 

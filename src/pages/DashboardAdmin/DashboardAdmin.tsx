@@ -69,8 +69,6 @@ export const DashboardAdmin: React.FC = () => {
 
   return (
     <>
-      <Header />
-
       <Box sx={{ minHeight: "calc(100vh - 64px)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: 5, position: "relative", paddingTop: "50px", paddingBottom: "50px" }}>
         <Typography id="titulo-body" sx={{ textAlign: "center", fontWeight: "700", fontSize: { xs: 30, md: 44 }, color: "white" }} variant="h3">Dashboard Colaboradores</Typography>
         <Paper sx={{ width: { xs: "95%", md: "60%" }, borderRadius: "10px", boxShadow: "10px 10px 10px var(--azul-escuro-dbc)" }}>

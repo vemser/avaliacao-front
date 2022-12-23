@@ -1,7 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
 
-import { Navigate } from 'react-router-dom';
-
 import { Box, Typography, Stack, FormControl, TextField, FormLabel, InputLabel, MenuItem, Select, Button } from '@mui/material'
 
 import { Header } from '../../components/Header/Header'
@@ -48,8 +46,8 @@ export const CadastrarFeedback = () => {
     }
   }
 
-  const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
-  if (infosUsuario.cargo !== "Instrutor") return <Navigate to="/" />
+  // const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
+  // if (infosUsuario.cargo !== "Instrutor") return <Navigate to="/" />
 
   return (
     <>

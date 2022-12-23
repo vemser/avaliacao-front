@@ -4,7 +4,7 @@ import { Paper, TableContainer, Table, TableBody, TablePagination, Button, style
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { Header } from "../../components/Header/Header";
 
@@ -64,8 +64,8 @@ export const DashboardAdmin: React.FC = () => {
 
   useEffect(() => { pegarColaborador() }, [])
 
-  const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
-  if (infosUsuario.cargo !== "Admin") return <Navigate to="/" />
+  // const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
+  // if (infosUsuario.cargo !== "Admin") return <Navigate to="/" />
 
   return (
     <>

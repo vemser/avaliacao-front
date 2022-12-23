@@ -5,7 +5,7 @@ import { Box, FormControl, TextField, Stack, Typography, Avatar, Button } from "
 import { useContext, useState } from "react";
 
 import { useForm } from "react-hook-form";
-import { Navigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import { editarColaboradorSchema } from "../../utils/schemas";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -38,8 +38,8 @@ export const EditarColaborador = () => {
 
   const editarColaboradores = (data: IColaboradorEditado) => { editarColaborador(data, state.idUsuario, imagemAPI); }
 
-  const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
-  if (infosUsuario.cargo !== "Admin") return <Navigate to="/" />
+  // const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
+  // if (infosUsuario.cargo !== "Admin") return <Navigate to="/" />
 
   return (
     <>

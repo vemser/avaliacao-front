@@ -1,6 +1,7 @@
 import { EditarModulo } from './EditarModulo/EditarModulo';
 import { CadastrarModulo } from './CadastrarModulo/CadastrarModulo';
 import { ListarModulo } from './ListarModulo/ListarModulo';
+import { CadastrarAtividade } from './CadastrarAtividade/CadastrarAtividade';
 export { Login } from "./Login/Login";
 export { DashboardAdmin } from "./DashboardAdmin/DashboardAdmin";
 export { DashboardGestor } from "./DashboardGestor/DashboardGestor";
@@ -30,3 +31,4 @@ export { EditarPrograma } from './EditarPrograma/EditarPrograma';
 export { ListarModulo } from "./ListarModulo/ListarModulo";
 export { CadastrarModulo } from "./CadastrarModulo/CadastrarModulo";
 export { EditarModulo } from "./EditarModulo/EditarModulo";
+export {CadastrarAtividade} from "./CadastrarAtividade/CadastrarAtividade"

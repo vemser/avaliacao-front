@@ -17,7 +17,6 @@ import { AlunoContext } from '../../context/AlunoContext';
 import { IEditarAluno } from '../../utils/interface';
 
 import Autocomplete from '@mui/material/Autocomplete';
-import { Email } from '@mui/icons-material';
 
 
 const top100Films = [

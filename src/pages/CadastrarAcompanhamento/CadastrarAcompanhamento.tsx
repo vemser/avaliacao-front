@@ -1,6 +1,5 @@
 import { useContext } from "react";
 
-import { Navigate } from "react-router-dom";
 
 import { Box, Typography, Stack, FormControl, TextField } from "@mui/material";
 
@@ -27,8 +26,8 @@ export const CadastrarAcompanhamento = () => {
 
   const cadastrarAcompanhamento = (data: ICadastrarAcompanhamento) => { criarAcompanhamento(data) }
 
-  const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
-  if (infosUsuario.cargo !== "Gestor de Pessoas") return <Navigate to="/" />
+  // const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
+  // if (infosUsuario.cargo !== "Gestor de Pessoas") return <Navigate to="/" />
 
   return (
     <>

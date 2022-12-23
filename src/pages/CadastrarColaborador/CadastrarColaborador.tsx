@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
 
-import { Navigate } from "react-router-dom";
 
 import { Header } from "../../components/Header/Header";
 import { BotaoVerde } from "../../components/BotaoVerde/BotaoVerde";
@@ -38,8 +37,8 @@ export const CadastrarColaborador = () => {
 
   const cadastroColaborador = (data: IColaborador) => { criarColaborador(data, imagemAPI); };
 
-  const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
-  if (infosUsuario.cargo !== "Admin") return <Navigate to="/" />
+  // const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
+  // if (infosUsuario.cargo !== "Admin") return <Navigate to="/" />
 
   return (
     <>

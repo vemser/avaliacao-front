@@ -29,8 +29,7 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
   const { isOpen, toggleOpen } = useContext(MenuLateralContext);
   const navigate = useNavigate();
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down("sm"));
-
+  const mdDown = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
     <>
@@ -79,35 +78,35 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
 
           <Box flex="1">
             <List component="nav">
-              <ListItemButton onClick={() => {navigate("/dashboard/instrutor")}}>
+              <ListItemButton onClick={() => { navigate("/dashboard/instrutor") }}>
                 <ListItemIcon>
                   <HomeIcon />
                 </ListItemIcon>
-                <ListItemText primary="Lista aluno"/>
+                <ListItemText primary="Lista aluno" />
               </ListItemButton>
-              <ListItemButton onClick={() => {navigate("/lista-feedback")}}>
+              <ListItemButton onClick={() => { navigate("/lista-feedback") }}>
                 <ListItemIcon>
                   <HomeIcon />
                 </ListItemIcon>
-                <ListItemText primary="Lista feedback"/>
+                <ListItemText primary="Lista feedback" />
               </ListItemButton>
-              <ListItemButton onClick={() => {navigate("/lista-acompanhamento")}}>
+              <ListItemButton onClick={() => { navigate("/lista-acompanhamento") }}>
                 <ListItemIcon>
                   <HomeIcon />
                 </ListItemIcon>
-                <ListItemText primary="Lista acompanhamento"/>
+                <ListItemText primary="Lista acompanhamento" />
               </ListItemButton>
-              <ListItemButton onClick={() => {navigate("/dashboard/trilha-programa")}}>
+              <ListItemButton onClick={() => { navigate("/dashboard/trilha-programa") }}>
                 <ListItemIcon>
                   <HomeIcon />
                 </ListItemIcon>
-                <ListItemText primary="Lista trilha/programa"/>
+                <ListItemText primary="Lista trilha/programa" />
               </ListItemButton>
-              <ListItemButton onClick={() => {navigate("/lista-modulo")}}>
+              <ListItemButton onClick={() => { navigate("/lista-modulo") }}>
                 <ListItemIcon>
                   <HomeIcon />
                 </ListItemIcon>
-                <ListItemText primary="Lista modulo"/>
+                <ListItemText primary="Lista modulo" />
               </ListItemButton>
             </List>
           </Box>

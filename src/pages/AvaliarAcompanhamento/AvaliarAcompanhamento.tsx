@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 
 import { Box, Typography, Stack, FormControl, TextField, FormLabel, Button, InputLabel, MenuItem, Select } from "@mui/material";
 
@@ -21,15 +21,16 @@ const itemPaddingTop = 8;
 const MenuProps = { PaperProps: { style: { maxHeight: itemHeigth * 4.5 + itemPaddingTop, width: 250 } } };
 
 export const AvaliarAcompanhamento = () => {
+  const navigate = useNavigate();
   const { getAlunos, alunos } = useContext(AlunoContext);
   const { pegarAcompanhamento, acompanhamento, criarAvaliacao } = useContext(GestorContext)
-  
+
   useEffect(() => { getAlunos(); pegarAcompanhamento() }, [])
-  
+
   const [mudaRadio, setMudaRadio] = useState('')
   const manipulaState = (event: string) => { setMudaRadio(event) }
   const resetFiltros = () => { setMudaRadio('') }
-  
+
   const { register, handleSubmit, formState: { errors } } = useForm<IAvaliarAcompanhamento>({
     resolver: yupResolver(CriarAvaliacaoSchema)
   })
@@ -42,7 +43,7 @@ export const AvaliarAcompanhamento = () => {
       criarAvaliacao(avaliacao)
     }
   }
-  
+
   const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
   // if (infosUsuario.cargo !== "Gestor de Pessoas") return <Navigate to="/" />
 
@@ -50,11 +51,11 @@ export const AvaliarAcompanhamento = () => {
     <>
       <Header />
 
-      <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "calc(100vh - 64px)" }}>
-        <Typography id="titulo-body" sx={{ textAlign: "center", marginBottom: "20px", fontSize: { xs: "35px", md: "40px" }, fontWeight: "700", color: "white" }} variant="h3">Avaliar acompanhamento</Typography>
+      <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
+        <Typography id="titulo-body" sx={{ textAlign: "center", marginBottom: "30px", fontSize: { xs: "35px", md: "40px" }, fontWeight: "600", color: "white", userSelect: "none" }} variant="h3">Avaliar acompanhamento</Typography>
 
         <Box component="form" onSubmit={handleSubmit(avaliarAcompanhamento)} sx={{
-          display: { xs: "block", md: "flex" }, justifyContent: "space-between", backgroundColor: "var(--branco)", width: { xs: "90%", md: "60%" }, borderRadius: "10px", padding: {
+          display: { xs: "block", md: "flex" }, justifyContent: "space-between", backgroundColor: "var(--branco)", width: { xs: "90%", md: "90%", lg: "70%" }, borderRadius: "10px", padding: {
             xs: 5, md: 5
           }, boxShadow: "10px 10px 10px var(--azul-escuro-dbc)", gap: 8
         }}>
@@ -97,7 +98,7 @@ export const AvaliarAcompanhamento = () => {
                   </Stack>
                 </Box>
 
-                <Button id="limpar-filtro" type="button" size="small" variant="contained" onClick={resetFiltros}>Limpar filtros</Button>
+                <Button id="limpar-filtro" type="button" size="small" variant="contained" onClick={resetFiltros} sx={{ textTransform: "capitalize", fontSize: "1rem" }}>Limpar filtros</Button>
               </Box>
             </FormControl>
 
@@ -138,12 +139,13 @@ export const AvaliarAcompanhamento = () => {
           </Stack>
 
           <Stack component="div" spacing={4} sx={{
-            width: { xs: "100%", md: "50%" }, display: "flex", alignItems: "end", marginTop: {
+            width: { xs: "100%", md: "50%" }, display: "flex", marginTop: {
               xs: 2, md: 0
-            }
+            } ,
+            alignItems: "end"
           }}>
             <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>
-              <TextField id="descricao" error={!!errors.descricao} label="Digite uma descrição" placeholder="Digite uma descrição" multiline variant="filled" {...register("descricao")} />
+              <TextField id="descricao" error={!!errors.descricao} label="Digite uma descrição" placeholder="Digite uma descrição" multiline rows={4} focused variant="filled" {...register("descricao")} />
               {errors.descricao && <Typography id="erro-descricao" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px" }} color="error">{errors.descricao.message}</Typography>}
             </FormControl>
 
@@ -152,7 +154,13 @@ export const AvaliarAcompanhamento = () => {
               {errors.dataCriacao && <Typography id="erro-dataCriacao" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px" }} color="error">{errors.dataCriacao.message}</Typography>}
             </FormControl>
 
-            <Button id="botao-avaliar" type="submit" sx={{ textTransform: "capitalize", width: { xs: "20%", md: "150px" }, marginTop: { xs: "10px!important", md: "200px!important" } }} variant="contained">Avaliar</Button>
+            {/* <Button id="botao-avaliar" type="submit" sx={{ marginTop: "auto", fontSize: "1rem", textTransform: "capitalize", width: { xs: "20%", md: "150px" } }} variant="contained">Avaliar</Button> */}
+
+            <Box sx={{ display: "flex", alignItems: "end", bottom: 0, paddingTop: "20px", gap: 2, flexDirection: { xs: "column", sm: "row" } }}>
+              <Button onClick={() => { navigate(-1) }} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d " }, textTransform: "capitalize", fontSize: "1rem", width: { xs: "180px", md: "160px", lg: "180px" } }}>Cancelar</Button>
+              <Button variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "180px", md: "160px", lg: "180px" } }}>Salvar</Button>
+            </Box>
+
           </Stack>
         </Box>
       </Box>

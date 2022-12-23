@@ -44,13 +44,8 @@ export const ListarAcompanhamento = () => {
 
   useEffect(() => { pegarAcompanhamento() }, [])
 
-  // const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
-  // if (infosUsuario.cargo !== "Gestor de Pessoas") return <Navigate to="/" />
-
   return (
     <>
-      <Header />
-
       <Box sx={{ height: "calc(100vh - 64px)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: 5 }}>
         <Typography id="titulo-body" sx={{ textAlign: "center", fontSize: { xs: 30, md: 44 }, fontWeight: "700", color: "white" }} variant="h3">Lista acompanhamentos</Typography>
 

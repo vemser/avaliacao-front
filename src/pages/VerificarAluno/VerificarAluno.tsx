@@ -72,8 +72,6 @@ export const VerificarAluno: React.FC = () => {
 
   return (
     <>
-      <Header />
-
       <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "calc(100vh - 64px)" }}>
         <Typography id="titulo-body" sx={{
           textAlign: "center", marginBottom: "20px", fontSize: {

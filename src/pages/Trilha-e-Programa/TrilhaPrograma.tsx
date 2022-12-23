@@ -16,8 +16,6 @@ export const TrilhaPrograma = () => {
 
   return (
     <>
-      <Header />
-
       <Box sx={{ height: "calc(100vh - 64px)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: 5 }}>
         {!mudaDashboard && 
           <>

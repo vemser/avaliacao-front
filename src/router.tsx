@@ -14,6 +14,7 @@ function AppRoutes() {
       <BrowserRouter basename={process.env.PUBLIC_URL}>
         <ToastContainer />
         <Context.AuthProvider>
+          <Context.MenuLateralProvider>
           <Context.AdminProvider>
           <Context.AlunoProvider>
           <Context.GestorProvider>
@@ -33,6 +34,7 @@ function AppRoutes() {
                 <Route path="/cadastrar-programa" element={<Pages.CadastrarPrograma />} />
                 <Route path="/editar-trilha" element={<Pages.EditarTrilha />} />
                 <Route path="/editar-programa" element={<Pages.EditarPrograma />} />
+                <Route path="/cadastrar-atividade" element={<Pages.CadastrarAtividade/>}/>
 
                 {/* Rotas admin */}
                 <Route path="/dashboard/admin" element={<Pages.DashboardAdmin />} />
@@ -72,6 +74,7 @@ function AppRoutes() {
           </Context.GestorProvider>
           </Context.AlunoProvider>
           </Context.AdminProvider>
+          </Context.MenuLateralProvider>
         </Context.AuthProvider>
       </BrowserRouter>
     </>

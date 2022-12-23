@@ -41,7 +41,6 @@ export const CadastrarModulo = () => {
 
     return (
         <>
-            <Header />
             <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "calc(100vh - 64px)", paddingTop: "50px", paddingBottom: "50px" }}>
 
                 <Titulo texto="Cadastrar Módulo" />

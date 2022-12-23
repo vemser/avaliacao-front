@@ -42,7 +42,6 @@ export const CadastrarColaborador = () => {
 
   return (
     <>
-      <Header />
       <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "calc(100vh - 64px)" }}>
         <Titulo texto="Cadastrar colaborador" />
 

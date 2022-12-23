@@ -1,13 +1,13 @@
 import { Box, Stack, Typography, Avatar } from '@mui/material';
-import { Navigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { Header } from '../../components/Header/Header';
 import { Titulo } from '../../components/Titulo/Titulo';
 
 export const DetalhesColaborador = () => {
   const { state } = useLocation()
 
-  const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
-  if (infosUsuario.cargo !== "Admin") return <Navigate to="/" />
+  // const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
+  // if (infosUsuario.cargo !== "Admin") return <Navigate to="/" />
 
   return (
     <>

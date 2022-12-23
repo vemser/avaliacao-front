@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from "react";
 
-import { Navigate } from "react-router-dom";
 
 import { Box, Typography, Stack, FormControl, TextField, FormLabel, Button, InputLabel, MenuItem, Select } from "@mui/material";
 
@@ -22,16 +21,15 @@ const itemPaddingTop = 8;
 const MenuProps = { PaperProps: { style: { maxHeight: itemHeigth * 4.5 + itemPaddingTop, width: 250 } } };
 
 export const AvaliarAcompanhamento = () => {
-  const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
   const { getAlunos, alunos } = useContext(AlunoContext);
   const { pegarAcompanhamento, acompanhamento, criarAvaliacao } = useContext(GestorContext)
-
+  
   useEffect(() => { getAlunos(); pegarAcompanhamento() }, [])
-
+  
   const [mudaRadio, setMudaRadio] = useState('')
   const manipulaState = (event: string) => { setMudaRadio(event) }
   const resetFiltros = () => { setMudaRadio('') }
-
+  
   const { register, handleSubmit, formState: { errors } } = useForm<IAvaliarAcompanhamento>({
     resolver: yupResolver(CriarAvaliacaoSchema)
   })
@@ -44,8 +42,9 @@ export const AvaliarAcompanhamento = () => {
       criarAvaliacao(avaliacao)
     }
   }
-
-  if (infosUsuario.cargo !== "Gestor de Pessoas") return <Navigate to="/" />
+  
+  const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
+  // if (infosUsuario.cargo !== "Gestor de Pessoas") return <Navigate to="/" />
 
   return (
     <>

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { Header } from "../../components/Header/Header";
 
@@ -44,8 +44,8 @@ export const ListarAcompanhamento = () => {
 
   useEffect(() => { pegarAcompanhamento() }, [])
 
-  const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
-  if (infosUsuario.cargo !== "Gestor de Pessoas") return <Navigate to="/" />
+  // const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
+  // if (infosUsuario.cargo !== "Gestor de Pessoas") return <Navigate to="/" />
 
   return (
     <>

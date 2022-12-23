@@ -44,8 +44,19 @@ export const CadastrarAtividade = () => {
               />
             </FormControl>
 
+            <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>
+              <InputLabel id="select-atividade">Módulo</InputLabel>
+              <Select labelId="demo-simple-select-filled-label" defaultValue="initial-stack" id="select-modulo" >
+                <MenuItem value="initial-stack" disabled><em>Selecione um módulo</em></MenuItem>
+                <MenuItem id="frontend" value="FRONTEND">ReactJs</MenuItem>
+                <MenuItem id="backend" value="BACKEND">JavaScript</MenuItem>
+                <MenuItem id="qa" value="QA">TypeScript</MenuItem>
+              </Select>
+             
+            </FormControl> 
+
             <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>
-            <TextField
+              <TextField
                 placeholder="Digite uma descrição"
                 multiline
                 rows={4}
@@ -56,21 +67,9 @@ export const CadastrarAtividade = () => {
                 focused
               />
             </FormControl>
-
           </Stack>
 
           <Stack component="div" spacing={3} sx={{ width: { xs: "100%", md: "50%" }, display: "flex", alignItems: "end", marginTop: { xs: 2, md: 0 } }}>
-
-          <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>
-              <InputLabel id="select-atividade">Módulo</InputLabel>
-              <Select labelId="demo-simple-select-filled-label" defaultValue="initial-stack" id="select-modulo" >
-                <MenuItem value="initial-stack" disabled><em>Selecione um módulo</em></MenuItem>
-                <MenuItem id="frontend" value="FRONTEND">ReactJs</MenuItem>
-                <MenuItem id="backend" value="BACKEND">JavaScript</MenuItem>
-                <MenuItem id="qa" value="QA">TypeScript</MenuItem>
-              </Select>
-             
-            </FormControl> 
 
             <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>
               <TextField type="number" label="Peso atividade " placeholder='Digite o peso da atividade' id='peso' variant="filled" focused
@@ -91,8 +90,6 @@ export const CadastrarAtividade = () => {
               />
             </FormControl> 
 
-            
-
             <Box sx={{display:"flex",alignItems:"end"}}>
 
               <Button onClick={()=>{navigate(-1)}} variant="contained"  sx={{backgroundColor:"#808080 ",":hover":{backgroundColor:"#5f5d5d "},textTransform: "capitalize", width:{ xs:"15ch", md:"25ch"}}} >Cancelar</Button>
@@ -104,7 +101,5 @@ export const CadastrarAtividade = () => {
         </Box>
       </Box>
     </>
-
-    
   )
 }

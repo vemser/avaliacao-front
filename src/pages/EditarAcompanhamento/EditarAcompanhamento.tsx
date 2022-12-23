@@ -1,6 +1,6 @@
 import { useContext } from "react"
 
-import { Navigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import { Box, Typography, Stack, FormControl, TextField } from "@mui/material"
 
@@ -28,8 +28,8 @@ export const EditarAcompanhamento = () => {
 
   const handleEdit = (data: IEditarAcompanhamento) => { editAcompanhamento(data, state.idAcompanhamento) }
 
-  const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
-  if (infosUsuario.cargo !== "Gestor de Pessoas") return <Navigate to="/" />
+  // const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
+  // if (infosUsuario.cargo !== "Gestor de Pessoas") return <Navigate to="/" />
 
   return (
     <>

@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import { Header } from "../../components/Header/Header";
@@ -58,8 +58,8 @@ export const CadastrarAluno = () => {
     }
   };
 
-  const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
-  if (infosUsuario.cargo !== "Instrutor" && infosUsuario.cargo !== "Gestor de Pessoas") return <Navigate to="/" />
+  // const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
+  // if (infosUsuario.cargo !== "Instrutor" && infosUsuario.cargo !== "Gestor de Pessoas") return <Navigate to="/" />
 
   return (
     <>
@@ -82,17 +82,17 @@ export const CadastrarAluno = () => {
             </FormControl>
 
             <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>
-              <TextField type="tel" label="Telefone" placeholder='Digite o número de telefone' id='telefone' variant="filled" focused
+              <TextField type="number" label="Telefone" placeholder='Digite o número de telefone' id='telefone' variant="filled" focused
               />
             </FormControl>
 
             <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>
-              <TextField type="tel" label="Cidade" placeholder='Digite sua cidade' id='cidade' variant="filled" focused
+              <TextField type="text" label="Cidade" placeholder='Digite sua cidade' id='cidade' variant="filled" focused
               />
             </FormControl>
 
             <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>
-              <TextField type="tel" label="Estado" placeholder='Digite seu estado' id='estado' variant="filled" focused
+              <TextField type="text" label="Estado" placeholder='Digite seu estado' id='estado' variant="filled" focused
               />
             </FormControl>
 

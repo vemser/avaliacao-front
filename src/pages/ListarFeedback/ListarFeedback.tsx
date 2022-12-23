@@ -1,7 +1,5 @@
 import React, { useContext, useEffect } from "react"
 
-import { Navigate } from "react-router-dom";
-
 import { Box, Typography, Paper, TableContainer, Table, TableRow, TableCell, TableBody, TablePagination, styled, tableCellClasses } from "@mui/material"
 
 import { Header } from "../../components/Header/Header"
@@ -41,8 +39,8 @@ export const ListarFeedback: React.FC = () => {
 
   useEffect(() => { pegarFeedback(); }, [])
 
-  const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
-  if (infosUsuario.cargo !== "Instrutor") return <Navigate to="/" />
+  // const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
+  // if (infosUsuario.cargo !== "Instrutor") return <Navigate to="/" />
 
 
   return (

@@ -1,8 +1,10 @@
 import { useContext, useState } from "react";
+import React from 'react';
 
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { IMaskInput } from 'react-imask';
+
 
 import { Header } from "../../components/Header/Header";
 import { BotaoVerde } from "../../components/BotaoVerde/BotaoVerde";
@@ -20,6 +22,8 @@ import { AlunoContext } from "../../context/AlunoContext";
 import { toast } from "react-toastify";
 import { toastConfig } from "../../utils/toast";
 
+import Input from '@mui/material/Input';
+
 const top100Films = [
   { label: 'The Shawshank Redemption', year: 1994 },
   { label: 'The Godfather', year: 1972 },
@@ -30,7 +34,47 @@ const top100Films = [
   { label: 'Pulp Fiction', year: 1994 }
 ];
 
+interface CustomProps {
+  onChange: (event: { target: { name: string; value: string } }) => void;
+  name: string;
+}
+
+const TextMaskCustom = React.forwardRef<HTMLElement, CustomProps>(
+  function TextMaskCustom(props, ref) {
+    const { onChange, ...other } = props;
+    return (
+      <IMaskInput
+        {...other}
+        mask="(00) 00000-0000"
+        definitions={{
+          '#': /[1-9]/,
+        }}
+        onAccept={(value: any) => onChange({ target: { name: props.name, value } })}
+        overwrite
+      />
+    );
+  },
+);
+
+
+interface State {
+  textmask: string;
+
+}
+
 export const CadastrarAluno = () => {
+
+  const [values, setValues] = React.useState<State>({
+    textmask: '(99) 99999-9999'
+  });
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValues({
+      ...values,
+      [event.target.name]: event.target.value,
+    });
+  };
+
   const navigate = useNavigate()
   const { criarAluno } = useContext(AlunoContext)
 
@@ -82,8 +126,15 @@ export const CadastrarAluno = () => {
               {errors.email && <Typography id="erro-emailAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.email.message}</Typography>}
             </FormControl>
 
-            <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>
-              <TextField label="Telefone" placeholder='Digite o número de telefone' id='telefone' variant="filled" focused />
+            <FormControl sx={{ width: { xs: "100%", md: "100%" } }} variant="standard">
+              <InputLabel htmlFor="formatted-text-mask-input">Telefone</InputLabel>
+              <Input
+                value={values.textmask}
+                onChange={handleChange}
+                name="textmask"
+                id="formatted-text-mask-input"
+                inputComponent={TextMaskCustom as any}
+              />
             </FormControl>
 
             <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>

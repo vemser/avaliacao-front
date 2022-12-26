@@ -12,10 +12,11 @@ export const AlunoContext = createContext({} as IAluno);
 
 export const AlunoProvider = ({ children }: IChildren) => {
   const navigate = useNavigate()
+
   const [alunos, setAlunos] = useState<IAlunosCadastrados[]>([]);
   const [paginacaoAlunos, setPaginacaoAlunos] = useState<IPaginacao>({pagina: 0, quantidadePagina: 0, tamanho: 0, totalElementos: 0})
 
-  const criarAluno = async (infosAluno: ICadastroAluno, imagem: FormData) => {
+  const criarAluno = async (infosAluno: ICadastroAluno) => {
     try {
       nProgress.start();
       await API.post(`/aluno/cadastrar-aluno?stack=${infosAluno.stack}`, infosAluno, { 
@@ -27,18 +28,6 @@ export const AlunoProvider = ({ children }: IChildren) => {
         navigate(`/dashboard/${cargoSplitado}`);
         toast.success("Aluno cadastrado com sucesso!", toastConfig); 
       })
-
-      if(imagem){
-        const id = localStorage.getItem("idAlunoCadastrado")
-        await API.put(`/aluno/upload-imagem/${id}`, imagem, { 
-          headers: { Authorization: localStorage.getItem("token"), 'Content-Type': 'multipart/form-data' },
-         }).then((response) => {
-          localStorage.removeItem("idAlunoCadastrado")
-          toast.success("Foto enviada com sucesso", toastConfig);
-        }).catch((error) => {
-          toast.error("Foto não enviada", toastConfig)
-        })  
-      }
     } catch (error) {
       toast.error("Campo nulo, ou preenchido de forma incorreta, tente de novo.", toastConfig);
     } finally{
@@ -46,7 +35,7 @@ export const AlunoProvider = ({ children }: IChildren) => {
     }
   }
 
-  const getAlunos = async (pagina?: number) => {
+  const pegarAluno = async (pagina?: number) => {
     try {
       nProgress.start();
       await API.get(`/aluno/listar-alunos?page=${pagina ? pagina : 0}&size=10`, { 
@@ -68,7 +57,7 @@ export const AlunoProvider = ({ children }: IChildren) => {
       API.defaults.headers.common["Authorization"] = localStorage.getItem("token");
       await API.delete(`/aluno/delete/${id}`);
       toast.success("Aluno desativado com sucesso.", toastConfig);
-      getAlunos()
+      pegarAluno()
     } catch (error) {
       toast.error('Você não tem autorização para remover este aluno.', toastConfig);
     } finally {
@@ -76,25 +65,15 @@ export const AlunoProvider = ({ children }: IChildren) => {
     }
   }
 
-  const editarAluno = async (dadosEditados: IEditarAluno, id: number, imagem: FormData) => {
+  const editarAluno = async (dadosEditados: IEditarAluno, id: number) => {
     try {
       nProgress.start()
-      await API.put(`/aluno/atualizar-aluno/${id}?stack=${dadosEditados.stack}`,dadosEditados,{
+      await API.put(`/aluno/atualizar-aluno/${id}?stack=${dadosEditados.stack}`, dadosEditados, {
         headers: { Authorization: localStorage.getItem("token") }
       }).then((res)=>{
         toast.success("Aluno editado com sucesso!!", toastConfig);
         navigate("/dashboard/gestor")
       })
-
-      if(imagem){
-        await API.put(`/aluno/upload-imagem/${id}`, imagem, { 
-          headers: { Authorization: localStorage.getItem("token"), 'Content-Type': 'multipart/form-data' },
-         }).then((response) => {
-          toast.success("Foto enviada com sucesso", toastConfig);
-        }).catch((error) => {
-          toast.error("Foto não enviada", toastConfig)
-        })  
-      }
     } catch (error) {
       toast.error("Campo nulo, ou preenchido de forma incorreta, ou com id inválido, tente de novo.", toastConfig);
     } finally {
@@ -103,7 +82,7 @@ export const AlunoProvider = ({ children }: IChildren) => {
   }
 
   return (
-    <AlunoContext.Provider value={{ criarAluno, getAlunos, alunos, deletarAluno, editarAluno, paginacaoAlunos }}>
+    <AlunoContext.Provider value={{ criarAluno, pegarAluno, alunos, deletarAluno, editarAluno, paginacaoAlunos }}>
       {children}
     </AlunoContext.Provider>
   );

@@ -38,8 +38,6 @@ function AppRoutes() {
 
                 {/* Rotas admin */}
                 <Route path="/dashboard/admin" element={<Pages.DashboardAdmin />} />
-                <Route path="/cadastrar-colaborador" element={<Pages.CadastrarColaborador />} />
-                <Route path="/editar-colaborador" element={<Pages.EditarColaborador />} />
                 <Route path="/detalhes-colaborador" element={<Pages.DetalhesColaborador />} />
 
                 {/* Rotas Gestor */}

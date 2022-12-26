@@ -4,7 +4,6 @@ import { useLocation } from "react-router-dom";
 
 import { Box, Typography, Stack, FormControl, TextField } from "@mui/material"
 
-import { Header } from "../../components/Header/Header"
 import { BotaoAzul } from "../../components/BotaoAzul/BotaoAzul";
 import { Titulo } from "../../components/Titulo/Titulo";
 
@@ -20,13 +19,13 @@ import { GestorContext } from "../../context/GestorContext";
 
 export const EditarAcompanhamento = () => {
   const { state } = useLocation();
-  const { editAcompanhamento } = useContext(GestorContext)
+  const { editarAcompanhamento } = useContext(GestorContext)
 
   const { register, handleSubmit, formState: { errors } } = useForm<IEditarAcompanhamento>({
     resolver: yupResolver(EditarAcompanhamentoSchema)
   })
 
-  const handleEdit = (data: IEditarAcompanhamento) => { editAcompanhamento(data, state.idAcompanhamento) }
+  const handleEdit = (data: IEditarAcompanhamento) => { editarAcompanhamento(data, state.idAcompanhamento) }
 
   // const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
   // if (infosUsuario.cargo !== "Gestor de Pessoas") return <Navigate to="/" />

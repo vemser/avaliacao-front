@@ -6,8 +6,6 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 import { useNavigate } from "react-router-dom";
 
-import { Header } from "../../components/Header/Header";
-
 import { AdminContext } from "../../context/AdminContext";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -91,7 +89,6 @@ export const DashboardAdmin: React.FC = () => {
                     <StyledTableCell onClick={() => navigate("/detalhes-colaborador", { state: data })} id="email" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100px" }}>{data.email}</StyledTableCell>
                     <StyledTableCell onClick={() => navigate("/detalhes-colaborador", { state: data })} id="cargo" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }}>{data.cargo}</StyledTableCell>
                     <StyledTableCell id="acoes" sx={{ textAlign: "center" }}>
-                      <Button id={`botao-editar-admin-${data.idUsuario}`} title="Editar" onClick={() => { navigate("/editar-colaborador", { state: data }) }}><EditIcon /></Button>
                       <Button id={`botao-deletar-admin-${data.idUsuario}`} onClick={() => { handleOpen(); setIdDelete(data.idUsuario) }} title="Deletar"><DeleteForeverIcon /></Button>
                     </StyledTableCell>
                   </StyledTableRow>

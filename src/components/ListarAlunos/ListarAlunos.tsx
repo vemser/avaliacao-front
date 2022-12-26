@@ -48,9 +48,9 @@ const style = {
 
 export const ListarAlunos: React.FC = () => {
   const navigate = useNavigate();
-  const { getAlunos, alunos, deletarAluno, paginacaoAlunos } = useContext(AlunoContext);
+  const { pegarAluno, alunos, deletarAluno, paginacaoAlunos } = useContext(AlunoContext);
 
-  useEffect(() => { getAlunos() } , [])
+  useEffect(() => { pegarAluno() } , [])
 
   // Funções Modal
   const [idDelete, setIdDelete] = useState<number | undefined>();
@@ -58,7 +58,7 @@ export const ListarAlunos: React.FC = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const handleChangePage = async (event: unknown, newPage: number) => { await getAlunos(newPage); };
+  const handleChangePage = async (event: unknown, newPage: number) => { await pegarAluno(newPage); };
 
   return (
     <>

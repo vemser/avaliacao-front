@@ -24,6 +24,9 @@ import { toastConfig } from "../../utils/toast";
 
 import Input from '@mui/material/Input';
 
+import DeleteIcon from '@mui/icons-material/Delete';
+
+
 const top100Films = [
   { label: 'The Shawshank Redemption', year: 1994 },
   { label: 'The Godfather', year: 1972 },
@@ -80,6 +83,9 @@ export const CadastrarAluno = () => {
 
   const [selectedImage, setSelectedImage] = useState();
 
+  const [tec, setTec] = useState<string>('')
+  const [mostrarTec, setMostrarTec] = useState<string[]>([])
+
   const imageChange = (e: any): void => {
     if (e.target.files && e.target.files.length > 0) {
       setSelectedImage(e.target.files[0]);
@@ -89,6 +95,11 @@ export const CadastrarAluno = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<ICadastroAluno>({
     resolver: yupResolver(alunoSchema)
   });
+  
+  const adicionarTecnologia = () =>{
+    mostrarTec.includes(tec) ? alert("ja existe") : setMostrarTec([...mostrarTec, tec])
+    setTec("")
+  }
 
   const imagemAPI = new FormData();
   if (selectedImage) {
@@ -161,9 +172,10 @@ export const CadastrarAluno = () => {
           <Stack component="div" spacing={3} sx={{ width: { xs: "100%", md: "50%" }, display: "flex", alignItems: "end", marginTop: { xs: 2, md: 0 } }}>
 
           <FormControl sx={{ width: { xs: "100%", md: "100%"},display:"flex",flexDirection:"row",gap:"10px" }}>
-            <TextField sx={{width:"90%"}} type="text" label='Tecnologias' placeholder='Tecnologias' id='tecnologias' variant="outlined"/>
 
-            <Button id="botao-adiconar-tecnologia" variant={"contained"} sx={{ width: '10%',fontSize:"20px"}}>
+            <TextField sx={{width:"90%"}} type="text" label='Tecnologias' placeholder='Tecnologias' id='tecnologias' value={tec} onChange={ (e) => setTec(e.target.value)} variant="outlined"/>
+
+            <Button id="botao-adiconar-tecnologia" variant={"contained"} sx={{ width: '10%',fontSize:"20px"}} onClick={adicionarTecnologia}>
                 +
             </Button>
 
@@ -181,18 +193,22 @@ export const CadastrarAluno = () => {
               gap: '10px'
             }}>
              
-                {/* <Box
+              {mostrarTec.map((el) => (
+                <Box
                   sx={{
                     display: 'flex',
+                    alignItems:"center",
                     border: '1px solid #ababab',
                     borderRadius: '15px',
                     p: '10px',
-                    height: '50px',
+                    height: '30px',
                     gap: '5px'
                   }}
                 >
+                  {el}
                   <Box sx={{
-                    width: '30px',
+                    width: '25px',
+                    height:'25px',
                     borderRadius: '100%',
                     background: 'red',
                     display: 'flex',
@@ -201,9 +217,13 @@ export const CadastrarAluno = () => {
                     cursor: 'pointer',
                     color: 'white',
                     paddingLeft: '2px'
-                  }}>
+                  }} onClick={() => setMostrarTec(mostrarTec.filter(r => r !== el))} >
+                    <DeleteIcon sx={{fontSize:"20px"}} />
                   </Box>
-                </Box> */}
+
+                </Box>
+
+              ))}
 
             </Box>
 

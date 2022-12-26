@@ -128,7 +128,7 @@ export const Login = () => {
               <Typography id="modal-modal-titulo" sx={{ marginTop: "20px" }} variant="h6" component="h2" color="#1e62fe">
                 Informe seu e-mail DBC
               </Typography>
-              <FormControl sx={{ mt: 2, width: { xs: "100%", md: "100%" } }} variant="outlined">
+              <FormControl sx={{ mt: 2, width: "100%" }} variant="outlined">
                 <InputLabel htmlFor="email-modal">Email</InputLabel>
                 <OutlinedInput id="email-modal" type="email" onChange={(e) => { setInputEmailModal(e.target.value); setVerificarEmailModal(e.target.value); }} placeholder="fulano.silva@dbccompany.com.br" label="Email" endAdornment={
                   <InputAdornment position="end">

@@ -45,7 +45,7 @@ export const EditarUsuario = () => {
 
         <Box component="form" onSubmit={handleSubmit(nomeEditado)} sx={{ display: { xs: "flex", md: "flex" }, flexDirection: "column", alignItems: "center", justifyContent: "center", backgroundColor: "var(--branco)", width: { xs: "90%", md: "25%" }, borderRadius: "10px", padding: { xs: 5, md: 5 }, boxShadow: "10px 10px 10px var(--azul-escuro-dbc)", gap: 3 }}>
           <img src={logo} alt="Logo DBC Azul" width={100} />
-          <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>
+          <FormControl sx={{ width: "100%" }}>
             <TextField id="nomeCompletoUsuario" {...register("nome")} defaultValue={infosUsuario.nome} label="Editar nome" placeholder="Fulano da Silva" variant="filled" focused />
             {errors.nome && <Typography id="erro-nome" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.nome.message}</Typography>}
           </FormControl>

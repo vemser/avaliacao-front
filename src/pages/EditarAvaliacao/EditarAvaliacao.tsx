@@ -63,7 +63,7 @@ export const EditarAvaliacao = () => {
             }, display: "flex", alignItems: { xs: "start", md: "start" }
           }}>
 
-            <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>
+            <FormControl variant="filled" sx={{ width: "100%" }}>
               <InputLabel id="acompanhamento">Titulo do Acompanhamento</InputLabel>
               <Select MenuProps={MenuProps} labelId="demo-simple-select-filled-label" defaultValue="initial-acompanhamento" id="acompanhamento" {...register("idAcompanhamento")}>
                 <MenuItem value="initial-acompanhamento" disabled><em>Selecione o Acompanhamento</em></MenuItem>
@@ -103,7 +103,7 @@ export const EditarAvaliacao = () => {
               </Box>
             </FormControl>
 
-            <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>
+            <FormControl variant="filled" sx={{ width: "100%" }}>
               <InputLabel id="aluno">Aluno</InputLabel>
               <Select MenuProps={MenuProps} labelId="demo-simple-select-filled-label" defaultValue="initial-aluno" id="aluno" {...register("idAluno")}>
                 <MenuItem value="initial-aluno" disabled><em>Selecione o Aluno</em></MenuItem>
@@ -119,14 +119,14 @@ export const EditarAvaliacao = () => {
               </Select>
             </FormControl>
 
-            <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>
+            <FormControl variant="filled" sx={{ width: "100%" }}>
               <InputLabel id="responsavel">Responsável</InputLabel>
               <Select labelId="demo-simple-select-filled-label" id="responsavel" value="responsavel">
                 <MenuItem value="responsavel">{infosUsuario.nome}</MenuItem>
               </Select>
             </FormControl>
 
-            <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>
+            <FormControl variant="filled" sx={{ width: "100%" }}>
               <InputLabel id="status">Status</InputLabel>
               <Select labelId="demo-simple-select-filled-label" defaultValue="initial-status" id="status" {...register("status")}>
                 <MenuItem value="initial-status" disabled><em>Selecione o Status</em></MenuItem>
@@ -137,11 +137,11 @@ export const EditarAvaliacao = () => {
           </Stack>
 
           <Stack component="div" spacing={4} sx={{ width: { xs: "100%", md: "50%" }, display: "flex", alignItems: "end", marginTop: { xs: 2, md: 0 } }}>
-            <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>
+            <FormControl sx={{ width: "100%" }}>
               <TextField id="descricao" defaultValue={state.descricao} {...register("descricao")} label="Digite uma descrição" placeholder="Digite uma descrição" multiline variant="filled" />
             </FormControl>
 
-            <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>
+            <FormControl sx={{ width: "100%" }}>
               <TextField id="data" value={state.dataCriacao} label="Data inicial" type="date" sx={{ width: "100%" }} InputLabelProps={{ shrink: true }} />
             </FormControl>
 

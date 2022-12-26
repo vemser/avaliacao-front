@@ -5,6 +5,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { AlunoContext } from "../../context/AlunoContext";
 
 import { Paper, TableContainer, Table, TableRow, TableCell, TableBody, Button, TablePagination, tableCellClasses, Box, Typography, Modal, styled } from "@mui/material";
+import { Titulo } from "../Titulo/Titulo";
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -50,7 +51,7 @@ export const ListarAlunos: React.FC = () => {
   const navigate = useNavigate();
   const { getAlunos, alunos, deletarAluno, paginacaoAlunos } = useContext(AlunoContext);
 
-  useEffect(() => { getAlunos() } , [])
+  useEffect(() => { getAlunos() }, [])
 
   // Funções Modal
   const [idDelete, setIdDelete] = useState<number | undefined>();
@@ -61,24 +62,24 @@ export const ListarAlunos: React.FC = () => {
   const handleChangePage = async (event: unknown, newPage: number) => { await getAlunos(newPage); };
 
   return (
-    <>
-      <Box sx={{ minHeight: "calc(100vh - 64px)", paddingTop: "50px", paddingBottom: "50px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: 5 }}>
-        <Typography sx={{ textAlign: "center", fontWeight: "700", fontSize: { xs: 30, md: 44 }, color: "white" }} variant="h3">Dashboard Alunos</Typography>
+    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
 
-        <Box sx={{width:"60%",display:"flex",alignItems:"end",flexDirection:"column",padding:"20px",background:"#f8f8fff8",borderRadius:"10px",boxShadow:"10px 10px 10px var(--azul-escuro-dbc)"}}>
+      <Titulo texto="Alunos" />
 
-          <Button onClick={() => navigate("/cadastrar-aluno")} variant="contained" sx={{width:"200px",whiteSpace:"nowrap",display:"flex",marginBottom:"10px"}}>Cadastrar Aluno</Button>
+      <Box sx={{ width: { xs: "95%", md: "80%" }, display: "flex", alignItems: "end", flexDirection: "column", padding: "20px", background: "#f8f8fff8", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
 
-          <Paper sx={{ width: { xs: "95%", md: "100%" }, borderRadius: "10px" }}>
-            <TableContainer sx={{ maxHeight: 430 }}>
-              <Table component="table" stickyHeader aria-label="sticky table">
-                <thead>
-                  <TableRow sx={{ backgroundColor: "#090F27", color: "white" }}>
-                    {columns.map((column) => (
-                      <TableCell key={column.id} align={column.align} style={{ top: 57, minWidth: column.minWidth, fontWeight: "700", fontSize: "1rem", textAlign: "center" }}>{column.label}</TableCell>
-                    ))}
-                  </TableRow>
-                </thead>
+        <Button onClick={() => navigate("/cadastrar-aluno")} variant="contained" sx={{ width: "200px", whiteSpace: "nowrap", display: "flex", marginBottom: "10px" }}>Cadastrar Aluno</Button>
+
+        <Paper sx={{ width: "100%", borderRadius: "10px" }}>
+          <TableContainer sx={{ maxHeight: 430 }}>
+            <Table component="table" stickyHeader aria-label="sticky table">
+              <thead>
+                <TableRow sx={{ backgroundColor: "#090F27", color: "white" }}>
+                  {columns.map((column) => (
+                    <TableCell key={column.id} align={column.align} style={{ top: 57, minWidth: column.minWidth, fontWeight: "700", fontSize: "1rem", textAlign: "center" }}>{column.label}</TableCell>
+                  ))}
+                </TableRow>
+              </thead>
 
               <TableBody>
                 {alunos.map((data: any) => (
@@ -97,21 +98,20 @@ export const ListarAlunos: React.FC = () => {
           </TableContainer>
 
           {/* Paginação */}
-          <TablePagination rowsPerPageOptions={[]} component="div" count={paginacaoAlunos.totalElementos} rowsPerPage={paginacaoAlunos.tamanho} page={paginacaoAlunos.pagina} onPageChange={handleChangePage}  />
+          <TablePagination rowsPerPageOptions={[]} component="div" count={paginacaoAlunos.totalElementos} rowsPerPage={paginacaoAlunos.tamanho} page={paginacaoAlunos.pagina} onPageChange={handleChangePage} />
 
-            {/* Modal Confirmar Delete */}
-            <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-titulo" aria-describedby="modal-modal-description" sx={{ backdropFilter: "blur(10px)" }}>
-              <Box sx={style}>
-                <Typography id="modal-modal-titulo" variant="h6" component="h2" color="error">Você realmente deseja excluir?</Typography>
-                <Box sx={{ display: "flex", gap: 2, alignItems: "center", justifyContent: "center" }}>
-                  <Button id="botao-confirmar-modal" onClick={() => { deletarAluno(idDelete); handleClose(); }} size="medium" color="success" type="submit" sx={{ mt: 2 }} variant="contained">Confirmar</Button>
-                  <Button id="botao-fechar-modal" onClick={handleClose} size="medium" type="submit" sx={{ mt: 2 }} variant="contained">Fechar</Button>
-                </Box>
+          {/* Modal Confirmar Delete */}
+          <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-titulo" aria-describedby="modal-modal-description" sx={{ backdropFilter: "blur(10px)" }}>
+            <Box sx={style}>
+              <Typography id="modal-modal-titulo" variant="h6" component="h2" color="error">Você realmente deseja excluir?</Typography>
+              <Box sx={{ display: "flex", gap: 2, alignItems: "center", justifyContent: "center" }}>
+                <Button id="botao-confirmar-modal" onClick={() => { deletarAluno(idDelete); handleClose(); }} size="medium" color="success" type="submit" sx={{ mt: 2 }} variant="contained">Confirmar</Button>
+                <Button id="botao-fechar-modal" onClick={handleClose} size="medium" type="submit" sx={{ mt: 2 }} variant="contained">Fechar</Button>
               </Box>
-            </Modal>
-          </Paper>
-        </Box>
+            </Box>
+          </Modal>
+        </Paper>
       </Box>
-    </>
+    </Box>
   )
 }

@@ -29,7 +29,7 @@ const programas = [
 export const EditarModulo = () => {
     const navigate = useNavigate();
     const { state } = useLocation();
-    const [ programaSelecionado, setProgramaSelecionado ] = useState<string[]>([]);
+    const [programaSelecionado, setProgramaSelecionado] = useState<string[]>([]);
 
     const handleChange = (event: any) => {
         const {
@@ -50,13 +50,13 @@ export const EditarModulo = () => {
 
                     <img src={logo} alt="Logo DBC" width={150} />
 
-                    <Stack component="div" spacing={2} sx={{ width: { xs: "100%", md: "100%" }, display: "flex", alignItems: { xs: "start", md: "start" } }}>
+                    <Stack component="div" spacing={2} sx={{ width: "100%", display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
-                        <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>
+                        <FormControl sx={{ width: "100%" }}>
                             <TextField id="descricao" defaultValue={state.nome} label="Digite um nome" placeholder="Digite um nome" multiline variant="filled" />
                         </FormControl>
 
-                        <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>
+                        <FormControl variant="filled" sx={{ width: "100%" }}>
                             <InputLabel id="aluno">Selecione uma trilha</InputLabel>
                             <Select MenuProps={MenuProps} labelId="demo-simple-select-filled-label" id="aluno" defaultValue={state.trilha} >
                                 <MenuItem value="initial-aluno" disabled><em>Selecione a Trilha</em></MenuItem>
@@ -66,7 +66,7 @@ export const EditarModulo = () => {
                             </Select>
                         </FormControl>
 
-                        <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>
+                        <FormControl variant="filled" sx={{ width: "100%" }}>
                             <InputLabel id="demo-multiple-name-label">Selecione o Programa</InputLabel>
                             <Select
                                 id="select-programa"

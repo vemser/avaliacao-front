@@ -78,7 +78,7 @@ export const ListarModulo = () => {
 
                     <Button onClick={() => navigate("/cadastrar-modulo")} variant="contained" sx={{ width: "200px", whiteSpace: "nowrap", display: "flex", marginBottom: "10px" }}>Cadastrar Módulo</Button>
 
-                    <Paper sx={{ width: { xs: "100%", md: "100%" }, borderRadius: "10px" }}>
+                    <Paper sx={{ width: "100%", borderRadius: "10px" }}>
                         <TableContainer id="tabela-admin" sx={{ maxHeight: 430, borderRadius: "10px" }}>
                             <Table stickyHeader aria-label="sticky table">
                                 <thead>

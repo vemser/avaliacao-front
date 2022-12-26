@@ -36,19 +36,19 @@ export const AlterarSenha = () => {
 
         <Box component="form" onSubmit={handleSubmit(alterarSenha)} sx={{ display: { xs: "flex", md: "flex" }, flexDirection: "column", alignItems: "center", backgroundColor: "var(--branco)", width: { xs: "90%", md: "25%" }, borderRadius: "10px", padding: { xs: 5, md: 5 }, boxShadow: "10px 10px 10px var(--azul-escuro-dbc)", gap: 2 }}>
           <img src={logo} alt="Logo DBC" width={150} />
-          <Stack component="div" spacing={2} sx={{ width: { xs: "100%", md: "100%" }, display: "flex", alignItems: { xs: "start", md: "start" } }}>
+          <Stack component="div" spacing={2} sx={{ width: "100%", display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
-            <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>
+            <FormControl sx={{ width: "100%" }}>
               <TextField type="password" error={!!errors.senhaAntiga} id="senhaAntiga" {...register("senhaAntiga")} label="Senha antiga" placeholder="Digite sua senha antiga" variant="filled" focused />
               {errors.senhaAntiga && <Typography id="erro-senhaAntiga" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px" }} color="error">{errors.senhaAntiga.message}</Typography>}
             </FormControl>
 
-            <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>
+            <FormControl sx={{ width: "100%" }}>
               <TextField type="password" error={!!errors.novaSenha} id="novaSenha" {...register("novaSenha")} label="Senha nova" placeholder="Digite sua senha nova" variant="filled" focused />
               {errors.novaSenha && <Typography id="erro-novaSenha" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px" }} color="error">{errors.novaSenha.message}</Typography>}
             </FormControl>
 
-            <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>
+            <FormControl sx={{ width: "100%" }}>
               <TextField type="password" id="confirmarNovaSenha" error={!!errors.confirmarNovaSenha} {...register("confirmarNovaSenha")} label="Confirme senha nova" placeholder="Confirme sua senha nova" variant="filled" focused />
               {errors.confirmarNovaSenha && <Typography id="erro-confirmaSenha" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px" }} color="error">{errors.confirmarNovaSenha.message}</Typography>}
             </FormControl>

@@ -57,9 +57,9 @@ export const VerificarAluno: React.FC = () => {
   const { state } = useLocation();
 
   const { getAvaliacaoPorID, avaliacoesPorID, paginacaoAvaliacao } = useContext(GestorContext);
-  const { getFeedbackPorID, feedbackPorID,  paginacaoFeedback } = useContext(InstrutorContext)
+  const { getFeedbackPorID, feedbackPorID, paginacaoFeedback } = useContext(InstrutorContext)
 
-   // Paginação Avaliacao
+  // Paginação Avaliacao
   const handleChangePageAvaliacao = async (event: unknown, newPage: number) => { await getAvaliacaoPorID(state.idAluno, newPage); }
 
   // Paginação Feedback
@@ -85,7 +85,7 @@ export const VerificarAluno: React.FC = () => {
           }, flexDirection: "column", alignItems: "end", backgroundColor: "var(--branco)", width: { xs: "90%", md: "50%" }, borderRadius: "10px", padding: { xs: 2, md: 3 }, boxShadow: "10px 10px 10px var(--azul-escuro-dbc)", gap: 2
         }}>
 
-          <Stack component="div" spacing={2} sx={{ width: { xs: "100%", md: "100%" }, display: "flex", alignItems: { xs: "start", md: "start" } }}>
+          <Stack component="div" spacing={2} sx={{ width: "100%", display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
             <Box sx={{ display: { xs: "flex", md: "flex" }, flexDirection: { xs: "column", md: "row" }, alignItems: "center", justifyContent: "space-between", width: "100%", marginTop: "-10px" }}>
               <Box sx={{ display: "flex", flexWrap: "wrap", width: { xs: "100%", md: "80%" }, justifyContent: "space-between", gap: 2, marginBottom: "20px" }}>
@@ -125,7 +125,7 @@ export const VerificarAluno: React.FC = () => {
               </TableContainer>
 
               {/* Paginação */}
-              <TablePagination rowsPerPageOptions={[]} component="div" count={paginacaoFeedback.totalElementos} rowsPerPage={paginacaoFeedback.tamanho} page={paginacaoFeedback.pagina} onPageChange={handleChangePageFeedBack}  />
+              <TablePagination rowsPerPageOptions={[]} component="div" count={paginacaoFeedback.totalElementos} rowsPerPage={paginacaoFeedback.tamanho} page={paginacaoFeedback.pagina} onPageChange={handleChangePageFeedBack} />
             </Paper>
 
             {/* Tabela Avaliações */}
@@ -157,7 +157,7 @@ export const VerificarAluno: React.FC = () => {
               </TableContainer>
 
               {/* Paginação */}
-              <TablePagination rowsPerPageOptions={[]} component="div" count={paginacaoAvaliacao.totalElementos} rowsPerPage={paginacaoAvaliacao.tamanho} page={paginacaoAvaliacao.pagina} onPageChange={handleChangePageAvaliacao}  />
+              <TablePagination rowsPerPageOptions={[]} component="div" count={paginacaoAvaliacao.totalElementos} rowsPerPage={paginacaoAvaliacao.tamanho} page={paginacaoAvaliacao.pagina} onPageChange={handleChangePageAvaliacao} />
             </Paper>
           </Stack>
 

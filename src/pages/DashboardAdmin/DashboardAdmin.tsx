@@ -6,9 +6,8 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 import { useNavigate } from "react-router-dom";
 
-import { Header } from "../../components/Header/Header";
-
 import { AdminContext } from "../../context/AdminContext";
+import { Titulo } from "../../components/Titulo/Titulo";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: { backgroundColor: theme.palette.common.black, color: theme.palette.common.white },
@@ -62,18 +61,21 @@ export const DashboardAdmin: React.FC = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  useEffect(() => { pegarColaborador() }, [])
+  useEffect(() => { pegarColaborador() }, []);
 
   // const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
   // if (infosUsuario.cargo !== "Admin") return <Navigate to="/" />
 
   return (
-    <>
-      <Box sx={{ minHeight: "calc(100vh - 64px)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: 5, position: "relative", paddingTop: "50px", paddingBottom: "50px" }}>
-        <Typography id="titulo-body" sx={{ textAlign: "center", fontWeight: "700", fontSize: { xs: 30, md: 44 }, color: "white" }} variant="h3">Dashboard Colaboradores</Typography>
-        <Paper sx={{ width: { xs: "95%", md: "60%" }, borderRadius: "10px", boxShadow: "10px 10px 10px var(--azul-escuro-dbc)" }}>
+    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
 
-          <TableContainer id="tabela-admin" sx={{ maxHeight: 430 }}>
+      <Titulo texto="Colaboradores" />
+
+      <Box sx={{ width: { xs: "95%", md: "80%" }, display: "flex", alignItems: "end", flexDirection: "column", padding: "20px", background: "#f8f8fff8", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
+
+        <Paper sx={{ width: "100%", borderRadius: "10px" }}>
+
+          <TableContainer id="tabela-admin" sx={{ maxHeight: "30vw", borderRadius: "10px" }}>
             <Table stickyHeader aria-label="sticky table">
               <thead>
                 <TableRow sx={{ backgroundColor: "#090F27", color: "white" }}>
@@ -101,7 +103,7 @@ export const DashboardAdmin: React.FC = () => {
           </TableContainer>
 
           {/* Paginação */}
-          <TablePagination rowsPerPageOptions={[]} component="div" count={paginacaoColaborador.totalElementos} rowsPerPage={paginacaoColaborador.tamanho} page={paginacaoColaborador.pagina} onPageChange={handleChangePage}  />
+          <TablePagination rowsPerPageOptions={[]} component="div" count={paginacaoColaborador.totalElementos} rowsPerPage={paginacaoColaborador.tamanho} page={paginacaoColaborador.pagina} onPageChange={handleChangePage} />
 
           {/* Modal Confirmar Delete */}
           <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-titulo" aria-describedby="modal-modal-description" sx={{ backdropFilter: "blur(10px)" }}>
@@ -115,6 +117,6 @@ export const DashboardAdmin: React.FC = () => {
           </Modal>
         </Paper>
       </Box>
-    </>
+    </Box>
   );
 };

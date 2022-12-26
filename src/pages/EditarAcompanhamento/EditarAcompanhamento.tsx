@@ -33,7 +33,7 @@ export const EditarAcompanhamento = () => {
 
   return (
     <>
-     
+
       <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "calc(100vh - 64px)" }}>
         <Titulo texto="Editar Acompanhamento" />
 
@@ -44,14 +44,14 @@ export const EditarAcompanhamento = () => {
         }}>
           <img src={logo} alt="Logo DBC" width={150} />
 
-          <Stack component="div" spacing={2} sx={{ width: { xs: "100%", md: "100%" }, display: "flex", alignItems: { xs: "start", md: "start" } }}>
+          <Stack component="div" spacing={2} sx={{ width: "100%", display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
-            <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>
+            <FormControl sx={{ width: "100%" }}>
               <TextField id="titulo" error={!!errors.titulo} {...register("titulo")} label="Titulo acompanhamento" placeholder="Digite um titulo" variant="filled" focused defaultValue={state.titulo} />
               {errors.titulo && <Typography id="erro-titulo" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px" }} color="error">{errors.titulo.message}</Typography>}
             </FormControl>
 
-            <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>
+            <FormControl sx={{ width: "100%" }}>
               <TextField id="descricao" error={!!errors.descricao} label="Digite uma descrição" placeholder="Digite uma descrição" focused variant="filled" {...register("descricao")} defaultValue={state.descricao} />
               {errors.descricao && <Typography id="erro-descricao" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px" }} color="error">{errors.descricao.message}</Typography>}
             </FormControl>

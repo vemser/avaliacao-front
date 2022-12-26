@@ -60,7 +60,7 @@ export const EditarFeedback = () => {
         <Box component="form" onSubmit={handleSubmit(editarFeedbacks)} sx={{ display: { xs: "flex", md: "flex" }, flexDirection: "column", alignItems: "center", backgroundColor: "var(--branco)", width: { xs: "90%", md: "35%" }, borderRadius: "10px", padding: { xs: 5, md: 5 }, boxShadow: "10px 10px 10px var(--azul-escuro-dbc)", gap: 2 }}>
 
           <img src={logo} alt="Logo DBC" width={150} />
-          <Stack component="div" spacing={2} sx={{ width: { xs: "100%", md: "100%" }, display: "flex", alignItems: { xs: "start", md: "start" } }}>
+          <Stack component="div" spacing={2} sx={{ width: "100%", display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
             <FormControl variant="filled">
               <FormLabel sx={{ color: "var(--azul-claro-dbc)", fontWeight: "500", marginBottom: "10px" }} id="demo-controlled-radio-buttons-group">Filtrar alunos por stack:</FormLabel>
@@ -92,7 +92,7 @@ export const EditarFeedback = () => {
               </Box>
             </FormControl>
 
-            <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>
+            <FormControl variant="filled" sx={{ width: "100%" }}>
               <InputLabel id="aluno">Selecione aluno</InputLabel>
               <Select MenuProps={MenuProps} labelId="demo-simple-select-filled-label" id="aluno" {...register("idAluno")} defaultValue="initial-aluno">
                 <MenuItem value="initial-aluno" disabled><em>Selecione o Aluno</em></MenuItem>
@@ -108,11 +108,11 @@ export const EditarFeedback = () => {
               </Select>
             </FormControl>
 
-            <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>
+            <FormControl sx={{ width: "100%" }}>
               <TextField id="descricao" defaultValue={state.descricao} {...register("descricao")} error={!!errors.descricao} label="Digite uma descrição" placeholder="Digite uma descrição" multiline variant="filled" />
             </FormControl>
 
-            <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>
+            <FormControl variant="filled" sx={{ width: "100%" }}>
               <InputLabel id="tipo">Status</InputLabel>
               <Select labelId="demo-simple-select-filled-label" defaultValue={state.tipo} id="tipo" error={!!errors.tipo} {...register("tipo")} >
                 <MenuItem id="positivo" value="POSITIVO">Positivo</MenuItem>

@@ -2,10 +2,8 @@ import React, { useContext, useEffect } from "react";
 
 import { Navigate, useLocation, useNavigate } from "react-router-dom"
 
-import { TablePagination, Box, Typography, Stack, Button, Paper, styled, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableRow, Avatar, IconButton } from "@mui/material";
+import { TablePagination, Box, Typography, Stack, Button, Paper, styled, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableRow, Avatar } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-
-import { Header } from "../../components/Header/Header";
 
 import { GestorContext } from "../../context/GestorContext";
 import { InstrutorContext } from "../../context/InstrutorContext";
@@ -56,16 +54,16 @@ export const VerificarAluno: React.FC = () => {
   const navigate = useNavigate()
   const { state } = useLocation();
 
-  const { getAvaliacaoPorID, avaliacoesPorID, paginacaoAvaliacao } = useContext(GestorContext);
-  const { getFeedbackPorID, feedbackPorID,  paginacaoFeedback } = useContext(InstrutorContext)
+  const { pegarAvaliacaoPorID, avaliacoesPorID, paginacaoAvaliacao } = useContext(GestorContext);
+  const { pegarFeedbackPorID, feedbackPorID,  paginacaoFeedback } = useContext(InstrutorContext)
 
    // Paginação Avaliacao
-  const handleChangePageAvaliacao = async (event: unknown, newPage: number) => { await getAvaliacaoPorID(state.idAluno, newPage); }
+  const handleChangePageAvaliacao = async (event: unknown, newPage: number) => { await pegarAvaliacaoPorID(state.idAluno, newPage); }
 
   // Paginação Feedback
-  const handleChangePageFeedBack = async (event: unknown, newPage: number) => { await getFeedbackPorID(state.idAluno, newPage); }
+  const handleChangePageFeedBack = async (event: unknown, newPage: number) => { await pegarFeedbackPorID(state.idAluno, newPage); }
 
-  useEffect(() => { getAvaliacaoPorID(state.idAluno, 0); getFeedbackPorID(state.idAluno, 0); }, [])
+  useEffect(() => { pegarAvaliacaoPorID(state.idAluno, 0); pegarFeedbackPorID(state.idAluno, 0); }, [])
 
   const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
   if (infosUsuario.cargo !== "Instrutor" && infosUsuario.cargo !== "Gestor de Pessoas") return <Navigate to="/" />

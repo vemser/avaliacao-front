@@ -31,28 +31,26 @@ export interface IAuth {
 }
 
 export interface IAdmin {
-  criarColaborador: (userColaborador: IUserColaborador, imagem: FormData) => Promise<void>,
-  deletarColaborador: (id: number | undefined) => Promise<void>,
   pegarColaborador: (pagina?: number) => Promise<void>,
-  editarColaborador: (dadosEditados: IColaboradorEditado, id: number, imagem: FormData) => Promise<void>,
+  deletarColaborador: (id: number | undefined) => Promise<void>,
   colaborador: IPegarColaborador[],
   paginacaoColaborador: IPaginacao
 }
 
 export interface IAluno {
-  getAlunos: (pagina?: number) => Promise<void>,
+  criarAluno: (infosAluno: ICadastroAluno) => Promise<void>,
+  pegarAluno: (pagina?: number) => Promise<void>,
+  editarAluno: (dadosEditados: IEditarAluno, id: number) => Promise<void>
   deletarAluno: (id: number | undefined) => Promise<void>,
-  criarAluno: (infosAluno: ICadastroAluno, imagem: FormData) => Promise<void>,
   alunos: IAlunosCadastrados[],
   paginacaoAlunos: IPaginacao,
-  editarAluno: (dadosEditados: IEditarAluno, id: number, imagem: FormData) => Promise<void>
 }
 
 export interface IGestor {
   criarAcompanhamento: (acompanhamento: ICriarAcompanhamento) => Promise<void>,
-  editAcompanhamento: (dadosEditados: IEditarAcompanhamento, id: number) => Promise<void>,
+  editarAcompanhamento: (dadosEditados: IEditarAcompanhamento, id: number) => Promise<void>,
   pegarAcompanhamento: (pagina?: number) => Promise<void>,
-  getAvaliacaoPorID: (id: number, page: number) => Promise<void>,
+  pegarAvaliacaoPorID: (id: number, pagina: number) => Promise<void>,
   criarAvaliacao: (avalicao: ICriarAvaliacao) => void,
   editarAvaliacao: (dadosEditados: IEditarAvaliacao, id: number) => Promise<void>,
   acompanhamento: ICriarAcompanhamento[],
@@ -65,7 +63,7 @@ export interface IGestor {
 export interface IInstrutor {
   cadastrarFeedback: (feedbacks: object) => Promise<void>,
   pegarFeedback: (pagina?: number) => Promise<void>,
-  getFeedbackPorID: (id: number, page: number) => Promise<void>,
+  pegarFeedbackPorID: (id: number, page: number) => Promise<void>,
   editarFeedback: (id: number, dadosEditados: IEditarFeedback) => Promise<void>,
   feedback: ICadastrarFeedback[],
   feedbackPorID: IFeedbackPorId[],
@@ -138,7 +136,7 @@ export interface IColaboradorEditado {
   email: string
 }
 
-export interface IUserColaborador {
+export interface IDadosColaborador {
   nome: string,
   email: string,
   cargo: string

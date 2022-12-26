@@ -1,12 +1,11 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-import { Header } from '../../components/Header/Header'
 import { BotaoVerde } from '../../components/BotaoVerde/BotaoVerde';
 import { Titulo } from '../../components/Titulo/Titulo';
 
-import { Box, Stack, FormControl, TextField, Typography, InputLabel, Select, MenuItem, Avatar, Button } from '@mui/material';
+import { Box, Stack, FormControl, TextField, Typography, InputLabel, Select, MenuItem, Button } from '@mui/material';
 
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -17,7 +16,6 @@ import { AlunoContext } from '../../context/AlunoContext';
 import { IEditarAluno } from '../../utils/interface';
 
 import Autocomplete from '@mui/material/Autocomplete';
-
 
 const top100Films = [
   { label: 'The Shawshank Redemption', year: 1994 },
@@ -31,37 +29,20 @@ const top100Films = [
 
 export const EditarAluno = () => {
   const { state } = useLocation()
-  console.log(state)
 
   const navigate = useNavigate()
 
   const { editarAluno } = useContext(AlunoContext)
 
-  const [selectedImage, setSelectedImage] = useState<File>();
-
-  const imageChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    if (e.target.files && e.target.files.length > 0) {
-      setSelectedImage(e.target.files[0]);
-    }
-  };
-
   const { register, handleSubmit, formState: { errors } } = useForm<IEditarAluno>({
     resolver: yupResolver(editarAlunoSchema),
-    defaultValues:{
-      nome: state.nome,
-      email: state.email
-    }
+    defaultValues: { nome: state.nome, email: state.email }
   });
 
-  const imagemAPI = new FormData()
-  if (selectedImage) {
-    imagemAPI.append("file", selectedImage)
-  }
+  const editarAlunos = (data: IEditarAluno) => { editarAluno(data, state.idAluno) };
 
-  const editarAlunos = (data: IEditarAluno) => { editarAluno(data, state.idAluno, imagemAPI) };
-
-  const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
-  if (infosUsuario.cargo !== "Gestor de Pessoas" && infosUsuario.cargo !== "Instrutor") return <Navigate to="/" />
+  // const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
+  // if (infosUsuario.cargo !== "Gestor de Pessoas" && infosUsuario.cargo !== "Instrutor") return <Navigate to="/" />
 
   return (
     <>
@@ -191,7 +172,7 @@ export const EditarAluno = () => {
               {errors.stack && <Typography id="erro-selectAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.stack.message}</Typography>}
             </FormControl>
 
-            <Box sx={{display:"flex",alignItems:"end"}}>
+            <Box sx={{ display:"flex", alignItems:"end" }}>
 
               <Button onClick={()=>{navigate(-1)}} variant="contained"  sx={{backgroundColor:"#808080 ",":hover":{backgroundColor:"#5f5d5d "},textTransform: "capitalize", width:{ xs:"15ch", md:"25ch"}}} >Cancelar</Button>
 

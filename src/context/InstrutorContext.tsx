@@ -1,9 +1,12 @@
-import nProgress from "nprogress";
-import { createContext, useState} from "react";
+import { createContext, useState } from "react";
+
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+
 import { API } from "../utils/api";
 import { ICadastrarFeedback, IChildren, IEditarFeedback, IFeedbackPorId, IInstrutor, IPaginacao } from "../utils/interface";
+
+import nProgress from "nprogress";
+import { toast } from "react-toastify";
 import { toastConfig } from "../utils/toast";
 
 export const InstrutorContext = createContext({} as IInstrutor);
@@ -12,9 +15,10 @@ export const InstrutorProvider = ({children}: IChildren) => {
   const token = localStorage.getItem("token");
   const navigate = useNavigate()
 
-  const [feedback,setFeedback] = useState<ICadastrarFeedback[]>([])
+  const [feedback, setFeedback] = useState<ICadastrarFeedback[]>([])
   const [feedbackPorID, setFeedbackPorID] = useState<IFeedbackPorId[]>([])
   const [feedbacks, setFeedbacks] = useState<any | null>(null)
+
   const [paginacaoFeedback, setPaginacaoFeedback] = useState<IPaginacao>({pagina: 0, quantidadePagina: 0, tamanho: 0, totalElementos: 0})
 
   const cadastrarFeedback = async (feedbacks: object) =>{
@@ -59,7 +63,7 @@ export const InstrutorProvider = ({children}: IChildren) => {
     }
   }
 
-  const getFeedbackPorID = async (id: number, page: number) => {
+  const pegarFeedbackPorID = async (id: number, page: number) => {
     try {
       nProgress.start()
       API.defaults.headers.common["Authorization"] = localStorage.getItem("token");
@@ -75,7 +79,7 @@ export const InstrutorProvider = ({children}: IChildren) => {
   }
   
   return (
-    <InstrutorContext.Provider value={{ cadastrarFeedback, pegarFeedback, feedback, editarFeedback, getFeedbackPorID, feedbackPorID, feedbacks, paginacaoFeedback }}>
+    <InstrutorContext.Provider value={{ cadastrarFeedback, pegarFeedback, feedback, editarFeedback, pegarFeedbackPorID, feedbackPorID, feedbacks, paginacaoFeedback }}>
       {children}
     </InstrutorContext.Provider>
   );

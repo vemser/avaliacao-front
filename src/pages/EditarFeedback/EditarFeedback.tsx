@@ -27,10 +27,10 @@ const MenuProps = { PaperProps: { style: { maxHeight: itemHeigth * 4.5 + itemPad
 
 export const EditarFeedback = () => {
   const { editarFeedback } = useContext(InstrutorContext);
-  const { getAlunos, alunos } = useContext(AlunoContext);
+  const { pegarAluno, alunos } = useContext(AlunoContext);
   const { state } = useLocation()
 
-  useEffect(() => { getAlunos(); }, [])
+  useEffect(() => { pegarAluno(); }, [])
 
   const [mudaRadio, setMudaRadio] = useState('')
   const manipulaState = (event: string) => { setMudaRadio(event) }

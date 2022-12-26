@@ -1,7 +1,10 @@
 import { createContext, useState } from "react";
+
+import { useNavigate } from "react-router-dom";
+
 import { API } from "../utils/api";
 import { ICriarAcompanhamento, IChildren, IGestor, ICriarAvaliacao, IEditarAcompanhamento, IAvaliacaoPorId, IEditarAvaliacao, IPaginacao } from "../utils/interface";
-import { useNavigate } from "react-router-dom";
+
 import { toast } from "react-toastify";
 import { toastConfig } from "../utils/toast";
 import nProgress from "nprogress";
@@ -11,12 +14,14 @@ export const GestorContext = createContext({} as IGestor);
 export const GestorProvider = ({children} : IChildren) =>{
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
-  const [paginacaoAcompanhamento, setPaginacaoAcompanhamento] = useState<IPaginacao>({pagina: 0, quantidadePagina: 0, tamanho: 0, totalElementos: 0})
-  const [paginacaoAvaliacao, setPaginacaoAvaliacao] = useState<IPaginacao>({pagina: 0, quantidadePagina: 0, tamanho: 0, totalElementos: 0})
+  
   const [acompanhamento,setAcompanhamento] = useState<ICriarAcompanhamento[]>([])
   const [avaliacoesPorID, setAvaliacoesPorID] = useState<IAvaliacaoPorId[]>([])
   const [avaliacoes, setAvaliacoes] = useState<any | null>(null)
 
+  const [paginacaoAcompanhamento, setPaginacaoAcompanhamento] = useState<IPaginacao>({pagina: 0, quantidadePagina: 0, tamanho: 0, totalElementos: 0})
+  const [paginacaoAvaliacao, setPaginacaoAvaliacao] = useState<IPaginacao>({pagina: 0, quantidadePagina: 0, tamanho: 0, totalElementos: 0})
+  
   const criarAcompanhamento = async (acompanhamento: ICriarAcompanhamento) =>{
     try {
       nProgress.start()
@@ -45,7 +50,7 @@ export const GestorProvider = ({children} : IChildren) =>{
     }
   }
 
-  const editAcompanhamento = async (dadosEditados: IEditarAcompanhamento, id: number) => {
+  const editarAcompanhamento = async (dadosEditados: IEditarAcompanhamento, id: number) => {
     try {
       nProgress.start()
       await API.put(`/acompanhamento/editar-acompanhamento/${id}`, dadosEditados, {
@@ -91,11 +96,11 @@ export const GestorProvider = ({children} : IChildren) =>{
     }
   }
 
-  const getAvaliacaoPorID = async (id: number, page: number) => {
+  const pegarAvaliacaoPorID = async (id: number, pagina: number) => {
     try {
       nProgress.start()
       API.defaults.headers.common["Authorization"] = localStorage.getItem("token");
-      const { data } = await API.get(`/avaliacao-acompanhamento/${id}?page=${page}&size=5`)
+      const { data } = await API.get(`/avaliacao-acompanhamento/${id}?page=${pagina}&size=5`)
       setAvaliacoesPorID(data.elementos)
       setAvaliacoes(data)
       setPaginacaoAvaliacao({pagina: data.pagina, quantidadePagina: data.quantidadePaginas, tamanho: data.tamanho, totalElementos: data.totalElementos})
@@ -107,7 +112,7 @@ export const GestorProvider = ({children} : IChildren) =>{
   }
 
   return (
-    <GestorContext.Provider value={{ criarAcompanhamento, pegarAcompanhamento, acompanhamento, criarAvaliacao, editAcompanhamento, getAvaliacaoPorID, avaliacoesPorID, editarAvaliacao, avaliacoes, paginacaoAcompanhamento, paginacaoAvaliacao }}>
+    <GestorContext.Provider value={{ criarAcompanhamento, pegarAcompanhamento, acompanhamento, criarAvaliacao, editarAcompanhamento, pegarAvaliacaoPorID, avaliacoesPorID, editarAvaliacao, avaliacoes, paginacaoAcompanhamento, paginacaoAvaliacao }}>
       {children}
     </GestorContext.Provider>
   );

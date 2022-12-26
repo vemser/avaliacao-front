@@ -7,8 +7,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { CriarAvaliacaoSchema } from "../../utils/schemas";
 
-import { Header } from "../../components/Header/Header"
-
 import { AlunoContext } from "../../context/AlunoContext";
 import { GestorContext } from "../../context/GestorContext";
 import { toastConfig } from "../../utils/toast";
@@ -22,10 +20,10 @@ const MenuProps = { PaperProps: { style: { maxHeight: itemHeigth * 4.5 + itemPad
 
 export const AvaliarAcompanhamento = () => {
   const navigate = useNavigate();
-  const { getAlunos, alunos } = useContext(AlunoContext);
+  const { pegarAluno, alunos } = useContext(AlunoContext);
   const { pegarAcompanhamento, acompanhamento, criarAvaliacao } = useContext(GestorContext)
 
-  useEffect(() => { getAlunos(); pegarAcompanhamento() }, [])
+  useEffect(() => { pegarAluno(); pegarAcompanhamento() }, [])
 
   const [mudaRadio, setMudaRadio] = useState('')
   const manipulaState = (event: string) => { setMudaRadio(event) }

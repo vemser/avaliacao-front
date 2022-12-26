@@ -63,6 +63,8 @@ interface State {
 }
 
 export const CadastrarAluno = () => {
+  const navigate = useNavigate()
+  const { criarAluno } = useContext(AlunoContext)
 
   const [values, setValues] = React.useState<State>({
     textmask: '(99) 99999-9999'
@@ -75,31 +77,15 @@ export const CadastrarAluno = () => {
     });
   };
 
-  const navigate = useNavigate()
-  const { criarAluno } = useContext(AlunoContext)
-
-  const [selectedImage, setSelectedImage] = useState();
-
-  const imageChange = (e: any): void => {
-    if (e.target.files && e.target.files.length > 0) {
-      setSelectedImage(e.target.files[0]);
-    }
-  };
-
   const { register, handleSubmit, formState: { errors } } = useForm<ICadastroAluno>({
     resolver: yupResolver(alunoSchema)
   });
-
-  const imagemAPI = new FormData();
-  if (selectedImage) {
-    imagemAPI.append("file", selectedImage)
-  }
 
   const cadastroAluno = (data: ICadastroAluno) => {
     if (data.stack === "initial-stack") {
       toast.error("Preencha todos os campos!", toastConfig)
     } else {
-      criarAluno(data, imagemAPI)
+      criarAluno(data)
     }
   };
 

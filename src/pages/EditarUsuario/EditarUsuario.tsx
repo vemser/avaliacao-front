@@ -3,7 +3,6 @@ import { useContext, useState } from 'react';
 import { Avatar, Box, Button, FormControl, TextField, Typography } from '@mui/material';
 
 import { BotaoVerde } from '../../components/BotaoVerde/BotaoVerde';
-import { Header } from '../../components/Header/Header';
 import { Titulo } from '../../components/Titulo/Titulo';
 
 import logo from '../../assets/dbc-logo.webp';

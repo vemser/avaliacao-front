@@ -24,10 +24,6 @@ function AppRoutes() {
               <Route path="*" element={<Components.NotFound />} />
               <Route path="/dashboard/undefined" element={<Components.Loading />} />
 
-              {/* Redefinir senha com token e email */}
-              <Route path="/recuperar-senha" element={<Components.Intermediaria />} />
-              <Route path="/redefinir-senha" element={<Pages.RedefinirSenha />} />
-
               <Route element={<Components.RotaPrivada />}>
                 <Route path="/dashboard/trilha-programa" element={<Pages.TrilhaPrograma />} />
                 <Route path="/cadastrar-trilha" element={<Pages.CadastrarTrilha />} />
@@ -64,7 +60,6 @@ function AppRoutes() {
                 <Route path="/editar-modulo" element={<Pages.EditarModulo />} />
                       
                 {/* Trocar senha logado e editar usuario logado */}
-                <Route path="/alterar-senha" element={<Pages.AlterarSenha />} />
                 <Route path="/editar-usuario" element={<Pages.EditarUsuario />} />
               </Route>
             </Routes>

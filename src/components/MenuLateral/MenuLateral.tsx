@@ -82,31 +82,31 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
                 <ListItemIcon>
                   <HomeIcon />
                 </ListItemIcon>
-                <ListItemText primary="Lista aluno" />
+                <ListItemText primary="Aluno" />
               </ListItemButton>
               <ListItemButton onClick={() => { navigate("/lista-feedback") }}>
                 <ListItemIcon>
                   <HomeIcon />
                 </ListItemIcon>
-                <ListItemText primary="Lista feedback" />
+                <ListItemText primary="Feedback" />
               </ListItemButton>
               <ListItemButton onClick={() => { navigate("/lista-acompanhamento") }}>
                 <ListItemIcon>
                   <HomeIcon />
                 </ListItemIcon>
-                <ListItemText primary="Lista acompanhamento" />
+                <ListItemText primary="Acompanhamento" />
               </ListItemButton>
               <ListItemButton onClick={() => { navigate("/dashboard/trilha-programa") }}>
                 <ListItemIcon>
                   <HomeIcon />
                 </ListItemIcon>
-                <ListItemText primary="Lista trilha/programa" />
+                <ListItemText primary="Trilha/programa" />
               </ListItemButton>
               <ListItemButton onClick={() => { navigate("/lista-modulo") }}>
                 <ListItemIcon>
                   <HomeIcon />
                 </ListItemIcon>
-                <ListItemText primary="Lista modulo" />
+                <ListItemText primary="Modulo" />
               </ListItemButton>
             </List>
           </Box>

@@ -39,7 +39,8 @@ export const AuthProvider = ({ children }: IChildren) => {
       await AuthAPI.get("/usuario/logged-user", { headers: { Authorization: localStorage.getItem("token") }
        }).then((response) => {
         setUsuarioLogado(response.data)
-        localStorage.setItem("cargo", usuarioLogado.cargo)
+        const arrayCargos = response.data.cargos.map((cargo: any) => cargo.descricao)
+        localStorage.setItem("cargo", JSON.stringify(arrayCargos))
       })
     } catch (error) {
       toast.error("Você não tem permissão para acessar este recurso.", toastConfig);

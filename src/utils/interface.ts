@@ -21,10 +21,7 @@ export interface IPaginacao {
 }
 export interface IAuth {
   usuarioLogin: (infoUser: IUsuario) => Promise<void>,
-  redefinirSenha: (email: string) => Promise<void>,
   usuarioLogout: () => void,
-  trocarSenhaLogado: (senhas: ISenhas) => Promise<void>,
-  recuperarSenha: (senha: string) => Promise<void>,
   editarPerfil: (nome: IEditarNome, imagem: FormData, id: number) => Promise<void>,
   tokenAuth: string | null,
   usuarioLogado: any | undefined
@@ -119,15 +116,14 @@ export interface ISenhas {
 }
 
 export interface IUsuario {
-  email: string,
-  senha: string
+  username: string,
+  password: string
 }
 
 export interface IUsuarioLogado {
   idUsuario: number,
-  nome: string,
-  email: string,
-  foto: string | null,
+  login: string,
+  imagem: string | null,
   cargo: string
 }
 

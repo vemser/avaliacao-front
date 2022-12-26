@@ -7,8 +7,6 @@ export { DashboardAdmin } from "./DashboardAdmin/DashboardAdmin";
 export { DashboardGestor } from "./DashboardGestor/DashboardGestor";
 export { DashboardInstrutor } from "./DashboardInstrutor/DashboardInstrutor";
 export { CadastrarAluno } from "./CadastrarAluno/CadastrarAluno";
-export { RedefinirSenha } from "./RedefinirSenha/RedefinirSenha";
-export { AlterarSenha } from "./AlterarSenha/AlterarSenha";
 export { CadastrarAcompanhamento } from "./CadastrarAcompanhamento/CadastrarAcompanhamento";
 export { VerificarAluno } from "./VerificarAluno/VerificarAluno";
 export { AvaliarAcompanhamento } from "./AvaliarAcompanhamento/AvaliarAcompanhamento";

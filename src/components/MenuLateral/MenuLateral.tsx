@@ -14,18 +14,19 @@ import {
 import { Box } from "@mui/system";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useNavigate } from "react-router-dom";
+
 import { MenuLateralContext } from "../../context/MenuLateralContext";
+import { AuthContext } from "../../context/AuthContext";
 
 // icons
-import HomeIcon from "@mui/icons-material/Home";
-import MenuIcon from "@mui/icons-material/Menu";
-
+import { Home, ExitToApp, Menu } from "@mui/icons-material";
 
 interface IProps {
   children: React.ReactNode;
 }
 
 export const MenuLateral: React.FC<IProps> = ({ children }) => {
+  const { usuarioLogout } = useContext(AuthContext);
   const { isOpen, toggleOpen } = useContext(MenuLateralContext);
   const navigate = useNavigate();
   const theme = useTheme();
@@ -35,7 +36,7 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
     <>
       {mdDown && (
         <IconButton onClick={toggleOpen} sx={{ position: "fixed" }}>
-          <MenuIcon color="action" fontSize="large" />
+          <Menu color="action" fontSize="large" />
         </IconButton>
       )}
       <Drawer
@@ -80,33 +81,39 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
             <List component="nav">
               <ListItemButton onClick={() => { navigate("/dashboard/instrutor") }}>
                 <ListItemIcon>
-                  <HomeIcon />
+                  <Home />
                 </ListItemIcon>
                 <ListItemText primary="Lista aluno" />
               </ListItemButton>
               <ListItemButton onClick={() => { navigate("/lista-feedback") }}>
                 <ListItemIcon>
-                  <HomeIcon />
+                  <Home />
                 </ListItemIcon>
                 <ListItemText primary="Lista feedback" />
               </ListItemButton>
               <ListItemButton onClick={() => { navigate("/lista-acompanhamento") }}>
                 <ListItemIcon>
-                  <HomeIcon />
+                  <Home />
                 </ListItemIcon>
                 <ListItemText primary="Lista acompanhamento" />
               </ListItemButton>
               <ListItemButton onClick={() => { navigate("/dashboard/trilha-programa") }}>
                 <ListItemIcon>
-                  <HomeIcon />
+                  <Home />
                 </ListItemIcon>
                 <ListItemText primary="Lista trilha/programa" />
               </ListItemButton>
               <ListItemButton onClick={() => { navigate("/lista-modulo") }}>
                 <ListItemIcon>
-                  <HomeIcon />
+                  <Home />
                 </ListItemIcon>
                 <ListItemText primary="Lista modulo" />
+              </ListItemButton>
+              <ListItemButton onClick={() => { usuarioLogout(); }}>
+                <ListItemIcon>
+                  <ExitToApp fontSize="medium" />
+                </ListItemIcon>
+                <Typography textAlign="center">Sair</Typography>
               </ListItemButton>
             </List>
           </Box>

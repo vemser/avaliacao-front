@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from 'react';
 
 import { Box, Typography, Stack, FormControl, TextField, FormLabel, InputLabel, MenuItem, Select, Button } from '@mui/material'
 
-import { Header } from '../../components/Header/Header'
 import { BotaoAzul } from '../../components/BotaoAzul/BotaoAzul';
 import { Titulo } from '../../components/Titulo/Titulo';
 
@@ -24,14 +23,14 @@ const itemPaddingTop = 8;
 const MenuProps = { PaperProps: { style: { maxHeight: itemHeigth * 4.5 + itemPaddingTop, width: 250, } } };
 
 export const CadastrarFeedback = () => {
-  const { getAlunos, alunos } = useContext(AlunoContext);
+  const { pegarAluno, alunos } = useContext(AlunoContext);
   const { cadastrarFeedback } = useContext(InstrutorContext);
 
   const [mudaRadio, setMudaRadio] = useState('')
   const manipulaState = (event: string) => { setMudaRadio(event) }
   const resetFiltros = () => { setMudaRadio('') }
 
-  useEffect(() => { getAlunos(); }, [])
+  useEffect(() => { pegarAluno(); }, [])
 
   const { register, handleSubmit, formState: { errors } } = useForm<ICadastrarFeedbackForm>({
     resolver: yupResolver(CadastrarFeedbackSchema)

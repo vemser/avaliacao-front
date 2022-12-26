@@ -7,10 +7,8 @@ export { DashboardAdmin } from "./DashboardAdmin/DashboardAdmin";
 export { DashboardGestor } from "./DashboardGestor/DashboardGestor";
 export { DashboardInstrutor } from "./DashboardInstrutor/DashboardInstrutor";
 export { CadastrarAluno } from "./CadastrarAluno/CadastrarAluno";
-export { CadastrarColaborador } from "./CadastrarColaborador/CadastrarColaborador";
 export { RedefinirSenha } from "./RedefinirSenha/RedefinirSenha";
 export { AlterarSenha } from "./AlterarSenha/AlterarSenha";
-export { EditarColaborador } from "./EditarColaborador/EditarColaborador";
 export { CadastrarAcompanhamento } from "./CadastrarAcompanhamento/CadastrarAcompanhamento";
 export { VerificarAluno } from "./VerificarAluno/VerificarAluno";
 export { AvaliarAcompanhamento } from "./AvaliarAcompanhamento/AvaliarAcompanhamento";
@@ -31,4 +29,4 @@ export { EditarPrograma } from './EditarPrograma/EditarPrograma';
 export { ListarModulo } from "./ListarModulo/ListarModulo";
 export { CadastrarModulo } from "./CadastrarModulo/CadastrarModulo";
 export { EditarModulo } from "./EditarModulo/EditarModulo";
-export {CadastrarAtividade} from "./CadastrarAtividade/CadastrarAtividade"
+export { CadastrarAtividade } from "./CadastrarAtividade/CadastrarAtividade";

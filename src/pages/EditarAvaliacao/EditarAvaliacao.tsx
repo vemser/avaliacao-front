@@ -12,7 +12,6 @@ import { toast } from "react-toastify";
 import { toastConfig } from "../../utils/toast";
 
 import { BotaoVerde } from "../../components/BotaoVerde/BotaoVerde";
-import { Header } from "../../components/Header/Header";
 
 import { AlunoContext } from "../../context/AlunoContext";
 import { GestorContext } from "../../context/GestorContext";
@@ -27,14 +26,14 @@ export const EditarAvaliacao = () => {
   const { state } = useLocation()
   const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
 
-  const { getAlunos, alunos } = useContext(AlunoContext);
+  const { pegarAluno, alunos } = useContext(AlunoContext);
   const { pegarAcompanhamento, acompanhamento, editarAvaliacao } = useContext(GestorContext)
 
   const [mudaRadio, setMudaRadio] = useState('')
   const manipulaState = (event: string) => { setMudaRadio(event) }
   const resetFiltros = () => { setMudaRadio('') }
 
-  useEffect(() => { getAlunos(); pegarAcompanhamento() }, [])
+  useEffect(() => { pegarAluno(); pegarAcompanhamento() }, [])
 
   const { register, handleSubmit } = useForm<IEditarAvaliacaoForm>({
     resolver: yupResolver(EditarAvaliacaoSchema)

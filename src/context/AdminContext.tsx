@@ -1,73 +1,22 @@
 import { createContext, useState } from "react";
 
-import nProgress from 'nprogress';
+import nProgress from "nprogress";
 import { toast } from "react-toastify";
 import { toastConfig } from "../utils/toast";
 
 import { API } from "../utils/api";
-import { IAdmin, IChildren, IColaboradorEditado, IPaginacao, IPegarColaborador, IUserColaborador } from "../utils/interface";
-import { useNavigate } from "react-router-dom";
+import { IAdmin, IChildren, IPaginacao, IPegarColaborador } from "../utils/interface";
 
 export const AdminContext = createContext({} as IAdmin);
 
-export const AdminProvider = ({ children }: IChildren) =>{
-  const token = localStorage.getItem("token");
-  const navigate = useNavigate();
-
-  const [paginacaoColaborador, setPaginacaoColaborador] = useState<IPaginacao>({pagina: 0, quantidadePagina: 0, tamanho: 0, totalElementos: 0});
+export const AdminProvider = ({ children }: IChildren) => {
   const [colaborador, setColaborador] = useState<IPegarColaborador[]>([])
+  const [paginacaoColaborador, setPaginacaoColaborador] = useState<IPaginacao>({ pagina: 0, quantidadePagina: 0, tamanho: 0, totalElementos: 0 });
   
-  const criarColaborador = async (userColaborador: IUserColaborador, imagem: FormData) => {
-    try {
-      nProgress.start();
-      API.defaults.headers.common["Authorization"] = token;
-      const { data } = await API.post(`/administrador/cadastrar-usuario?cargo=${userColaborador.cargo}`, userColaborador)
-      navigate("/dashboard/admin")
-      toast.success("Colaborador cadastrado com sucesso!", toastConfig);
-
-      if(imagem){
-        await API.put(`/administrador/upload-imagem/${data.idUsuario}`, imagem, { 
-          headers: { Authorization: localStorage.getItem("token"), 'Content-Type': 'multipart/form-data' },
-         }).then((response) => {
-          toast.success("Foto enviada com sucesso", toastConfig);
-          localStorage.removeItem("idCadastrado")
-        }).catch((error) => {
-          toast.error("Foto não enviada", toastConfig)
-        })    
-      }
-    } catch (error) {
-      toast.error("Campo nulo, ou preenchido de forma incorreta, tente de novo.", toastConfig);
-    } finally{
-      nProgress.done();
-    }
-  }
-
-  const editarColaborador = async (dadosEditados: IColaboradorEditado, id: number, imagem: FormData) => {
-    try {
-      nProgress.start();
-      await API.put(`/administrador/atualizar-usuario/${id}`, dadosEditados, {
-        headers: { Authorization: localStorage.getItem("token") }
-      }).then((response) => {
-        navigate("/dashboard/admin")
-        toast.success("Colaborador editado com sucesso!", toastConfig);
-      });
-
-      if(imagem) {
-        await API.put(`/administrador/upload-imagem/${id}`, imagem, { 
-        headers: { Authorization: localStorage.getItem("token") },
-        }).then((response) => { toast.success("Foto editada com sucesso!", toastConfig); })
-      }
-    } catch (error) {
-      toast.error("Campo nulo, ou preenchido de forma incorreta, tente de novo.", toastConfig);
-    } finally {
-      nProgress.done();
-    }
-  }
-
   const pegarColaborador = async (pagina?: number) => {
     try {
       nProgress.start();
-      API.defaults.headers.common["Authorization"] = token;
+      API.defaults.headers.common["Authorization"] = localStorage.getItem("token");
       const { data } = await API.get(`/administrador/listar-usuarios?page=${pagina ? pagina: 0}&size=10`)
       setColaborador(data.elementos)
       setPaginacaoColaborador({pagina: data.pagina, quantidadePagina: data.quantidadePaginas, tamanho: data.tamanho, totalElementos: data.totalElementos})
@@ -81,7 +30,7 @@ export const AdminProvider = ({ children }: IChildren) =>{
   const deletarColaborador = async (id: number | undefined) => {
     try {
       nProgress.start();
-      API.defaults.headers.common["Authorization"] = token;
+      API.defaults.headers.common["Authorization"] = localStorage.getItem("token");
       await API.delete(`/administrador/delete/${id}`);
       toast.success("Colaborador desativado com sucesso.", toastConfig);
       pegarColaborador()
@@ -93,7 +42,7 @@ export const AdminProvider = ({ children }: IChildren) =>{
   }
 
   return (
-    <AdminContext.Provider value={{ criarColaborador, pegarColaborador, colaborador, deletarColaborador, editarColaborador, paginacaoColaborador }}>
+    <AdminContext.Provider value={{ pegarColaborador, colaborador, deletarColaborador, paginacaoColaborador }}>
       {children}
     </AdminContext.Provider>
   );

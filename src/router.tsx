@@ -31,8 +31,7 @@ function AppRoutes() {
                 <Route path="/editar-trilha" element={<Pages.EditarTrilha />} />
                 <Route path="/editar-programa" element={<Pages.EditarPrograma />} />
                 <Route path="/cadastrar-atividade" element={<Pages.CadastrarAtividade/>}/>
-                <Route path="/cadastrar-reserva-alocacao" element={<Pages.CadastrarReservaAlacocao/>}/>
-
+-
                 {/* Rotas admin */}
                 <Route path="/dashboard/admin" element={<Pages.DashboardAdmin />} />
                 <Route path="/detalhes-colaborador" element={<Pages.DetalhesColaborador />} />
@@ -63,8 +62,10 @@ function AppRoutes() {
                 {/* Trocar senha logado e editar usuario logado */}
                 <Route path="/editar-usuario" element={<Pages.EditarUsuario />} />
 
-                {/* Rotas de alocação */}
-                <Route path="/lista-alocacao" element={<Pages.ListarAlocacao />} />
+                {/* Rotas de alocação/reserva */}
+                <Route path="/lista-alocacao-reserva" element={<Pages.ListarAlocacao />} />
+                <Route path="/cadastrar-reserva-alocacao" element={<Pages.CadastrarReservaAlacocao/>}/>
+
 
               </Route>
             </Routes>

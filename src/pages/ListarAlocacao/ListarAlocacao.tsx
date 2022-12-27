@@ -60,7 +60,7 @@ export const ListarAlocacao: React.FC = () => {
 
         <Box sx={{ width: "60%", display: "flex", alignItems: "end", flexDirection: "column", padding: "20px", background: "#f8f8fff8", borderRadius: "10px", boxShadow: "10px 10px 10px var(--azul</Box>-escuro-dbc)" }}>
 
-        <Button onClick={() => navigate("/cadastrar-alocacao")} variant="contained" sx={{ width: "200px", whiteSpace: "nowrap", display: "flex", marginBottom: "10px" }}>Cadastrar Módulo</Button>
+        <Button onClick={() => navigate("/cadastrar-reserva-alocacao")} variant="contained" sx={{ width: "200px", whiteSpace: "nowrap", display: "flex", marginBottom: "10px" }}>Cadastrar Alocação</Button>
 
         <Paper sx={{ width: { xs: "100%", md: "100%" }, borderRadius: "10px" }}>
           <TableContainer sx={{ maxHeight: 430 }}>
@@ -81,7 +81,7 @@ export const ListarAlocacao: React.FC = () => {
                     <StyledTableCell id={`cliente-${alocacao.idAlocacao}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem"}} >{alocacao.cliente}</StyledTableCell>
                     <StyledTableCell id={`situacao-${alocacao.idAlocacao}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem"}} >{alocacao.situacao}</StyledTableCell>
                     <StyledTableCell id={`situacao-${alocacao.idAlocacao}`} sx={{ textAlign: "center" }}>
-                      <Button id={`botao-avaliar-acompanhamento-${alocacao.idAlocacao}`}onClick={() => navigate("/editar-alocacao", { state: alocacao })} title="Editar Alocacao"><EditIcon /></Button>
+                      <Button id={`botao-alocacao-reserva-${alocacao.idAlocacao}`}onClick={() => navigate("/editar-alocacao-reserva", { state: alocacao })} title="Editar Alocacao"><EditIcon /></Button>
                       <Button id={`botao-deletar-${alocacao.idAlocacao}`} title="Deletar"><DeleteForeverIcon /></Button></StyledTableCell>
                   </StyledTableRow> 
                 ))}

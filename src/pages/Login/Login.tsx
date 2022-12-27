@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 
 import { Navigate } from "react-router-dom";
 
@@ -12,29 +12,32 @@ import backgroundLogin from "../../assets/bg-login.png";
 import { Box, Button, Typography, Stack, InputLabel, OutlinedInput, InputAdornment, IconButton, FormControl } from "@mui/material";
 import { LoginOutlined, Visibility, VisibilityOff, AccountCircle } from "@mui/icons-material";
 
-import { AuthContext } from "../../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 export const Login = () => {
-  // Funções context
-  const { usuarioLogin, tokenAuth } = useContext(AuthContext);
-  const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
+  const { usuarioLogin } = useAuth();
+  const token = localStorage.getItem('token');
 
   const [values, setValues] = useState<ILogin>({ password: "", showPassword: false });
 
-  // Funções exibir senha / esconder senha
   const handleChange = (prop: keyof ILogin) => (event: React.ChangeEvent<HTMLInputElement>) => setValues({ ...values, [prop]: event.target.value });
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => event.preventDefault();
   const handleClickShowPassword = () => setValues({ ...values, showPassword: !values.showPassword });
-
+  
   const { register, handleSubmit, formState: { errors } } = useForm<IUsuario>({
     resolver: yupResolver(userSchema)
   });
+  
+  const onSubmit = (data: IUsuario) => {
+    if(data.username.includes("@")){
+      const novoData = { username: data.username.split("@")[0], password: data.password }
+      usuarioLogin(novoData);
+    } else {
+      usuarioLogin(data); 
+    }
+  }
 
-  // Submit Formulario Login
-  const onSubmit = (data: IUsuario) => { usuarioLogin(data); }
-
-  const cargoSplitado = infosUsuario?.cargo?.split(" ")[0].toLowerCase();
-  if(tokenAuth) return <Navigate to={`/dashboard/${cargoSplitado}`} />
+  if(token) return <Navigate to={`/dashboard/gestor`} />
 
   return (
     <>

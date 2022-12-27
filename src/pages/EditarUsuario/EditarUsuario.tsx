@@ -1,60 +1,50 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 
-import { Avatar, Box, Button, FormControl, TextField, Typography } from '@mui/material';
+import { Avatar, Box, Button, Typography } from '@mui/material';
 
-import { BotaoVerde } from '../../components/BotaoVerde/BotaoVerde';
 import { Titulo } from '../../components/Titulo/Titulo';
 
 import logo from '../../assets/dbc-logo.webp';
 
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { editarNomePerfil } from '../../utils/schemas';
-import { IEditarNome } from '../../utils/interface';
-
-import { AuthContext } from '../../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 
 export const EditarUsuario = () => {
+  const { editarPerfil, usuarioLogado } = useAuth()
+
   const [selectedImage, setSelectedImage] = useState<File>();
-  const { editarPerfil } = useContext(AuthContext)
 
-  const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
-
-  const { register, handleSubmit, formState: { errors } } = useForm<IEditarNome>({
-    resolver: yupResolver(editarNomePerfil)
-  })
-
-  const imageChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const imageChange = (e: any): void => {
     if (e.target.files && e.target.files.length > 0) {
       setSelectedImage(e.target.files[0]);
     }
   };
 
   const imagemAPI = new FormData();
-  if (selectedImage) {
-    imagemAPI.append("file", selectedImage)
+  if(selectedImage) {
+    imagemAPI.append("imagem", selectedImage)
   }
-
-  const nomeEditado = (data: IEditarNome) => { editarPerfil(data, imagemAPI, infosUsuario.idUsuario) }
 
   return (
     <>
       <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "calc(100vh - 64px)" }}>
-        <Titulo texto="Editar perfil" />
+        <Titulo texto="Editar Foto" />
 
-        <Box component="form" onSubmit={handleSubmit(nomeEditado)} sx={{ display: { xs: "flex", md: "flex" }, flexDirection: "column", alignItems: "center", justifyContent: "center", backgroundColor: "var(--branco)", width: { xs: "90%", md: "25%" }, borderRadius: "10px", padding: { xs: 5, md: 5 }, boxShadow: "10px 10px 10px var(--azul-escuro-dbc)", gap: 3 }}>
+        <Box sx={{ display: { xs: "flex", md: "flex" }, flexDirection: "column", alignItems: "center", justifyContent: "center", backgroundColor: "var(--branco)", width: { xs: "90%", md: "25%" }, borderRadius: "10px", padding: { xs: 5, md: 5 }, boxShadow: "10px 10px 10px var(--azul-escuro-dbc)", gap: 3 }}>
+
           <img src={logo} alt="Logo DBC Azul" width={100} />
-          <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>
-            <TextField id="nomeCompletoUsuario" {...register("nome")} defaultValue={infosUsuario.nome} label="Editar nome" placeholder="Fulano da Silva" variant="filled" focused />
-            {errors.nome && <Typography id="erro-nome" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.nome.message}</Typography>}
-          </FormControl>
 
-          <Avatar alt="Foto Enviada" id="foto-enviada" src={selectedImage ? URL.createObjectURL(selectedImage) : infosUsuario.foto ? `data:image/jpeg;base64,${infosUsuario.foto}` : ""} sx={{ width: 150, height: 150 }} />
+          <Avatar alt="Foto Enviada" id="foto-enviada" src={selectedImage ? URL.createObjectURL(selectedImage) : usuarioLogado.imagem ? `data:image/jpeg;base64,${usuarioLogado.imagem}` : ""} sx={{ width: 150, height: 150 }} />
           <Button component="label" variant="contained">
             <input id="imagemUsuario" type="file" hidden accept="image/jpeg" onChange={imageChange} />
             <Typography sx={{ textTransform: "capitalize" }} variant="body1">Inserir Foto</Typography>
           </Button>
-          <BotaoVerde texto="Editar" />
+
+          <Box sx={{ display:"flex", alignItems:"end", gap: 2 }}>
+            <Button variant="contained" sx={{backgroundColor:"#808080 ", ":hover":{backgroundColor:"#5f5d5d "}, textTransform: "capitalize", width:{ xs:"15ch", md:"25ch"}}}>Cancelar</Button>
+
+            <Button onClick={() => editarPerfil(imagemAPI)} variant="contained" color="success" sx={{ textTransform: "capitalize", width:{ xs:"15ch", md:"25ch" }}}>Salvar</Button>
+          </Box>
+
         </Box>
       </Box>
     </>

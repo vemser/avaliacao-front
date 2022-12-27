@@ -22,8 +22,8 @@ export interface IPaginacao {
 export interface IAuth {
   usuarioLogin: (infoUser: IUsuario) => Promise<void>,
   usuarioLogout: () => void,
-  editarPerfil: (nome: IEditarNome, imagem: FormData, id: number) => Promise<void>,
-  tokenAuth: string | null,
+  editarPerfil: (imagem: FormData) => Promise<void>,
+  pegarUsuarioLogado: () => Promise<void>,
   usuarioLogado: any | undefined
 }
 
@@ -124,7 +124,7 @@ export interface IUsuarioLogado {
   idUsuario: number,
   login: string,
   imagem: string | null,
-  cargo: string
+  cargo: string[]
 }
 
 export interface IColaboradorEditado {

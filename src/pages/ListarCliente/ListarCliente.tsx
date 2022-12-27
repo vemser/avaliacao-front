@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import * as Components from "../../components"
 
-import { TableCell, tableCellClasses, TableRow, Box, Paper, TableContainer, Table, TableBody, Button, TablePagination, styled } from "@mui/material";
+import { TableCell, tableCellClasses, TableRow, Box, Paper, TableContainer, Table, TableBody, Button, TablePagination, styled, TableHead } from "@mui/material";
 
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -63,14 +63,14 @@ export const ListarCliente: React.FC = () => {
 
         <Paper sx={{ width: { xs: "100%", md: "100%" }, borderRadius: "10px" }}>
           <TableContainer sx={{ maxHeight: 430 }}>
-            <Table stickyHeader aria-label="sticky table">
-              <thead>
-                <TableRow sx={{ backgroundColor: "#090F27", color: "white" }}>
+            <Table stickyHeader>
+              <TableHead >
+                <TableRow >
                   {columns.map((column) => (
-                    <TableCell key={column.id} align={column.align} style={{ top: 57, minWidth: column.minWidth, fontWeight: "700", fontSize: "1rem", textAlign: "center" }}>{column.label}</TableCell>
+                    <TableCell key={column.id} align={column.align}   style={{  minWidth: column.minWidth, fontWeight: "700", fontSize: "1rem", textAlign: "center" }}>{column.label}</TableCell>
                   ))}
                 </TableRow>
-              </thead>
+              </TableHead>
               <TableBody>
                 {dados.map((cliente) => (
                   <StyledTableRow key={cliente.idCliente}>

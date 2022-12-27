@@ -71,6 +71,9 @@ function AppRoutes() {
                 {/* Rotas de cliente */}
                 <Route path="/lista-cliente" element={<Pages.ListarCliente />} />
 
+                {/* Rotas de vagas */}
+                <Route path="/lista-vaga" element={<Pages.ListarVaga />} />
+
 
               </Route>
             </Routes>

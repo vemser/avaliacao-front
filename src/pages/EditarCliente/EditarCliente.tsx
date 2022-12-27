@@ -1,12 +1,9 @@
-import { Box, Stack, FormControl, TextField, InputLabel, Select, MenuItem, Button } from '@mui/material';
+import { Box, Stack, FormControl, TextField, InputLabel, Input, Select, MenuItem, Button } from '@mui/material';
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
-import { BotaoVerde } from '../../components/BotaoVerde/BotaoVerde';
-import { Titulo } from '../../components/Titulo/Titulo';
-
-import Input from '@mui/material/Input';
 import { IMaskInput } from 'react-imask';
-
+import { useNavigate } from 'react-router-dom';
+import { Titulo } from '../../components';
+import { BotaoVerde } from '../../components/BotaoVerde/BotaoVerde';
 
 
 interface CustomProps {
@@ -37,7 +34,7 @@ interface State {
 
 }
 
-export const CadastrarCliente = () => {
+export const EditarCliente = () => {
 
   const navigate = useNavigate()
 
@@ -51,11 +48,11 @@ export const CadastrarCliente = () => {
       [event.target.name]: event.target.value,
     });
   };
-
+  
   return (
     <>
       <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "calc(100vh - 64px)" }}>
-        <Titulo texto="Cadastrar cliente" />
+        <Titulo texto="Editar cliente" />
 
         <Box component="form" sx={{ display: { xs: "block", md: "flex" }, justifyContent: "space-between", backgroundColor: "var(--branco)", width: { xs: "90%", md: "70%" }, borderRadius: "10px", padding: { xs: 5, md: 5 }, boxShadow: "10px 10px 10px var(--azul-escuro-dbc)",gap:"50px" }}>
           <Stack component="div" spacing={3} sx={{ width: { xs: "100%", md: "50%" }, display: "flex", alignItems: { xs: "start", md: "start" } }}>
@@ -105,5 +102,4 @@ export const CadastrarCliente = () => {
       </Box>
     </>
   );
-};
-
+}

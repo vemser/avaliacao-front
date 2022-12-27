@@ -26,3 +26,4 @@ export { EditarModulo } from "./EditarModulo/EditarModulo";
 export { CadastrarAtividade } from "./CadastrarAtividade/CadastrarAtividade";
 export { CadastrarReservaAlacocao } from "./CadastrarReservaAlocacao/CadastrarReservaAlacocao"
 export { ListarAlocacao } from "./ListarAlocacao/ListarAlocacao";
+export { ListarCliente } from "./ListarCliente/ListarCliente";

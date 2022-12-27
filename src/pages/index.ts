@@ -1,4 +1,3 @@
-import { EditarReservaAlocacao } from './EditarReservaAlocacao/EditarReservaAlocacao';
 export { Login } from "./Login/Login";
 export { DashboardAdmin } from "./DashboardAdmin/DashboardAdmin";
 export { DashboardGestor } from "./DashboardGestor/DashboardGestor";
@@ -30,3 +29,4 @@ export { ListarAlocacao } from "./ListarAlocacao/ListarAlocacao";
 export {CadastrarCliente} from "./CadastrarCliente/CadastrarCliente"
 export {EditarReservaAlocacao} from "./EditarReservaAlocacao/EditarReservaAlocacao"
 export { ListarCliente } from "./ListarCliente/ListarCliente";
+export {EditarCliente} from "./EditarCliente/EditarCliente"

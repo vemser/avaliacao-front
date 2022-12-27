@@ -115,6 +115,12 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
                 </ListItemIcon>
                 <ListItemText primary="Reserva e alocação" />
               </ListItemButton>
+              <ListItemButton onClick={() => { navigate("/lista-cliente") }}>
+                <ListItemIcon>
+                  <Home />
+                </ListItemIcon>
+                <ListItemText primary="Cliente" />
+              </ListItemButton>
               <ListItemButton onClick={() => { usuarioLogout(); }}>
                 <ListItemIcon>
                   <ExitToApp fontSize="medium" />

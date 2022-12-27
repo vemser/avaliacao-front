@@ -71,7 +71,7 @@ function AppRoutes() {
 
                 {/* Rotas de cliente */}
                 <Route path="/lista-cliente" element={<Pages.ListarCliente />} />
-
+                <Route path="/editar-cliente" element={<Pages.EditarCliente />} />
 
               </Route>
             </Routes>

@@ -1,4 +1,5 @@
 import { CadastrarCliente } from './CadastrarCliente/CadastrarCliente';
+import { EditarReservaAlocacao } from './EditarReservaAlocacao/EditarReservaAlocacao';
 export { Login } from "./Login/Login";
 export { DashboardAdmin } from "./DashboardAdmin/DashboardAdmin";
 export { DashboardGestor } from "./DashboardGestor/DashboardGestor";
@@ -28,3 +29,4 @@ export { CadastrarAtividade } from "./CadastrarAtividade/CadastrarAtividade";
 export { CadastrarReservaAlacocao } from "./CadastrarReservaAlocacao/CadastrarReservaAlacocao"
 export { ListarAlocacao } from "./ListarAlocacao/ListarAlocacao";
 export {CadastrarCliente} from "./CadastrarCliente/CadastrarCliente"
+export {EditarReservaAlocacao} from "./EditarReservaAlocacao/EditarReservaAlocacao"

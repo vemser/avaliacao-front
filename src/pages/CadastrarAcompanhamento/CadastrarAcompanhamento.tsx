@@ -33,7 +33,7 @@ export const CadastrarAcompanhamento = () => {
       <Titulo texto="Cadastrar Acompanhamento" />
 
       <Box component="form" onSubmit={handleSubmit(cadastrarAcompanhamento)} sx={{
-        display: "flex", flexDirection: "column", alignItems: "center", backgroundColor: "var(--branco)", width: { xs: "90%", md: "70%", lg: "60%", xl: "50%" }, borderRadius: "10px", padding: {
+        display: "flex", flexDirection: "column", alignItems: "center", backgroundColor: "var(--branco)", width: { xs: "95%", md: "70%", lg: "60%", xl: "50%" }, borderRadius: "10px", padding: {
           xs: 3, sm: 5
         }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: 3
       }}>
@@ -41,12 +41,12 @@ export const CadastrarAcompanhamento = () => {
         <Stack component="div" spacing={3} sx={{ width: "100%", display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField id="titulo" error={!!errors.titulo} {...register("titulo")} label="Título acompanhamento" placeholder="Digite um título" variant="filled" focused />
+            <TextField id="titulo" error={!!errors.titulo} {...register("titulo")} label="Título acompanhamento" placeholder="Digite um título" variant="filled" />
             {errors.titulo && <Typography id="erro-titulo" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px" }} color="error">{errors.titulo.message}</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField id="descricao" error={!!errors.descricao} label="Digite uma descrição" placeholder="Digite uma descrição" multiline rows={4} focused variant="filled" {...register("descricao")} />
+            <TextField id="descricao" error={!!errors.descricao} label="Digite uma descrição" placeholder="Digite uma descrição" multiline rows={4} variant="filled" {...register("descricao")} />
             {errors.descricao && <Typography id="erro-descricao" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px" }} color="error">{errors.descricao.message}</Typography>}
           </FormControl>
 

@@ -16,17 +16,17 @@ export const CadastrarPrograma = () => {
         <Titulo texto="Cadastrar Programa" />
 
         <Box component="form" sx={{
-          display: "flex", flexDirection: "column", alignItems: "center", backgroundColor: "var(--branco)", width: { xs: "90%", md: "70%", lg: "60%", xl: "50%" }, borderRadius: "10px", padding: {
+          display: "flex", flexDirection: "column", alignItems: "center", backgroundColor: "var(--branco)", width: { xs: "95%", md: "70%", lg: "60%", xl: "50%" }, borderRadius: "10px", padding: {
             xs: 3, sm: 5
           }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: 3
         }}>
           <img src={logo} alt="Logo DBC Azul" width={150} />
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField id="nome-programa" label="Nome do Programa" placeholder="Ex: Vem Ser 10" variant="filled" focused />
+            <TextField id="nome-programa" label="Nome do Programa" placeholder="Ex: Vem Ser 10" variant="filled" />
           </FormControl>
           <FormControl sx={{ width: "100%" }}>
-            <TextField id="descricao-programa" label="Descrição do Programa" multiline rows={4} placeholder="Ex: Este programa é destinado..." variant="filled" focused />
+            <TextField id="descricao-programa" label="Descrição do Programa" multiline rows={4} placeholder="Ex: Este programa é destinado..." variant="filled" />
           </FormControl>
 
           <Box sx={{ display: "flex", width: "100%", justifyContent: "center", alignItems: "center", bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>

@@ -30,7 +30,7 @@ export const CadastrarAtividade = () => {
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField id="titulo-atividade" label="Título" placeholder="Digite um título para a atividade" variant="filled" focused />
+            <TextField id="titulo-atividade" label="Título" placeholder="Digite um título para a atividade" variant="filled" />
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
@@ -61,7 +61,6 @@ export const CadastrarAtividade = () => {
               id="descricao"
               label="Descrição"
               variant='filled'
-              focused
             />
           </FormControl>
         </Stack>
@@ -69,7 +68,7 @@ export const CadastrarAtividade = () => {
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: "end", marginTop: { xs: 2, md: 0 } }}>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField type="number" label="Peso atividade " placeholder='Digite o peso da atividade' id='peso' variant="filled" focused
+            <TextField type="number" label="Peso atividade " placeholder='Digite o peso da atividade' id='peso' variant="filled"
             />
           </FormControl>
 
@@ -83,7 +82,7 @@ export const CadastrarAtividade = () => {
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField type="datetime-local" label="Data/horário de entrega " placeholder='Digite uam data de entrega' id='data-entrega' variant="filled" focused
+            <TextField type="datetime-local" label="Data/horário de entrega " placeholder='Digite uam data de entrega' id='data-entrega' variant="filled"
             />
           </FormControl>
 

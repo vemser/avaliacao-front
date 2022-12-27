@@ -41,60 +41,57 @@ export const EditarModulo = () => {
     };
 
     return (
-        <>
-            <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "calc(100vh - 64px)", paddingTop: "50px", paddingBottom: "50px" }}>
+        <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
+            <Titulo texto="Editar Módulo" />
 
-                <Titulo texto="Editar Módulo" />
+            <Box component="form" sx={{
+                display: "flex", flexDirection: "column", alignItems: "center", backgroundColor: "var(--branco)", width: { xs: "95%", md: "70%", lg: "60%", xl: "50%" }, borderRadius: "10px", padding: {
+                    xs: 3, sm: 5
+                }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: 3
+            }}>
 
-                <Box component="form" sx={{ display: { xs: "flex", md: "flex" }, flexDirection: "column", alignItems: "center", backgroundColor: "var(--branco)", width: { xs: "90%", md: "35%" }, borderRadius: "10px", padding: { xs: 5, md: 5 }, boxShadow: "10px 10px 10px var(--azul-escuro-dbc)", gap: 2 }}>
+                <img src={logo} alt="Logo DBC" width={150} />
+                <Stack component="div" spacing={3} sx={{ width: "100%", display: "flex", alignItems: { xs: "start", md: "start" } }}>
+                    <FormControl sx={{ width: "100%" }}>
+                        <TextField id="descricao" defaultValue={state.nome} label="Digite um nome" placeholder="Digite um nome" multiline variant="filled" />
+                    </FormControl>
 
-                    <img src={logo} alt="Logo DBC" width={150} />
+                    <FormControl variant="filled" sx={{ width: "100%" }}>
+                        <InputLabel id="aluno">Selecione uma trilha</InputLabel>
+                        <Select MenuProps={MenuProps} labelId="demo-simple-select-filled-label" id="aluno" defaultValue={state.trilha} >
+                            <MenuItem value="initial-aluno" disabled><em>Selecione a Trilha</em></MenuItem>
+                            <MenuItem id={`trilha-1`} value={'Frontend'}>Frontend</MenuItem>
+                            <MenuItem id={`trilha-2`} value={'Backend'}>Backend</MenuItem>
+                            <MenuItem id={`trilha-3`} value={'QA'}>QA</MenuItem>
+                        </Select>
+                    </FormControl>
 
-                    <Stack component="div" spacing={2} sx={{ width: "100%", display: "flex", alignItems: { xs: "start", md: "start" } }}>
+                    <FormControl variant="filled" sx={{ width: "100%" }}>
+                        <InputLabel id="demo-multiple-name-label" variant='filled'>Selecione o Programa</InputLabel>
+                        <Select
+                            id="select-programa"
+                            multiple
+                            defaultValue={state.programa}
+                            value={programaSelecionado}
+                            onChange={handleChange}
+                            input={<OutlinedInput label="Name" />}
+                            renderValue={(selected) => selected.join(', ')}
+                        >
+                            {programas.map((programa) => (
+                                <MenuItem key={programa} value={programa}>
+                                    <Checkbox checked={programaSelecionado.indexOf(programa) > -1} />
+                                    <ListItemText primary={programa} />
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                </Stack>
+                <Box sx={{ display: "flex", width: "100%", justifyContent: "center", alignItems: "center", bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>
+                    <Button onClick={() => { navigate(-1) }} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d " }, textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cancelar</Button>
 
-                        <FormControl sx={{ width: "100%" }}>
-                            <TextField id="descricao" defaultValue={state.nome} label="Digite um nome" placeholder="Digite um nome" multiline variant="filled" />
-                        </FormControl>
-
-                        <FormControl variant="filled" sx={{ width: "100%" }}>
-                            <InputLabel id="aluno">Selecione uma trilha</InputLabel>
-                            <Select MenuProps={MenuProps} labelId="demo-simple-select-filled-label" id="aluno" defaultValue={state.trilha} >
-                                <MenuItem value="initial-aluno" disabled><em>Selecione a Trilha</em></MenuItem>
-                                <MenuItem id={`trilha-1`} value={'Frontend'}>Frontend</MenuItem>
-                                <MenuItem id={`trilha-2`} value={'Backend'}>Backend</MenuItem>
-                                <MenuItem id={`trilha-3`} value={'QA'}>QA</MenuItem>
-                            </Select>
-                        </FormControl>
-
-                        <FormControl variant="filled" sx={{ width: "100%" }}>
-                            <InputLabel id="demo-multiple-name-label">Selecione o Programa</InputLabel>
-                            <Select
-                                id="select-programa"
-                                multiple
-                                defaultValue={state.programa}
-                                value={programaSelecionado}
-                                onChange={handleChange}
-                                input={<OutlinedInput label="Name" />}
-                                renderValue={(selected) => selected.join(', ')}
-                            >
-                                {programas.map((programa) => (
-                                    <MenuItem key={programa} value={programa}>
-                                        <Checkbox checked={programaSelecionado.indexOf(programa) > -1} />
-                                        <ListItemText primary={programa} />
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-
-                    </Stack>
-
-                    <Box sx={{ display: "flex", alignItems: "end", gap: 2 }}>
-                        <Button onClick={() => { navigate(-1) }} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d " }, textTransform: "capitalize", width: { xs: "15ch", md: "25ch" } }}>Cancelar</Button>
-                        <Button variant="contained" color="success" sx={{ textTransform: "capitalize", width: { xs: "15ch", md: "25ch" } }}>Salvar</Button>
-                    </Box>
-
+                    <Button variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Salvar</Button>
                 </Box>
             </Box>
-        </>
+        </Box>
     )
 }

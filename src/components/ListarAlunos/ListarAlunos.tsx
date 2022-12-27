@@ -4,7 +4,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { AlunoContext } from "../../context/AlunoContext";
 
-import { Paper, TableContainer, Table, TableRow, TableCell, TableBody, Button, TablePagination, tableCellClasses, Box, Typography, Modal, styled } from "@mui/material";
+import { Paper, TableContainer, Table, TableRow, TableCell, TableBody, Button, TablePagination, tableCellClasses, Box, Typography, Modal, styled, TableHead } from "@mui/material";
 import { Titulo } from "../Titulo/Titulo";
 
 
@@ -59,34 +59,37 @@ export const ListarAlunos: React.FC = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  function formatarTexto(str: string) {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  }
+
   const handleChangePage = async (event: unknown, newPage: number) => { await getAlunos(newPage); };
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
-
       <Titulo texto="Alunos" />
 
-      <Box sx={{ width: { xs: "95%", md: "80%" }, display: "flex", alignItems: "end", flexDirection: "column", padding: "20px", background: "#f8f8fff8", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
+      <Box sx={{ width: { xs: "95%", md: "80%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
 
-        <Button onClick={() => navigate("/cadastrar-aluno")} variant="contained" sx={{ width: "200px", whiteSpace: "nowrap", display: "flex", marginBottom: "10px" }}>Cadastrar Aluno</Button>
+        <Button onClick={() => navigate("/cadastrar-aluno")} variant="contained" sx={{ width: "auto", paddingLeft: "15px", paddingRight: "15px", display: "flex", marginBottom: "10px", marginRight: "14px", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Aluno</Button>
 
-        <Paper sx={{ width: "100%", borderRadius: "10px" }}>
+        <Paper sx={{ width: "100%", borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px" }}>
           <TableContainer sx={{ maxHeight: 430 }}>
             <Table component="table" stickyHeader aria-label="sticky table">
-              <thead>
-                <TableRow sx={{ backgroundColor: "#090F27", color: "white" }}>
+              <TableHead sx={{ backgroundColor: "#090F27" }}>
+                <TableRow>
                   {columns.map((column) => (
-                    <TableCell key={column.id} align={column.align} style={{ top: 57, minWidth: column.minWidth, fontWeight: "700", fontSize: "1rem", textAlign: "center" }}>{column.label}</TableCell>
+                    <TableCell key={column.id} align={column.align} style={{ minWidth: "25%", fontWeight: "700", fontSize: "1rem", textAlign: "center", backgroundColor: "#090F27", color: "white" }}>{column.label}</TableCell>
                   ))}
                 </TableRow>
-              </thead>
+              </TableHead>
 
               <TableBody>
                 {alunos.map((data: any) => (
                   <StyledTableRow sx={{ ":hover": { opacity: "0.7", cursor: "pointer" } }} key={data.idAluno}>
                     <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: data })} id="codigo" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row">{data.idAluno}</StyledTableCell>
                     <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: data })} id="nome" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }}>{data.nome}</StyledTableCell>
-                    <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: data })} id="stack" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }}>{data.stack}</StyledTableCell>
+                    <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: data })} id="stack" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", textTransform: "capitalize" }}>{formatarTexto(data.stack)}</StyledTableCell>
                     <StyledTableCell id="acoes" sx={{ textAlign: "center" }}>
                       <Button id={`botao-editar-${data.idAluno}`} title="Deletar" onClick={() => navigate("/editar-aluno", { state: data })}><EditIcon /></Button>
                       <Button id={`botao-deletar-${data.idAluno}`} title="Deletar" onClick={() => { handleOpen(); setIdDelete(data.idAluno) }}><DeleteForeverIcon /></Button>

@@ -139,7 +139,7 @@ export const AvaliarAcompanhamento = () => {
           width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: "end"
         }}>
           <FormControl sx={{ width: "100%" }}>
-            <TextField id="descricao" error={!!errors.descricao} label="Digite uma descrição" placeholder="Digite uma descrição" multiline rows={4} focused variant="filled" {...register("descricao")} />
+            <TextField id="descricao" error={!!errors.descricao} label="Digite uma descrição" placeholder="Digite uma descrição" multiline rows={4} variant="filled" {...register("descricao")} />
             {errors.descricao && <Typography id="erro-descricao" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px" }} color="error">{errors.descricao.message}</Typography>}
           </FormControl>
 

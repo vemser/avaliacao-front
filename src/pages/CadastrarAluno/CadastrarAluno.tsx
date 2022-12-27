@@ -115,12 +115,12 @@ export const CadastrarAluno = () => {
           <Stack component="div" spacing={3} sx={{ width: { xs: "100%", md: "50%" }, display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
             <FormControl sx={{ width: "100%" }}>
-              <TextField id="nomeCompletoAluno" label="Nome Completo" placeholder="Fulano da Silva" variant="filled" error={!!errors.nome}  {...register("nome")} focused />
+              <TextField id="nomeCompletoAluno" label="Nome Completo" placeholder="Fulano da Silva" variant="filled" error={!!errors.nome}  {...register("nome")} />
               {errors.nome && <Typography id="erro-nomeCompletoAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.nome.message}</Typography>}
             </FormControl>
 
             <FormControl sx={{ width: "100%" }}>
-              <TextField id="emailAluno" label="E-mail DBC" placeholder="fulano.silva@dbccompany.com.br" variant="filled" {...register("email")} error={!!errors.email} focused />
+              <TextField id="emailAluno" label="E-mail DBC" placeholder="fulano.silva@dbccompany.com.br" variant="filled" {...register("email")} error={!!errors.email} />
 
               {errors.email && <Typography id="erro-emailAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.email.message}</Typography>}
             </FormControl>
@@ -137,11 +137,11 @@ export const CadastrarAluno = () => {
             </FormControl>
 
             <FormControl sx={{ width: "100%" }}>
-              <TextField type="text" label="Cidade" placeholder='Digite sua cidade' id='cidade' variant="filled" focused />
+              <TextField type="text" label="Cidade" placeholder='Digite sua cidade' id='cidade' variant="filled" />
             </FormControl>
 
             <FormControl sx={{ width: "100%" }}>
-              <TextField type="text" label="Estado" placeholder='Digite seu estado' id='estado' variant="filled" focused />
+              <TextField type="text" label="Estado" placeholder='Digite seu estado' id='estado' variant="filled" />
             </FormControl>
 
             <FormControl sx={{ width: "100%" }}>
@@ -153,7 +153,6 @@ export const CadastrarAluno = () => {
                 id="descricao"
                 label="Descrição"
                 variant='filled'
-                focused
               />
             </FormControl>
           </Stack>

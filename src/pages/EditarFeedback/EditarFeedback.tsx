@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import { Box, Stack, FormControl, FormLabel, Typography, InputLabel, Select, MenuItem, TextField, Button } from '@mui/material'
 
@@ -26,9 +26,10 @@ const itemPaddingTop = 8;
 const MenuProps = { PaperProps: { style: { maxHeight: itemHeigth * 4.5 + itemPaddingTop, width: 250 } } };
 
 export const EditarFeedback = () => {
+  const navigate = useNavigate();
   const { editarFeedback } = useContext(InstrutorContext);
   const { getAlunos, alunos } = useContext(AlunoContext);
-  const { state } = useLocation()
+  const { state } = useLocation();
 
   useEffect(() => { getAlunos(); }, [])
 
@@ -53,77 +54,83 @@ export const EditarFeedback = () => {
   // if (infosUsuario.cargo !== "Instrutor") return <Navigate to="/" />
 
   return (
-    <>
-      <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "calc(100vh - 64px)" }}>
-        <Titulo texto="Editar feedback" />
+    <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
+      <Titulo texto="Editar Feedback" />
 
-        <Box component="form" onSubmit={handleSubmit(editarFeedbacks)} sx={{ display: { xs: "flex", md: "flex" }, flexDirection: "column", alignItems: "center", backgroundColor: "var(--branco)", width: { xs: "90%", md: "35%" }, borderRadius: "10px", padding: { xs: 5, md: 5 }, boxShadow: "10px 10px 10px var(--azul-escuro-dbc)", gap: 2 }}>
+      <Box component="form" onSubmit={handleSubmit(editarFeedbacks)} sx={{
+        display: "flex", flexDirection: "column", alignItems: "center", backgroundColor: "var(--branco)", width: { xs: "95%", md: "70%", lg: "60%", xl: "50%" }, borderRadius: "10px", padding: {
+          xs: 3, sm: 5
+        }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: 3
+      }}>
 
-          <img src={logo} alt="Logo DBC" width={150} />
-          <Stack component="div" spacing={2} sx={{ width: "100%", display: "flex", alignItems: { xs: "start", md: "start" } }}>
+        <img src={logo} alt="Logo DBC" width={150} />
+        <Stack component="div" spacing={3} sx={{ width: "100%", display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
-            <FormControl variant="filled">
-              <FormLabel sx={{ color: "var(--azul-claro-dbc)", fontWeight: "500", marginBottom: "10px" }} id="demo-controlled-radio-buttons-group">Filtrar alunos por stack:</FormLabel>
+          <FormControl variant="filled">
+            <FormLabel sx={{ color: "var(--azul-claro-dbc)", fontWeight: "500", marginBottom: "10px" }} id="demo-controlled-radio-buttons-group">Filtrar alunos por stack:</FormLabel>
 
-              <Box sx={{ display: "flex", flexWrap: { xs: "wrap", md: "nowrap" }, alignItems: "center", gap: 2 }}>
+            <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 2 }}>
 
-                <Box color="primary" sx={{ display: "flex", flexDirection: "column", gap: 1, color: "var(--azul-claro-dbc)" }}>
-                  <Stack spacing={2} direction="row">
-                    <input type="radio" value="QA" id="qa" name="stack" onChange={(e) => manipulaState(e.target.value)} />
-                    <Typography sx={{ fontWeight: "700" }}>QA</Typography>
-                  </Stack>
-                </Box>
-
-                <Box sx={{ display: "flex", flexDirection: "column", gap: 1, color: "var(--azul-claro-dbc)" }}>
-                  <Stack spacing={2} direction="row">
-                    <input type="radio" value="BACKEND" id="backend" name="stack" onChange={(e) => manipulaState(e.target.value)} />
-                    <Typography sx={{ fontWeight: "700" }}>Backend</Typography>
-                  </Stack>
-                </Box>
-
-                <Box sx={{ display: "flex", flexDirection: "column", gap: 1, color: "var(--azul-claro-dbc)" }}>
-                  <Stack spacing={2} direction="row">
-                    <input type="radio" value="FRONTEND" id="frontend" name="stack" onChange={(e) => manipulaState(e.target.value)} />
-                    <Typography sx={{ fontWeight: "700" }}>Frontend</Typography>
-                  </Stack>
-                </Box>
-
-                <Button id="limpar-filtros" type="button" size="small" variant="contained" onClick={resetFiltros}>Limpar filtros</Button>
+              <Box color="primary" sx={{ display: "flex", flexDirection: "column", gap: 1, color: "var(--azul-claro-dbc)" }}>
+                <Stack spacing={2} direction="row">
+                  <input type="radio" value="QA" id="qa" name="stack" onChange={(e) => manipulaState(e.target.value)} />
+                  <Typography sx={{ fontWeight: "700" }}>QA</Typography>
+                </Stack>
               </Box>
-            </FormControl>
 
-            <FormControl variant="filled" sx={{ width: "100%" }}>
-              <InputLabel id="aluno">Selecione aluno</InputLabel>
-              <Select MenuProps={MenuProps} labelId="demo-simple-select-filled-label" id="aluno" {...register("idAluno")} defaultValue="initial-aluno">
-                <MenuItem value="initial-aluno" disabled><em>Selecione o Aluno</em></MenuItem>
-                {alunos.map((aluno) => {
-                  if (mudaRadio) {
-                    if (mudaRadio === aluno.stack) {
-                      return (<MenuItem id={`alunos-${aluno.stack.toLowerCase()}-${aluno.idAluno}`} key={aluno.idAluno} value={aluno.idAluno}>{aluno.nome}</MenuItem>)
-                    }
-                  } else {
-                    return (<MenuItem id={`alunos-geral-${aluno.idAluno}`} key={aluno.idAluno} value={aluno.idAluno}>{aluno.nome}</MenuItem>)
+              <Box sx={{ display: "flex", flexDirection: "column", gap: 1, color: "var(--azul-claro-dbc)" }}>
+                <Stack spacing={2} direction="row">
+                  <input type="radio" value="BACKEND" id="backend" name="stack" onChange={(e) => manipulaState(e.target.value)} />
+                  <Typography sx={{ fontWeight: "700" }}>Backend</Typography>
+                </Stack>
+              </Box>
+
+              <Box sx={{ display: "flex", flexDirection: "column", gap: 1, color: "var(--azul-claro-dbc)" }}>
+                <Stack spacing={2} direction="row">
+                  <input type="radio" value="FRONTEND" id="frontend" name="stack" onChange={(e) => manipulaState(e.target.value)} />
+                  <Typography sx={{ fontWeight: "700" }}>Frontend</Typography>
+                </Stack>
+              </Box>
+
+              <Button id="limpar-filtros" type="button" size="small" variant="contained" onClick={resetFiltros} sx={{ textTransform: "capitalize", fontSize: "1rem", width: "140px" }}>Limpar filtros</Button>
+            </Box>
+          </FormControl>
+
+          <FormControl variant="filled" sx={{ width: "100%" }}>
+            <InputLabel id="aluno">Selecione aluno</InputLabel>
+            <Select MenuProps={MenuProps} labelId="demo-simple-select-filled-label" id="aluno" {...register("idAluno")} defaultValue="initial-aluno">
+              <MenuItem value="initial-aluno" disabled><em>Selecione o Aluno</em></MenuItem>
+              {alunos.map((aluno) => {
+                if (mudaRadio) {
+                  if (mudaRadio === aluno.stack) {
+                    return (<MenuItem id={`alunos-${aluno.stack.toLowerCase()}-${aluno.idAluno}`} key={aluno.idAluno} value={aluno.idAluno}>{aluno.nome}</MenuItem>)
                   }
-                })}
-              </Select>
-            </FormControl>
+                } else {
+                  return (<MenuItem id={`alunos-geral-${aluno.idAluno}`} key={aluno.idAluno} value={aluno.idAluno}>{aluno.nome}</MenuItem>)
+                }
+              })}
+            </Select>
+          </FormControl>
 
-            <FormControl sx={{ width: "100%" }}>
-              <TextField id="descricao" defaultValue={state.descricao} {...register("descricao")} error={!!errors.descricao} label="Digite uma descrição" placeholder="Digite uma descrição" multiline variant="filled" />
-            </FormControl>
+          <FormControl sx={{ width: "100%" }}>
+            <TextField id="descricao" defaultValue={state.descricao} {...register("descricao")} error={!!errors.descricao} label="Digite uma descrição" placeholder="Digite uma descrição" multiline rows={4} variant="filled" />
+          </FormControl>
 
-            <FormControl variant="filled" sx={{ width: "100%" }}>
-              <InputLabel id="tipo">Status</InputLabel>
-              <Select labelId="demo-simple-select-filled-label" defaultValue={state.tipo} id="tipo" error={!!errors.tipo} {...register("tipo")} >
-                <MenuItem id="positivo" value="POSITIVO">Positivo</MenuItem>
-                <MenuItem id="atencao" value="ATENCAO">Atencao</MenuItem>
-              </Select>
-            </FormControl>
+          <FormControl variant="filled" sx={{ width: "100%" }}>
+            <InputLabel id="tipo">Status</InputLabel>
+            <Select labelId="demo-simple-select-filled-label" defaultValue={state.tipo} id="tipo" error={!!errors.tipo} {...register("tipo")} >
+              <MenuItem id="positivo" value="POSITIVO">Positivo</MenuItem>
+              <MenuItem id="atencao" value="ATENCAO">Atencao</MenuItem>
+            </Select>
+          </FormControl>
 
-          </Stack>
-          <BotaoAzul texto="Enviar" />
+        </Stack>
+        <Box sx={{ display: "flex", width: "100%", justifyContent: "center", alignItems: "center", bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>
+          <Button onClick={() => { navigate(-1) }} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d " }, textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cancelar</Button>
+
+          <Button variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Salvar</Button>
         </Box>
       </Box>
-    </>
+    </Box>
   )
 }

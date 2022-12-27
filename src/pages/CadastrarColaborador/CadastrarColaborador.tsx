@@ -54,11 +54,11 @@ export const CadastrarColaborador = () => {
           <Stack component="div" spacing={2} sx={{ width: { xs: "100%", md: "50%" }, display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
             <FormControl sx={{ width: "100%" }}>
-              <TextField id="nome" {...register("nome")} error={!!errors.nome} label="Nome Completo" placeholder="Fulano da Silva" variant="filled" focused />
+              <TextField id="nome" {...register("nome")} error={!!errors.nome} label="Nome Completo" placeholder="Fulano da Silva" variant="filled" />
               {errors.nome && <Typography id="erro-nome" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.nome.message}</Typography>}
             </FormControl>
             <FormControl sx={{ width: "100%" }}>
-              <TextField id="email" error={!!errors.email} {...register("email")} label="E-mail DBC" placeholder="fulano.silva@dbccompany.com.br" variant="filled" focused />
+              <TextField id="email" error={!!errors.email} {...register("email")} label="E-mail DBC" placeholder="fulano.silva@dbccompany.com.br" variant="filled" />
               {errors.email && <Typography id="erro-email" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.email.message}</Typography>}
             </FormControl>
 

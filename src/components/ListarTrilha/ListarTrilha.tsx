@@ -5,6 +5,7 @@ import { Box, Typography, Paper, TableContainer, Table, TableRow, TableCell, Tab
 
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
+import TableHead from '@mui/material/TableHead';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: { backgroundColor: theme.palette.common.black, color: theme.palette.common.white },
@@ -72,17 +73,16 @@ export const ListarTrilha = () => {
 
   return (
     <>
-
-
-      <TableContainer sx={{ maxHeight: 430, paddingTop: "10px", borderBottom: "1px solid #000", borderRadius: "5px" }}>
+      <TableContainer sx={{ maxHeight: 430 }}>
         <Table component="table" stickyHeader aria-label="sticky table">
-          <thead>
-            <TableRow sx={{ backgroundColor: "#090F27", color: "white" }}>
+
+          <TableHead sx={{ backgroundColor: "#090F27" }}>
+            <TableRow>
               {columns.map((column) => (
-                <TableCell key={column.id} align={column.align} style={{ top: 57, minWidth: column.minWidth, fontWeight: "700", fontSize: "1rem", textAlign: "center" }}>{column.label}</TableCell>
+                <TableCell key={column.id} align={column.align} style={{ minWidth: "33.33%", fontWeight: "700", fontSize: "1rem", textAlign: "center", backgroundColor: "#090F27", color: "white" }}>{column.label}</TableCell>
               ))}
             </TableRow>
-          </thead>
+          </TableHead>
 
           <TableBody>
             {trilhas.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((trilha: any) => (

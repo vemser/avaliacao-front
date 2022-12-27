@@ -44,7 +44,7 @@ export const CadastrarModulo = () => {
             <Titulo texto="Cadastrar Módulo" />
 
             <Box component="form" sx={{
-                display: "flex", flexDirection: "column", alignItems: "center", backgroundColor: "var(--branco)", width: { xs: "90%", md: "70%", lg: "60%", xl: "50%" }, borderRadius: "10px", padding: {
+                display: "flex", flexDirection: "column", alignItems: "center", backgroundColor: "var(--branco)", width: { xs: "95%", md: "70%", lg: "60%", xl: "50%" }, borderRadius: "10px", padding: {
                     xs: 3, sm: 5
                 }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: 3
             }}>

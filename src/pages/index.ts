@@ -1,4 +1,3 @@
-import { CadastrarCliente } from './CadastrarCliente/CadastrarCliente';
 export { Login } from "./Login/Login";
 export { DashboardAdmin } from "./DashboardAdmin/DashboardAdmin";
 export { DashboardGestor } from "./DashboardGestor/DashboardGestor";

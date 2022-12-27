@@ -67,7 +67,6 @@ function AppRoutes() {
 
                 {/* Rotas de alocação/reserva */}
                 <Route path="/lista-alocacao-reserva" element={<Pages.ListarAlocacao />} />
-                <Route path="/cadastrar-reserva-alocacao" element={<Pages.CadastrarReservaAlacocao/>}/>
 
                 {/* Rotas de cliente */}
                 <Route path="/lista-cliente" element={<Pages.ListarCliente />} />

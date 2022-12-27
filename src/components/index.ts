@@ -3,3 +3,4 @@ export { Intermediaria } from "./Intermediaria/Intermediaria";
 export { NotFound } from "./NotFound/NotFound";
 export { Loading } from "./Loading/Loading";
 export { MenuLateral } from "./MenuLateral/MenuLateral";
+export { Titulo} from "./Titulo/Titulo";

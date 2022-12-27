@@ -62,6 +62,10 @@ function AppRoutes() {
                       
                 {/* Trocar senha logado e editar usuario logado */}
                 <Route path="/editar-usuario" element={<Pages.EditarUsuario />} />
+
+                {/* Rotas de alocação */}
+                <Route path="/lista-alocacao" element={<Pages.ListarAlocacao />} />
+
               </Route>
             </Routes>
           </Context.InstrutorProvider>

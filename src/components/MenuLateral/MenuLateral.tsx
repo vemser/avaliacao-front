@@ -17,8 +17,7 @@ interface IProps {
 }
 
 export const MenuLateral: React.FC<IProps> = ({ children }) => {
-  const { usuarioLogout, usuarioLogado, pegarUsuarioLogado } = useAuth()
-
+  const { usuarioLogout, usuarioLogado, pegarUsuarioLogado } = useAuth();
   const { isOpen, toggleOpen } = useContext(MenuLateralContext);
   const navigate = useNavigate();
   const theme = useTheme();
@@ -26,8 +25,7 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
 
   useEffect(() => {
     pegarUsuarioLogado()
-  }, [])
-  
+  }, []);  
 
   return (
     <>
@@ -55,6 +53,7 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
             gap="0.5rem"
             alignItems="center"
             justifyContent="center"
+            padding="10px"
           >
             <img src={logo} alt="Logo DBC" width={100} style={{ marginBottom: theme.spacing(2) }} />
             <Avatar sx={{ height: theme.spacing(14), width: theme.spacing(14) }} src={`data:image/jpeg;base64,${usuarioLogado.imagem}`}

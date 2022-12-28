@@ -17,8 +17,7 @@ interface IProps {
 }
 
 export const MenuLateral: React.FC<IProps> = ({ children }) => {
-  const { usuarioLogout, usuarioLogado, pegarUsuarioLogado } = useAuth()
-
+  const { usuarioLogout, usuarioLogado, pegarUsuarioLogado } = useAuth();
   const { isOpen, toggleOpen } = useContext(MenuLateralContext);
   const navigate = useNavigate();
   const theme = useTheme();
@@ -26,8 +25,7 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
 
   useEffect(() => {
     pegarUsuarioLogado()
-  }, [])
-  
+  }, []);  
 
   return (
     <>
@@ -49,18 +47,19 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
         >
           <Box
             width="100%"
-            height={theme.spacing(30)}
+            height={theme.spacing(32)}
             display="flex"
             flexDirection="column"
             gap="0.5rem"
             alignItems="center"
             justifyContent="center"
+            padding="10px"
           >
-            <img src={logo} alt="Logo DBC Azul" width={100} style={{ marginBottom: "20px" }} />
-            <Avatar sx={{ height: theme.spacing(12), width: theme.spacing(12) }} src={`data:image/jpeg;base64,${usuarioLogado.imagem}`}
+            <img src={logo} alt="Logo DBC" width={100} style={{ marginBottom: theme.spacing(2) }} />
+            <Avatar sx={{ height: theme.spacing(14), width: theme.spacing(14) }} src={`data:image/jpeg;base64,${usuarioLogado.imagem}`}
             />
             <Typography sx={{ width: "100%", padding: "0 2rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", textAlign: "center", textTransform: "capitalize" }}>
-              Olá, <strong>{usuarioLogado.login.split('.')[0]}</strong>
+              <span style={{ fontWeight: "500", userSelect: "none" }}>Olá, </span> <strong style={{ color: "var(--azul-claro-dbc)", userSelect: "none" }}>{usuarioLogado.login.split('.')[0]}</strong>
             </Typography>
           </Box>
 

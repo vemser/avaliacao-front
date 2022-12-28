@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import { Paper, TableContainer, Table, TableBody, TablePagination, Button, styled, Typography, Box, TableCell, tableCellClasses, TableRow, Modal } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
+import { Paper, TableContainer, Table, TableBody, TablePagination, Button, styled, Typography, Box, TableCell, tableCellClasses, TableRow, Modal, TableHead } from "@mui/material";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 import { useNavigate } from "react-router-dom";
@@ -68,24 +67,24 @@ export const DashboardAdmin: React.FC = () => {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
-
       <Titulo texto="Colaboradores" />
 
-      <Box sx={{ width: { xs: "95%", md: "80%" }, display: "flex", alignItems: "end", flexDirection: "column", padding: "20px", background: "#f8f8fff8", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
+      <Box sx={{ width: { xs: "95%", md: "80%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
 
-        <Paper sx={{ width: "100%", borderRadius: "10px" }}>
-
-          <TableContainer id="tabela-admin" sx={{ maxHeight: "30vw", borderRadius: "10px" }}>
+        <Paper sx={{ width: "100%", borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px" }}>
+          <TableContainer id="tabela-admin" sx={{ maxHeight: 430 }}>
             <Table stickyHeader aria-label="sticky table">
-              <thead>
-                <TableRow sx={{ backgroundColor: "#090F27", color: "white" }}>
+
+              <TableHead sx={{ backgroundColor: "#090F27" }}>
+                <TableRow>
                   {columns.map((column) => (
-                    <TableCell key={column.id} align={column.align} style={{ top: 57, minWidth: column.minWidth, fontWeight: "700", fontSize: "1rem", textAlign: "center" }}>
+                    <TableCell key={column.id} align={column.align} style={{ minWidth: "25%", fontWeight: "700", fontSize: "1rem", textAlign: "center", backgroundColor: "#090F27", color: "white" }}>
                       {column.label}
                     </TableCell>
                   ))}
                 </TableRow>
-              </thead>
+              </TableHead>
+
               <TableBody>
                 {colaborador.map((data) => (
                   <StyledTableRow sx={{ ":hover": { opacity: "0.7", cursor: "pointer" } }} key={data.idUsuario}>

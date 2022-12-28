@@ -2,13 +2,11 @@ import React from "react";
 
 import { useNavigate } from "react-router-dom";
 
-import * as Components from "../../components"
-
 import { TableCell, tableCellClasses, TableRow, Box, Paper, TableContainer, Table, TableBody, Button, TablePagination, styled, TableHead } from "@mui/material";
 
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-
+import { Titulo } from "../../components";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: { backgroundColor: theme.palette.common.black, color: theme.palette.common.white },
@@ -20,7 +18,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:last-child td, &:last-child th": { border: 0 },
 }));
 
-
 interface Column {
   id: "codigo" | "nome" | "email" | "telefone" | "situacao" | "acoes";
   label: string;
@@ -30,7 +27,7 @@ interface Column {
 }
 
 const columns: Column[] = [
-  { id: "codigo", label: "Codigo", minWidth: 5 },
+  { id: "codigo", label: "Código", minWidth: 5 },
   { id: "nome", label: "Nome", minWidth: 5 },
   { id: "email", label: "Email", minWidth: 5 },
   { id: "telefone", label: "Telefone", minWidth: 5 },
@@ -40,49 +37,48 @@ const columns: Column[] = [
 
 // dados 
 const dados = [
-  {idCliente: 10000, nome:"nomeX", email: "emailY@gmail.com.br", telefone: "telefoneZ", situacao: "INATIVO"},
-  {idCliente: 1000, nome:"nomeX", email: "emailY@gmail.com.br", telefone: "telefoneZ", situacao: "ATIVO"},
-  {idCliente: 100, nome:"nomeX", email: "emailY@gmail.com.br", telefone: "telefoneZ", situacao: "INATIVO"},
-  {idCliente: 10, nome:"nomeX", email: "emailY@gmail.com.br", telefone: "telefoneZ", situacao: "ATIVO"},
-  {idCliente: 1, nome:"nomeX", email: "emailY@gmail.com.br", telefone: "telefoneZ", situacao: "ATIVO"}
+  { idCliente: 10000, nome: "nomeX", email: "emailY@gmail.com.br", telefone: "telefoneZ", situacao: "INATIVO" },
+  { idCliente: 1000, nome: "nomeX", email: "emailY@gmail.com.br", telefone: "telefoneZ", situacao: "ATIVO" },
+  { idCliente: 100, nome: "nomeX", email: "emailY@gmail.com.br", telefone: "telefoneZ", situacao: "INATIVO" },
+  { idCliente: 10, nome: "nomeX", email: "emailY@gmail.com.br", telefone: "telefoneZ", situacao: "ATIVO" },
+  { idCliente: 1, nome: "nomeX", email: "emailY@gmail.com.br", telefone: "telefoneZ", situacao: "ATIVO" }
 ]
 export const ListarCliente: React.FC = () => {
+  const navigate = useNavigate();
+  const handleChangePage = () => console.log("Fazer paginação");
 
-  const navigate = useNavigate()
-
- const handleChangePage = () => console.log("Fazer paginação");
-  
   return (
-    <>
-      <Box sx={{ minHeight: "calc(100vh - 64px)", paddingTop: "50px", paddingBottom: "50px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: 5 }}>
-        <Components.Titulo texto="Clientes"/>
+    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
+      <Titulo texto="Clientes" />
 
-        <Box sx={{ width: "60%", display: "flex", alignItems: "end", flexDirection: "column", padding: "20px", background: "#f8f8fff8", borderRadius: "10px", boxShadow: "10px 10px 10px var(--azul</Box>-escuro-dbc)" }}>
+      <Box sx={{ width: { xs: "95%", md: "80%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
 
-        <Button onClick={() => navigate("/cadastrar-cliente")} variant="contained" sx={{ width: "200px", whiteSpace: "nowrap", display: "flex", marginBottom: "10px" }}>Cadastrar Cliente</Button>
+        <Button onClick={() => navigate("/cadastrar-cliente")} variant="contained" sx={{ width: "auto", paddingLeft: "15px", paddingRight: "15px", display: "flex", marginBottom: "10px", marginRight: "14px", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Cliente</Button>
 
-        <Paper sx={{ width: { xs: "100%", md: "100%" }, borderRadius: "10px" }}>
+        <Paper sx={{ width: "100%", borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px" }}>
           <TableContainer sx={{ maxHeight: 430 }}>
             <Table stickyHeader>
-              <TableHead >
+
+              <TableHead sx={{ backgroundColor: "#090F27" }} >
                 <TableRow >
                   {columns.map((column) => (
-                    <TableCell key={column.id} align={column.align}   style={{  minWidth: column.minWidth, fontWeight: "700", fontSize: "1rem", textAlign: "center" }}>{column.label}</TableCell>
+                    <TableCell key={column.id} align={column.align} style={{ minWidth: "16.6%", fontWeight: "700", fontSize: "1rem", textAlign: "center", backgroundColor: "#090F27", color: "white" }}>{column.label}</TableCell>
                   ))}
                 </TableRow>
               </TableHead>
+
               <TableBody>
                 {dados.map((cliente) => (
                   <StyledTableRow key={cliente.idCliente}>
                     <StyledTableCell sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row"> {cliente.idCliente}</StyledTableCell>
                     <StyledTableCell id={`aluno-${cliente.idCliente}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} >{cliente.nome}</StyledTableCell>
                     <StyledTableCell id={`vaga-${cliente.idCliente}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }}>{cliente.email}</StyledTableCell>
-                    <StyledTableCell id={`cliente-${cliente.idCliente}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem"}} >{cliente.telefone}</StyledTableCell>
-                    <StyledTableCell id={`situacao-${cliente.idCliente}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem"}} >{cliente.situacao}</StyledTableCell>
+                    <StyledTableCell id={`cliente-${cliente.idCliente}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} >{cliente.telefone}</StyledTableCell>
+                    <StyledTableCell id={`situacao-${cliente.idCliente}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} >{cliente.situacao}</StyledTableCell>
                     <StyledTableCell id={`situacao-${cliente.idCliente}`} sx={{ textAlign: "center" }}>
                       <Button id={`botao-cliente-${cliente.idCliente}`} onClick={() => navigate("/editar-cliente", { state: cliente })} title="Editar cliente"><EditIcon /></Button>
                       <Button id={`botao-deletar-${cliente.idCliente}`} title="Deletar"><DeleteForeverIcon /></Button></StyledTableCell>
-                  </StyledTableRow> 
+                  </StyledTableRow>
                 ))}
               </TableBody>
             </Table>
@@ -92,8 +88,7 @@ export const ListarCliente: React.FC = () => {
           <TablePagination rowsPerPageOptions={[]} component="div" count={0} rowsPerPage={0} page={0} onPageChange={handleChangePage} />
         </Paper>
 
-        </Box>
       </Box>
-    </>
+    </Box>
   );
 };

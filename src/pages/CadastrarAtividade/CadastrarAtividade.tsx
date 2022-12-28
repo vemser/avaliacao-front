@@ -82,7 +82,7 @@ export const CadastrarAtividade = () => {
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField type="datetime-local" label="Data/horário de entrega " placeholder='Digite uam data de entrega' id='data-entrega' variant="filled"
+            <TextField type="datetime-local" label="Data/horário de entrega " placeholder='Digite uam data de entrega' id='data-entrega' variant="filled" InputLabelProps={{ shrink: true }}
             />
           </FormControl>
 

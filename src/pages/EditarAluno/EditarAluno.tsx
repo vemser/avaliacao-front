@@ -165,28 +165,27 @@ export const EditarAluno = () => {
             />
           </FormControl>
 
-            <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>
-              <InputLabel id="selectAluno">Situação</InputLabel>
-              <Select labelId="demo-simple-select-filled-label" defaultValue="initial-stack" id="select-situacao">
-                <MenuItem value="initial-stack" disabled><em>Selecione uma situação</em></MenuItem>
-                <MenuItem id="disponivel" value="DISPONIVEL">Disponível</MenuItem>
-                <MenuItem id="reservado" value="RESERVADO">Reservado</MenuItem>
-                <MenuItem id="alocado" value="ALOCADO">Alocado</MenuItem>
-                <MenuItem id="inativo" value="INATIVO">Inativo</MenuItem>
-              </Select>
-              {errors.stack && <Typography id="erro-selectAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.stack.message}</Typography>}
-            </FormControl>
+          <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>
+            <InputLabel id="selectAluno">Situação</InputLabel>
+            <Select labelId="demo-simple-select-filled-label" defaultValue="initial-stack" id="select-situacao">
+              <MenuItem value="initial-stack" disabled><em>Selecione uma situação</em></MenuItem>
+              <MenuItem id="disponivel" value="DISPONIVEL">Disponível</MenuItem>
+              <MenuItem id="reservado" value="RESERVADO">Reservado</MenuItem>
+              <MenuItem id="alocado" value="ALOCADO">Alocado</MenuItem>
+              <MenuItem id="inativo" value="INATIVO">Inativo</MenuItem>
+            </Select>
+            {errors.stack && <Typography id="erro-selectAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.stack.message}</Typography>}
+          </FormControl>
 
-            <Box sx={{ display:"flex", alignItems:"end" }}>
+          <Box sx={{ display: "flex", alignItems: "end" }}>
 
-              <Button onClick={()=>{navigate(-1)}} variant="contained"  sx={{backgroundColor:"#808080 ",":hover":{backgroundColor:"#5f5d5d "},textTransform: "capitalize", width:{ xs:"15ch", md:"25ch"}}} >Cancelar</Button>
+            <Button onClick={() => { navigate(-1) }} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d " }, textTransform: "capitalize", width: { xs: "15ch", md: "25ch" } }} >Cancelar</Button>
 
-              <BotaoVerde texto="Editar" />
-              
-            </Box>
-          </Stack>
-        </Box>
+            <BotaoVerde texto="Editar" />
+
+          </Box>
+        </Stack>
       </Box>
-    </>
+    </Box>
   )
 }

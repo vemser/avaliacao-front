@@ -81,3 +81,10 @@ export const EditarFeedbackSchema = yup.object().shape({
   descricao: yup.string().required("Por favor, digite alguma coisa na descrição"),
   tipo: yup.string().required("Por favor, selecione uns dos tipos")
 })
+
+export const ProgramaSchema = yup.object().shape({
+  nome:  yup.string().required("Por favor, insira um nome para a trilha").min(3, "O nome deve 3 caracteres"),
+  descricao: yup.string(),
+  dataInicio: yup.string().required("Por favor, insira uma data inicial"),
+  dataFim: yup.string().required("Por favor, insira uma data final"),
+})

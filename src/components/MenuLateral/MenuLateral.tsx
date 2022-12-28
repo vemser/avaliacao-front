@@ -110,6 +110,12 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
                 </ListItemIcon>
                 <ListItemText primary="Cliente" />
               </ListItemButton>
+              <ListItemButton onClick={() => { navigate("/lista-vaga") }}>
+                <ListItemIcon>
+                  <Home />
+                </ListItemIcon>
+                <ListItemText primary="Vaga" />
+              </ListItemButton>
               <ListItemButton onClick={() => { usuarioLogout(); }}>
                 <ListItemIcon>
                   <ExitToApp fontSize="medium" />

@@ -53,6 +53,16 @@ export const CadastrarModulo = () => {
                     <FormControl sx={{ width: "100%" }}>
                         <TextField id="descricao" label="Digite um nome" placeholder="Digite o nome do Módulo" multiline variant="filled" />
                     </FormControl>
+
+                    <FormControl sx={{ width: "100%" }}>
+                    <TextField id="dataInicio" label="Data Início" type="date" sx={{ width: "100%" }} InputLabelProps={{ shrink: true }}/>
+                    
+                    </FormControl>
+
+                    <FormControl sx={{ width: "100%" }}>
+                    <TextField id="dataFim" label="Data Fim" type="date" sx={{ width: "100%" }} InputLabelProps={{ shrink: true }}/>
+                    
+                    </FormControl>
                     <FormControl variant="filled" sx={{ width: "100%" }}>
                         <InputLabel id="aluno">Selecione uma trilha</InputLabel>
                         <Select MenuProps={MenuProps} labelId="demo-simple-select-filled-label" id="aluno" >

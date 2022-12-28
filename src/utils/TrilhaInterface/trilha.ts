@@ -1,0 +1,29 @@
+export interface ITrilha {
+  pegarTrilha: (pagina?: number, tamanho?: number) => Promise<void>,
+  deletarTrilha: (idTrilha: number | undefined) => Promise<void>,
+  cadastrarTrilha: (dadosTrilha: IDadosTrilha) => Promise<void>,
+  trilhas: ITrilhasAPI | null
+}
+
+export interface IChildren {
+  children: React.ReactNode;
+}
+
+export interface ITrilhasAPI {
+  totalElementos: number,
+  quantidadePaginas: number,
+  pagina: number,
+  tamanho: number,
+  elementos: ITrilhasElementos[]
+}
+
+export interface ITrilhasElementos {
+  nome: string,
+  descricao: string,
+  idTrilha: number
+}
+
+export interface IDadosTrilha {
+  nome: string, 
+  descricao: string
+}

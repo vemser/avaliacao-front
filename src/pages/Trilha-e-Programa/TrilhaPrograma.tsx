@@ -1,19 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Box, Button, Paper, Typography } from "@mui/material"
+import { Box, Button, Paper } from "@mui/material"
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 
-import { Header } from "../../components/Header/Header"
 import { ListarTrilha } from "../../components/ListarTrilha/ListarTrilha"
 import { ListarPrograma } from "../../components/ListarPrograma/ListarPrograma";
 import { Titulo } from "../../components/Titulo/Titulo";
 
 export const TrilhaPrograma = () => {
-  const navigate = useNavigate()
-  const [mudaDashboard, setMudaDashboard] = useState(false)
+  const navigate = useNavigate();
 
-  const trocarTabela = () => !mudaDashboard ? setMudaDashboard(true) : setMudaDashboard(false)
+  const [mudaDashboard, setMudaDashboard] = useState(false);
+
+  const trocarTabela = () => !mudaDashboard ? setMudaDashboard(true) : setMudaDashboard(false);
 
   return (
     <>

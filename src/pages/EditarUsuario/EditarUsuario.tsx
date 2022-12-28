@@ -40,7 +40,7 @@ export const EditarUsuario = () => {
           </Button>
 
           <Box sx={{ display:"flex", alignItems:"end", gap: 2 }}>
-            <Button variant="contained" sx={{backgroundColor:"#808080 ", ":hover":{backgroundColor:"#5f5d5d "}, textTransform: "capitalize", width:{ xs:"15ch", md:"25ch"}}}>Cancelar</Button>
+            <Button type="button" variant="contained" sx={{backgroundColor:"#808080 ", ":hover":{backgroundColor:"#5f5d5d "}, textTransform: "capitalize", width:{ xs:"15ch", md:"25ch"}}}>Cancelar</Button>
 
             <Button onClick={() => editarPerfil(imagemAPI)} variant="contained" color="success" sx={{ textTransform: "capitalize", width:{ xs:"15ch", md:"25ch" }}}>Salvar</Button>
           </Box>

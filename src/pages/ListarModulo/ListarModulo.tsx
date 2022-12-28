@@ -7,6 +7,8 @@ import { Box, Typography, Paper, TableContainer, Table, TableRow, TableCell, Tab
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { Titulo } from "../../components/Titulo/Titulo";
+import TableHead from "@mui/material/TableHead";
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -70,60 +72,60 @@ export const ListarModulo = () => {
     const handleClose = () => setOpen(false);
 
     return (
-        <>
-            <Box sx={{ minHeight: "calc(100vh - 64px)", paddingTop: "50px", paddingBottom: "50px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: 5 }}>
-                <Typography id="titulo-body" sx={{ textAlign: "center", fontSize: { xs: 30, md: 44 }, fontWeight: "700", color: "white" }} variant="h3">Lista de Módulos</Typography>
+        <Box sx={{ minHeight: "calc(100vh - 64px)", paddingTop: "50px", paddingBottom: "50px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: 5 }}>
+            <Titulo texto="Módulos" />
 
-                <Box sx={{ width: "60%", display: "flex", alignItems: "end", flexDirection: "column", padding: "20px", background: "#f8f8fff8", borderRadius: "10px", boxShadow: "10px 10px 10px var(--azul</Box>-escuro-dbc)" }}>
+            <Box sx={{ width: { xs: "95%", md: "80%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
 
-                    <Button onClick={() => navigate("/cadastrar-modulo")} variant="contained" sx={{ width: "200px", whiteSpace: "nowrap", display: "flex", marginBottom: "10px" }}>Cadastrar Módulo</Button>
+                <Button onClick={() => navigate("/cadastrar-modulo")} variant="contained" sx={{ width: "auto", paddingLeft: "15px", paddingRight: "15px", display: "flex", marginBottom: "10px", marginRight: "14px", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Módulo</Button>
 
-                    <Paper sx={{ width: { xs: "100%", md: "100%" }, borderRadius: "10px" }}>
-                        <TableContainer id="tabela-admin" sx={{ maxHeight: 430, borderRadius: "10px" }}>
-                            <Table stickyHeader aria-label="sticky table">
-                                <thead>
-                                    <TableRow sx={{ backgroundColor: "#090F27", color: "white" }}>
-                                        {columns.map((column) => (
-                                            <TableCell key={column.id} align={column.align} style={{ top: 57, minWidth: column.minWidth, fontWeight: "700", fontSize: "1rem", textAlign: "center" }}>
-                                                {column.label}
-                                            </TableCell>
-                                        ))}
-                                    </TableRow>
-                                </thead>
-                                <TableBody>
-                                    {modulos.map((data) => (
-                                        <StyledTableRow key={data.idModulo}>
-                                            <StyledTableCell id="nome" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} scope="row">{data.idModulo}</StyledTableCell>
+                <Paper sx={{ width: "100%", borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px" }}>
+                    <TableContainer id="tabela-admin" sx={{ maxHeight: 430 }}>
+                        <Table stickyHeader aria-label="sticky table">
 
-                                            <StyledTableCell id="nome" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", width: { md: "200px" } }} scope="row">{data.nome}</StyledTableCell>
-
-                                            <StyledTableCell id="trilha" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100px" }}>{data.trilha}</StyledTableCell>
-
-                                            <StyledTableCell id="programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", width: { md: "200px" } }}>{data.programa}</StyledTableCell>
-
-                                            <StyledTableCell id="acoes" sx={{ textAlign: "center" }}>
-                                                <Button id={`botao-editar-modulo`} title="Editar" onClick={() => { navigate("/editar-modulo", { state: data }) }}><EditIcon /></Button>
-                                                <Button id={`botao-duplicar-modulo`} title="Duplicar"><ContentCopyIcon /></Button>
-                                                <Button id={`botao-deletar-modulo`} title="Deletar"><DeleteForeverIcon /></Button>
-                                            </StyledTableCell>
-                                        </StyledTableRow>
+                            <TableHead sx={{ backgroundColor: "#090F27" }}>
+                                <TableRow>
+                                    {columns.map((column) => (
+                                        <TableCell key={column.id} align={column.align} style={{ minWidth: "20%", fontWeight: "700", fontSize: "1rem", textAlign: "center", backgroundColor: "#090F27", color: "white" }}>
+                                            {column.label}
+                                        </TableCell>
                                     ))}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-                        {/* Modal Confirmar Delete */}
-                        <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-titulo" aria-describedby="modal-modal-description" sx={{ backdropFilter: "blur(10px)" }}>
-                            <Box sx={style}>
-                                <Typography id="modal-modal-titulo" variant="h6" component="h2" color="error">Você realmente deseja excluir?</Typography>
-                                <Box sx={{ display: "flex", gap: 2, alignItems: "center", justifyContent: "center" }}>
-                                    <Button id="botao-confirmar-modal" size="medium" color="success" type="submit" sx={{ mt: 2 }} variant="contained">Confirmar</Button>
-                                    <Button id="botao-fechar-modal" onClick={handleClose} size="medium" type="submit" sx={{ mt: 2 }} variant="contained">Fechar</Button>
-                                </Box>
+                                </TableRow>
+                            </TableHead>
+
+                            <TableBody>
+                                {modulos.map((data) => (
+                                    <StyledTableRow key={data.idModulo}>
+                                        <StyledTableCell id="nome" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} scope="row">{data.idModulo}</StyledTableCell>
+
+                                        <StyledTableCell id="nome" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", width: { md: "200px" } }} scope="row">{data.nome}</StyledTableCell>
+
+                                        <StyledTableCell id="trilha" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100px" }}>{data.trilha}</StyledTableCell>
+
+                                        <StyledTableCell id="programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", width: { md: "200px" } }}>{data.programa}</StyledTableCell>
+
+                                        <StyledTableCell id="acoes" sx={{ textAlign: "center" }}>
+                                            <Button id={`botao-editar-modulo`} title="Editar" onClick={() => { navigate("/editar-modulo", { state: data }) }}><EditIcon /></Button>
+                                            <Button id={`botao-duplicar-modulo`} title="Duplicar"><ContentCopyIcon /></Button>
+                                            <Button id={`botao-deletar-modulo`} title="Deletar"><DeleteForeverIcon /></Button>
+                                        </StyledTableCell>
+                                    </StyledTableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    {/* Modal Confirmar Delete */}
+                    <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-titulo" aria-describedby="modal-modal-description" sx={{ backdropFilter: "blur(10px)" }}>
+                        <Box sx={style}>
+                            <Typography id="modal-modal-titulo" variant="h6" component="h2" color="error">Você realmente deseja excluir?</Typography>
+                            <Box sx={{ display: "flex", gap: 2, alignItems: "center", justifyContent: "center" }}>
+                                <Button id="botao-confirmar-modal" size="medium" color="success" type="submit" sx={{ mt: 2 }} variant="contained">Confirmar</Button>
+                                <Button id="botao-fechar-modal" onClick={handleClose} size="medium" type="submit" sx={{ mt: 2 }} variant="contained">Fechar</Button>
                             </Box>
-                        </Modal>
-                    </Paper>
-                </Box>
+                        </Box>
+                    </Modal>
+                </Paper>
             </Box>
-        </>
+        </Box>
     )
 }

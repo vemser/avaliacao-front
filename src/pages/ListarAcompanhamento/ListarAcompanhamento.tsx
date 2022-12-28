@@ -1,13 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
 
-import { Header } from "../../components/Header/Header";
-
-import { TableCell, tableCellClasses, TableRow, Typography, Box, Paper, TableContainer, Table, TableBody, Button, TablePagination, styled } from "@mui/material";
+import { TableCell, tableCellClasses, TableRow, Box, Paper, TableContainer, Table, TableBody, Button, TablePagination, styled, TableHead } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 
 import { GestorContext } from "../../context/GestorContext";
+import { Titulo } from "../../components/Titulo/Titulo";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: { backgroundColor: theme.palette.common.black, color: theme.palette.common.white },
@@ -19,7 +18,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:last-child td, &:last-child th": { border: 0 },
 }));
 
-
 interface Column {
   id: "codigo" | "titulo" | "dataInicial" | "descricao" | "acoes";
   label: string;
@@ -29,8 +27,8 @@ interface Column {
 }
 
 const columns: Column[] = [
-  { id: "codigo", label: "Codigo", minWidth: 5 },
-  { id: "titulo", label: "Titulo", minWidth: 5 },
+  { id: "codigo", label: "Código", minWidth: 5 },
+  { id: "titulo", label: "Título", minWidth: 5 },
   { id: "dataInicial", label: "Data inicial", minWidth: 5 },
   { id: "descricao", label: "Descrição", minWidth: 5, align: "right", format: (value: number) => value.toLocaleString("en-US") },
   { id: "acoes", label: "Ações", minWidth: 5, align: "right", format: (value: number) => value.toLocaleString("en-US") }
@@ -45,20 +43,25 @@ export const ListarAcompanhamento = () => {
   useEffect(() => { pegarAcompanhamento() }, [])
 
   return (
-    <>
-      <Box sx={{ height: "calc(100vh - 64px)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: 5 }}>
-        <Typography id="titulo-body" sx={{ textAlign: "center", fontSize: { xs: 30, md: 44 }, fontWeight: "700", color: "white" }} variant="h3">Lista acompanhamentos</Typography>
+    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
+      <Titulo texto="Acompanhamentos" />
 
-        <Paper sx={{ width: { xs: "95%", md: "65%" }, borderRadius: "10px", boxShadow: "10px 10px 10px var(--azul-escuro-dbc)" }}>
+      <Box sx={{ width: { xs: "95%", md: "80%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
+
+        <Button onClick={() => navigate("/cadastrar-acompanhamento")} variant="contained" sx={{ width: "auto", paddingLeft: "15px", paddingRight: "15px", display: "flex", marginBottom: "10px", marginRight: "14px", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Acompanhamento</Button>
+
+        <Paper sx={{ width: "100%", borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px" }}>
           <TableContainer sx={{ maxHeight: 430 }}>
             <Table stickyHeader aria-label="sticky table">
-              <thead>
-                <TableRow sx={{ backgroundColor: "#090F27", color: "white" }}>
+              
+              <TableHead sx={{ backgroundColor: "#090F27" }} >
+                <TableRow>
                   {columns.map((column) => (
-                    <TableCell key={column.id} align={column.align} style={{ top: 57, minWidth: column.minWidth, fontWeight: "700", fontSize: "1rem", textAlign: "center" }}>{column.label}</TableCell>
+                    <TableCell key={column.id} align={column.align} style={{ minWidth: "20%", fontWeight: "700", fontSize: "1rem", textAlign: "center", backgroundColor: "#090F27", color: "white" }}>{column.label}</TableCell>
                   ))}
                 </TableRow>
-              </thead>
+              </TableHead>
+
               <TableBody>
                 {acompanhamento.map((acompanhamentos) => (
                   <StyledTableRow key={acompanhamentos.idAcompanhamento}>
@@ -79,6 +82,6 @@ export const ListarAcompanhamento = () => {
           <TablePagination rowsPerPageOptions={[]} component="div" count={paginacaoAcompanhamento.totalElementos} rowsPerPage={paginacaoAcompanhamento.tamanho} page={paginacaoAcompanhamento.pagina} onPageChange={handleChangePage} />
         </Paper>
       </Box>
-    </>
+    </Box>
   );
 };

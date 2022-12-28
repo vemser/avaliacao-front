@@ -13,6 +13,7 @@ import { toastConfig } from "../../utils/toast";
 import { toast } from "react-toastify";
 
 import { IAvaliarAcompanhamento } from "../../utils/interface";
+import { Titulo } from "../../components/Titulo/Titulo";
 
 const itemHeigth = 48;
 const itemPaddingTop = 8;
@@ -47,17 +48,18 @@ export const AvaliarAcompanhamento = () => {
 
   return (
     <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
-      <Typography id="titulo-body" sx={{ textAlign: "center", marginBottom: "30px", fontSize: { xs: "35px", md: "40px" }, fontWeight: "600", color: "white", userSelect: "none" }} variant="h3">Avaliar acompanhamento</Typography>
+      
+      <Titulo texto="Avaliar Acompanhamento" />
 
       <Box component="form" onSubmit={handleSubmit(avaliarAcompanhamento)} sx={{
-        display: { xs: "block", md: "flex" }, justifyContent: "space-between", backgroundColor: "var(--branco)", width: { xs: "90%", md: "90%", lg: "80%" }, borderRadius: "10px", padding: {
-          xs: 5, md: 5
-        }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: 8
+        display: "flex", flexDirection: { xs: "column", lg: "row" }, justifyContent: "space-between", backgroundColor: "var(--branco)", width: { xs: "95%", md: "90%", lg: "85%" }, borderRadius: "10px", padding: {
+          xs: 3, sm: 5
+        }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: { xs: 3, xl: 8 }
       }}>
 
-        <Stack component="div" spacing={3} sx={{ width: { xs: "100%", md: "50%" }, display: "flex", alignItems: { xs: "start", md: "start" } }}>
-          <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>
-            <InputLabel id="acompanhamento">Titulo do Acompanhamento</InputLabel>
+        <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: { xs: "start", md: "start" } }}>
+          <FormControl variant="filled" sx={{ width: "100%" }}>
+            <InputLabel id="acompanhamento">Título do Acompanhamento</InputLabel>
             <Select MenuProps={MenuProps} labelId="demo-simple-select-filled-label" id="acompanhamento" error={!!errors.idAcompanhamento} {...register("idAcompanhamento")} defaultValue="initial-acompanhamento">
               <MenuItem value="initial-acompanhamento" disabled><em>Selecione o Acompanhamento</em></MenuItem>
               {acompanhamento.map((acompanhamentos) => (
@@ -70,7 +72,7 @@ export const AvaliarAcompanhamento = () => {
           <FormControl variant="filled">
             <FormLabel sx={{ color: "var(--azul-claro-dbc)", fontWeight: "500", marginBottom: "10px" }} id="demo-controlled-radio-buttons-group">Filtrar alunos por trilha</FormLabel>
 
-            <Box sx={{ display: "flex", flexWrap: { xs: "wrap", md: "nowrap" }, alignItems: "center", gap: 2 }}>
+            <Box sx={{ display: "flex", flexWrap: { xs: "wrap" }, alignItems: "center", gap: 2 }}>
 
               <Box color="primary" sx={{ display: "flex", flexDirection: "column", gap: 1, color: "var(--azul-claro-dbc)" }}>
                 <Stack spacing={2} direction="row">
@@ -93,11 +95,11 @@ export const AvaliarAcompanhamento = () => {
                 </Stack>
               </Box>
 
-              <Button id="limpar-filtro" type="button" size="small" variant="contained" onClick={resetFiltros} sx={{ textTransform: "capitalize", fontSize: "1rem" }}>Limpar filtros</Button>
+              <Button id="limpar-filtro" type="button" size="small" variant="contained" onClick={resetFiltros} sx={{ textTransform: "capitalize", fontSize: "1rem", width: "140px" }}>Limpar filtros</Button>
             </Box>
           </FormControl>
 
-          <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>
+          <FormControl variant="filled" sx={{ width: "100%" }}>
             <InputLabel id="aluno-label">Aluno</InputLabel>
             <Select MenuProps={MenuProps} labelId="demo-simple-select-filled-label" defaultValue="initial-aluno" id="aluno-select" error={!!errors.idAluno} {...register("idAluno")}>
               <MenuItem value="initial-aluno" disabled><em>Selecione o Aluno</em></MenuItem>
@@ -114,14 +116,14 @@ export const AvaliarAcompanhamento = () => {
             {errors.idAluno && <Typography id="erro-aluno" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px" }} color="error">{errors.idAluno.message}</Typography>}
           </FormControl>
 
-          <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>
-            <InputLabel id="responsavel">Responsavel</InputLabel>
+          <FormControl variant="filled" sx={{ width: "100%" }}>
+            <InputLabel id="responsavel">Responsável</InputLabel>
             <Select labelId="demo-simple-select-filled-label" id="responsavel" value="responsavel">
               <MenuItem value="responsavel">{infosUsuario.nome}</MenuItem>
             </Select>
           </FormControl>
 
-          <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>
+          <FormControl variant="filled" sx={{ width: "100%" }}>
             <InputLabel id="status">Status</InputLabel>
             <Select labelId="demo-simple-select-filled-label" defaultValue="initial-status" id="status" error={!!errors.tipo} {...register("tipo")}>
               <MenuItem value="initial-status" disabled><em>Selecione o Status</em></MenuItem>
@@ -134,27 +136,22 @@ export const AvaliarAcompanhamento = () => {
         </Stack>
 
         <Stack component="div" spacing={4} sx={{
-          width: { xs: "100%", md: "50%" }, display: "flex", marginTop: {
-            xs: 2, md: 0
-          },
-          alignItems: "end"
+          width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: "end"
         }}>
-          <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>
-            <TextField id="descricao" error={!!errors.descricao} label="Digite uma descrição" placeholder="Digite uma descrição" multiline rows={4} focused variant="filled" {...register("descricao")} />
+          <FormControl sx={{ width: "100%" }}>
+            <TextField id="descricao" error={!!errors.descricao} label="Digite uma descrição" placeholder="Digite uma descrição" multiline rows={4} variant="filled" {...register("descricao")} />
             {errors.descricao && <Typography id="erro-descricao" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px" }} color="error">{errors.descricao.message}</Typography>}
           </FormControl>
 
-          <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>
+          <FormControl sx={{ width: "100%" }}>
             <TextField id="data" error={!!errors.dataCriacao} label="Data inicial" type="date" sx={{ width: "100%" }} InputLabelProps={{ shrink: true }} {...register("dataCriacao")} />
             {errors.dataCriacao && <Typography id="erro-dataCriacao" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px" }} color="error">{errors.dataCriacao.message}</Typography>}
           </FormControl>
 
-          {/* <Button id="botao-avaliar" type="submit" sx={{ marginTop: "auto", fontSize: "1rem", textTransform: "capitalize", width: { xs: "20%", md: "150px" } }} variant="contained">Avaliar</Button> */}
+          <Box sx={{ display: "flex", width: "100%", justifyContent: { xs: "center", lg: "end" }, alignItems: { xs: "center", lg: "end" }, bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>
+            <Button onClick={() => { navigate(-1) }} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d " }, textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cancelar</Button>
 
-          <Box sx={{ display: "flex", alignItems: "end", bottom: 0, paddingTop: "20px", gap: 2, flexDirection: { xs: "column", sm: "row" } }}>
-            <Button onClick={() => { navigate(-1) }} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d " }, textTransform: "capitalize", fontSize: "1rem", width: { xs: "180px", md: "160px", lg: "180px" } }}>Cancelar</Button>
-            
-            <Button variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "180px", md: "160px", lg: "180px" } }}>Salvar</Button>
+            <Button variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Salvar</Button>
           </Box>
 
         </Stack>

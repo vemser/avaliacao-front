@@ -40,21 +40,20 @@ export const Login = () => {
   if(token) return <Navigate to={`/dashboard/gestor`} />
 
   return (
-    <>
-      <Box id="container-global" component="section" sx={{ textAlign: "center", display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+    <Box id="container-global" component="section" sx={{ textAlign: "center", display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
 
-        <Box id="box-esquerda" sx={{ backgroundImage: `url(${backgroundLogin})`, width: "40%", height: "100%", backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "center", display: { xs: "none", md: "block" } }}></Box>
+      <Box id="box-esquerda" sx={{ backgroundImage: `url(${backgroundLogin})`, width: "40%", height: "100%", backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "center", display: { xs: "none", md: "block" } }}></Box>
 
-        <Box id="box-direita" sx={{ width: { xs: "100%", md: "60%" }, height: "100%", display: "flex", justifyContent: "center", alignItems: "center", flexWrap: "wrap", backgroundColor: { md: "#f8f8ff", xs: "linear-gradient(151deg, rgba(17,29,77,0.8631827731092436) 0%, rgba(28,88,248,0.938813025210084) 70%)" } }}>
+      <Box id="box-direita" sx={{ width: { xs: "100%", md: "60%" }, height: "100%", display: "flex", justifyContent: "center", alignItems: "center", flexWrap: "wrap", backgroundColor: { md: "#F5F5F5", xs: "linear-gradient(151deg, rgba(17,29,77,0.8631827731092436) 0%, rgba(28,88,248,0.938813025210084) 70%)" } }}>
 
-          <Box id="box-login" component={"form"} onSubmit={handleSubmit(onSubmit)} sx={{
-            backgroundColor: "var(--branco)", width: {
-              xs: "90%", md: "70%"
-            }, borderRadius: 3, padding: { xs: 2, md: 5 }, boxShadow: "0px 4px 14px rgba(0, 0, 0, 0.25)"
-          }}>
-            <Stack spacing={2} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-              <Typography id="titulo" variant='h3' sx={{ color: "#1e62fe", fontWeight: "700" }}>AvaliaSer</Typography>
-              <Typography id="subtitulo" variant='body1' sx={{ color: "#090F27", fontWeight: "600" }}>Faça seu login!</Typography>
+        <Box id="box-login" component={"form"} onSubmit={handleSubmit(onSubmit)} sx={{
+          backgroundColor: "var(--branco)", width: {
+            xs: "90%", md: "70%"
+          }, borderRadius: 3, padding: { xs: 2, md: 5 }, boxShadow: "0px 4px 14px rgba(0, 0, 0, 0.25)"
+        }}>
+          <Stack spacing={3} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <Typography id="titulo" variant='h3' sx={{ color: "#1e62fe", fontWeight: "700", userSelect: "none" }}>AvaliaSer</Typography>
+            <Typography id="subtitulo" variant='body1' sx={{ color: "#090F27", fontWeight: "600", userSelect: "none" }}>Faça seu login!</Typography>
 
               <FormControl sx={{ width: { xs: "90%", md: "70%" } }} variant="outlined">
                 <InputLabel htmlFor="usuario" error={!!errors.username}>Usuário</InputLabel>
@@ -85,6 +84,6 @@ export const Login = () => {
           </Box>
         </Box>
       </Box>
-    </>
+    </Box>
   );
 };

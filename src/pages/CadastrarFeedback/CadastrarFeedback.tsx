@@ -1,8 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 
-import { Box, Typography, Stack, FormControl, TextField, FormLabel, InputLabel, MenuItem, Select, Button } from '@mui/material'
+import { Box, Typography, Stack, FormControl, TextField, FormLabel, InputLabel, MenuItem, Select, Button } from '@mui/material';
 
-import { BotaoAzul } from '../../components/BotaoAzul/BotaoAzul';
 import { Titulo } from '../../components/Titulo/Titulo';
 
 import logo from "../../assets/dbc-logo.webp";
@@ -17,12 +16,14 @@ import { toast } from 'react-toastify';
 import { toastConfig } from '../../utils/toast';
 
 import { ICadastrarFeedbackForm } from '../../utils/interface';
+import { useNavigate } from 'react-router-dom';
 
 const itemHeigth = 48;
 const itemPaddingTop = 8;
 const MenuProps = { PaperProps: { style: { maxHeight: itemHeigth * 4.5 + itemPaddingTop, width: 250, } } };
 
 export const CadastrarFeedback = () => {
+  const navigate = useNavigate();
   const { pegarAluno, alunos } = useContext(AlunoContext);
   const { cadastrarFeedback } = useContext(InstrutorContext);
 
@@ -50,17 +51,21 @@ export const CadastrarFeedback = () => {
 
   return (
     <>
-      <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "calc(100vh - 64px)" }}>
-        <Titulo texto="Cadastrar feedback" />
+      <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
+        <Titulo texto="Cadastrar Feedback" />
 
-        <Box component="form" onSubmit={handleSubmit(cadastrarFeedbacks)} sx={{ display: { xs: "flex", md: "flex" }, flexDirection: "column", alignItems: "center", backgroundColor: "var(--branco)", width: { xs: "90%", md: "35%" }, borderRadius: "10px", padding: { xs: 5, md: 5 }, boxShadow: "10px 10px 10px var(--azul-escuro-dbc)", gap: 2 }}>
+        <Box component="form" onSubmit={handleSubmit(cadastrarFeedbacks)} sx={{
+          display: "flex", flexDirection: "column", alignItems: "center", backgroundColor: "var(--branco)", width: { xs: "95%", md: "70%", lg: "60%", xl: "50%" }, borderRadius: "10px", padding: {
+            xs: 3, sm: 5
+          }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: 3
+        }}>
           <img src={logo} alt="Logo DBC" width={150} />
-          <Stack component="div" spacing={2} sx={{ width: { xs: "100%", md: "100%" }, display: "flex", alignItems: { xs: "start", md: "start" } }}>
+          <Stack component="div" spacing={3} sx={{ width: "100%", display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
             <FormControl variant="filled">
               <FormLabel sx={{ color: "var(--azul-claro-dbc)", fontWeight: "500", marginBottom: "10px" }} id="demo-controlled-radio-buttons-group">Filtrar alunos por stack:</FormLabel>
 
-              <Box sx={{ display: "flex", flexWrap: { xs: "wrap", md: "nowrap" }, alignItems: "center", gap: 2 }}>
+              <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 2 }}>
 
                 <Box color="primary" sx={{ display: "flex", flexDirection: "column", gap: 1, color: "var(--azul-claro-dbc)" }}>
                   <Stack spacing={2} direction="row">
@@ -83,11 +88,11 @@ export const CadastrarFeedback = () => {
                   </Stack>
                 </Box>
 
-                <Button id="limpar-filtro" type="button" size="small" variant="contained" onClick={resetFiltros}>Limpar filtros</Button>
+                <Button id="limpar-filtro" type="button" size="small" variant="contained" onClick={resetFiltros} sx={{ textTransform: "capitalize", fontSize: "1rem", width: "140px" }}>Limpar filtros</Button>
               </Box>
             </FormControl>
 
-            <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>
+            <FormControl variant="filled" sx={{ width: "100%" }}>
               <InputLabel id="aluno">Selecione aluno</InputLabel>
               <Select MenuProps={MenuProps} labelId="demo-simple-select-filled-label" defaultValue="initial-aluno" id="idAluno" {...register("idAluno")}>
                 <MenuItem value="initial-aluno" disabled><em>Selecione o Aluno</em></MenuItem>
@@ -104,12 +109,12 @@ export const CadastrarFeedback = () => {
               {errors.idAluno && <Typography id="erro-aluno" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.idAluno.message}</Typography>}
             </FormControl>
 
-            <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>
+            <FormControl sx={{ width: "100%" }}>
               <TextField id="descricao" {...register("descricao")} error={!!errors.descricao} label="Digite uma descrição" placeholder="Digite uma descrição" multiline variant="filled" />
               {errors.descricao && <Typography id="erro-descricao" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.descricao.message}</Typography>}
             </FormControl>
 
-            <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>
+            <FormControl variant="filled" sx={{ width: "100%" }}>
               <InputLabel id="status">Status</InputLabel>
               <Select labelId="demo-simple-select-filled-label" id="status" defaultValue="initial-status" error={!!errors.tipo} {...register("tipo")}>
                 <MenuItem value="initial-status" disabled><em>Selecione o Status</em></MenuItem>
@@ -119,8 +124,11 @@ export const CadastrarFeedback = () => {
               {errors.tipo && <Typography id="erro-status" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.tipo.message}</Typography>}
             </FormControl>
           </Stack>
+          <Box sx={{ display: "flex", width: "100%", justifyContent: "center", alignItems: "center", bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>
+            <Button onClick={() => { navigate(-1) }} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d " }, textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cancelar</Button>
 
-          <BotaoAzul texto="Enviar" />
+            <Button variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cadastrar</Button>
+          </Box>
         </Box>
       </Box>
     </>

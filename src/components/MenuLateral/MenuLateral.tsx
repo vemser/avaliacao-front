@@ -33,7 +33,7 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
     <>
       {mdDown && (
         <IconButton onClick={toggleOpen} sx={{ position: "fixed" }}>
-          <Menu color="action" fontSize="large" />
+          <MenuIcon color="action" fontSize="large" sx={{ color: "black" }} />
         </IconButton>
       )}
       <Drawer

@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { CadastrarFeedbackSchema } from '../../utils/schemas';
 
-import { AlunoContext } from '../../context/AlunoContext';
+import { useAluno } from '../../context/Comportamental/AlunoContext';
 import { InstrutorContext } from '../../context/InstrutorContext';
 import { toast } from 'react-toastify';
 import { toastConfig } from '../../utils/toast';
@@ -24,7 +24,7 @@ const MenuProps = { PaperProps: { style: { maxHeight: itemHeigth * 4.5 + itemPad
 
 export const CadastrarFeedback = () => {
   const navigate = useNavigate();
-  const { pegarAluno, alunos } = useContext(AlunoContext);
+  const { pegarAluno, alunos } = useAluno();
   const { cadastrarFeedback } = useContext(InstrutorContext);
 
   const [mudaRadio, setMudaRadio] = useState('')
@@ -96,10 +96,10 @@ export const CadastrarFeedback = () => {
               <InputLabel id="aluno">Selecione aluno</InputLabel>
               <Select MenuProps={MenuProps} labelId="demo-simple-select-filled-label" defaultValue="initial-aluno" id="idAluno" {...register("idAluno")}>
                 <MenuItem value="initial-aluno" disabled><em>Selecione o Aluno</em></MenuItem>
-                {alunos.map((aluno) => {
+                {alunos?.elementos.map((aluno) => {
                   if (mudaRadio) {
-                    if (mudaRadio === aluno.stack) {
-                      return (<MenuItem id={`alunos-${aluno.stack.toLowerCase()}-${aluno.idAluno}`} key={aluno.idAluno} value={aluno.idAluno}>{aluno.nome}</MenuItem>)
+                    if (mudaRadio === aluno.trilha.nome) {
+                      return (<MenuItem id={`alunos-${aluno.trilha.nome.toLowerCase()}-${aluno.idAluno}`} key={aluno.idAluno} value={aluno.idAluno}>{aluno.nome}</MenuItem>)
                     }
                   } else {
                     return (<MenuItem id={`alunos-geral-${aluno.idAluno}`} key={aluno.idAluno} value={aluno.idAluno}>{aluno.nome}</MenuItem>)

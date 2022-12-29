@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Box, Typography, Paper, TableContainer, Table, TableRow, TableCell, TableBody, tableCellClasses, Button, TablePagination, Modal, styled } from '@mui/material';
@@ -6,6 +6,7 @@ import { Box, Typography, Paper, TableContainer, Table, TableRow, TableCell, Tab
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
 import TableHead from '@mui/material/TableHead';
+import { useTrilha } from '../../context/Tecnico/TrilhaContext';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: { backgroundColor: theme.palette.common.black, color: theme.palette.common.white },
@@ -48,28 +49,19 @@ const style = {
 export const ListarTrilha = () => {
   const navigate = useNavigate();
 
-  const trilhas = [
-    {idTrilha: 1, nome: "FrontEnd", descricao: "sfjkksknfknfsknsknfdkssfjkksknfknfsknsknfdkssfjkksknfknfsknsknfdks"},
-    {idTrilha: 2, nome: "BackEnd", descricao: "sfjkksknfknfsknsknfdks"},
-    {idTrilha: 3, nome: "Quality Assurance", descricao: "sfjkksknfknfsknsknfdks"}
-  ];
-  const deletarTrilha = (id: number | undefined) => console.log(id);
+  const { trilhas, pegarTrilha, deletarTrilha } = useTrilha();
 
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const handleChangePage = (event: unknown, newPage: number) => { pegarTrilha(newPage); };
+
+  useEffect(() => {
+    pegarTrilha();
+  }, []);
 
   // Funções Modal
-  const [idDelete, setIdDelete] = useState<number | undefined>();
+  const [idDelete, setIdDelete] = useState<number | undefined>(0);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
-  // const handleChangePage = (event: unknown, newPage: number) => { setPage(newPage); };
-
-  // const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setRowsPerPage(+event.target.value);
-  //   setPage(0);
-  // };
 
   return (
     <>
@@ -85,12 +77,10 @@ export const ListarTrilha = () => {
           </TableHead>
 
           <TableBody>
-            {trilhas.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((trilha: any) => (
+            {trilhas?.elementos.map((trilha: any) => (
               <StyledTableRow key={trilha.idTrilha}>
-                <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: trilha })} id="nome-trilha" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row">{trilha.nome}</StyledTableCell>
-
-                <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: trilha })} id="descricao-trilha" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{trilha.descricao}</StyledTableCell>
-
+                <StyledTableCell id="nome-trilha" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row">{trilha.nome}</StyledTableCell>
+                <StyledTableCell id="descricao-trilha" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{trilha.descricao}</StyledTableCell>
                 <StyledTableCell id="acoes-trilha" sx={{ textAlign: "center" }}>
                   <Button id={`botao-editar-${trilha.idTrilha}`} title="Editar" onClick={() => navigate("/editar-trilha", { state: trilha })}><EditIcon /></Button>
                   <Button id={`botao-deletar-${trilha.idTrilha}`} title="Deletar" onClick={() => { handleOpen(); setIdDelete(trilha.idTrilha) }}><DeleteForeverIcon /></Button>
@@ -101,8 +91,8 @@ export const ListarTrilha = () => {
         </Table>
       </TableContainer>
 
-      {/* Paginação
-      <TablePagination rowsPerPageOptions={[10, 20, 30]} component="div" count={alunos.length} rowsPerPage={rowsPerPage} page={page} onPageChange={handleChangePage} onRowsPerPageChange={handleChangeRowsPerPage} labelRowsPerPage="Linhas por página:" /> */}
+      {/* Paginação */}
+      <TablePagination rowsPerPageOptions={[]} component="div" count={trilhas ? trilhas.totalElementos : 0} rowsPerPage={trilhas ? trilhas.tamanho : 0} page={trilhas ? trilhas.pagina : 0} onPageChange={handleChangePage} />
 
       {/* Modal Confirmar Delete */}
       <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-titulo" aria-describedby="modal-modal-description" sx={{ backdropFilter: "blur(10px)" }}>

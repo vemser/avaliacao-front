@@ -2,8 +2,11 @@ import * as  yup from "yup";
 
 const regexEmail = /^[A-Za-z0-9._%+-]+@dbccompany.com.br$/
 
+const regexMay = /^(?:([A-Za-z0-9._%+-]+@dbccompany.com.br)|([A-Za-z]+.[A-Za-z]+))$/
+
+
 export const userSchema = yup.object().shape({
-  username: yup.string().required("Por favor, digite seu usuário"),
+  username: yup.string().required("Por favor, digite seu usuário").matches(regexMay, "Precisa ser email @dbccompany.com.br ou usuário valido"),
   password: yup.string().required("Por favor, digite sua senha").min(8, "A senha deve ter no mínimo 8 caracteres")
 });
 

@@ -1,14 +1,15 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Header } from "../../components/Header/Header";
 
-import { Box, Typography, Paper, TableContainer, Table, TableRow, TableCell, TableBody, Button, Modal, styled, tableCellClasses } from "@mui/material";
+import { Box, Typography, Paper, TableContainer,TablePagination, Table, TableRow, TableCell, TableBody, Button, Modal, styled, tableCellClasses } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { Titulo } from "../../components/Titulo/Titulo";
 import TableHead from "@mui/material/TableHead";
+import { ModuloContext } from "../../context/Tecnico/ModuloContext";
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -63,6 +64,11 @@ const modulos = [
 ]
 
 export const ListarModulo = () => {
+
+    const { pegarModulo, modulo } = useContext(ModuloContext);
+
+    useEffect(() => { pegarModulo();},[])
+
     const navigate = useNavigate();
 
     // Funções Modal
@@ -70,6 +76,8 @@ export const ListarModulo = () => {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const handleChangePage = async (event: unknown,newPage:number) => { await pegarModulo(newPage)}
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
@@ -114,6 +122,8 @@ export const ListarModulo = () => {
                             </TableBody>
                         </Table>
                     </TableContainer>
+
+                    <TablePagination rowsPerPageOptions={[]} component="div" count={modulo ? modulo.totalElementos : 0} rowsPerPage={modulo ? modulo.totalElementos : 0} page={modulo ? modulo.totalElementos : 0} onPageChange={handleChangePage} />
                     {/* Modal Confirmar Delete */}
                     <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-titulo" aria-describedby="modal-modal-description" sx={{ backdropFilter: "blur(10px)" }}>
                         <Box sx={style}>

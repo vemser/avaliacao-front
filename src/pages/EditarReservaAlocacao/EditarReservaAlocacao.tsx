@@ -20,13 +20,17 @@ export const EditarReservaAlocacao = () => {
 
   return (
     <>
-      <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "calc(100vh - 64px)" }}>
-        <Titulo texto="Editar reserva e alocação" />
+      <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
+        <Titulo texto="Editar Reserva e Alocação" />
 
-        <Box component="form" sx={{ display: { xs: "block", md: "flex" }, justifyContent: "space-between", backgroundColor: "var(--branco)", width: { xs: "90%", md: "70%" }, borderRadius: "10px", padding: { xs: 5, md: 5 }, boxShadow: "10px 10px 10px var(--azul-escuro-dbc)",gap:"50px" }}>
-          <Stack component="div" spacing={3} sx={{ width: { xs: "100%", md: "50%" }, display: "flex", alignItems: { xs: "start", md: "start" } }}>
+        <Box component="form" sx={{
+          display: "flex", flexDirection: { xs: "column", lg: "row" }, justifyContent: "space-between", backgroundColor: "var(--branco)", width: { xs: "95%", md: "90%", lg: "85%" }, borderRadius: "10px", padding: {
+            xs: 3, sm: 5
+          }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: { xs: 3, xl: 8 }
+        }}>
+          <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
-          <FormControl sx={{ width: { xs: "100%", md: "100%" }}} >
+            <FormControl sx={{ width: "100%" }} >
               <Autocomplete
                 disablePortal
                 id="alocacao"
@@ -35,7 +39,7 @@ export const EditarReservaAlocacao = () => {
               />
             </FormControl>  
 
-            <FormControl sx={{ width: { xs: "100%", md: "100%" }}} >
+            <FormControl sx={{ width: "100%" }} >
               <Autocomplete
                 disablePortal
                 id="aluno"
@@ -44,7 +48,7 @@ export const EditarReservaAlocacao = () => {
               />
             </FormControl>  
 
-            <FormControl sx={{ width: { xs: "100%", md: "100%" }}} >
+            <FormControl sx={{ width: "100%" }} >
               <Autocomplete
                 disablePortal
                 id="vaga"
@@ -53,7 +57,7 @@ export const EditarReservaAlocacao = () => {
               />
             </FormControl>  
 
-            <FormControl sx={{ width: { xs: "100%", md: "100%" }}} >
+            <FormControl sx={{ width: "100%" }} >
               <Autocomplete
                 disablePortal
                 id="cliente"
@@ -62,7 +66,7 @@ export const EditarReservaAlocacao = () => {
               />
             </FormControl>  
 
-            <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>
+            <FormControl variant="filled" sx={{ width: "100%" }}>
               <InputLabel id="selectAluno">Situação</InputLabel>
               <Select labelId="demo-simple-select-filled-label" defaultValue="initial-stack" id="select-trilha" >
                 <MenuItem value="initial-stack" disabled><em>Selecione uma situação</em></MenuItem>
@@ -71,17 +75,13 @@ export const EditarReservaAlocacao = () => {
                 <MenuItem id="inativo" value="INATIVO">Inativo</MenuItem>
                 <MenuItem id="cancelado" value="CANCELADO">Cancelado</MenuItem>
                 <MenuItem id="finalizado" value="FINALIZADO">Finalizado</MenuItem>
-
-
               </Select>
-             
             </FormControl>
-
           </Stack>
 
-          <Stack component="div" spacing={3} sx={{ width: { xs: "100%", md: "50%" }, display: "flex", alignItems: "end", marginTop: { xs: 2, md: 0 } }}>
+          <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: "end" }}>
 
-          <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>
+          <FormControl sx={{ width: "100%" }}>
             <TextField
                 placeholder="Digite uma descrição"
                 multiline
@@ -90,29 +90,25 @@ export const EditarReservaAlocacao = () => {
                 id="descricao"
                 label="Descrição"
                 variant='filled'
-                focused
               />
             </FormControl>
 
-            <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>
+            <FormControl sx={{ width: "100%" }}>
             <TextField
                 placeholder="Digite um motivo"
                 multiline
                 rows={4}
                 sx={{width: "100%"}}
                 id="motivo"
-                label="Motivo"
+                label="Motivo da edição"
                 variant='filled'
-                focused
               />
             </FormControl>
 
-            <Box sx={{display:"flex",alignItems:"end"}}>
+            <Box sx={{ display: "flex", width: "100%", justifyContent: { xs: "center", lg: "end" }, alignItems: { xs: "center", lg: "end" }, bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>
+              <Button type="button" onClick={() => { navigate(-1) }} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d " }, textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cancelar</Button>
 
-              <Button onClick={()=>{navigate(-1)}} variant="contained"  sx={{backgroundColor:"#808080 ",":hover":{backgroundColor:"#5f5d5d "},textTransform: "capitalize", width:{ xs:"15ch", md:"25ch"}}} >Cancelar</Button>
-
-              <BotaoVerde texto="Enviar" />
-              
+              <Button type="submit" variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Salvar</Button>
             </Box>
           </Stack>
         </Box>

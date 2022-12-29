@@ -138,7 +138,7 @@ export const EditarAvaliacao = () => {
           </FormControl>
         </Stack>
 
-        <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: "end", marginTop: { xs: 2, md: 0 } }}>
+        <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: "end" }}>
           <FormControl sx={{ width: "100%" }}>
             <TextField id="descricao" defaultValue={state.descricao} {...register("descricao")} label="Digite uma descrição" placeholder="Digite uma descrição" multiline rows={4} variant="filled" />
           </FormControl>

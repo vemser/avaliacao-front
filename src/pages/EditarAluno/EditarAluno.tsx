@@ -28,11 +28,9 @@ const top100Films = [
 ];
 
 export const EditarAluno = () => {
-  const { state } = useLocation()
-
-  const navigate = useNavigate()
-
-  const { editarAluno } = useContext(AlunoContext)
+  const { state } = useLocation();
+  const navigate = useNavigate();
+  const { editarAluno } = useContext(AlunoContext);
 
   const { register, handleSubmit, formState: { errors } } = useForm<IEditarAluno>({
     resolver: yupResolver(editarAlunoSchema),
@@ -177,12 +175,10 @@ export const EditarAluno = () => {
             {errors.stack && <Typography id="erro-selectAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.stack.message}</Typography>}
           </FormControl>
 
-          <Box sx={{ display: "flex", alignItems: "end" }}>
+          <Box sx={{ display: "flex", width: "100%", justifyContent: { xs: "center", lg: "end" }, alignItems: { xs: "center", lg: "end" }, bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>
+            <Button type="button" onClick={() => { navigate(-1) }} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d " }, textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cancelar</Button>
 
-            <Button onClick={() => { navigate(-1) }} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d " }, textTransform: "capitalize", width: { xs: "15ch", md: "25ch" } }} >Cancelar</Button>
-
-            <BotaoVerde texto="Editar" />
-
+            <Button type="submit" variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Salvar</Button>
           </Box>
         </Stack>
       </Box>

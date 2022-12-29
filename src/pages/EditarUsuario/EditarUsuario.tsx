@@ -7,10 +7,11 @@ import { Titulo } from '../../components/Titulo/Titulo';
 import logo from '../../assets/dbc-logo.webp';
 
 import { useAuth } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 export const EditarUsuario = () => {
-  const { editarPerfil, usuarioLogado } = useAuth()
-
+  const navigate = useNavigate();
+  const { editarPerfil, usuarioLogado } = useAuth();
   const [selectedImage, setSelectedImage] = useState<File>();
 
   const imageChange = (e: any): void => {
@@ -20,33 +21,33 @@ export const EditarUsuario = () => {
   };
 
   const imagemAPI = new FormData();
-  if(selectedImage) {
+  if (selectedImage) {
     imagemAPI.append("imagem", selectedImage)
   }
 
   return (
-    <>
-      <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "calc(100vh - 64px)" }}>
-        <Titulo texto="Editar Foto" />
+    <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
+      <Titulo texto="Editar Foto" />
 
-        <Box sx={{ display: { xs: "flex", md: "flex" }, flexDirection: "column", alignItems: "center", justifyContent: "center", backgroundColor: "var(--branco)", width: { xs: "90%", md: "25%" }, borderRadius: "10px", padding: { xs: 5, md: 5 }, boxShadow: "10px 10px 10px var(--azul-escuro-dbc)", gap: 3 }}>
+      <Box sx={{
+        display: "flex", flexDirection: "column", alignItems: "center", backgroundColor: "var(--branco)", width: { xs: "95%", md: "70%", lg: "60%", xl: "50%" }, borderRadius: "10px", padding: {
+          xs: 3, sm: 5
+        }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: 3
+      }}>
+        <img src={logo} alt="Logo DBC Azul" width={150} />
 
-          <img src={logo} alt="Logo DBC Azul" width={100} />
+        <Avatar alt="Foto Enviada" id="foto-enviada" src={selectedImage ? URL.createObjectURL(selectedImage) : usuarioLogado.imagem ? `data:image/jpeg;base64,${usuarioLogado.imagem}` : ""} sx={{ width: 150, height: 150 }} />
+        <Button component="label" variant="contained">
+          <input id="imagemUsuario" type="file" hidden accept="image/jpeg" onChange={imageChange} />
+          <Typography sx={{ textTransform: "capitalize" }} variant="body1">Inserir Foto</Typography>
+        </Button>
 
-          <Avatar alt="Foto Enviada" id="foto-enviada" src={selectedImage ? URL.createObjectURL(selectedImage) : usuarioLogado.imagem ? `data:image/jpeg;base64,${usuarioLogado.imagem}` : ""} sx={{ width: 150, height: 150 }} />
-          <Button component="label" variant="contained">
-            <input id="imagemUsuario" type="file" hidden accept="image/jpeg" onChange={imageChange} />
-            <Typography sx={{ textTransform: "capitalize" }} variant="body1">Inserir Foto</Typography>
-          </Button>
+        <Box sx={{ display: "flex", width: "100%", justifyContent: "center", alignItems: "center", bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>
+          <Button type="button" onClick={() => { navigate(-1) }} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d " }, textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cancelar</Button>
 
-          <Box sx={{ display:"flex", alignItems:"end", gap: 2 }}>
-            <Button type="button" variant="contained" sx={{backgroundColor:"#808080 ", ":hover":{backgroundColor:"#5f5d5d "}, textTransform: "capitalize", width:{ xs:"15ch", md:"25ch"}}}>Cancelar</Button>
-
-            <Button onClick={() => editarPerfil(imagemAPI)} variant="contained" color="success" sx={{ textTransform: "capitalize", width:{ xs:"15ch", md:"25ch" }}}>Salvar</Button>
-          </Box>
-
+          <Button type="button" onClick={() => editarPerfil(imagemAPI)} variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Salvar</Button>
         </Box>
       </Box>
-    </>
+    </Box>
   )
 }

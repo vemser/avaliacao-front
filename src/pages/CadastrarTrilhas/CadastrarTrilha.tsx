@@ -48,6 +48,5 @@ export const CadastrarTrilha = () => {
           </Box>
         </Box>
       </Box>
-    </Box>
   )
 }

@@ -51,7 +51,9 @@ export const TrilhaPrograma = () => {
 
             <Box sx={{ display: "flex", flexDirection: { xs: "column", md: "row" }, justifyContent: "space-between", alignItems: "center", width: "100%" }}>
               <Button onClick={trocarTabela} id="botao-swap" variant='outlined' sx={{ width: { xs: "260px", md: "auto" }, paddingLeft: "15px", paddingRight: "15px", display: "flex", marginBottom: "10px", marginLeft: { xs: "0", md: "14px" }, textTransform: "capitalize", fontSize: "1rem" }}>Trilhas <SwapHorizIcon /></Button>
-              <Componentes.CampoBusca label="Buscar por nome" buscar={buscarPorNomePrograma}/>
+              
+              <Componentes.CampoBusca label="Buscar por nome" buscar={buscarPorNomePrograma} resetar={resetBuscaPrograma}/>
+
               <Button onClick={() => navigate("/cadastrar-programa")} variant="contained" sx={{ width: { xs: "260px", md: "auto" }, paddingLeft: "15px", paddingRight: "15px", display: "flex", marginBottom: "10px", marginRight: { xs: "0", md: "14px" }, textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Programa</Button>
             </Box>
 

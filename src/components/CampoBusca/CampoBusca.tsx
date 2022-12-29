@@ -6,9 +6,11 @@ import RestartAltIcon from '@mui/icons-material/RestartAlt';
 interface IProps {
   label: string;
   buscar: (valor: string) => Promise<void>;
+  resetar: () => Promise<void>;
 }
 
-export const CampoBusca: React.FC<IProps> = ({ buscar, label }) => {
+export const CampoBusca: React.FC<IProps> = ({ buscar, resetar, label }) => {
+  const [buscou, setBuscou] = useState<boolean>(false)
   const [search, setSearch] = useState<string | null>(null);
 
   return (
@@ -23,12 +25,12 @@ export const CampoBusca: React.FC<IProps> = ({ buscar, label }) => {
       endAdornment: (
         <InputAdornment position="end">
           {
-            !search ?
-            <IconButton onClick={() => { if(search) { buscar(search) } }}>
+            !buscou ?
+            <IconButton onClick={() => { if(search) { buscar(search); setBuscou(true) } }}>
               <SearchIcon />
             </IconButton>
             :
-            <IconButton onClick={() => { if(search) { buscar(search) } }}>
+            <IconButton onClick={() => { if(search) { resetar(); setBuscou(false) } }}>
               <RestartAltIcon />
             </IconButton>
           }

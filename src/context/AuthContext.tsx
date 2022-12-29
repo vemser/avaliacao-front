@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }: IChildren) => {
       toast.success("Seja bem-vindo(a)", toastConfig);
       navigate("/dashboard/gestor")
     } catch (error) {
-      toast.error("Usuário ou senha incorretos.", toastConfig);
+      toast.error("Desculpe, houve algum erro", toastConfig);
     } finally {
       nProgress.done();
     }
@@ -65,6 +65,7 @@ export const AuthProvider = ({ children }: IChildren) => {
   const usuarioLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('cargo');
+    navigate("/");
   };
 
   return (

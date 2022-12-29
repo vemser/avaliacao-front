@@ -53,6 +53,16 @@ export const CadastrarModulo = () => {
                     <FormControl sx={{ width: "100%" }}>
                         <TextField id="descricao" label="Digite um nome" placeholder="Digite o nome do Módulo" multiline variant="filled" />
                     </FormControl>
+
+                    <FormControl sx={{ width: "100%" }}>
+                    <TextField id="dataInicio" label="Data Início" type="date" sx={{ width: "100%" }} InputLabelProps={{ shrink: true }}/>
+                    
+                    </FormControl>
+
+                    <FormControl sx={{ width: "100%" }}>
+                    <TextField id="dataFim" label="Data Fim" type="date" sx={{ width: "100%" }} InputLabelProps={{ shrink: true }}/>
+                    
+                    </FormControl>
                     <FormControl variant="filled" sx={{ width: "100%" }}>
                         <InputLabel id="aluno">Selecione uma trilha</InputLabel>
                         <Select MenuProps={MenuProps} labelId="demo-simple-select-filled-label" id="aluno" >
@@ -82,9 +92,9 @@ export const CadastrarModulo = () => {
                     </FormControl>
                 </Stack>
                 <Box sx={{ display: "flex", width: "100%", justifyContent: "center", alignItems: "center", bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>
-                    <Button onClick={() => { navigate(-1) }} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d " }, textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cancelar</Button>
+                    <Button type="button" onClick={() => { navigate(-1) }} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d " }, textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cancelar</Button>
 
-                    <Button variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cadastrar</Button>
+                    <Button type="submit" variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cadastrar</Button>
                 </Box>
             </Box>
         </Box>

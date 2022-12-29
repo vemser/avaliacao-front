@@ -31,3 +31,5 @@ export { ListarCliente } from "./ListarCliente/ListarCliente";
 export { ListarVaga} from "./ListarVaga/ListarVaga";
 export {EditarReservaAlocacao} from "./EditarReservaAlocacao/EditarReservaAlocacao"
 export {EditarCliente} from "./EditarCliente/EditarCliente"
+export {CadastrarVaga} from "./CadastrarVaga/CadastrarVaga"
+

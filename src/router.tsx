@@ -31,6 +31,7 @@ function AppRoutes() {
                 <Route path="/editar-trilha" element={<Pages.EditarTrilha />} />
                 <Route path="/editar-programa" element={<Pages.EditarPrograma />} />
                 <Route path="/cadastrar-atividade" element={<Pages.CadastrarAtividade/>}/>
+                <Route path="/cadastrar-vaga" element={<Pages.CadastrarVaga/>}/>
 -
                 <Route path="/cadastrar-reserva-alocacao" element={<Pages.CadastrarReservaAlacocao/>}/>
                 <Route path="/cadastrar-cliente" element={<Pages.CadastrarCliente/>}/>

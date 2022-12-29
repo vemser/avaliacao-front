@@ -2,13 +2,11 @@ import React from "react";
 
 import { useNavigate } from "react-router-dom";
 
-import * as Components from "../../components"
-
-import { TableCell, tableCellClasses, TableRow, Box, Paper, TableContainer, Table, TableBody, Button, TablePagination, styled } from "@mui/material";
+import { TableCell, tableCellClasses, TableRow, Box, Paper, TableContainer, Table, TableBody, Button, TablePagination, styled, TableHead } from "@mui/material";
 
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-
+import { Titulo } from "../../components/Titulo/Titulo";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: { backgroundColor: theme.palette.common.black, color: theme.palette.common.white },
@@ -48,30 +46,29 @@ const dados = [
 ]
 
 export const ListarAlocacao: React.FC = () => {
-
-  const navigate = useNavigate()
-
+  const navigate = useNavigate();
  const handleChangePage = () => console.log("Fazer paginação");
   
   return (
-    <>
-      <Box sx={{ minHeight: "calc(100vh - 64px)", paddingTop: "50px", paddingBottom: "50px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: 5 }}>
-        <Components.Titulo texto="Reserva e Alocação"/>
+    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
+        <Titulo texto="Reserva e Alocação"/>
 
-        <Box sx={{ width: "60%", display: "flex", alignItems: "end", flexDirection: "column", padding: "20px", background: "#f8f8fff8", borderRadius: "10px", boxShadow: "10px 10px 10px var(--azul</Box>-escuro-dbc)" }}>
+      <Box sx={{ width: { xs: "95%", md: "80%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
 
-        <Button onClick={() => navigate("/cadastrar-reserva-alocacao")} variant="contained" sx={{ width: "200px", whiteSpace: "nowrap", display: "flex", marginBottom: "10px" }}>Cadastrar Alocação</Button>
+        <Button onClick={() => navigate("/cadastrar-reserva-alocacao")} variant="contained" sx={{ width: "auto", paddingLeft: "15px", paddingRight: "15px", display: "flex", marginBottom: "10px", marginRight: "14px", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Alocação</Button>
 
-        <Paper sx={{ width: { xs: "100%", md: "100%" }, borderRadius: "10px" }}>
+        <Paper sx={{ width: "100%", borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px" }}>
           <TableContainer sx={{ maxHeight: 430 }}>
             <Table stickyHeader aria-label="sticky table">
-              <thead>
-                <TableRow sx={{ backgroundColor: "#090F27", color: "white" }}>
+
+              <TableHead sx={{ backgroundColor: "#090F27" }} >
+                <TableRow>
                   {columns.map((column) => (
-                    <TableCell key={column.id} align={column.align} style={{ top: 57, minWidth: column.minWidth, fontWeight: "700", fontSize: "1rem", textAlign: "center" }}>{column.label}</TableCell>
+                    <TableCell key={column.id} align={column.align} style={{ minWidth: "16.6%", fontWeight: "700", fontSize: "1rem", textAlign: "center", backgroundColor: "#090F27", color: "white" }}>{column.label}</TableCell>
                   ))}
                 </TableRow>
-              </thead>
+              </TableHead>
+
               <TableBody>
                 {dados.map((alocacao) => (
                   <StyledTableRow key={alocacao.idAlocacao}>
@@ -95,6 +92,5 @@ export const ListarAlocacao: React.FC = () => {
 
         </Box>
       </Box>
-    </>
   );
 };

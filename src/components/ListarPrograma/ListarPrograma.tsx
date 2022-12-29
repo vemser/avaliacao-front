@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Box, Typography,  TableContainer, Table, TableRow, TableCell, TableBody, tableCellClasses, Button, TablePagination, Modal, styled } from '@mui/material';
+import { Box, Typography,  TableContainer, Table, TableRow, TableCell, TableBody, tableCellClasses, Button, TablePagination, Modal, styled, Tooltip  } from '@mui/material';
 
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
@@ -19,7 +19,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 interface Column {
-  id: "nome" | "descricao" | "situacao" | "dataInicio" | "dataFim" | "acoes";
+  id: "codigo" | "nome" | "descricao" | "situacao" | "dataInicio" | "dataFim" | "acoes";
   label: string;
   minWidth?: number;
   align?: "right";
@@ -27,6 +27,7 @@ interface Column {
 }
 
 const columns: Column[] = [
+  { id: "codigo", label: "Código", minWidth: 5 },
   { id: "nome", label: "Nome do Programa", minWidth: 5 },
   { id: "descricao", label: "Descrição", minWidth: 5 },
   { id: "situacao", label: "Situação", minWidth: 5 },
@@ -68,6 +69,10 @@ export const ListarPrograma = () => {
 
   const deletar = async (id: number ) => { await deletarProgama(id) }
 
+  function formatarTexto(str: string) {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  }
+
   return (
     <>
       <TableContainer sx={{ maxHeight: 430 }}>
@@ -84,12 +89,16 @@ export const ListarPrograma = () => {
           <TableBody>
             {programas?.elementos.map((programa: any) => (
               <StyledTableRow key={programa.idPrograma}>
+                <StyledTableCell id="id-programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row">{programa.idPrograma}</StyledTableCell>
+
                 <StyledTableCell id="nome-programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row">{programa.nome}</StyledTableCell>
 
-                <StyledTableCell id="descricao-programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{programa.descricao ? programa.descricao : "Sem descrição"}</StyledTableCell>
-                <StyledTableCell id="descricao-programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{programa.situacao}</StyledTableCell>
-                <StyledTableCell id="descricao-programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{programa.dataInicio}</StyledTableCell>
-                <StyledTableCell id="descricao-programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{programa.dataFim}</StyledTableCell>
+                <Tooltip title={programa.descricao} PopperProps={{sx: {marginTop: "-35px !important"}}} arrow>
+                  <StyledTableCell id="descricao-programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{programa.descricao ? programa.descricao : "Sem descrição"}</StyledTableCell>
+                </Tooltip>
+                <StyledTableCell id="situacao-programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{formatarTexto(programa.situacao)}</StyledTableCell>
+                <StyledTableCell id="dataInicio-programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{programa.dataInicio}</StyledTableCell>
+                <StyledTableCell id="dataFim-programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{programa.dataFim}</StyledTableCell>
 
                 <StyledTableCell id="acoes-programa" sx={{ textAlign: "center" }}>
                   <Button id={`botao-editar-${programa.idPrograma}`} title="Editar" onClick={() => navigate("/editar-programa", { state: programa })}><EditIcon /></Button>

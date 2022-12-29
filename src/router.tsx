@@ -36,7 +36,7 @@ function AppRoutes() {
                 <Route path="/cadastrar-atividade" element={<Pages.CadastrarAtividade/>}/>
                 <Route path="/cadastrar-vaga" element={<Pages.CadastrarVaga/>}/>
                 <Route path="/editar-atividade" element={<Pages.EditarAtividade/>}/>
--
+
                 <Route path="/cadastrar-reserva-alocacao" element={<Pages.CadastrarReservaAlacocao/>}/>
                 <Route path="/cadastrar-cliente" element={<Pages.CadastrarCliente/>}/>
 
@@ -83,8 +83,8 @@ function AppRoutes() {
 
               </Route>
             </Routes>
-          </Context.ModuloProvider>
           </Context.TrilhaProvider>
+          </Context.ModuloProvider>
           </Context.InstrutorProvider>
           </Context.GestorProvider>
           </Context.AlunoProvider>

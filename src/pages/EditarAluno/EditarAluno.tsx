@@ -11,7 +11,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { editarAlunoSchema } from '../../utils/schemas';
 
-import { AlunoContext } from '../../context/Comportamental/AlunoContext';
+import { AlunoContext, useAluno } from '../../context/Comportamental/AlunoContext';
 
 import { IEditarAluno } from '../../utils/interface';
 
@@ -30,7 +30,6 @@ const top100Films = [
 export const EditarAluno = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const { editarAluno } = useContext(AlunoContext);
 
   const { register, handleSubmit, formState: { errors } } = useForm<IEditarAluno>({
     resolver: yupResolver(editarAlunoSchema),

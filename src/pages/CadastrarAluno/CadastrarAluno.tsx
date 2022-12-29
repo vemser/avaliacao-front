@@ -45,7 +45,7 @@ const TextMaskCustom = React.forwardRef<HTMLElement, CustomProps>(
     return (
       <IMaskInput
         {...other}
-        mask="(00) 00000-0000"
+        mask="(00)00000-0000"
         definitions={{
           '#': /[1-9]/,
         }}
@@ -67,7 +67,7 @@ export const CadastrarAluno = () => {
   const { criarAluno } = useContext(AlunoContext)
 
   const [values, setValues] = React.useState<State>({
-    textmask: '(99) 99999-9999'
+    textmask: ''
   });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -95,6 +95,7 @@ export const CadastrarAluno = () => {
     } else {
       criarAluno(data)
     }
+    console.log(data)
   };
 
   // const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
@@ -126,19 +127,20 @@ export const CadastrarAluno = () => {
             <InputLabel htmlFor="formatted-text-mask-input">Telefone</InputLabel>
             <Input
               value={values.textmask}
+              {...register("telefone")}
               onChange={handleChange}
               name="textmask"
-              id="formatted-text-mask-input"
+              id="telefone"
               inputComponent={TextMaskCustom as any}
             />
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField type="text" label="Cidade" placeholder='Digite sua cidade' id='cidade' variant="filled" />
+            <TextField type="text" label="Cidade" placeholder='Digite sua cidade' id='cidade' variant="filled" {...register("cidade")} />
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField type="text" label="Estado" placeholder='Digite seu estado' id='estado' variant="filled" />
+            <TextField type="text" label="Estado" placeholder='Digite seu estado' id='estado' variant="filled" {...register("estado")} />
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
@@ -150,6 +152,7 @@ export const CadastrarAluno = () => {
               id="descricao"
               label="Descrição"
               variant='filled'
+              {...register("descricao")}
             />
           </FormControl>
         </Stack>
@@ -227,6 +230,7 @@ export const CadastrarAluno = () => {
             <Autocomplete
               disablePortal
               id="programa"
+              {...register("programa")}
               options={top100Films}
               renderInput={(params) => <TextField {...params} label="Programa" variant="filled" />}
             />
@@ -234,7 +238,7 @@ export const CadastrarAluno = () => {
 
           <FormControl variant="filled" sx={{ width: "100%" }}>
             <InputLabel id="selectAluno">Situação</InputLabel>
-            <Select labelId="demo-simple-select-filled-label" defaultValue="initial-stack" id="select-situacao">
+            <Select labelId="demo-simple-select-filled-label" defaultValue="initial-stack" id="situacao" {...register("situacao")}>
               <MenuItem value="initial-stack" disabled><em>Selecione uma situação</em></MenuItem>
               <MenuItem id="disponivel" value="DISPONIVEL">Disponível</MenuItem>
               <MenuItem id="reservado" value="RESERVADO">Reservado</MenuItem>
@@ -247,7 +251,7 @@ export const CadastrarAluno = () => {
           <Box sx={{ display: "flex", width: "100%", justifyContent: { xs: "center", lg: "end" }, alignItems: { xs: "center", lg: "end" }, bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>
             <Button onClick={() => { navigate(-1) }} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d " }, textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cancelar</Button>
 
-            <Button variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cadastrar</Button>
+            <Button variant="contained" type="submit" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cadastrar</Button>
           </Box>
         </Stack>
       </Box>

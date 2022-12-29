@@ -5,3 +5,4 @@ export { Loading } from "./Loading/Loading";
 export { MenuLateral } from "./MenuLateral/MenuLateral";
 export { Titulo} from "./Titulo/Titulo";
 export { CardVaga } from "./CardVaga/CardVaga";
+export { CampoBusca } from "./CampoBusca/CampoBusca";

@@ -14,6 +14,7 @@ function AppRoutes() {
       <BrowserRouter basename={process.env.PUBLIC_URL}>
         <ToastContainer />
         <Context.AuthProvider>
+          <Context.ProgramaProvider>
           <Context.MenuLateralProvider>
           <Context.AdminProvider>
           <Context.AlunoProvider>
@@ -87,6 +88,7 @@ function AppRoutes() {
           </Context.AlunoProvider>
           </Context.AdminProvider>
           </Context.MenuLateralProvider>
+          </Context.ProgramaProvider>
         </Context.AuthProvider>
       </BrowserRouter>
     </>

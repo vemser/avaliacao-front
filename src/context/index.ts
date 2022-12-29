@@ -4,4 +4,5 @@ export { AlunoProvider } from "./AlunoContext";
 export { GestorProvider } from "./GestorContext";
 export { InstrutorProvider } from "./InstrutorContext";
 export { MenuLateralProvider } from "./MenuLateralContext";
-export {ModuloProvider} from "./Tecnico/ModuloContext"
+export { ModuloProvider } from "./Tecnico/ModuloContext"
+export { ProgramaProvider } from "./Tecnico/ProgramaContext";

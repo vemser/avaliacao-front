@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Box, Typography, Paper, TableContainer, Table, TableRow, TableCell, TableBody, tableCellClasses, Button, TablePagination, Modal, styled } from '@mui/material';
+import { Box, Typography,  TableContainer, Table, TableRow, TableCell, TableBody, tableCellClasses, Button, TablePagination, Modal, styled } from '@mui/material';
 
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
 import TableHead from '@mui/material/TableHead';
+import { usePrograma } from '../../context/Tecnico/ProgramaContext';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: { backgroundColor: theme.palette.common.black, color: theme.palette.common.white },
@@ -18,7 +19,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 interface Column {
-  id: "nome" | "descricao" | "acoes";
+  id: "nome" | "descricao" | "situacao" | "dataInicio" | "dataFim" | "acoes";
   label: string;
   minWidth?: number;
   align?: "right";
@@ -27,7 +28,10 @@ interface Column {
 
 const columns: Column[] = [
   { id: "nome", label: "Nome do Programa", minWidth: 5 },
-  { id: "descricao", label: "Descrição do Programa", minWidth: 5 },
+  { id: "descricao", label: "Descrição", minWidth: 5 },
+  { id: "situacao", label: "Situação", minWidth: 5 },
+  { id: "dataInicio", label: "Data de Inicio", minWidth: 5 },
+  { id: "dataFim", label: "Data de Fim", minWidth: 5 },
   { id: "acoes", label: "Ações", minWidth: 5, align: "right", format: (value: number) => value.toLocaleString("en-US") }
 ];
 
@@ -47,29 +51,22 @@ const style = {
 
 export const ListarPrograma = () => {
   const navigate = useNavigate();
+  const { pegarPrograma, deletarProgama, programas } = usePrograma()
 
-  const programas = [
-    {idPrograma: 1, nome: "Vem Ser 10", descricao: "sfjkksknfknfsknsknfdkssfjkksknfknfsknsknfdkssfjkksknfknfsknsknfdks"},
-    {idPrograma: 2, nome: "DBC", descricao: "sfjkksknfknfsknsknfdks"},
-    {idPrograma: 3, nome: "Vem Ser 11", descricao: "sfjkksknfknfsknsknfdks"}
-  ];
-  const deletarPrograma = (id: number | undefined) => console.log(id);
-
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  useEffect(() => {
+    pegarPrograma()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // Funções Modal
-  const [idDelete, setIdDelete] = useState<number | undefined>();
+  const [idDelete, setIdDelete] = useState<number | null>(null);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  // const handleChangePage = (event: unknown, newPage: number) => { setPage(newPage); };
+  const mudarPagina = async (event: unknown, newPage: number) => { await pegarPrograma(newPage); };
 
-  // const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setRowsPerPage(+event.target.value);
-  //   setPage(0);
-  // };
+  const deletar = async (id: number ) => { await deletarProgama(id) }
 
   return (
     <>
@@ -85,11 +82,14 @@ export const ListarPrograma = () => {
           </TableHead>
 
           <TableBody>
-            {programas.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((programa: any) => (
+            {programas?.elementos.map((programa: any) => (
               <StyledTableRow key={programa.idPrograma}>
-                <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: programa })} id="nome-programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row">{programa.nome}</StyledTableCell>
+                <StyledTableCell id="nome-programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row">{programa.nome}</StyledTableCell>
 
-                <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: programa })} id="descricao-programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{programa.descricao}</StyledTableCell>
+                <StyledTableCell id="descricao-programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{programa.descricao ? programa.descricao : "Sem descrição"}</StyledTableCell>
+                <StyledTableCell id="descricao-programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{programa.situacao}</StyledTableCell>
+                <StyledTableCell id="descricao-programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{programa.dataInicio}</StyledTableCell>
+                <StyledTableCell id="descricao-programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{programa.dataFim}</StyledTableCell>
 
                 <StyledTableCell id="acoes-programa" sx={{ textAlign: "center" }}>
                   <Button id={`botao-editar-${programa.idPrograma}`} title="Editar" onClick={() => navigate("/editar-programa", { state: programa })}><EditIcon /></Button>
@@ -102,15 +102,14 @@ export const ListarPrograma = () => {
         </Table>
       </TableContainer>
 
-      {/* Paginação
-      <TablePagination rowsPerPageOptions={[10, 20, 30]} component="div" count={alunos.length} rowsPerPage={rowsPerPage} page={page} onPageChange={handleChangePage} onRowsPerPageChange={handleChangeRowsPerPage} labelRowsPerPage="Linhas por página:" /> */}
+      <TablePagination rowsPerPageOptions={[]} component="div" count={programas?.totalElementos ? programas.totalElementos : 0} rowsPerPage={programas?.tamanho ? programas.tamanho : 0} page={programas?.pagina ? programas.pagina : 0} onPageChange={mudarPagina}/>
 
       {/* Modal Confirmar Delete */}
       <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-titulo" aria-describedby="modal-modal-description" sx={{ backdropFilter: "blur(10px)" }}>
         <Box sx={style}>
           <Typography id="modal-modal-titulo" variant="h6" component="h2" color="error">Você realmente deseja excluir?</Typography>
           <Box sx={{ display: "flex", gap: 2, alignItems: "center", justifyContent: "center" }}>
-            <Button id="botao-confirmar-modal" onClick={() => { deletarPrograma(idDelete); handleClose(); }} size="medium" color="success" type="submit" sx={{ mt: 2 }} variant="contained">Confirmar</Button>
+            <Button id="botao-confirmar-modal" onClick={() => { if(idDelete) deletar(idDelete); handleClose(); }} size="medium" color="success" type="submit" sx={{ mt: 2 }} variant="contained">Confirmar</Button>
             <Button id="botao-fechar-modal" onClick={handleClose} size="medium" type="submit" sx={{ mt: 2 }} variant="contained">Fechar</Button>
           </Box>
         </Box>

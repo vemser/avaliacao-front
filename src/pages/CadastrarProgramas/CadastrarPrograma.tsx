@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
 
-import { Box, FormControl, TextField, Button, Typography } from '@mui/material';
+import { Box, FormControl, TextField, Button, Typography, Select, MenuItem, InputLabel } from '@mui/material';
 
 import { Titulo } from '../../components/Titulo/Titulo';
 
@@ -21,7 +21,6 @@ export const CadastrarPrograma: React.FC = () => {
   });
 
   const cadastrar = async (data: IProgramas) => {
-    data.situacao = "ABERTO";
     await cadastrarPrograma(data)
     reset();
   }
@@ -46,7 +45,15 @@ export const CadastrarPrograma: React.FC = () => {
             <TextField id="descricao-programa" label="Descrição do Programa" multiline rows={4} placeholder="Ex: Este programa é destinado..." variant="filled" {...register("descricao")}/>
           </FormControl>
 
-          <Box sx={{ width: "100%",  display: "flex", justifyContent: "space-between"}}>
+          <FormControl sx={{ width: "100%" }}>
+            <InputLabel>Situação</InputLabel>
+            <Select  label="Situação" defaultValue="ABERTO" id="situacao-programa" {...register("situacao")}>
+              <MenuItem value="ABERTO" >Aberto</MenuItem>
+              <MenuItem value="FECHADO">Fechado</MenuItem>
+            </Select>
+          </FormControl>
+
+          <Box sx={{ width: "100%",  display: "flex", justifyContent: "space-between"}}>    
             <FormControl sx={{ width: "45%" }}>
               <TextField id="dataInicioPrograma"  label="Data inicial" type="date" sx={{ width: "100%" }} InputLabelProps={{ shrink: true }}  {...register("dataInicio")}/>
               {errors.dataInicio && <Typography id="erro-dataInicioPrograma" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.dataInicio.message}</Typography>}
@@ -64,6 +71,5 @@ export const CadastrarPrograma: React.FC = () => {
           </Box>
         </Box>
       </Box>
-    </Box>
   )
 }

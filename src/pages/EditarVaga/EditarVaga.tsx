@@ -3,6 +3,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import { Titulo } from '../../components';
 
+
 const top100Films = [
   { label: 'The Shawshank Redemption', year: 1994 },
   { label: 'The Godfather', year: 1972 },
@@ -13,14 +14,14 @@ const top100Films = [
   { label: 'Pulp Fiction', year: 1994 }
 ];
 
-export const EditarAtividade = () => {
+
+export const EditarVaga = () => {
 
   const navigate = useNavigate()
 
-
   return (
     <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
-      <Titulo texto="Editar Atividade" />
+      <Titulo texto="Editar Vaga" />
 
       <Box component="form" sx={{
         display: "flex", flexDirection: { xs: "column", lg: "row" }, justifyContent: "space-between", backgroundColor: "var(--branco)", width: { xs: "95%", md: "90%", lg: "85%" }, borderRadius: "10px", padding: {
@@ -30,10 +31,20 @@ export const EditarAtividade = () => {
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField id="titulo-atividade" label="Título" placeholder="Digite um título para a atividade" variant="filled" />
+            <TextField id="nomeVaga" label="Nome da vaga" placeholder="Digite o nome da vaga" variant="filled" />
+
           </FormControl>
 
-          <FormControl sx={{ width: "100%" }} >
+          <FormControl sx={{ width: { xs: "100%", md: "100%" } }} >
+            <Autocomplete
+              disablePortal
+              id="cliente"
+              options={top100Films}
+              renderInput={(params) => <TextField {...params} label="Cliente" variant="filled" />}
+            />
+          </FormControl>
+
+          <FormControl sx={{ width: { xs: "100%", md: "100%" } }} >
             <Autocomplete
               disablePortal
               id="programa"
@@ -42,48 +53,28 @@ export const EditarAtividade = () => {
             />
           </FormControl>
 
-          <FormControl variant="filled" sx={{ width: "100%" }}>
-            <InputLabel id="select-atividade">Módulo</InputLabel>
-            <Select labelId="demo-simple-select-filled-label" defaultValue="initial-stack" id="select-modulo" >
-              <MenuItem value="initial-stack" disabled><em>Selecione um módulo</em></MenuItem>
-              <MenuItem id="frontend" value="FRONTEND">ReactJs</MenuItem>
-              <MenuItem id="backend" value="BACKEND">JavaScript</MenuItem>
-              <MenuItem id="qa" value="QA">TypeScript</MenuItem>
-            </Select>
-          </FormControl>
-
           <FormControl sx={{ width: "100%" }}>
-            <TextField
-              placeholder="Digite uma descrição"
-              multiline
-              rows={4}
-              sx={{ width: "100%" }}
-              id="descricao"
-              label="Descrição"
-              variant='filled'
-            />
+            <TextField id="vagaTotais" type="number" label="Quantidade de vagas" placeholder="Digite a quantidade de vagas" variant="filled" />
           </FormControl>
         </Stack>
 
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: "end" }}>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField type="number" label="Peso atividade " placeholder='Digite o peso da atividade' id='peso' variant="filled"
-            />
-          </FormControl>
-
-          <FormControl sx={{ width: "100%" }} >
-            <Autocomplete
-              disablePortal
-              id="programa"
-              options={top100Films}
-              renderInput={(params) => <TextField {...params} label="Alunos" variant="filled" />}
-            />
+            <TextField id="dataAbertura" label="Data de Abertura" type="date" sx={{ width: "100%" }} InputLabelProps={{ shrink: true }} />
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField type="datetime-local" label="Data/horário de entrega " placeholder='Digite uam data de entrega' id='data-entrega' variant="filled" InputLabelProps={{ shrink: true }}
-            />
+            <TextField id="dataFechamento" label="Data de Fechamento" type="date" sx={{ width: "100%" }} InputLabelProps={{ shrink: true }} />
+          </FormControl>
+
+          <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>
+            <InputLabel id="selectAluno">Situação</InputLabel>
+            <Select labelId="demo-simple-select-filled-label" defaultValue="initial-stack" id="select-trilha" >
+              <MenuItem value="initial-stack" disabled><em>Selecione uma situação</em></MenuItem>
+              <MenuItem id="aberta" value="ABERTA">Aberta</MenuItem>
+              <MenuItem id="fechada" value="FECHADA">Fechada</MenuItem>
+            </Select>
           </FormControl>
 
           <Box sx={{ display: "flex", width: "100%", justifyContent: { xs: "center", lg: "end" }, alignItems: { xs: "center", lg: "end" }, bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>
@@ -94,5 +85,5 @@ export const EditarAtividade = () => {
         </Stack>
       </Box>
     </Box>
-  )
+  );
 }

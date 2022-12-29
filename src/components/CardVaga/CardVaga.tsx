@@ -3,11 +3,14 @@ import {Box,  Button,  Divider,  IconButton, Typography} from "@mui/material";
 
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { useNavigate } from 'react-router-dom';
 
 interface IProps {
   situacao: string;
 }
 export const CardVaga: React.FC<IProps> = ({ situacao }) => {
+
+  const navigate = useNavigate()
 
   const shadow = "rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px"
 
@@ -26,7 +29,7 @@ export const CardVaga: React.FC<IProps> = ({ situacao }) => {
           Código: 222
         </Typography>
         <Box sx={{display: "flex", alignItems: "center", gap: 1}}>
-          <IconButton>
+          <IconButton onClick={() => navigate("/editar-vaga")} >
             <EditIcon/>
           </IconButton>
           <IconButton>

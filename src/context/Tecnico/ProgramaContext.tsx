@@ -46,6 +46,23 @@ export const ProgramaProvider = ({ children }: IChildren) => {
     }
   }
 
+  const pegarProgramaPorNome = async (nome: string, pagina: number = 0, tamanho: number = 10) => {
+    try {
+      nProgress.start();
+      const { data } = await API.get(`/programa/nome/${nome}?page=${pagina}&size=${tamanho}`);
+      setProgramas(data);
+      console.log(data);
+    } catch(error) {
+      let message = "Ops, algo deu errado!";
+      if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message;
+      }
+      toast.error(message, toastConfig);
+    } finally {
+      nProgress.done();
+    }
+  }
+
   const deletarProgama = async (id: number) => {
     try {
       nProgress.start();
@@ -79,7 +96,7 @@ export const ProgramaProvider = ({ children }: IChildren) => {
   }
 
   return (
-    <ProgramaContext.Provider value={{ programas, cadastrarPrograma, pegarPrograma, deletarProgama, editarPrograma }}>
+    <ProgramaContext.Provider value={{ programas, cadastrarPrograma, pegarPrograma, deletarProgama, editarPrograma, pegarProgramaPorNome }}>
       {children}
     </ProgramaContext.Provider>
   );

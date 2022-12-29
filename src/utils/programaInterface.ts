@@ -1,4 +1,5 @@
 export interface IProgramas {
+  idPrograma: number;
   nome: string;
   situacao: string;
   descricao: string;
@@ -9,7 +10,8 @@ export interface IProgramas {
 export interface IProgramaContext {
   programas: IObjectProgramas | null;
   cadastrarPrograma: (programa: IProgramas) => Promise<void>;
-  pegarPrograma: (pagina?: number, tamanho?: number) => Promise<void>
+  pegarPrograma: (pagina?: number, tamanho?: number) => Promise<void>;
+  pegarProgramaPorNome: (nome: string, pagina?: number, tamanho?: number) => Promise<void>;
   deletarProgama: (id: number) => Promise<void>;
   editarPrograma: (programa: IProgramas, id: number) => Promise<void>;
 }

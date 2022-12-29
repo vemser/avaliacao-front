@@ -19,7 +19,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 interface Column {
-  id: "nome" | "descricao" | "acoes";
+  id: "nome" | "descricao" | "situacao" | "dataInicio" | "dataFim" | "acoes";
   label: string;
   minWidth?: number;
   align?: "right";
@@ -28,7 +28,10 @@ interface Column {
 
 const columns: Column[] = [
   { id: "nome", label: "Nome do Programa", minWidth: 5 },
-  { id: "descricao", label: "Descrição do Programa", minWidth: 5 },
+  { id: "descricao", label: "Descrição", minWidth: 5 },
+  { id: "situacao", label: "Situação", minWidth: 5 },
+  { id: "dataInicio", label: "Data de Inicio", minWidth: 5 },
+  { id: "dataFim", label: "Data de Fim", minWidth: 5 },
   { id: "acoes", label: "Ações", minWidth: 5, align: "right", format: (value: number) => value.toLocaleString("en-US") }
 ];
 
@@ -84,6 +87,9 @@ export const ListarPrograma = () => {
                 <StyledTableCell id="nome-programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row">{programa.nome}</StyledTableCell>
 
                 <StyledTableCell id="descricao-programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{programa.descricao ? programa.descricao : "Sem descrição"}</StyledTableCell>
+                <StyledTableCell id="descricao-programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{programa.situacao}</StyledTableCell>
+                <StyledTableCell id="descricao-programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{programa.dataInicio}</StyledTableCell>
+                <StyledTableCell id="descricao-programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{programa.dataFim}</StyledTableCell>
 
                 <StyledTableCell id="acoes-programa" sx={{ textAlign: "center" }}>
                   <Button id={`botao-editar-${programa.idPrograma}`} title="Editar" onClick={() => navigate("/editar-programa", { state: programa })}><EditIcon /></Button>

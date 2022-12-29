@@ -51,7 +51,6 @@ export const ProgramaProvider = ({ children }: IChildren) => {
       nProgress.start();
       const { data } = await API.get(`/programa/nome/${nome}?page=${pagina}&size=${tamanho}`);
       setProgramas(data);
-      console.log(data);
     } catch(error) {
       let message = "Ops, algo deu errado!";
       if (axios.isAxiosError(error) && error?.response) {
@@ -68,6 +67,7 @@ export const ProgramaProvider = ({ children }: IChildren) => {
       nProgress.start();
       await API.delete(`/programa/${id}`);
       toast.success("Programa deletado com sucesso!", toastConfig);
+      await pegarPrograma();
     } catch(error) {
       let message = "Ops, algo deu errado!";
       if (axios.isAxiosError(error) && error?.response) {

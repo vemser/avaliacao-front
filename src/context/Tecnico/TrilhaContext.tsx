@@ -19,8 +19,7 @@ export const TrilhaProvider = ({ children }: IChildren) => {
   const pegarTrilha = async (pagina: number = 0, tamanho: number = 10) => {
     try {
       nProgress.start();     
-      await API.get(`/trilha/lista-trilha-page?page=${pagina}&size=${tamanho}`)
-      .then((response) => {
+      await API.get(`/trilha/lista-trilha-page?page=${pagina}&size=${tamanho}`).then((response) => {
         setTrilhas(response.data)
       })
     } catch (error) {
@@ -55,10 +54,25 @@ export const TrilhaProvider = ({ children }: IChildren) => {
     }
   };
 
+  const editarTrilha = async (dadosTrilha: IDadosTrilha, idTrilha: number) => {
+    try {
+      nProgress.start();
+      await API.put(`/trilha/update/${idTrilha}`, dadosTrilha).then((response) => {
+        toast.success('Trilha foi editada com sucesso.', toastConfig);
+      });
+      navigate('/dashboard/trilha-programa');
+    } catch (error) {
+      toast.error('Houve um erro inesperado.', toastConfig);
+    } finally {
+      nProgress.done();
+    }
+  };
+
   const deletarTrilha = async (idTrilha: number | undefined) => {
     try {
       nProgress.start();
       await API.delete(`/trilha/${idTrilha}`);
+      toast.success('Trilha desativada com sucesso.', toastConfig);
       pegarTrilha();
     } catch(error) {
       toast.error('Houve um erro inesperado.', toastConfig);
@@ -68,7 +82,7 @@ export const TrilhaProvider = ({ children }: IChildren) => {
   };
   
   return (
-    <TrilhaContext.Provider value={{ cadastrarTrilha, pegarTrilha, deletarTrilha, trilhas }}>
+    <TrilhaContext.Provider value={{ cadastrarTrilha, pegarTrilha, editarTrilha, deletarTrilha, trilhas }}>
       {children}
     </TrilhaContext.Provider>
   );

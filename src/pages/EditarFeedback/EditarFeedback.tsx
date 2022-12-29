@@ -7,13 +7,11 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import { EditarFeedbackSchema } from '../../utils/schemas'
 
-import { BotaoAzul } from '../../components/BotaoAzul/BotaoAzul'
-import { Header } from '../../components/Header/Header'
 import { Titulo } from '../../components/Titulo/Titulo'
 
 import logo from "../../assets/dbc-logo.webp";
 
-import { AlunoContext } from '../../context/AlunoContext'
+import { useAluno } from '../../context/Comportamental/AlunoContext'
 import { InstrutorContext } from '../../context/InstrutorContext'
 
 import { toast } from 'react-toastify'
@@ -28,7 +26,7 @@ const MenuProps = { PaperProps: { style: { maxHeight: itemHeigth * 4.5 + itemPad
 export const EditarFeedback = () => {
   const navigate = useNavigate();
   const { editarFeedback } = useContext(InstrutorContext);
-  const { pegarAluno, alunos } = useContext(AlunoContext);
+  const { pegarAluno, alunos } = useAluno();
   const { state } = useLocation();
 
   useEffect(() => { pegarAluno(); }, [])
@@ -100,10 +98,10 @@ export const EditarFeedback = () => {
             <InputLabel id="aluno">Selecione aluno</InputLabel>
             <Select MenuProps={MenuProps} labelId="demo-simple-select-filled-label" id="aluno" {...register("idAluno")} defaultValue="initial-aluno">
               <MenuItem value="initial-aluno" disabled><em>Selecione o Aluno</em></MenuItem>
-              {alunos.map((aluno) => {
+              {alunos?.elementos.map((aluno) => {
                 if (mudaRadio) {
-                  if (mudaRadio === aluno.stack) {
-                    return (<MenuItem id={`alunos-${aluno.stack.toLowerCase()}-${aluno.idAluno}`} key={aluno.idAluno} value={aluno.idAluno}>{aluno.nome}</MenuItem>)
+                  if (mudaRadio === aluno.trilha.nome) {
+                    return (<MenuItem id={`alunos-${aluno.trilha.nome.toLowerCase()}-${aluno.idAluno}`} key={aluno.idAluno} value={aluno.idAluno}>{aluno.nome}</MenuItem>)
                   }
                 } else {
                   return (<MenuItem id={`alunos-geral-${aluno.idAluno}`} key={aluno.idAluno} value={aluno.idAluno}>{aluno.nome}</MenuItem>)

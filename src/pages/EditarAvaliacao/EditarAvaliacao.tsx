@@ -11,7 +11,7 @@ import { EditarAvaliacaoSchema } from "../../utils/schemas";
 import { toast } from "react-toastify";
 import { toastConfig } from "../../utils/toast";
 
-import { AlunoContext } from "../../context/AlunoContext";
+import { useAluno } from "../../context/Comportamental/AlunoContext";
 import { GestorContext } from "../../context/GestorContext";
 
 import { IEditarAvaliacaoForm } from "../../utils/interface";
@@ -26,7 +26,7 @@ export const EditarAvaliacao = () => {
   const { state } = useLocation()
   const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
 
-  const { pegarAluno, alunos } = useContext(AlunoContext);
+  const { pegarAluno, alunos } = useAluno();
   const { pegarAcompanhamento, acompanhamento, editarAvaliacao } = useContext(GestorContext)
 
   const [mudaRadio, setMudaRadio] = useState('')
@@ -109,10 +109,10 @@ export const EditarAvaliacao = () => {
             <InputLabel id="aluno">Aluno</InputLabel>
             <Select MenuProps={MenuProps} labelId="demo-simple-select-filled-label" defaultValue="initial-aluno" id="aluno" {...register("idAluno")}>
               <MenuItem value="initial-aluno" disabled><em>Selecione o Aluno</em></MenuItem>
-              {alunos.map((aluno) => {
+              {alunos?.elementos.map((aluno) => {
                 if (mudaRadio) {
-                  if (mudaRadio === aluno.stack) {
-                    return (<MenuItem id={`alunos-${aluno.stack.toLowerCase()}-${aluno.idAluno}`} key={aluno.idAluno} value={aluno.idAluno}>{aluno.nome}</MenuItem>)
+                  if (mudaRadio === aluno.trilha.nome) {
+                    return (<MenuItem id={`alunos-${aluno.trilha.nome.toLowerCase()}-${aluno.idAluno}`} key={aluno.idAluno} value={aluno.idAluno}>{aluno.nome}</MenuItem>)
                   }
                 } else {
                   return (<MenuItem id={`alunos-geral-${aluno.idAluno}`} key={aluno.idAluno} value={aluno.idAluno}>{aluno.nome}</MenuItem>)

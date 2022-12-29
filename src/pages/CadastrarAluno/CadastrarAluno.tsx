@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import React from 'react';
 
 import { useNavigate } from "react-router-dom";
@@ -15,7 +15,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { alunoSchema } from "../../utils/schemas";
 import { ICadastroAluno } from "../../utils/interface";
 
-import { AlunoContext } from "../../context/AlunoContext";
+import { useAluno } from "../../context/Comportamental/AlunoContext";
 import { toast } from "react-toastify";
 import { toastConfig } from "../../utils/toast";
 
@@ -64,7 +64,7 @@ interface State {
 
 export const CadastrarAluno = () => {
   const navigate = useNavigate()
-  const { criarAluno } = useContext(AlunoContext)
+  // const { criarAluno } = useAluno();
 
   const [values, setValues] = React.useState<State>({
     textmask: '(99) 99999-9999'
@@ -90,11 +90,11 @@ export const CadastrarAluno = () => {
   }
 
   const cadastroAluno = (data: ICadastroAluno) => {
-    if (data.stack === "initial-stack") {
-      toast.error("Preencha todos os campos!", toastConfig)
-    } else {
-      criarAluno(data)
-    }
+    // if (data.stack === "initial-stack") {
+    //   toast.error("Preencha todos os campos!", toastConfig)
+    // } else {
+    //   criarAluno(data)
+    // }
   };
 
   // const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");

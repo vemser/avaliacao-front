@@ -11,7 +11,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { editarAlunoSchema } from '../../utils/schemas';
 
-import { AlunoContext } from '../../context/AlunoContext';
+import { AlunoContext } from '../../context/Comportamental/AlunoContext';
 
 import { IEditarAluno } from '../../utils/interface';
 
@@ -40,7 +40,7 @@ export const EditarAluno = () => {
     }
   });
 
-  const editarAlunos = (data: IEditarAluno) => { editarAluno(data, state.idAluno) };
+  const editarAlunos = (data: IEditarAluno) => { console.log('falta endpoint') };
 
   // const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
   // if (infosUsuario.cargo !== "Gestor de Pessoas" && infosUsuario.cargo !== "Instrutor") return <Navigate to="/" />

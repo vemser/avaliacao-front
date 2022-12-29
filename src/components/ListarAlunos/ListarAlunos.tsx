@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { AlunoContext } from "../../context/AlunoContext";
+import { useAluno } from "../../context/Comportamental/AlunoContext";
 
 import { Paper, TableContainer, Table, TableRow, TableCell, TableBody, Button, TablePagination, tableCellClasses, Box, Typography, Modal, styled, TableHead } from "@mui/material";
 import { Titulo } from "../Titulo/Titulo";
@@ -49,9 +49,9 @@ const style = {
 
 export const ListarAlunos: React.FC = () => {
   const navigate = useNavigate();
-  const { pegarAluno, alunos, deletarAluno, paginacaoAlunos } = useContext(AlunoContext);
+  const { pegarAluno, alunos, deletarAluno } = useAluno();
 
-  useEffect(() => { pegarAluno() } , [])
+  useEffect(() => { pegarAluno() }, [])
 
   // Funções Modal
   const [idDelete, setIdDelete] = useState<number | undefined>();
@@ -85,14 +85,14 @@ export const ListarAlunos: React.FC = () => {
               </TableHead>
 
               <TableBody>
-                {alunos.map((data: any) => (
-                  <StyledTableRow sx={{ ":hover": { opacity: "0.7", cursor: "pointer" } }} key={data.idAluno}>
-                    <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: data })} id="codigo" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row">{data.idAluno}</StyledTableCell>
-                    <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: data })} id="nome" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }}>{data.nome}</StyledTableCell>
-                    <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: data })} id="stack" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", textTransform: "capitalize" }}>{formatarTexto(data.stack)}</StyledTableCell>
+                {alunos?.elementos.map((aluno: any) => (
+                  <StyledTableRow sx={{ ":hover": { opacity: "0.7", cursor: "pointer" } }} key={aluno.idAluno}>
+                    <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: aluno })} id="codigo" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row">{aluno.idAluno}</StyledTableCell>
+                    <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: aluno })} id="nome" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }}>{aluno.nome}</StyledTableCell>
+                    <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: aluno })} id="stack" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", textTransform: "capitalize" }}>{formatarTexto(aluno.stack)}</StyledTableCell>
                     <StyledTableCell id="acoes" sx={{ textAlign: "center" }}>
-                      <Button id={`botao-editar-${data.idAluno}`} title="Deletar" onClick={() => navigate("/editar-aluno", { state: data })}><EditIcon /></Button>
-                      <Button id={`botao-deletar-${data.idAluno}`} title="Deletar" onClick={() => { handleOpen(); setIdDelete(data.idAluno) }}><DeleteForeverIcon /></Button>
+                      <Button id={`botao-editar-${aluno.idAluno}`} title="Deletar" onClick={() => navigate("/editar-aluno", { state: aluno })}><EditIcon /></Button>
+                      <Button id={`botao-deletar-${aluno.idAluno}`} title="Deletar" onClick={() => { handleOpen(); setIdDelete(aluno.idAluno) }}><DeleteForeverIcon /></Button>
                     </StyledTableCell>
                   </StyledTableRow>
                 ))}
@@ -101,7 +101,7 @@ export const ListarAlunos: React.FC = () => {
           </TableContainer>
 
           {/* Paginação */}
-          <TablePagination rowsPerPageOptions={[]} component="div" count={paginacaoAlunos.totalElementos} rowsPerPage={paginacaoAlunos.tamanho} page={paginacaoAlunos.pagina} onPageChange={handleChangePage} />
+          <TablePagination rowsPerPageOptions={[]} component="div" count={alunos ? alunos.totalElementos : 0} rowsPerPage={alunos ? alunos.tamanho : 0} page={alunos ? alunos.pagina : 0} onPageChange={handleChangePage} />
 
           {/* Modal Confirmar Delete */}
           <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-titulo" aria-describedby="modal-modal-description" sx={{ backdropFilter: "blur(10px)" }}>

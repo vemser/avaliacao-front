@@ -20,7 +20,8 @@ function AppRoutes() {
           <Context.AlunoProvider>
           <Context.GestorProvider>
           <Context.InstrutorProvider>
-            <Context.ModuloProvider>
+          <Context.ModuloProvider>
+          <Context.TrilhaProvider>
             <Routes>
               <Route index element={<Pages.Login />} />
               <Route path="*" element={<Components.NotFound />} />
@@ -82,7 +83,8 @@ function AppRoutes() {
 
               </Route>
             </Routes>
-            </Context.ModuloProvider>
+          </Context.ModuloProvider>
+          </Context.TrilhaProvider>
           </Context.InstrutorProvider>
           </Context.GestorProvider>
           </Context.AlunoProvider>

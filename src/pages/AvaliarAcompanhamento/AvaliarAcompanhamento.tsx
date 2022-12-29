@@ -7,7 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { CriarAvaliacaoSchema } from "../../utils/schemas";
 
-import { AlunoContext } from "../../context/AlunoContext";
+import { useAluno } from "../../context/Comportamental/AlunoContext";
 import { GestorContext } from "../../context/GestorContext";
 import { toastConfig } from "../../utils/toast";
 import { toast } from "react-toastify";
@@ -21,7 +21,7 @@ const MenuProps = { PaperProps: { style: { maxHeight: itemHeigth * 4.5 + itemPad
 
 export const AvaliarAcompanhamento = () => {
   const navigate = useNavigate();
-  const { pegarAluno, alunos } = useContext(AlunoContext);
+  const { pegarAluno, alunos } = useAluno();
   const { pegarAcompanhamento, acompanhamento, criarAvaliacao } = useContext(GestorContext)
 
   useEffect(() => { pegarAluno(); pegarAcompanhamento() }, [])
@@ -48,7 +48,7 @@ export const AvaliarAcompanhamento = () => {
 
   return (
     <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
-      
+
       <Titulo texto="Avaliar Acompanhamento" />
 
       <Box component="form" onSubmit={handleSubmit(avaliarAcompanhamento)} sx={{
@@ -103,10 +103,10 @@ export const AvaliarAcompanhamento = () => {
             <InputLabel id="aluno-label">Aluno</InputLabel>
             <Select MenuProps={MenuProps} labelId="demo-simple-select-filled-label" defaultValue="initial-aluno" id="aluno-select" error={!!errors.idAluno} {...register("idAluno")}>
               <MenuItem value="initial-aluno" disabled><em>Selecione o Aluno</em></MenuItem>
-              {alunos.map((aluno) => {
+              {alunos?.elementos.map((aluno) => {
                 if (mudaRadio) {
-                  if (mudaRadio === aluno.stack) {
-                    return (<MenuItem id={`alunos-${aluno.stack.toLowerCase()}-${aluno.idAluno}`} key={aluno.idAluno} value={aluno.idAluno}>{aluno.nome}</MenuItem>)
+                  if (mudaRadio === aluno.trilha.nome) {
+                    return (<MenuItem id={`alunos-${aluno.trilha.nome.toLowerCase()}-${aluno.idAluno}`} key={aluno.idAluno} value={aluno.idAluno}>{aluno.nome}</MenuItem>)
                   }
                 } else {
                   return (<MenuItem id={`alunos-geral-${aluno.idAluno}`} key={aluno.idAluno} value={aluno.idAluno}>{aluno.nome}</MenuItem>)

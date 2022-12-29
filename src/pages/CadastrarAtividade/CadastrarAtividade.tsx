@@ -65,7 +65,7 @@ export const CadastrarAtividade = () => {
           </FormControl>
         </Stack>
 
-        <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: "end", marginTop: { xs: 2, md: 0 } }}>
+        <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: "end" }}>
 
           <FormControl sx={{ width: "100%" }}>
             <TextField type="number" label="Peso atividade " placeholder='Digite o peso da atividade' id='peso' variant="filled"

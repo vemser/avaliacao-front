@@ -69,7 +69,7 @@ export const CadastrarReservaAlacocao = () => {
 
         </Stack>
 
-        <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: "end", marginTop: { xs: 2, md: 0 } }}>
+        <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: "end" }}>
 
           <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>
             <TextField

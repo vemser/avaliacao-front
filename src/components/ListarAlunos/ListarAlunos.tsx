@@ -89,7 +89,7 @@ export const ListarAlunos: React.FC = () => {
                   <StyledTableRow sx={{ ":hover": { opacity: "0.7", cursor: "pointer" } }} key={aluno.idAluno}>
                     <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: aluno })} id="codigo" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row">{aluno.idAluno}</StyledTableCell>
                     <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: aluno })} id="nome" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }}>{aluno.nome}</StyledTableCell>
-                    <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: aluno })} id="stack" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", textTransform: "capitalize" }}>{formatarTexto(aluno.stack)}</StyledTableCell>
+                    <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: aluno })} id="stack" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", textTransform: "capitalize" }}>{formatarTexto(aluno.trilha.nome)}</StyledTableCell>
                     <StyledTableCell id="acoes" sx={{ textAlign: "center" }}>
                       <Button id={`botao-editar-${aluno.idAluno}`} title="Deletar" onClick={() => navigate("/editar-aluno", { state: aluno })}><EditIcon /></Button>
                       <Button id={`botao-deletar-${aluno.idAluno}`} title="Deletar" onClick={() => { handleOpen(); setIdDelete(aluno.idAluno) }}><DeleteForeverIcon /></Button>

@@ -28,7 +28,7 @@ interface Column {
 }
 
 const columns: Column[] = [
-  { id: "codigo", label: "Codigo", minWidth: 5 },
+  { id: "codigo", label: "Código", minWidth: 5 },
   { id: "aluno", label: "Aluno", minWidth: 5 },
   { id: "vaga", label: "Vaga", minWidth: 5 },
   { id: "cliente", label: "Cliente", minWidth: 5 },

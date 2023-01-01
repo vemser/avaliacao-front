@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import React from 'react';
 
 import { useNavigate } from "react-router-dom";
@@ -22,6 +22,7 @@ import { toastConfig } from "../../utils/toast";
 import Input from '@mui/material/Input';
 
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useTrilha } from "../../context/Tecnico/TrilhaContext";
 
 
 const top100Films = [
@@ -45,7 +46,7 @@ const TextMaskCustom = React.forwardRef<HTMLElement, CustomProps>(
     return (
       <IMaskInput
         {...other}
-        mask="(00)00000-0000"
+        mask="(00) 00000-0000"
         definitions={{
           '#': /[1-9]/,
         }}
@@ -59,12 +60,17 @@ const TextMaskCustom = React.forwardRef<HTMLElement, CustomProps>(
 
 interface State {
   textmask: string;
-
 }
 
 export const CadastrarAluno = () => {
   const navigate = useNavigate()
   // const { criarAluno } = useAluno();
+  const { pegarTrilha, trilhas } = useTrilha();
+  console.log(trilhas)
+
+  useEffect(() => {
+    pegarTrilha()
+  }, [])
 
   const [values, setValues] = React.useState<State>({
     textmask: ''
@@ -216,23 +222,17 @@ export const CadastrarAluno = () => {
 
           <FormControl variant="filled" sx={{ width: "100%" }}>
             <InputLabel id="selectAluno">Trilha do Aluno</InputLabel>
-            <Select labelId="demo-simple-select-filled-label" defaultValue="initial-stack" id="select-trilha" error={!!errors.stack}  {...register("stack")}>
+            <Select labelId="demo-simple-select-filled-label" defaultValue="initial-stack" id="select-trilha" error={!!errors.stack} {...register("stack")}>
               <MenuItem value="initial-stack" disabled><em>Selecione a Trilha</em></MenuItem>
-              <MenuItem id="frontend" value="FRONTEND">Front-End</MenuItem>
-              <MenuItem id="backend" value="BACKEND">Back-End</MenuItem>
-              <MenuItem id="qa" value="QA">Quality Assurance</MenuItem>
+              {trilhas?.elementos.map((trilha) => (
+                <MenuItem id={`id-trilha=${trilha.idTrilha}`} value={`${trilha.nome}`}>{trilha.idTrilha} - {trilha.nome}</MenuItem>
+              ))}
             </Select>
             {errors.stack && <Typography id="erro-selectAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.stack.message}</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
-            <Autocomplete
-              disablePortal
-              id="programa"
-              {...register("programa")}
-              options={top100Films}
-              renderInput={(params) => <TextField {...params} label="Programa" variant="filled" />}
-            />
+            <Autocomplete disablePortal id="programa" {...register("programa")} options={top100Films} renderInput={(params) => <TextField {...params} label="Programa" variant="filled" />} />
           </FormControl>
 
           <FormControl variant="filled" sx={{ width: "100%" }}>

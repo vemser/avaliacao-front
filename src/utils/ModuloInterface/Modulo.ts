@@ -3,8 +3,8 @@ import { StringifyOptions } from "querystring"
 export interface IModulo {
   pegarModulo: (pagina?: number, tamanho?: number) => Promise<void>,
   modulo: IModuloAPI | null,
-  deletarModulo: (id: number | undefined) => Promise<void>
-
+  deletarModulo: (id: number | undefined) => Promise<void>,
+  cadastrarModulo: (dadosModulo: ICadastroModulo) => Promise<void>
 }
 
 export interface IModuloAPI {
@@ -38,4 +38,12 @@ export interface IListProgramaDTO {
   situacao: string,
   dataInicio: string,
   dataFim: string
+}
+
+export interface ICadastroModulo {
+  nome: string,
+  dataInicio: string,
+  dataFim: string,
+  idTrilha: number,
+  listPrograma: number[]
 }

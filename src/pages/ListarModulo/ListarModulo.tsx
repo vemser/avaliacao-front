@@ -1,8 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Header } from "../../components/Header/Header";
-
 import { Box, Typography, Paper, TableContainer, TablePagination, Table, TableRow, TableCell, TableBody, Button, Modal, styled, tableCellClasses } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -10,8 +8,6 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { Titulo } from "../../components/Titulo/Titulo";
 import TableHead from "@mui/material/TableHead";
 import { ModuloContext } from "../../context/Tecnico/ModuloContext";
-import { IListProgramaDTO, IModuloElementos } from "../../utils/ModuloInterface/Modulo";
-
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: { backgroundColor: theme.palette.common.black, color: theme.palette.common.white },
@@ -24,7 +20,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 interface Column {
-    id: "idModulo" | "nome" | "trilha" | "programa" | "acoes" | "dataInicio" | "dataFim";
+    id: "idModulo" | "nome" | "trilha" | "programa" | "dataInicio" | "dataFim" | "acoes";
     label: string;
     minWidth?: number;
     align?: "right";
@@ -35,10 +31,10 @@ const columns: Column[] = [
     { id: "idModulo", label: "Código", minWidth: 5 },
     { id: "nome", label: "Nome", minWidth: 5 },
     { id: "trilha", label: "Trilha", minWidth: 5 },
-    { id: "programa", label: "Programa", minWidth: 5, align: "right", format: (value: number) => value.toLocaleString("en-US") },
-    { id: "acoes", label: "Ações", minWidth: 5, align: "right", format: (value: number) => value.toLocaleString("en-US") },
-    { id: "dataInicio", label: "Data Início", minWidth: 5 },
-    { id: "dataFim", label: "Data Final", minWidth: 5 }
+    { id: "programa", label: "Programa", minWidth: 5 },
+    { id: "dataInicio", label: "Data de Início", minWidth: 5 },
+    { id: "dataFim", label: "Data Final", minWidth: 5, align: "right", format: (value: number) => value.toLocaleString("en-US") },
+    { id: "acoes", label: "Ações", minWidth: 5, align: "right", format: (value: number) => value.toLocaleString("en-US") }
 ];
 
 const style = {
@@ -54,17 +50,6 @@ const style = {
     boxShadow: 24,
     p: 4,
 };
-
-// const modulos = [
-//     { idModulo: '1', nome: 'React', trilha: 'Frontend', programa: 'VemSer 10ª Edição' },
-//     { idModulo: '2', nome: 'JavaScript', trilha: 'Frontend', programa: 'VemSer 10ª Edição' },
-//     { idModulo: '3', nome: 'Java', trilha: 'Backend', programa: 'VemSer 10ª Edição' },
-//     { idModulo: '4', nome: 'Spring', trilha: 'Backend', programa: 'VemSer 10ª Edição' },
-//     { idModulo: '5', nome: 'Cypress', trilha: 'QA', programa: 'VemSer 10ª Edição' },
-//     { idModulo: '6', nome: 'Selenium', trilha: 'QA', programa: 'VemSer 10ª Edição' },
-//     { idModulo: '7', nome: 'Next', trilha: 'Frontend', programa: 'VemSer 11ª Edição' },
-//     { idModulo: '8', nome: 'Redux', trilha: 'Frontend', programa: 'VemSer 11ª Edição' }
-// ]
 
 export const ListarModulo = () => {
     const navigate = useNavigate();
@@ -95,7 +80,7 @@ export const ListarModulo = () => {
                             <TableHead sx={{ backgroundColor: "#090F27" }}>
                                 <TableRow>
                                     {columns.map((column) => (
-                                        <TableCell key={column.id} align={column.align} style={{ minWidth: "20%", fontWeight: "700", fontSize: "1rem", textAlign: "center", backgroundColor: "#090F27", color: "white" }}>
+                                        <TableCell key={column.id} align={column.align} style={{ minWidth: "12.5%", fontWeight: "700", fontSize: "1rem", textAlign: "center", backgroundColor: "#090F27", color: "white" }}>
                                             {column.label}
                                         </TableCell>
                                     ))}
@@ -119,6 +104,10 @@ export const ListarModulo = () => {
 
                                         </StyledTableCell>
 
+                                        <StyledTableCell id="nome" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", width: { md: "200px" } }} scope="row">{data.dataInicio}</StyledTableCell>
+
+                                        <StyledTableCell id="nome" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", width: { md: "200px" } }} scope="row">{data.dataFim}</StyledTableCell>
+
                                         <StyledTableCell id="acoes" sx={{ textAlign: "center" }}>
                                             <Button id={`botao-editar-modulo`} title="Editar" onClick={() => { navigate("/editar-modulo", { state: modulo }) }}><EditIcon /></Button>
                                             <Button id={`botao-duplicar-modulo`} title="Duplicar"><ContentCopyIcon /></Button>
@@ -130,7 +119,7 @@ export const ListarModulo = () => {
                         </Table>
                     </TableContainer>
 
-                    <TablePagination rowsPerPageOptions={[]} component="div" count={modulo ? modulo.totalElementos : 0} rowsPerPage={modulo ? modulo.totalElementos : 0} page={modulo ? modulo.totalElementos : 0} onPageChange={handleChangePage} />
+                    <TablePagination rowsPerPageOptions={[]} component="div" count={modulo ? modulo.totalElementos : 0} rowsPerPage={modulo ? modulo.tamanho : 0} page={modulo ? modulo.pagina : 0} onPageChange={handleChangePage} />
                     {/* Modal Confirmar Delete */}
                     <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-titulo" aria-describedby="modal-modal-description" sx={{ backdropFilter: "blur(10px)" }}>
                         <Box sx={style}>

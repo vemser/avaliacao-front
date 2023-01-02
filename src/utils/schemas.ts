@@ -103,6 +103,13 @@ export const ProgramaSchema = yup.object().shape({
   dataFim: yup.string().required("Por favor, insira uma data final"),
 })
 
+export const moduloSchema = yup.object().shape({
+  nome: yup.string().required("Por favor, insira um nome para a trilha").min(3, "O nome deve 3 caracteres"),
+  dataInicio: yup.string().required("Por favor, insira uma data inicial"),
+  dataFim: yup.string().required("Por favor, insira uma data final"),
+  idTrilha: yup.string().required("Por favor, selecione uma trilha")
+})
+
 export const ClienteSchema = yup.object().shape({
   nome: yup.string().required("Por favor, digite o nome do cliente"),
   email: yup.string().required("Por favor, digite o e-mail do cliente").email("Por favor, digite um e-mail válido").matches(regexEmail, "Só aceitamos email @dbccompany.com.br"),

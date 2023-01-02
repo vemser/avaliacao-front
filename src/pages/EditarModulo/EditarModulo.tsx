@@ -1,11 +1,10 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { Header } from '../../components/Header/Header';
 import { Titulo } from '../../components/Titulo/Titulo';
 
 import logo from "../../assets/dbc-logo.webp";
 
-import { Box, Stack, FormControl, FormLabel, Typography, Button, InputLabel, Select, MenuItem, TextField, OutlinedInput, Checkbox, ListItemText } from '@mui/material';
+import { Box, Stack, FormControl, Button, InputLabel, Select, MenuItem, TextField, OutlinedInput, Checkbox, ListItemText } from '@mui/material';
 import { useState } from 'react';
 
 const itemHeigth = 48;

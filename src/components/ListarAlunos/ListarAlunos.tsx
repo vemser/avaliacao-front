@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
+
 import { useNavigate } from "react-router-dom";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { useAluno } from "../../context/Comportamental/AlunoContext";
 
 import { Paper, TableContainer, Table, TableRow, TableCell, TableBody, Button, TablePagination, tableCellClasses, Box, Typography, Modal, styled, TableHead } from "@mui/material";
-import { Titulo } from "../Titulo/Titulo";
+import { Edit, DeleteForever } from "@mui/icons-material";
 
+import { useAluno } from "../../context/Comportamental/AlunoContext";
+import * as Componentes from "../../components";
+
+import { Titulo } from "../Titulo/Titulo";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: { backgroundColor: theme.palette.common.black, color: theme.palette.common.white },
@@ -19,7 +21,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 interface Column {
-  id: "codigo" | "nome" | "stack" | "acoes";
+  id: "codigo" | "nome" | "email" | "trilha" | "acoes";
   label: string;
   minWidth?: number;
   align?: "right";
@@ -29,7 +31,8 @@ interface Column {
 const columns: Column[] = [
   { id: "codigo", label: "Código", minWidth: 5 },
   { id: "nome", label: "Nome", minWidth: 5 },
-  { id: "stack", label: "Stack", minWidth: 5, align: "right", format: (value: number) => value.toLocaleString("en-US") },
+  { id: "email", label: "Email", minWidth: 5 },
+  { id: "trilha", label: "Trilha", minWidth: 5, align: "right", format: (value: number) => value.toLocaleString("en-US") },
   { id: "acoes", label: "Ações", minWidth: 5, align: "right", format: (value: number) => value.toLocaleString("en-US") }
 ];
 
@@ -65,13 +68,31 @@ export const ListarAlunos: React.FC = () => {
 
   const handleChangePage = async (event: unknown, newPage: number) => { await pegarAluno(newPage); };
 
+  const filtrosAluno = async (valor: any) => {
+    if(valor.includes("@")){
+      await pegarAluno(0, 10, `&email=${valor}`)
+    } else if(!isNaN(valor)) {
+      await pegarAluno(0, 10, `&idAluno=${valor}`)
+    } else {
+      await pegarAluno(0, 10, `&nome=${valor}`);
+    }
+  }
+
+  const resetFiltroAluno = async () => {
+    await pegarAluno();
+  }
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
       <Titulo texto="Alunos" />
 
       <Box sx={{ width: { xs: "95%", md: "80%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
 
-        <Button onClick={() => navigate("/cadastrar-aluno")} variant="contained" sx={{ width: "auto", paddingLeft: "15px", paddingRight: "15px", display: "flex", marginBottom: "10px", marginRight: "14px", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Aluno</Button>
+        <Box sx={{ display: "flex", gap: 3, flexDirection: { xs: "column", md: "row" }, justifyContent: "space-between", alignItems: "center", width: "100%", marginBottom: "10px",paddingInline: 2 }}>
+          <Componentes.CampoBusca label="Nome, Email ou Código" buscar={filtrosAluno} resetar={resetFiltroAluno} />
+
+          <Button onClick={() => navigate("/cadastrar-aluno")} variant="contained" sx={{ width: "auto", paddingLeft: "15px", paddingRight: "15px", display: "flex", marginBottom: "10px", marginRight: "14px", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Aluno</Button>
+        </Box>
 
         <Paper sx={{ width: "100%", borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px" }}>
           <TableContainer sx={{ maxHeight: 430 }}>
@@ -89,10 +110,11 @@ export const ListarAlunos: React.FC = () => {
                   <StyledTableRow sx={{ ":hover": { opacity: "0.7", cursor: "pointer" } }} key={aluno.idAluno}>
                     <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: aluno })} id="codigo" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row">{aluno.idAluno}</StyledTableCell>
                     <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: aluno })} id="nome" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }}>{aluno.nome}</StyledTableCell>
+                    <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: aluno })} id="email" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }}>{aluno.email}</StyledTableCell>
                     <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: aluno })} id="stack" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", textTransform: "capitalize" }}>{formatarTexto(aluno.trilha.nome)}</StyledTableCell>
                     <StyledTableCell id="acoes" sx={{ textAlign: "center" }}>
-                      <Button id={`botao-editar-${aluno.idAluno}`} title="Deletar" onClick={() => navigate("/editar-aluno", { state: aluno })}><EditIcon /></Button>
-                      <Button id={`botao-deletar-${aluno.idAluno}`} title="Deletar" onClick={() => { handleOpen(); setIdDelete(aluno.idAluno) }}><DeleteForeverIcon /></Button>
+                      <Button id={`botao-editar-${aluno.idAluno}`} title="Deletar" onClick={() => navigate("/editar-aluno", { state: aluno })}><Edit /></Button>
+                      <Button id={`botao-deletar-${aluno.idAluno}`} title="Deletar" onClick={() => { handleOpen(); setIdDelete(aluno.idAluno) }}><DeleteForever /></Button>
                     </StyledTableCell>
                   </StyledTableRow>
                 ))}

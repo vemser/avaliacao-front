@@ -8,6 +8,8 @@ import { API } from "../../utils/api";
 import { IAlunosAPI, IChildren, IAluno } from "../../utils/AlunoInterface/aluno";
 import { useNavigate } from "react-router-dom";
 
+import { ICadastroAlunoAPI } from "../../utils/interface";
+
 export const AlunoContext = createContext({} as IAluno);
 
 export const AlunoProvider = ({ children }: IChildren) => {
@@ -15,12 +17,25 @@ export const AlunoProvider = ({ children }: IChildren) => {
 
   const [alunos, setAlunos] = useState<IAlunosAPI | null>(null);
 
-  const pegarAluno = async (pagina: number = 0, tamanho: number = 10) => {
+  const cadastrarAluno = async (dadosAluno: ICadastroAlunoAPI) => {
     try {
       nProgress.start();
-      await API.get(`/aluno/listar-alunos?page=${pagina}&size=${tamanho}`).then((response) => {
+      await API.post('/aluno/cadastrar-aluno', dadosAluno).then((response) => {
+        navigate('/dashboard/gestor');
+        toast.success('Aluno(a) foi cadastrado(a) com sucesso.', toastConfig);
+      })
+    } catch (error) {
+      toast.error('Houve um erro inesperado.', toastConfig);
+    } finally {
+      nProgress.done();
+    }
+  }
+
+  const pegarAluno = async (pagina: number = 0, tamanho: number = 10, filtros: string = '') => {
+    try {
+      nProgress.start();
+      await API.get(`/aluno/listar-alunos?page=${pagina}&size=${tamanho}${filtros}`).then((response) => {
         setAlunos(response.data);
-        console.log(response.data)
       })
     } catch (error) {
       toast.error('Houve um erro inesperado.', toastConfig);
@@ -43,7 +58,7 @@ export const AlunoProvider = ({ children }: IChildren) => {
   }
 
   return (
-    <AlunoContext.Provider value={{ alunos, pegarAluno, deletarAluno }}>
+    <AlunoContext.Provider value={{ alunos, pegarAluno, deletarAluno, cadastrarAluno }}>
       {children}
     </AlunoContext.Provider>
   );

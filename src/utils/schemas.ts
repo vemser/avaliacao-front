@@ -18,7 +18,7 @@ export const alunoSchema = yup.object().shape({
   situacao: yup.string().required("Por favor, escolha uma situação"),
   descricao: yup.string().required("Por favor, digite uma descrição"),
   idTrilha: yup.string().required("Por favor, escolha uma trilha"),
-  idPrograma: yup.string().required("Por favor, escolha um programa"),
+  idPrograma: yup.string(),
 });
 
 export const trilhaSchema = yup.object().shape({

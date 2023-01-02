@@ -101,6 +101,5 @@ export const moduloSchema = yup.object().shape({
   nome: yup.string().required("Por favor, insira um nome para a trilha").min(3, "O nome deve 3 caracteres"),
   dataInicio: yup.string().required("Por favor, insira uma data inicial"),
   dataFim: yup.string().required("Por favor, insira uma data final"),
-  idTrilha: yup.number().required("Por favor, selecione uma trilha"),
-  listPrograma: yup.number()
+  idTrilha: yup.string().required("Por favor, selecione uma trilha")
 })

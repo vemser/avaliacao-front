@@ -107,7 +107,7 @@ export const ListarModulo = () => {
                                     <StyledTableRow key={data.idModulo}>
                                         <StyledTableCell id="nome" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} scope="row">{data.idModulo}</StyledTableCell>
 
-                                        <StyledTableCell id="programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", width: { md: "200px" } }}>{modulo.listProgramaDTO.map((programa: IListProgramaDTO) =>  programa.nome )}</StyledTableCell>
+                                        <StyledTableCell id="programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", width: { md: "200px" } }}>{data.listProgramaDTO.map((programa: IListProgramaDTO) =>  programa.nome )}</StyledTableCell>
 
                                         <StyledTableCell id="trilha" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100px" }}>{data.trilhaDTO.nome}</StyledTableCell>
 

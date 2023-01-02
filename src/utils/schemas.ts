@@ -96,3 +96,9 @@ export const ProgramaSchema = yup.object().shape({
   dataInicio: yup.string().required("Por favor, insira uma data inicial"),
   dataFim: yup.string().required("Por favor, insira uma data final"),
 })
+
+export const ClienteSchema = yup.object().shape({
+  nome: yup.string().required("Por favor, digite o nome do cliente"),
+  email: yup.string().required("Por favor, digite o e-mail do cliente").email("Por favor, digite um e-mail válido").matches(regexEmail, "Só aceitamos email @dbccompany.com.br"),
+  telefone: yup.string().required("Por favor, digite o telefone do cliente")
+})

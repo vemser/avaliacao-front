@@ -10,6 +10,7 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { Titulo } from "../../components/Titulo/Titulo";
 import TableHead from "@mui/material/TableHead";
 import { ModuloContext } from "../../context/Tecnico/ModuloContext";
+import { IListProgramaDTO, IModuloElementos } from "../../utils/ModuloInterface/Modulo";
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -23,7 +24,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 interface Column {
-    id: "idModulo" | "nome" | "trilha" | "programa" | "acoes";
+    id: "idModulo" | "nome" | "trilha" | "programa" | "acoes" | "dataInicio" | "dataFim";
     label: string;
     minWidth?: number;
     align?: "right";
@@ -35,7 +36,9 @@ const columns: Column[] = [
     { id: "nome", label: "Nome", minWidth: 5 },
     { id: "trilha", label: "Trilha", minWidth: 5 },
     { id: "programa", label: "Programa", minWidth: 5, align: "right", format: (value: number) => value.toLocaleString("en-US") },
-    { id: "acoes", label: "Ações", minWidth: 5, align: "right", format: (value: number) => value.toLocaleString("en-US") }
+    { id: "acoes", label: "Ações", minWidth: 5, align: "right", format: (value: number) => value.toLocaleString("en-US") },
+    { id: "dataInicio", label: "Data Início", minWidth: 5 },
+    { id: "dataFim", label: "Data Final", minWidth: 5 }
 ];
 
 const style = {
@@ -52,16 +55,16 @@ const style = {
     p: 4,
 };
 
-const modulos = [
-    { idModulo: '1', nome: 'React', trilha: 'Frontend', programa: 'VemSer 10ª Edição' },
-    { idModulo: '2', nome: 'JavaScript', trilha: 'Frontend', programa: 'VemSer 10ª Edição' },
-    { idModulo: '3', nome: 'Java', trilha: 'Backend', programa: 'VemSer 10ª Edição' },
-    { idModulo: '4', nome: 'Spring', trilha: 'Backend', programa: 'VemSer 10ª Edição' },
-    { idModulo: '5', nome: 'Cypress', trilha: 'QA', programa: 'VemSer 10ª Edição' },
-    { idModulo: '6', nome: 'Selenium', trilha: 'QA', programa: 'VemSer 10ª Edição' },
-    { idModulo: '7', nome: 'Next', trilha: 'Frontend', programa: 'VemSer 11ª Edição' },
-    { idModulo: '8', nome: 'Redux', trilha: 'Frontend', programa: 'VemSer 11ª Edição' }
-]
+// const modulos = [
+//     { idModulo: '1', nome: 'React', trilha: 'Frontend', programa: 'VemSer 10ª Edição' },
+//     { idModulo: '2', nome: 'JavaScript', trilha: 'Frontend', programa: 'VemSer 10ª Edição' },
+//     { idModulo: '3', nome: 'Java', trilha: 'Backend', programa: 'VemSer 10ª Edição' },
+//     { idModulo: '4', nome: 'Spring', trilha: 'Backend', programa: 'VemSer 10ª Edição' },
+//     { idModulo: '5', nome: 'Cypress', trilha: 'QA', programa: 'VemSer 10ª Edição' },
+//     { idModulo: '6', nome: 'Selenium', trilha: 'QA', programa: 'VemSer 10ª Edição' },
+//     { idModulo: '7', nome: 'Next', trilha: 'Frontend', programa: 'VemSer 11ª Edição' },
+//     { idModulo: '8', nome: 'Redux', trilha: 'Frontend', programa: 'VemSer 11ª Edição' }
+// ]
 
 export const ListarModulo = () => {
     const navigate = useNavigate();
@@ -104,7 +107,7 @@ export const ListarModulo = () => {
                                     <StyledTableRow key={data.idModulo}>
                                         <StyledTableCell id="nome" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} scope="row">{data.idModulo}</StyledTableCell>
 
-                                        <StyledTableCell id="nome" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", width: { md: "200px" } }} scope="row">{data.nome}</StyledTableCell>
+                                        <StyledTableCell id="programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", width: { md: "200px" } }}>{data.listProgramaDTO.map((programa: IListProgramaDTO) =>  programa.nome )}</StyledTableCell>
 
                                         <StyledTableCell id="trilha" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100px" }}>{data.trilhaDTO.nome}</StyledTableCell>
 
@@ -117,7 +120,7 @@ export const ListarModulo = () => {
                                         </StyledTableCell>
 
                                         <StyledTableCell id="acoes" sx={{ textAlign: "center" }}>
-                                            <Button id={`botao-editar-modulo`} title="Editar" onClick={() => { navigate("/editar-modulo", { state: data }) }}><EditIcon /></Button>
+                                            <Button id={`botao-editar-modulo`} title="Editar" onClick={() => { navigate("/editar-modulo", { state: modulo }) }}><EditIcon /></Button>
                                             <Button id={`botao-duplicar-modulo`} title="Duplicar"><ContentCopyIcon /></Button>
                                             <Button id={`botao-deletar-modulo`} title="Deletar"><DeleteForeverIcon /></Button>
                                         </StyledTableCell>

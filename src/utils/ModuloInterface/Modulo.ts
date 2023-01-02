@@ -1,3 +1,5 @@
+import { StringifyOptions } from "querystring"
+
 export interface IModulo {
   pegarModulo: (pagina?: number, tamanho?: number) => Promise<void>,
   modulo: IModuloAPI | null,

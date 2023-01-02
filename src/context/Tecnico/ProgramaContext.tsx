@@ -49,7 +49,7 @@ export const ProgramaProvider = ({ children }: IChildren) => {
   const pegarProgramaPorNome = async (nome: string, pagina: number = 0, tamanho: number = 10) => {
     try {
       nProgress.start();
-      const { data } = await API.get(`/programa/nome/${nome}?page=${pagina}&size=${tamanho}`);
+      const { data } = await API.get(`/programa/list-nome?page=${pagina}&size=${tamanho}&nome=${nome}`);
       setProgramas(data);
     } catch(error) {
       let message = "Ops, algo deu errado!";

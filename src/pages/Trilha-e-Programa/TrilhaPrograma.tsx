@@ -7,11 +7,14 @@ import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import * as Componentes from "../../components";
 
 import { usePrograma } from "../../context/Tecnico/ProgramaContext";
+import { useTrilha } from "../../context/Tecnico/TrilhaContext";
 
 export const TrilhaPrograma = () => {
   const navigate = useNavigate()
   const [mudaDashboard, setMudaDashboard] = useState(false)
+
   const { pegarProgramaPorNome, pegarPrograma } = usePrograma()
+  const { pegarTrilhaFiltroNome, pegarTrilha } = useTrilha();
 
   const trocarTabela = () => !mudaDashboard ? setMudaDashboard(true) : setMudaDashboard(false)
 
@@ -21,6 +24,14 @@ export const TrilhaPrograma = () => {
 
   const resetBuscaPrograma = async () => {
     await pegarPrograma();
+  }
+
+  const buscarPorNomeTrilha = async (valor: string) => {
+    await pegarTrilhaFiltroNome(valor);
+  }
+
+  const resetBuscaTrilha = async () => {
+    await pegarTrilha();
   }
 
   return (
@@ -34,7 +45,7 @@ export const TrilhaPrograma = () => {
             <Box sx={{ display: "flex", gap: 3, flexDirection: { xs: "column", md: "row" }, justifyContent: "space-between", alignItems: "center", width: "100%", marginBottom: "10px" }}>
               <Button onClick={trocarTabela} id="botao-swap" variant='outlined' sx={{ width: { xs: "260px", md: "auto" }, display: "flex", marginLeft: { xs: "0", md: "14px" }, textTransform: "capitalize", fontSize: "1rem" }}>Programas <SwapHorizIcon /></Button>
 
-              <Componentes.CampoBusca label="Buscar por nome" buscar={buscarPorNomePrograma} resetar={resetBuscaPrograma}/>
+              <Componentes.CampoBusca label="Buscar por nome" buscar={buscarPorNomeTrilha} resetar={resetBuscaTrilha}/>
 
               <Button onClick={() => navigate("/cadastrar-trilha")} variant="contained" sx={{ width: { xs: "260px", md: "auto" }, display: "flex", marginRight: { xs: "0", md: "14px" }, textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Trilha</Button>
             </Box>
@@ -54,7 +65,7 @@ export const TrilhaPrograma = () => {
             <Box sx={{ display: "flex", gap: 3, flexDirection: { xs: "column", md: "row" }, justifyContent: "space-between", alignItems: "center", width: "100%", paddingBottom: "10px" }}>
               <Button onClick={trocarTabela} id="botao-swap" variant='outlined' sx={{ width: { xs: "260px", md: "auto" }, display: "flex", marginLeft: { xs: "0", md: "14px" }, textTransform: "capitalize", fontSize: "1rem" }}>Trilhas <SwapHorizIcon /></Button>
               
-              <Componentes.CampoBusca label="Buscar por nome" buscar={buscarPorNomePrograma} resetar={resetBuscaPrograma}/>
+              <Componentes.CampoBusca label="Buscar por nome" buscar={buscarPorNomePrograma} resetar={resetBuscaPrograma} />
 
               <Button onClick={() => navigate("/cadastrar-programa")} variant="contained" sx={{ width: { xs: "260px", md: "auto" }, display: "flex", marginRight: { xs: "0", md: "14px" }, textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Programa</Button>
             </Box>

@@ -53,6 +53,8 @@ export const EditarAluno = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
 
+  console.log(state)
+
   const { programas, pegarPrograma } = usePrograma();
   const { trilhas, pegarTrilha } = useTrilha(); 
 
@@ -149,8 +151,8 @@ export const EditarAluno = () => {
           </FormControl>
 
           <Box sx={{ border: '1px solid #ababab', borderRadius: '5px', p: '5px', display: 'flex', width: '100%', height: '55px', overflowX: 'auto', alignItems: 'center', gap: '10px' }}>
-            {mostrarTec.map((el, index) => (
-              <Box key={index} sx={{ display: 'flex', alignItems: "center", border: '1px solid #ababab', borderRadius: '15px', p: '10px', height: '30px', gap: '5px' }}>{el}
+            {state.tecnologias.map((el: any) => (
+              <Box key={el.idTecnologia} sx={{ display: 'flex', alignItems: "center", border: '1px solid #ababab', borderRadius: '15px', p: '10px', height: '30px', gap: '5px' }}>{el.nome}
                 <Box sx={{ width: '25px', height: '25px', borderRadius: '100%', background: 'red', display: 'flex', justigyContent: 'center', alignItems: 'center', cursor: 'pointer', color: 'white', paddingLeft: '2px'}} onClick={() => setMostrarTec(mostrarTec.filter(r => r !== el))}>
                   <Delete sx={{ fontSize: "20px" }} />
                 </Box>

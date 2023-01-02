@@ -1,101 +1,79 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-import { Box, Stack, FormControl, TextField, InputLabel, Input, Select, MenuItem, Button } from '@mui/material';
+import { Box, Stack, FormControl, TextField, Button, Typography } from '@mui/material';
 
 import { Titulo } from '../../components';
+import { ICadastrarCliente } from '../../utils/ClienteInterface/Cliente';
 
-import { IMaskInput } from 'react-imask';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
-interface CustomProps {
-  onChange: (event: { target: { name: string; value: string } }) => void;
-  name: string;
-}
+import logo from "../../assets/dbc-logo.webp";
+import { ClienteSchema } from '../../utils/schemas';
+import InputMask from 'react-input-mask';
 
-const TextMaskCustom = React.forwardRef<HTMLElement, CustomProps>(
-  function TextMaskCustom(props, ref) {
-    const { onChange, ...other } = props;
-    return (
-      <IMaskInput
-        {...other}
-        mask="(00) 00000-0000"
-        definitions={{
-          '#': /[1-9]/,
-        }}
-        onAccept={(value: any) => onChange({ target: { name: props.name, value } })}
-        overwrite
-      />
-    );
-  },
-);
 
-interface State {
-  textmask: string;
-}
+
 
 export const EditarCliente = () => {
   const navigate = useNavigate();
+  const { state } = useLocation();
 
-  const [values, setValues] = React.useState<State>({
-    textmask: '(99) 99999-9999'
+  const { register, handleSubmit, formState: { errors } } = useForm<ICadastrarCliente>({
+    resolver: yupResolver(ClienteSchema),defaultValues: {
+     nome: state.nome,
+     email: state.email,
+     telefone: state.telefone
+    }
   });
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value,
-    });
-  };
+  const editarCliente = (data: ICadastrarCliente) => {
+    console.log(data)
+  }
 
   return (
-    <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
-      <Titulo texto="Editar Cliente" />
+    <Box component="section"sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
+      <Titulo texto="Cadastrar Cliente" />
 
-      <Box component="form" sx={{
-        display: "flex", flexDirection: { xs: "column", lg: "row" }, justifyContent: "space-between", backgroundColor: "var(--branco)", width: { xs: "95%", md: "90%", lg: "85%" }, borderRadius: "10px", padding: {
-          xs: 3, sm: 5
-        }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: { xs: 3, xl: 8 }
-      }}>
-        <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: { xs: "start", md: "start" } }}>
+      <Box component="form" onSubmit={handleSubmit(editarCliente)} sx={{
+                display: "flex", flexDirection: "column", alignItems: "center", backgroundColor: "var(--branco)", width: { xs: "95%", md: "70%", lg: "60%", xl: "50%" }, borderRadius: "10px", padding: {
+                    xs: 3, sm: 5
+                }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: 3
+            }}>
+        <img src={logo} alt="Logo DBC" width={150} />
 
-          <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>
-            <TextField id="nomeCliente" label="Nome Cliente" placeholder="Digite o nome do cleinte" variant="filled" />
-          </FormControl>
+        <Stack component="div" spacing={3} sx={{ width: "100%", display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
           <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>
-            <TextField id="emailCliente" label="Email Cliente" placeholder="Digite o email do cleinte" variant="filled" />
+            <TextField id="nomeCliente" label="Nome Cliente" {...register("nome")} placeholder="Digite o nome do cleinte" variant="filled"  />
+            {errors.nome && <Typography id="erro-nomeCliente" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.nome.message}</Typography>}
           </FormControl>
+
+          <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>
+            <TextField id="emailCliente" label="Email Cliente" {...register("email")} placeholder="Digite o email do cleinte" variant="filled"  />
+            {errors.email && <Typography id="erro-nomeCliente" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.email.message}</Typography>}
+          </FormControl>
+
+          <div style={{width:"100%",display:"flex",flexDirection:"column",gap:"5px"}}>
+            <label htmlFor="telefone">Digite seu telefone:</label>
+            <InputMask
+               style={{padding:"10px",border:"none",borderBottom:"1px solid gray",outline:"none"}}
+                mask="(99)99999-9999"
+                type="text"
+                id="telefone"
+                {...register("telefone")}
+              />
+              {errors.telefone && <Typography id="erro-nomeCliente" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.telefone.message}</Typography>}
+          </div>
 
         </Stack>
+        <Box sx={{ display: "flex", width: "100%", justifyContent: "center", alignItems: "center", bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>
+          <Button type="button" onClick={() => { navigate(-1) }} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d " }, textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cancelar</Button>
 
-        <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: "end" }}>
+          <Button type="submit" variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cadastrar</Button>
+       </Box>
 
-          <FormControl sx={{ width: { xs: "100%", md: "100%" } }} variant="standard">
-            <InputLabel htmlFor="formatted-text-mask-input">Telefone</InputLabel>
-            <Input
-              value={values.textmask}
-              onChange={handleChange}
-              name="textmask"
-              id="formatted-text-mask-input"
-              inputComponent={TextMaskCustom as any}
-            />
-          </FormControl>
-
-          <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" }, marginTop: { xs: "0", lg: "32px !important" } }}>
-            <InputLabel id="selectAluno">Situação</InputLabel>
-            <Select labelId="demo-simple-select-filled-label" defaultValue="initial-stack" id="select-trilha" >
-              <MenuItem value="initial-stack" disabled><em>Selecione uma situação</em></MenuItem>
-              <MenuItem id="ativo" value="ATIVO">Ativo</MenuItem>
-              <MenuItem id="inativo" value="INATIVO">Inativo</MenuItem>
-            </Select>
-          </FormControl>
-
-          <Box sx={{ display: "flex", width: "100%", justifyContent: { xs: "center", lg: "end" }, alignItems: { xs: "center", lg: "end" }, bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>
-            <Button type="button" onClick={() => { navigate(-1) }} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d " }, textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cancelar</Button>
-
-            <Button type="submit" variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Salvar</Button>
-          </Box>
-        </Stack>
       </Box>
     </Box>
   );

@@ -8,6 +8,7 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { Titulo } from "../../components/Titulo/Titulo";
 import TableHead from "@mui/material/TableHead";
 import { ModuloContext } from "../../context/Tecnico/ModuloContext";
+import { IListProgramaDTO } from "../../utils/ModuloInterface/Modulo";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: { backgroundColor: theme.palette.common.black, color: theme.palette.common.white },

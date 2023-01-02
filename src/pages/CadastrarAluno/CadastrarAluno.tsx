@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import React from 'react';
 
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { IMaskInput } from 'react-imask';
 
 import { Titulo } from "../../components/Titulo/Titulo";
 
 import { Box, FormControl, TextField, Stack, Typography, InputLabel, MenuItem, Select, Button } from "@mui/material";
+
+import InputMask from 'react-input-mask';
 
 import Autocomplete from '@mui/material/Autocomplete';
 
@@ -16,72 +16,22 @@ import { alunoSchema } from "../../utils/schemas";
 import { ICadastroAluno } from "../../utils/interface";
 
 import { useAluno } from "../../context/Comportamental/AlunoContext";
-import { toast } from "react-toastify";
-import { toastConfig } from "../../utils/toast";
-
-import Input from '@mui/material/Input';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useTrilha } from "../../context/Tecnico/TrilhaContext";
-
-
-const top100Films = [
-  { label: 'The Shawshank Redemption', year: 1994 },
-  { label: 'The Godfather', year: 1972 },
-  { label: 'The Godfather: Part II', year: 1974 },
-  { label: 'The Dark Knight', year: 2008 },
-  { label: '12 Angry Men', year: 1957 },
-  { label: "Schindler's List", year: 1993 },
-  { label: 'Pulp Fiction', year: 1994 }
-];
-
-interface CustomProps {
-  onChange: (event: { target: { name: string; value: string } }) => void;
-  name: string;
-}
-
-const TextMaskCustom = React.forwardRef<HTMLElement, CustomProps>(
-  function TextMaskCustom(props, ref) {
-    const { onChange, ...other } = props;
-    return (
-      <IMaskInput
-        {...other}
-        mask="(00) 00000-0000"
-        definitions={{
-          '#': /[1-9]/,
-        }}
-        onAccept={(value: any) => onChange({ target: { name: props.name, value } })}
-        overwrite
-      />
-    );
-  },
-);
-
-
-interface State {
-  textmask: string;
-}
+import { usePrograma } from "../../context/Tecnico/ProgramaContext";
 
 export const CadastrarAluno = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
   // const { criarAluno } = useAluno();
   const { pegarTrilha, trilhas } = useTrilha();
-  console.log(trilhas)
+  const { pegarPrograma, programas } = usePrograma();
 
   useEffect(() => {
-    pegarTrilha()
+    pegarTrilha();
+    pegarPrograma();
   }, [])
-
-  const [values, setValues] = React.useState<State>({
-    textmask: ''
-  });
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value,
-    });
-  };
 
   const [tec, setTec] = useState<string>('')
   const [mostrarTec, setMostrarTec] = useState<string[]>([])
@@ -96,6 +46,7 @@ export const CadastrarAluno = () => {
   }
 
   const cadastroAluno = (data: ICadastroAluno) => {
+    console.log(data)
     // if (data.stack === "initial-stack") {
     //   toast.error("Preencha todos os campos!", toastConfig)
     // } else {
@@ -111,141 +62,87 @@ export const CadastrarAluno = () => {
       <Titulo texto="Cadastrar Aluno" />
 
       <Box component="form" onSubmit={handleSubmit(cadastroAluno)} sx={{
-        display: "flex", flexDirection: { xs: "column", lg: "row" }, justifyContent: "space-between", backgroundColor: "var(--branco)", width: { xs: "95%", md: "90%", lg: "85%" }, borderRadius: "10px", padding: {
-          xs: 3, sm: 5
-        }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: { xs: 3, xl: 8 }
-      }}>
+        display: "flex", flexDirection: { xs: "column", lg: "row" }, justifyContent: "space-between", backgroundColor: "var(--branco)", width: { xs: "95%", md: "90%", lg: "85%" }, borderRadius: "10px", padding: { xs: 3, sm: 5 }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: { xs: 3, xl: 8 } }}>
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField id="nomeCompletoAluno" label="Nome Completo" placeholder="Digite o nome do aluno" variant="filled" error={!!errors.nome}  {...register("nome")} />
+            <TextField id="nomeCompletoAluno" label="Nome Completo" placeholder="Digite o nome do aluno" variant="filled" error={!!errors.nome} {...register("nome")} />
             {errors.nome && <Typography id="erro-nomeCompletoAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.nome.message}</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
             <TextField id="emailAluno" label="E-mail DBC" placeholder="Digite o e-mail DBC do aluno" variant="filled" {...register("email")} error={!!errors.email} />
-
             {errors.email && <Typography id="erro-emailAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.email.message}</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} variant="standard">
-            <InputLabel htmlFor="formatted-text-mask-input">Telefone</InputLabel>
-            <Input
-              value={values.textmask}
-              {...register("telefone")}
-              onChange={handleChange}
-              name="textmask"
-              id="telefone"
-              inputComponent={TextMaskCustom as any}
-              placeholder="Digite o telefone do aluno"
-            />
+            <label htmlFor="telefone">Telefone</label>
+            <InputMask style={{ padding: "10px", border: "none", outline: "none", borderBottom: "1px solid gray" }} mask="(99) 99999-9999" type="text" id="telefone" placeholder="Digite seu telefone" {...register('telefone')} />
+            {errors.telefone && <Typography id="erro-telefoneAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.telefone.message}</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField type="text" label="Cidade" placeholder='Digite a cidade do aluno' id='cidade' variant="filled" {...register("cidade")} />
+            <TextField type="text" label="Cidade" placeholder='Digite a cidade do aluno' id='cidade' variant="filled" {...register("cidade")} error={!!errors.cidade} />
+            {errors.cidade && <Typography id="erro-cidadeAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.cidade.message}</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField type="text" label="Estado" placeholder='Digite o estado do aluno' id='estado' variant="filled" {...register("estado")} />
+            <TextField type="text" label="Estado" placeholder='Digite o estado do aluno' id='estado' variant="filled" {...register("estado")} error={!!errors.estado} />
+            {errors.estado && <Typography id="erro-estadoAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.estado.message}</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField
-              placeholder="Digite uma descrição para o aluno"
-              multiline
-              rows={3}
-              sx={{ width: "100%" }}
-              id="descricao"
-              label="Descrição"
-              variant='filled'
-              {...register("descricao")}
-            />
+            <TextField placeholder="Digite uma descrição para o aluno" multiline rows={3} sx={{ width: "100%" }} id="descricao" label="Descrição" variant='filled' {...register("descricao")} error={!!errors.descricao} />
+            {errors.descricao && <Typography id="erro-descricaoAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.descricao.message}</Typography>}
           </FormControl>
         </Stack>
 
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: "end" }}>
-
+        {/* Corrigir tecnologia, get autocomplete */}
           <FormControl sx={{ width: { xs: "100%", md: "100%" }, display: "flex", flexDirection: "row", gap: "10px" }}>
-
             <TextField sx={{ width: "90%" }} type="text" label='Tecnologias' placeholder='Digite uma tecnologia' id='tecnologias' value={tec} onChange={(e) => setTec(e.target.value)} variant="outlined" />
 
             <Button id="botao-adiconar-tecnologia" variant={"contained"} sx={{ width: '10%', fontSize: "20px" }} onClick={adicionarTecnologia}>
               +
             </Button>
-
           </FormControl>
 
-          <Box sx={{
-            border: '1px solid #ababab',
-            borderRadius: '5px',
-            p: '5px',
-            display: 'flex',
-            width: '100%',
-            height: '55px',
-            overflowX: 'auto',
-            alignItems: 'center',
-            gap: '10px'
-          }}>
-
-            {mostrarTec.map((el) => (
-              <Box
-                sx={{
-                  display: 'flex',
-                  alignItems: "center",
-                  border: '1px solid #ababab',
-                  borderRadius: '15px',
-                  p: '10px',
-                  height: '30px',
-                  gap: '5px'
-                }}
-              >
-                {el}
-                <Box sx={{
-                  width: '25px',
-                  height: '25px',
-                  borderRadius: '100%',
-                  background: 'red',
-                  display: 'flex',
-                  justigyContent: 'center',
-                  alignItems: 'center',
-                  cursor: 'pointer',
-                  color: 'white',
-                  paddingLeft: '2px'
-                }} onClick={() => setMostrarTec(mostrarTec.filter(r => r !== el))} >
+          <Box sx={{ border: '1px solid #ababab', borderRadius: '5px', p: '5px', display: 'flex', width: '100%', height: '55px', overflowX: 'auto', alignItems: 'center', gap: '10px' }}>
+            {mostrarTec.map((el, index) => (
+              <Box key={index} sx={{ display: 'flex', alignItems: "center", border: '1px solid #ababab', borderRadius: '15px', p: '10px', height: '30px', gap: '5px' }}>{el}
+                <Box sx={{ width: '25px', height: '25px', borderRadius: '100%', background: 'red', display: 'flex', justigyContent: 'center', alignItems: 'center', cursor: 'pointer', color: 'white', paddingLeft: '2px' }} onClick={() => setMostrarTec(mostrarTec.filter(r => r !== el))}>
                   <DeleteIcon sx={{ fontSize: "20px" }} />
                 </Box>
-
               </Box>
-
             ))}
-
           </Box>
 
           <FormControl variant="filled" sx={{ width: "100%" }}>
             <InputLabel id="selectAluno">Trilha</InputLabel>
-            <Select labelId="demo-simple-select-filled-label" id="select-trilha" error={!!errors.stack} {...register("stack")}>
+            <Select labelId="demo-simple-select-filled-label" id="select-trilha" defaultValue="" error={!!errors.idTrilha} {...register("idTrilha")}>
               <MenuItem value="initial-stack" disabled><em>Selecione a trilha do aluno</em></MenuItem>
               {trilhas?.elementos.map((trilha) => (
-                <MenuItem id={`id-trilha=${trilha.idTrilha}`} value={`${trilha.nome}`}>{trilha.idTrilha} - {trilha.nome}</MenuItem>
+                <MenuItem key={trilha.idTrilha} id={`id-trilha=${trilha.idTrilha}`} value={`${trilha.idTrilha}`}>{trilha.nome}</MenuItem>
               ))}
             </Select>
-            {errors.stack && <Typography id="erro-selectAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.stack.message}</Typography>}
+            {errors.idTrilha && <Typography id="erro-trilhaAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.idTrilha.message}</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
-            <Autocomplete disablePortal id="programa" {...register("programa")} options={top100Films} renderInput={(params) => <TextField {...params} label="Programa" variant="filled" />} />
+            <Autocomplete disablePortal id="programa" {...register("idPrograma")} options={programas ? programas.elementos.map((programa) => ( { label: `${programa.idPrograma} - ${programa.nome}`, id: programa.idPrograma })) : []} renderInput={(params) => <TextField value={params.id} {...params}  label="Programa" variant="filled" />} />
+            {errors.idPrograma && <Typography id="erro-programaAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.idPrograma.message}</Typography>}
           </FormControl>
 
           <FormControl variant="filled" sx={{ width: "100%" }}>
             <InputLabel id="selectAluno">Situação</InputLabel>
-            <Select labelId="demo-simple-select-filled-label" id="situacao" {...register("situacao")}>
-              <MenuItem value="initial-stack" disabled><em>Selecione uma situação inicial para o aluno</em></MenuItem>
+            <Select labelId="demo-simple-select-filled-label" defaultValue="" id="situacao" error={!!errors.situacao} {...register("situacao")}>
+              <MenuItem value="initial-situacao" disabled><em>Selecione uma situação inicial para o aluno</em></MenuItem>
               <MenuItem id="disponivel" value="DISPONIVEL">Disponível</MenuItem>
               <MenuItem id="reservado" value="RESERVADO">Reservado</MenuItem>
               <MenuItem id="alocado" value="ALOCADO">Alocado</MenuItem>
               <MenuItem id="inativo" value="INATIVO">Inativo</MenuItem>
             </Select>
-            {errors.stack && <Typography id="erro-selectAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.stack.message}</Typography>}
+            {errors.situacao && <Typography id="erro-situacaoAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.situacao.message}</Typography>}
           </FormControl>
 
           <Box sx={{ display: "flex", width: "100%", justifyContent: { xs: "center", lg: "end" }, alignItems: { xs: "center", lg: "end" }, bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>

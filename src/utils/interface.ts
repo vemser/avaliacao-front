@@ -104,14 +104,15 @@ export interface IFeedbackPorId {
 
 export interface ICadastroAluno {
   nome: string,
-  email: string,
-  stack: string,
   telefone: string,
   cidade: string,
   estado: string,
-  descricao: string,
-  programa: string,
+  email: string,
   situacao: string
+  descricao: string,
+  idTrilha: string,
+  idPrograma: string,
+  tecnologias: number[]
 }
 
 export interface IAlunosCadastrados {

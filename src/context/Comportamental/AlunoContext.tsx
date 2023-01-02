@@ -20,6 +20,7 @@ export const AlunoProvider = ({ children }: IChildren) => {
       nProgress.start();
       await API.get(`/aluno/listar-alunos?page=${pagina}&size=${tamanho}`).then((response) => {
         setAlunos(response.data);
+        console.log(response.data)
       })
     } catch (error) {
       toast.error('Houve um erro inesperado.', toastConfig);

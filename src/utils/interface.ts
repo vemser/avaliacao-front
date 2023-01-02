@@ -37,7 +37,6 @@ export interface IAdmin {
 }
 
 export interface IAluno {
-  criarAluno: (infosAluno: ICadastroAluno) => Promise<void>,
   pegarAluno: (pagina?: number) => Promise<void>,
   editarAluno: (dadosEditados: IEditarAluno, id: number) => Promise<void>,
   deletarAluno: (id: number | undefined) => Promise<void>,
@@ -102,7 +101,7 @@ export interface IFeedbackPorId {
   alunoDTO: any
 }
 
-export interface ICadastroAluno {
+export interface ICadastroAlunoForm {
   nome: string,
   telefone: string,
   cidade: string,
@@ -112,6 +111,19 @@ export interface ICadastroAluno {
   descricao: string,
   idTrilha: string,
   idPrograma: string,
+  tecnologias: number[]
+}
+
+export interface ICadastroAlunoAPI {
+  nome: string,
+  telefone: string,
+  cidade: string,
+  estado: string,
+  email: string,
+  situacao: string
+  descricao: string,
+  idTrilha: number,
+  idPrograma: number,
   tecnologias: number[]
 }
 

@@ -1,6 +1,9 @@
+import { ICadastroAlunoAPI } from "../interface";
+
 export interface IAluno {
-  pegarAluno: (pagina?: number, tamanho?: number) => Promise<void>,
+  pegarAluno: (pagina?: number, tamanho?: number, filtros?: string) => Promise<void>,
   deletarAluno: (idAluno: number | undefined) => Promise<void>,
+  cadastrarAluno: (dadosAluno: ICadastroAlunoAPI) => Promise<void>,
   alunos: IAlunosAPI | null
 }
 

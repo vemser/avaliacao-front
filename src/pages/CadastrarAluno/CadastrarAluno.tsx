@@ -13,30 +13,30 @@ import Autocomplete from '@mui/material/Autocomplete';
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { alunoSchema } from "../../utils/schemas";
-import { ICadastroAluno } from "../../utils/interface";
-
-import { useAluno } from "../../context/Comportamental/AlunoContext";
+import { ICadastroAlunoForm } from "../../utils/interface";
 
 import DeleteIcon from '@mui/icons-material/Delete';
+
 import { useTrilha } from "../../context/Tecnico/TrilhaContext";
 import { usePrograma } from "../../context/Tecnico/ProgramaContext";
+import { useAluno } from "../../context/Comportamental/AlunoContext";
 
 export const CadastrarAluno = () => {
   const navigate = useNavigate();
 
-  // const { criarAluno } = useAluno();
+  const { cadastrarAluno } = useAluno();
   const { pegarTrilha, trilhas } = useTrilha();
   const { pegarPrograma, programas } = usePrograma();
 
   useEffect(() => {
-    pegarTrilha();
-    pegarPrograma();
+    pegarTrilha(0, 999);
+    pegarPrograma(0, 999);
   }, [])
 
   const [tec, setTec] = useState<string>('')
   const [mostrarTec, setMostrarTec] = useState<string[]>([])
 
-  const { register, handleSubmit, formState: { errors } } = useForm<ICadastroAluno>({
+  const { register, handleSubmit, formState: { errors } } = useForm<ICadastroAlunoForm>({
     resolver: yupResolver(alunoSchema)
   });
 
@@ -45,14 +45,9 @@ export const CadastrarAluno = () => {
     setTec("")
   }
 
-  const cadastroAluno = (data: ICadastroAluno) => {
-    const novoData = { nome: data.nome, telefone: data.telefone, cidade: data.cidade, estado: data.estado, email: data.email, situacao: data.situacao, descricao: data.descricao, idTrilha: parseInt(data.idTrilha), idPrograma: parseInt(data.idPrograma.split(' ')[0]), tecnologias: [] }
-    console.log(novoData)
-    // if (data.idTrilha === "initial-stack" || data.situacao === "initial-situacao") {
-    //   toast.error("Preencha todos os campos!", toastConfig)
-    // } else {
-    //   criarAluno(data)
-    // }
+  const cadastroAluno = (data: ICadastroAlunoForm) => {
+    const novoData = { ...data, idTrilha: parseInt(data.idTrilha), idPrograma: parseInt(data.idPrograma.split(' ')[0]), tecnologias: [1] }
+    cadastrarAluno(novoData)
   };
 
   // const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
@@ -77,7 +72,7 @@ export const CadastrarAluno = () => {
 
           <FormControl sx={{ width: "100%" }} variant="standard">
             <label htmlFor="telefone">Telefone</label>
-            <InputMask style={{ padding: "10px", border: "none", outline: "none", borderBottom: "1px solid gray" }} mask="(99) 99999-9999" type="text" id="telefone" placeholder="Digite seu telefone" {...register('telefone')} />
+            <InputMask style={{ padding: "10px", border: "none", outline: "none", borderBottom: "1px solid gray" }} mask="(99)99999-9999" type="text" id="telefone" placeholder="Digite seu telefone" {...register('telefone')} />
             {errors.telefone && <Typography id="erro-telefoneAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.telefone.message}</Typography>}
           </FormControl>
 

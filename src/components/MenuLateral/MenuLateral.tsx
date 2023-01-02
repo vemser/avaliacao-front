@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Avatar, Divider, Drawer, IconButton, List, ListItemButton, ListItemIcon, ListItemText, Typography, useTheme } from "@mui/material";
+import { Avatar, Collapse, Divider, Drawer, IconButton, List, ListItemButton, ListItemIcon, ListItemText, Typography, useTheme } from "@mui/material";
 import { Box } from "@mui/system";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +8,7 @@ import { MenuLateralContext } from "../../context/MenuLateralContext";
 import { useAuth } from "../../context/AuthContext";
 
 // icons
-import { Home, ExitToApp, Menu } from "@mui/icons-material";
+import { ExitToApp, Menu, ThumbUpAlt, School, Event, Source, Terminal, WorkHistory, BusinessCenter, Feed, Settings, ExpandLess, ExpandMore, AssignmentInd, IntegrationInstructions, Group } from "@mui/icons-material";
 
 import logo from '../../assets/dbc-logo.webp';
 
@@ -22,10 +22,25 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
   const navigate = useNavigate();
   const theme = useTheme();
   const mdDown = useMediaQuery(theme.breakpoints.down("md"));
+  const [openTab1, setOpenTab1] = React.useState(false);
+  const [openTab2, setOpenTab2] = React.useState(false);
+  const [openTab3, setOpenTab3] = React.useState(false);
+
+  const handleClickTab1 = () => {
+    setOpenTab1(!openTab1);
+  };
+
+  const handleClickTab2 = () => {
+    setOpenTab2(!openTab2);
+  };
+
+  const handleClickTab3 = () => {
+    setOpenTab3(!openTab3);
+  };
 
   useEffect(() => {
     pegarUsuarioLogado()
-  }, []);  
+  }, []);
 
   return (
     <>
@@ -67,65 +82,105 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
 
           <Box flex="1">
             <List component="nav">
-              <ListItemButton onClick={() => { navigate("/dashboard/instrutor") }}>
+
+              <ListItemButton onClick={handleClickTab1}>
                 <ListItemIcon>
-                  <Home />
+                  <AssignmentInd sx={{ color: "var(--azul-forte-dbc)" }} />
                 </ListItemIcon>
-                <ListItemText primary="Aluno" />
+                <ListItemText primary="Comportamental" />
+                {openTab1 ? <ExpandLess /> : <ExpandMore />}
               </ListItemButton>
-              <ListItemButton onClick={() => { navigate("/lista-feedback") }}>
+              <Collapse in={openTab1} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/dashboard/instrutor") }}>
+                    <ListItemIcon>
+                      <School sx={{ color: "var(--azul-escuro-dbc)" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Alunos" />
+                  </ListItemButton>
+
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/lista-feedback") }}>
+                    <ListItemIcon>
+                      <ThumbUpAlt sx={{ color: "var(--azul-escuro-dbc)" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Feedbacks" />
+                  </ListItemButton>
+
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/lista-acompanhamento") }}>
+                    <ListItemIcon>
+                      <Event sx={{ color: "var(--azul-escuro-dbc)" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Acompanhamentos" />
+                  </ListItemButton>
+                </List>
+              </Collapse>
+
+              <ListItemButton onClick={handleClickTab2}>
                 <ListItemIcon>
-                  <Home />
+                  <IntegrationInstructions sx={{ color: "var(--azul-forte-dbc)" }} />
                 </ListItemIcon>
-                <ListItemText primary="Feedback" />
+                <ListItemText primary="Técnico" />
+                {openTab2 ? <ExpandLess /> : <ExpandMore />}
               </ListItemButton>
-              <ListItemButton onClick={() => { navigate("/lista-acompanhamento") }}>
+              <Collapse in={openTab2} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/dashboard/trilha-programa") }}>
+                    <ListItemIcon>
+                      <Source sx={{ color: "var(--azul-escuro-dbc)" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Trilhas e Programas" />
+                  </ListItemButton>
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/lista-modulo") }}>
+                    <ListItemIcon>
+                      <Terminal sx={{ color: "var(--azul-escuro-dbc)" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Módulos" />
+                  </ListItemButton>
+                </List>
+              </Collapse>
+
+              <ListItemButton onClick={handleClickTab3}>
                 <ListItemIcon>
-                  <Home />
+                  <BusinessCenter sx={{ color: "var(--azul-forte-dbc)" }} />
                 </ListItemIcon>
-                <ListItemText primary="Acompanhamento" />
+                <ListItemText primary="Alocação" />
+                {openTab3 ? <ExpandLess /> : <ExpandMore />}
               </ListItemButton>
-              <ListItemButton onClick={() => { navigate("/dashboard/trilha-programa") }}>
-                <ListItemIcon>
-                  <Home />
-                </ListItemIcon>
-                <ListItemText primary="Trilha/programa" />
-              </ListItemButton>
-              <ListItemButton onClick={() => { navigate("/lista-modulo") }}>
-                <ListItemIcon>
-                  <Home />
-                </ListItemIcon>
-                <ListItemText primary="Modulo" />
-              </ListItemButton>
-              <ListItemButton onClick={() => { navigate("/lista-alocacao-reserva") }}>
-                <ListItemIcon>
-                  <Home />
-                </ListItemIcon>
-                <ListItemText primary="Reserva e alocação" />
-              </ListItemButton>
-              <ListItemButton onClick={() => { navigate("/lista-cliente") }}>
-                <ListItemIcon>
-                  <Home />
-                </ListItemIcon>
-                <ListItemText primary="Cliente" />
-              </ListItemButton>
-              <ListItemButton onClick={() => { navigate("/lista-vaga") }}>
-                <ListItemIcon>
-                  <Home />
-                </ListItemIcon>
-                <ListItemText primary="Vaga" />
-              </ListItemButton>
+              <Collapse in={openTab3} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/lista-alocacao-reserva") }}>
+                    <ListItemIcon>
+                      <WorkHistory sx={{ color: "var(--azul-escuro-dbc)" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Reserva e Alocação" />
+                  </ListItemButton>
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/lista-cliente") }}>
+                    <ListItemIcon>
+                      <Group sx={{ color: "var(--azul-escuro-dbc)" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Clientes" />
+                  </ListItemButton>
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/lista-vaga") }}>
+                    <ListItemIcon>
+                      <Feed sx={{ color: "var(--azul-escuro-dbc)" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Vagas" />
+                  </ListItemButton>
+                </List>
+              </Collapse>
+
               <ListItemButton onClick={() => { navigate("/editar-usuario") }}>
                 <ListItemIcon>
-                  <Home />
+                  <Settings sx={{ color: "var(--azul-forte-dbc)" }} />
                 </ListItemIcon>
-                <ListItemText primary="Editar Perfil" />
+                <ListItemText primary="Configurações" />
               </ListItemButton>
+
               <ListItemButton onClick={() => { usuarioLogout(); }}>
                 <ListItemIcon>
-                  <ExitToApp fontSize="medium" />
+                  <ExitToApp sx={{ color: "var(--azul-forte-dbc)" }} />
                 </ListItemIcon>
-                <Typography textAlign="center">Sair</Typography>
+                <ListItemText primary="Sair" />
               </ListItemButton>
             </List>
           </Box>

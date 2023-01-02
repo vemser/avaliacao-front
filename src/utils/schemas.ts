@@ -1,12 +1,11 @@
-import * as  yup from "yup";
+import * as yup from "yup";
 
-const regexEmail = /^[A-Za-z0-9._%+-]+@dbccompany.com.br$/
+const regexEmail = /^[A-Za-z0-9._%+-]+@dbccompany.com.br$/;
 
-const regexMay = /^(?:([A-Za-z0-9._%+-]+@dbccompany.com.br)|([A-Za-z]+.[A-Za-z]+))$/
-
+const regexEmailUserName = /^(?:([A-Za-z0-9._%+-]+@dbccompany.com.br)|([A-Za-z]+.[A-Za-z]+))$/
 
 export const userSchema = yup.object().shape({
-  username: yup.string().required("Por favor, digite seu usuário").matches(regexMay, "Precisa ser email @dbccompany.com.br ou usuário valido"),
+  username: yup.string().required("Por favor, digite seu usuário").matches(regexEmailUserName, "Precisa ser email @dbccompany.com.br ou usuário válido"),
   password: yup.string().required("Por favor, digite sua senha").min(8, "A senha deve ter no mínimo 8 caracteres")
 });
 
@@ -23,7 +22,8 @@ export const trilhaSchema = yup.object().shape({
 
 export const editarAlunoSchema = yup.object().shape({
   nome: yup.string().required("Por favor, digite seu nome completo").min(3,"O nome deve conter no mínimo 3 caracteres"),
-  email: yup.string().required("Por favor, digite seu e-mail").email("Por favor, digite um e-mail válido").matches(regexEmail, "Só aceitamos email @dbccompany.com.br")
+  email: yup.string().required("Por favor, digite seu e-mail").email("Por favor, digite um e-mail válido").matches(regexEmail, "Só aceitamos email @dbccompany.com.br"),
+  trilha: Object({ nome: yup.string().required("Edição é obrigatória!") })
 });
 
 export const editarNomePerfil = yup.object().shape({

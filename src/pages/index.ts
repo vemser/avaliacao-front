@@ -29,8 +29,8 @@ export { ListarAlocacao } from "./ListarAlocacao/ListarAlocacao";
 export { CadastrarCliente } from "./CadastrarCliente/CadastrarCliente"
 export { ListarCliente } from "./ListarCliente/ListarCliente";
 export { ListarVaga} from "./ListarVaga/ListarVaga";
+export {EditarVaga} from "./EditarVaga/EditarVaga"
 export {EditarReservaAlocacao} from "./EditarReservaAlocacao/EditarReservaAlocacao"
 export {EditarCliente} from "./EditarCliente/EditarCliente"
 export {CadastrarVaga} from "./CadastrarVaga/CadastrarVaga"
 export {EditarAtividade} from "./EditarAtividade/EditarAtividade"
-

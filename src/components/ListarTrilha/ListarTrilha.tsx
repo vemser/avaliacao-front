@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Box, Typography, Paper, TableContainer, Table, TableRow, TableCell, TableBody, tableCellClasses, Button, TablePagination, Modal, styled } from '@mui/material';
+import { Box, Typography, TableContainer, Table, TableRow, TableCell, TableBody, tableCellClasses, Button, TablePagination, Modal, styled, Tooltip } from '@mui/material';
 
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
@@ -19,7 +19,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 interface Column {
-  id: "nome" | "descricao" | "acoes";
+  id: "codigo" | "nome" | "descricao" | "acoes";
   label: string;
   minWidth?: number;
   align?: "right";
@@ -27,8 +27,9 @@ interface Column {
 }
 
 const columns: Column[] = [
+  { id: "codigo", label: "Código", minWidth: 5 },
   { id: "nome", label: "Nome da Trilha", minWidth: 5 },
-  { id: "descricao", label: "Descrição da Trilha", minWidth: 5 },
+  { id: "descricao", label: "Descrição", minWidth: 5 },
   { id: "acoes", label: "Ações", minWidth: 5, align: "right", format: (value: number) => value.toLocaleString("en-US") }
 ];
 
@@ -79,9 +80,12 @@ export const ListarTrilha = () => {
           <TableBody>
             {trilhas?.elementos.map((trilha: any) => (
               <StyledTableRow key={trilha.idTrilha}>
+                <StyledTableCell id="id-trilha" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row">{trilha.idTrilha}</StyledTableCell>
                 <StyledTableCell id="nome-trilha" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row">{trilha.nome}</StyledTableCell>
-                <StyledTableCell id="descricao-trilha" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{trilha.descricao}</StyledTableCell>
-                <StyledTableCell id="acoes-trilha" sx={{ textAlign: "center" }}>
+                <Tooltip title={trilha.descricao} PopperProps={{sx: {marginTop: "-35px !important"}}} arrow>
+                  <StyledTableCell id="descricao-trilha" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{trilha.descricao ? trilha.descricao : "Sem descrição"}</StyledTableCell>
+                </Tooltip>
+                  <StyledTableCell id="acoes-trilha" sx={{ textAlign: "center" }}>
                   <Button id={`botao-editar-${trilha.idTrilha}`} title="Editar" onClick={() => navigate("/editar-trilha", { state: trilha })}><EditIcon /></Button>
                   <Button id={`botao-deletar-${trilha.idTrilha}`} title="Deletar" onClick={() => { handleOpen(); setIdDelete(trilha.idTrilha) }}><DeleteForeverIcon /></Button>
                 </StyledTableCell>

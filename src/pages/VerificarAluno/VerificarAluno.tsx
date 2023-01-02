@@ -67,12 +67,12 @@ export const VerificarAluno: React.FC = () => {
 
   useEffect(() => { pegarAvaliacaoPorID(state.idAluno, 0); pegarFeedbackPorID(state.idAluno, 0); }, [])
 
-  const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
-  if (infosUsuario.cargo !== "Instrutor" && infosUsuario.cargo !== "Gestor de Pessoas") return <Navigate to="/" />
+  // const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
+  // if (infosUsuario.cargo !== "Instrutor" && infosUsuario.cargo !== "Gestor de Pessoas") return <Navigate to="/" />
 
   return (
     <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
-      <Titulo texto="Verificar Aluno" />
+      <Titulo texto={`Detalhes de ${state.nome}`} />
 
     <Box component="div" sx={{ width: { xs: "95%", md: "80%" }, display: "flex", alignItems: "end", flexDirection: "column", padding: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
 
@@ -83,7 +83,7 @@ export const VerificarAluno: React.FC = () => {
               <Typography sx={{ whiteSpace: "wrap", overflow: "hidden", textOverflow: "ellipsis" }}>Nome: <span style={{ fontWeight: 600 }}>{state.nome}</span></Typography>
             </Box>
             <Box sx={{ width: { xs: "100%", md: "auto" }, textAlign: "center" }}>
-              <Typography sx={{ whiteSpace: "wrap", overflow: "hidden", textOverflow: "ellipsis" }}>Turma: <span style={{ fontWeight: 600 }}>{state.stack}</span></Typography>
+              <Typography sx={{ whiteSpace: "wrap", overflow: "hidden", textOverflow: "ellipsis" }}>Trilha: <span style={{ fontWeight: 600 }}>{state.trilha.nome}</span></Typography>
             </Box>
             <Box sx={{ width: { xs: "100%", md: "auto" }, textAlign: "center" }}>
               <Typography sx={{ whiteSpace: "wrap", overflow: "hidden", textOverflow: "ellipsis" }}>Email: <span style={{ fontWeight: 600 }}>{state.email}</span></Typography>

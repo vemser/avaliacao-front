@@ -22,9 +22,11 @@ export interface IAlunosElementos {
   cidade: string,
   estado: string,
   email: string,
+  telefone: string,
   situacao: string,
   descricao: string,
   pontuacao: number,
+  tecnologias: ITecnologiasAluno,
   trilha: ITrilhaAluno,
   programa: IProgramaAluno
 }
@@ -42,4 +44,9 @@ export interface IProgramaAluno {
   situacao: string,
   dataInicio: string,
   dataFim: string
+}
+
+export interface ITecnologiasAluno {
+  nome: string,
+  idTecnologia: number,
 }

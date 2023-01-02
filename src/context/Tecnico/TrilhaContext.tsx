@@ -46,8 +46,8 @@ export const TrilhaProvider = ({ children }: IChildren) => {
     try {
       nProgress.start();
       await API.post('/trilha', dadosTrilha).then((response) => {
-        console.log(response.data)
         navigate('dashboard/trilha-programa');
+        toast.success('Trilha foi cadastrada com sucesso.', toastConfig);
       })
     } catch (error) {
       toast.error('Houve um erro inesperado.', toastConfig);

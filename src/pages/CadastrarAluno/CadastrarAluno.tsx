@@ -118,12 +118,12 @@ export const CadastrarAluno = () => {
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField id="nomeCompletoAluno" label="Nome Completo" placeholder="Fulano da Silva" variant="filled" error={!!errors.nome}  {...register("nome")} />
+            <TextField id="nomeCompletoAluno" label="Nome Completo" placeholder="Digite o nome do aluno" variant="filled" error={!!errors.nome}  {...register("nome")} />
             {errors.nome && <Typography id="erro-nomeCompletoAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.nome.message}</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField id="emailAluno" label="E-mail DBC" placeholder="fulano.silva@dbccompany.com.br" variant="filled" {...register("email")} error={!!errors.email} />
+            <TextField id="emailAluno" label="E-mail DBC" placeholder="Digite o e-mail DBC do aluno" variant="filled" {...register("email")} error={!!errors.email} />
 
             {errors.email && <Typography id="erro-emailAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.email.message}</Typography>}
           </FormControl>
@@ -137,20 +137,21 @@ export const CadastrarAluno = () => {
               name="textmask"
               id="telefone"
               inputComponent={TextMaskCustom as any}
+              placeholder="Digite o telefone do aluno"
             />
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField type="text" label="Cidade" placeholder='Digite sua cidade' id='cidade' variant="filled" {...register("cidade")} />
+            <TextField type="text" label="Cidade" placeholder='Digite a cidade do aluno' id='cidade' variant="filled" {...register("cidade")} />
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField type="text" label="Estado" placeholder='Digite seu estado' id='estado' variant="filled" {...register("estado")} />
+            <TextField type="text" label="Estado" placeholder='Digite o estado do aluno' id='estado' variant="filled" {...register("estado")} />
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
             <TextField
-              placeholder="Digite uma descrição"
+              placeholder="Digite uma descrição para o aluno"
               multiline
               rows={3}
               sx={{ width: "100%" }}
@@ -166,7 +167,7 @@ export const CadastrarAluno = () => {
 
           <FormControl sx={{ width: { xs: "100%", md: "100%" }, display: "flex", flexDirection: "row", gap: "10px" }}>
 
-            <TextField sx={{ width: "90%" }} type="text" label='Tecnologias' placeholder='Tecnologias' id='tecnologias' value={tec} onChange={(e) => setTec(e.target.value)} variant="outlined" />
+            <TextField sx={{ width: "90%" }} type="text" label='Tecnologias' placeholder='Digite uma tecnologia' id='tecnologias' value={tec} onChange={(e) => setTec(e.target.value)} variant="outlined" />
 
             <Button id="botao-adiconar-tecnologia" variant={"contained"} sx={{ width: '10%', fontSize: "20px" }} onClick={adicionarTecnologia}>
               +
@@ -221,9 +222,9 @@ export const CadastrarAluno = () => {
           </Box>
 
           <FormControl variant="filled" sx={{ width: "100%" }}>
-            <InputLabel id="selectAluno">Trilha do Aluno</InputLabel>
-            <Select labelId="demo-simple-select-filled-label" defaultValue="initial-stack" id="select-trilha" error={!!errors.stack} {...register("stack")}>
-              <MenuItem value="initial-stack" disabled><em>Selecione a Trilha</em></MenuItem>
+            <InputLabel id="selectAluno">Trilha</InputLabel>
+            <Select labelId="demo-simple-select-filled-label" id="select-trilha" error={!!errors.stack} {...register("stack")}>
+              <MenuItem value="initial-stack" disabled><em>Selecione a trilha do aluno</em></MenuItem>
               {trilhas?.elementos.map((trilha) => (
                 <MenuItem id={`id-trilha=${trilha.idTrilha}`} value={`${trilha.nome}`}>{trilha.idTrilha} - {trilha.nome}</MenuItem>
               ))}
@@ -237,8 +238,8 @@ export const CadastrarAluno = () => {
 
           <FormControl variant="filled" sx={{ width: "100%" }}>
             <InputLabel id="selectAluno">Situação</InputLabel>
-            <Select labelId="demo-simple-select-filled-label" defaultValue="initial-stack" id="situacao" {...register("situacao")}>
-              <MenuItem value="initial-stack" disabled><em>Selecione uma situação</em></MenuItem>
+            <Select labelId="demo-simple-select-filled-label" id="situacao" {...register("situacao")}>
+              <MenuItem value="initial-stack" disabled><em>Selecione uma situação inicial para o aluno</em></MenuItem>
               <MenuItem id="disponivel" value="DISPONIVEL">Disponível</MenuItem>
               <MenuItem id="reservado" value="RESERVADO">Reservado</MenuItem>
               <MenuItem id="alocado" value="ALOCADO">Alocado</MenuItem>

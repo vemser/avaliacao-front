@@ -16,7 +16,7 @@ export const ListarVaga: React.FC = () => {
       <Box sx={{ width: { xs: "95%", md: "80%" }, backgroundColor: "var(--branco)", borderRadius: "10px", boxShadow: "10px 10px 10px var(--azul</Box>-escuro-dbc)", padding: "20px" }}>
         
         <Box sx={{display: "flex",  width: "100%", alignItems: "center", justifyContent: "space-between", gap: 2, flexDirection: { xs: "column", sm: "row" }}}>
-          <TextField label="Pesquisar" placeholder="Digite o código da vaga"/>
+          <TextField label="Pesquisar" size="small" placeholder="Digite o código da vaga"/>
           <Button variant="contained" onClick={() => navigate("/cadastrar-vaga")} sx={{ width: "auto", paddingLeft: "15px", paddingRight: "15px", display: "flex", marginBottom: "10px", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Vaga</Button>
         </Box>
 

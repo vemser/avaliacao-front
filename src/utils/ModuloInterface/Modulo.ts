@@ -5,7 +5,7 @@ export interface IModulo {
 
 }
 
-export interface IModuloAPI{
+export interface IModuloAPI {
   totalElementos: number,
   quantidadePaginas: number,
   pagina: number,
@@ -18,5 +18,22 @@ export interface IModuloElementos {
   nome: string,
   dataInicio: string,
   dataFim: string,
-  ativo: string
+  ativo: string,
+  trilhaDTO: ITrilhaDTO,
+  listProgramaDTO: IListProgramaDTO[]
+}
+
+export interface ITrilhaDTO {
+  idTrilha: number,
+  descricao: string,
+  nome: string
+}
+
+export interface IListProgramaDTO {
+  idPrograma: number,
+  nome: string,
+  descricao: string,
+  situacao: string,
+  dataInicio: string,
+  dataFim: string
 }

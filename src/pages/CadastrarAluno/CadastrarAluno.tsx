@@ -46,8 +46,9 @@ export const CadastrarAluno = () => {
   }
 
   const cadastroAluno = (data: ICadastroAluno) => {
-    console.log(data)
-    // if (data.stack === "initial-stack") {
+    const novoData = { nome: data.nome, telefone: data.telefone, cidade: data.cidade, estado: data.estado, email: data.email, situacao: data.situacao, descricao: data.descricao, idTrilha: parseInt(data.idTrilha), idPrograma: parseInt(data.idPrograma.split(' ')[0]), tecnologias: [] }
+    console.log(novoData)
+    // if (data.idTrilha === "initial-stack" || data.situacao === "initial-situacao") {
     //   toast.error("Preencha todos os campos!", toastConfig)
     // } else {
     //   criarAluno(data)
@@ -61,8 +62,7 @@ export const CadastrarAluno = () => {
     <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
       <Titulo texto="Cadastrar Aluno" />
 
-      <Box component="form" onSubmit={handleSubmit(cadastroAluno)} sx={{
-        display: "flex", flexDirection: { xs: "column", lg: "row" }, justifyContent: "space-between", backgroundColor: "var(--branco)", width: { xs: "95%", md: "90%", lg: "85%" }, borderRadius: "10px", padding: { xs: 3, sm: 5 }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: { xs: 3, xl: 8 } }}>
+      <Box component="form" onSubmit={handleSubmit(cadastroAluno)} sx={{ display: "flex", flexDirection: { xs: "column", lg: "row" }, justifyContent: "space-between", backgroundColor: "var(--branco)", width: { xs: "95%", md: "90%", lg: "85%" }, borderRadius: "10px", padding: { xs: 3, sm: 5 }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: { xs: 3, xl: 8 } }}>
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
           <FormControl sx={{ width: "100%" }}>
@@ -102,9 +102,7 @@ export const CadastrarAluno = () => {
           <FormControl sx={{ width: { xs: "100%", md: "100%" }, display: "flex", flexDirection: "row", gap: "10px" }}>
             <TextField sx={{ width: "90%" }} type="text" label='Tecnologias' placeholder='Digite uma tecnologia' id='tecnologias' value={tec} onChange={(e) => setTec(e.target.value)} variant="outlined" />
 
-            <Button id="botao-adiconar-tecnologia" variant={"contained"} sx={{ width: '10%', fontSize: "20px" }} onClick={adicionarTecnologia}>
-              +
-            </Button>
+            <Button id="botao-adiconar-tecnologia" variant={"contained"} sx={{ width: '10%', fontSize: "20px" }} onClick={adicionarTecnologia}>+</Button>
           </FormControl>
 
           <Box sx={{ border: '1px solid #ababab', borderRadius: '5px', p: '5px', display: 'flex', width: '100%', height: '55px', overflowX: 'auto', alignItems: 'center', gap: '10px' }}>
@@ -118,7 +116,7 @@ export const CadastrarAluno = () => {
           </Box>
 
           <FormControl variant="filled" sx={{ width: "100%" }}>
-            <InputLabel id="selectAluno">Trilha</InputLabel>
+            <InputLabel id="trilhaAluno">Trilha</InputLabel>
             <Select labelId="demo-simple-select-filled-label" id="select-trilha" defaultValue="" error={!!errors.idTrilha} {...register("idTrilha")}>
               <MenuItem value="initial-stack" disabled><em>Selecione a trilha do aluno</em></MenuItem>
               {trilhas?.elementos.map((trilha) => (
@@ -129,12 +127,12 @@ export const CadastrarAluno = () => {
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
-            <Autocomplete disablePortal id="programa" {...register("idPrograma")} options={programas ? programas.elementos.map((programa) => ( { label: `${programa.idPrograma} - ${programa.nome}`, id: programa.idPrograma })) : []} renderInput={(params) => <TextField value={params.id} {...params}  label="Programa" variant="filled" />} />
+            <Autocomplete disablePortal id="programa" isOptionEqualToValue={(option, value) => option.label === value.label} options={programas ? programas.elementos.map((programa) => ( { label: `${programa.idPrograma} - ${programa.nome}`})) : []} renderInput={(params) => <TextField {...params} label="Programa" variant="filled" {...register("idPrograma")} />} />
             {errors.idPrograma && <Typography id="erro-programaAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.idPrograma.message}</Typography>}
           </FormControl>
 
           <FormControl variant="filled" sx={{ width: "100%" }}>
-            <InputLabel id="selectAluno">Situação</InputLabel>
+            <InputLabel id="situacaoAluno">Situação</InputLabel>
             <Select labelId="demo-simple-select-filled-label" defaultValue="" id="situacao" error={!!errors.situacao} {...register("situacao")}>
               <MenuItem value="initial-situacao" disabled><em>Selecione uma situação inicial para o aluno</em></MenuItem>
               <MenuItem id="disponivel" value="DISPONIVEL">Disponível</MenuItem>

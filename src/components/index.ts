@@ -6,3 +6,5 @@ export { MenuLateral } from "./MenuLateral/MenuLateral";
 export { Titulo} from "./Titulo/Titulo";
 export { CardVaga } from "./CardVaga/CardVaga";
 export { CampoBusca } from "./CampoBusca/CampoBusca";
+export { ListarTrilha } from "./ListarTrilha/ListarTrilha";
+export { ListarPrograma } from "./ListarPrograma/ListarPrograma";

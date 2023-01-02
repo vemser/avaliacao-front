@@ -115,7 +115,7 @@ export const CadastrarFeedback = () => {
 
           <FormControl sx={{ width: "100%" }}>
             <TextField
-              placeholder="Digite uma descrição"
+              placeholder="Digite uma descrição para o feedback"
               multiline
               rows={3}
               sx={{ width: "100%" }}
@@ -127,8 +127,8 @@ export const CadastrarFeedback = () => {
 
           <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>
             <InputLabel id="selectAluno">Situação</InputLabel>
-            <Select labelId="demo-simple-select-filled-label" defaultValue="initial-stack" id="select-trilha" >
-              <MenuItem value="initial-stack" disabled><em>Selecione uma situação</em></MenuItem>
+            <Select labelId="demo-simple-select-filled-label" id="select-trilha" >
+              <MenuItem value="initial-stack" disabled><em>Selecione a situação do feedback</em></MenuItem>
               <MenuItem id="positivo" value="POSITIVO">Positivo</MenuItem>
               <MenuItem id="atencao" value="ATENCAO">Atenção</MenuItem>
             </Select>

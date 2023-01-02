@@ -7,7 +7,7 @@ export interface IModulo {
 
 }
 
-export interface IModuloAPI{
+export interface IModuloAPI {
   totalElementos: number,
   quantidadePaginas: number,
   pagina: number,
@@ -23,7 +23,6 @@ export interface IModuloElementos {
   ativo: string,
   trilhaDTO: ITrilhaDTO,
   listProgramaDTO: IListProgramaDTO[]
-
 }
 
 export interface ITrilhaDTO {
@@ -32,7 +31,7 @@ export interface ITrilhaDTO {
   nome: string
 }
 
-export interface IListProgramaDTO{
+export interface IListProgramaDTO {
   idPrograma: number,
   nome: string,
   descricao: string,

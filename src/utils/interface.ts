@@ -39,10 +39,17 @@ export interface IAdmin {
 export interface IAluno {
   criarAluno: (infosAluno: ICadastroAluno) => Promise<void>,
   pegarAluno: (pagina?: number) => Promise<void>,
-  editarAluno: (dadosEditados: IEditarAluno, id: number) => Promise<void>
+  editarAluno: (dadosEditados: IEditarAluno, id: number) => Promise<void>,
   deletarAluno: (id: number | undefined) => Promise<void>,
   alunos: IAlunosCadastrados[],
   paginacaoAlunos: IPaginacao,
+}
+
+export interface IEditarAluno {
+  idAluno: number,
+  stack:string,
+  nome: string,
+  email: string
 }
 
 export interface IGestor {
@@ -180,13 +187,6 @@ export interface IEditarFeedback {
   idAluno: number,
   descricao: string,
   tipo: string
-}
-
-export interface IEditarAluno {
-  idAluno: number,
-  stack:string,
-  nome: string,
-  email: string
 }
 
 export interface ICriarAvaliacao {

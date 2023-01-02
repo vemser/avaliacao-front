@@ -27,7 +27,7 @@ export const EditarUsuario = () => {
 
   return (
     <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
-      <Titulo texto="Editar Foto" />
+      <Titulo texto="Configurações do Perfil" />
 
       <Box sx={{
         display: "flex", flexDirection: "column", alignItems: "center", backgroundColor: "var(--branco)", width: { xs: "95%", md: "70%", lg: "60%", xl: "50%" }, borderRadius: "10px", padding: {
@@ -39,7 +39,7 @@ export const EditarUsuario = () => {
         <Avatar alt="Foto Enviada" id="foto-enviada" src={selectedImage ? URL.createObjectURL(selectedImage) : usuarioLogado.imagem ? `data:image/jpeg;base64,${usuarioLogado.imagem}` : ""} sx={{ width: 150, height: 150 }} />
         <Button component="label" variant="contained">
           <input id="imagemUsuario" type="file" hidden accept="image/jpeg" onChange={imageChange} />
-          <Typography sx={{ textTransform: "capitalize" }} variant="body1">Inserir Foto</Typography>
+          <Typography sx={{ textTransform: "capitalize" }} variant="body1">Alterar Foto</Typography>
         </Button>
 
         <Box sx={{ display: "flex", width: "100%", justifyContent: "center", alignItems: "center", bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Header } from "../../components/Header/Header";
 
-import { Box, Typography, Paper, TableContainer,TablePagination, Table, TableRow, TableCell, TableBody, Button, Modal, styled, tableCellClasses } from "@mui/material";
+import { Box, Typography, Paper, TableContainer, TablePagination, Table, TableRow, TableCell, TableBody, Button, Modal, styled, tableCellClasses } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
@@ -67,20 +67,18 @@ const style = {
 // ]
 
 export const ListarModulo = () => {
-
+    const navigate = useNavigate();
     const { pegarModulo, modulo } = useContext(ModuloContext);
 
-    useEffect(() => { pegarModulo();},[])
+    useEffect(() => { pegarModulo(); }, []);
 
-    const navigate = useNavigate();
+    const handleChangePage = async (event: unknown, newPage: number) => { await pegarModulo(newPage) };
 
     // Funções Modal
     const [idDelete, setIdDelete] = useState<number | undefined>();
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
-    const handleChangePage = async (event: unknown,newPage:number) => { await pegarModulo(newPage)}
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
@@ -105,19 +103,21 @@ export const ListarModulo = () => {
                             </TableHead>
 
                             <TableBody>
-                                {modulo?.elementos.map((modulo: IModuloElementos) => (
-                                    <StyledTableRow key={modulo.idModulo}>
-                                        <StyledTableCell id="nome" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} scope="row">{modulo.idModulo}</StyledTableCell>
-
-                                        <StyledTableCell id="nome" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", width: { md: "200px" } }} scope="row">{modulo.nome}</StyledTableCell>
-
-                                        <StyledTableCell id="trilha" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100px" }}>{modulo.trilhaDTO.nome}</StyledTableCell>
+                                {modulo?.elementos.map((data) => (
+                                    <StyledTableRow key={data.idModulo}>
+                                        <StyledTableCell id="nome" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} scope="row">{data.idModulo}</StyledTableCell>
 
                                         <StyledTableCell id="programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", width: { md: "200px" } }}>{modulo.listProgramaDTO.map((programa: IListProgramaDTO) =>  programa.nome )}</StyledTableCell>
 
-                                        <StyledTableCell id="dataInicio" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", width: { md: "200px" } }}>{modulo.dataInicio}</StyledTableCell>
+                                        <StyledTableCell id="trilha" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100px" }}>{data.trilhaDTO.nome}</StyledTableCell>
 
-                                        <StyledTableCell id="dataFim" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", width: { md: "200px" } }}>{modulo.dataFim}</StyledTableCell>
+                                        <StyledTableCell id="programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", width: { md: "200px" } }}>
+
+                                            {data.listProgramaDTO.map((programa) => 
+                                                `${programa.nome}`
+                                            ).join(', ')}
+
+                                        </StyledTableCell>
 
                                         <StyledTableCell id="acoes" sx={{ textAlign: "center" }}>
                                             <Button id={`botao-editar-modulo`} title="Editar" onClick={() => { navigate("/editar-modulo", { state: modulo }) }}><EditIcon /></Button>

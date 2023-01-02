@@ -1,3 +1,5 @@
+import { StringifyOptions } from "querystring"
+
 export interface IModulo {
   pegarModulo: (pagina?: number, tamanho?: number) => Promise<void>,
   modulo: IModuloAPI | null,
@@ -18,5 +20,23 @@ export interface IModuloElementos {
   nome: string,
   dataInicio: string,
   dataFim: string,
-  ativo: string
+  ativo: string,
+  trilhaDTO: ITrilhaDTO,
+  listProgramaDTO: IListProgramaDTO[]
+
+}
+
+export interface ITrilhaDTO {
+  idTrilha: number,
+  descricao: string,
+  nome: string
+}
+
+export interface IListProgramaDTO{
+  idPrograma: number,
+  nome: string,
+  descricao: string,
+  situacao: string,
+  dataInicio: string,
+  dataFim: string
 }

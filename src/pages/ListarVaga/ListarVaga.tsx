@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Box, Button } from '@mui/material';
 
 import * as Components from "../../components";
-import { useVaga } from '../../context/alocacao/VagaContext';
+import { useVaga } from '../../context/Alocacao/VagaContext';
 
 export const ListarVaga: React.FC = () => {
   const { pegarVagas, pegarVagaPorNome, vagas } = useVaga();

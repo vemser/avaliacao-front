@@ -5,7 +5,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { useNavigate } from 'react-router-dom';
 import { IVagaApi } from '../../utils/VagaInterface/vaga';
-import { useVaga } from '../../context/alocacao/VagaContext';
+import { useVaga } from '../../context/Alocacao/VagaContext';
 
 const style = {
   position: "absolute" as const,

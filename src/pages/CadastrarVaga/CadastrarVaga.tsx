@@ -6,7 +6,7 @@ import { Titulo } from '../../components';
 
 import { VagaSchema } from "../../utils/schemas";
 import { IVaga } from '../../utils/VagaInterface/vaga';
-import { useVaga } from '../../context/alocacao/VagaContext';
+import { useVaga } from '../../context/Alocacao/VagaContext';
 import { usePrograma } from '../../context/Tecnico/ProgramaContext';
 import { useEffect } from 'react';
 

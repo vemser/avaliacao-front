@@ -7,5 +7,5 @@ export { MenuLateralProvider } from "./MenuLateralContext";
 export { ModuloProvider } from "./Tecnico/ModuloContext"
 export { ProgramaProvider } from "./Tecnico/ProgramaContext";
 export { TrilhaProvider } from '../context/Tecnico/TrilhaContext';
-export {ClienteProvider} from "../context/Alocacao/ClienteContext"
-export { VagaProvider } from "./alocacao/VagaContext";
+export { ClienteProvider } from "./Alocacao/ClienteContext";
+export { VagaProvider } from "./Alocacao/VagaContext";

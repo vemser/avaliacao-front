@@ -22,8 +22,8 @@ function AppRoutes() {
           <Context.InstrutorProvider>
           <Context.ModuloProvider>
           <Context.TrilhaProvider>
-            <Context.ClienteProvider>
-            <Context.VagaProvider>
+          <Context.ClienteProvider>
+          <Context.VagaProvider>
             <Routes>
                 <Route index element={<Pages.Login />} />
                 <Route path="*" element={<Components.NotFound />} />
@@ -86,6 +86,8 @@ function AppRoutes() {
 
               </Route>
             </Routes>
+          </Context.VagaProvider>
+          </Context.ClienteProvider>
           </Context.TrilhaProvider>
           </Context.ModuloProvider>
           </Context.InstrutorProvider>

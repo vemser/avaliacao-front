@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { toastConfig } from "../../utils/toast";
 import { API } from "../../utils/api";
 import { IChildren, IDadosTrilha, ITrilha, ITrilhasAPI } from "../../utils/TrilhaInterface/trilha";
+import { usePrograma } from "./ProgramaContext";
 
 export const TrilhaContext = createContext({} as ITrilha);
 
@@ -15,6 +16,7 @@ export const TrilhaProvider = ({ children }: IChildren) => {
   const navigate = useNavigate();
 
   const [trilhas, setTrilhas] = useState<ITrilhasAPI | null>(null);
+  const { setMudaDashboard } = usePrograma();
 
   const pegarTrilha = async (pagina: number = 0, tamanho: number = 10) => {
     try {
@@ -46,6 +48,7 @@ export const TrilhaProvider = ({ children }: IChildren) => {
     try {
       nProgress.start();
       await API.post('/trilha', dadosTrilha).then((response) => {
+        setMudaDashboard(false)
         navigate('dashboard/trilha-programa');
         toast.success('Trilha foi cadastrada com sucesso.', toastConfig);
       })

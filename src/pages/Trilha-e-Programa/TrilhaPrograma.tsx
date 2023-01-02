@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Box, Button, Paper } from "@mui/material";
@@ -11,9 +10,8 @@ import { useTrilha } from "../../context/Tecnico/TrilhaContext";
 
 export const TrilhaPrograma = () => {
   const navigate = useNavigate()
-  const [mudaDashboard, setMudaDashboard] = useState(false)
 
-  const { pegarProgramaPorNome, pegarPrograma } = usePrograma()
+  const { pegarProgramaPorNome, pegarPrograma, mudaDashboard, setMudaDashboard } = usePrograma()
   const { pegarTrilhaFiltroNome, pegarTrilha } = useTrilha();
 
   const trocarTabela = () => !mudaDashboard ? setMudaDashboard(true) : setMudaDashboard(false)

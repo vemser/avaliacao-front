@@ -8,17 +8,23 @@ import { toastConfig } from "../../utils/toast";
 import { API } from "../../utils/api";
 import { IChildren } from "../../utils/interface";
 import { IProgramas, IObjectProgramas, IProgramaContext } from "../../utils/programaInterface"
+import { useNavigate } from "react-router-dom";
 
 export const ProgramaContext = createContext({} as IProgramaContext);
 
 export const ProgramaProvider = ({ children }: IChildren) => {
+  const navigate = useNavigate();
+  
   const [programas, setProgramas] = useState<IObjectProgramas | null>(null)
+  const [mudaDashboard, setMudaDashboard] = useState<boolean>(false);
   
   const cadastrarPrograma = async (programa: IProgramas) => {
     try {
       nProgress.start();
       await API.post(`/programa`, programa);
       toast.success("Programa criado com sucesso!", toastConfig);
+      navigate('/dashboard/trilha-programa')
+      setMudaDashboard(true)
     } catch (error) {
       let message = "Ops, algo deu errado!";
       if (axios.isAxiosError(error) && error?.response) {
@@ -96,7 +102,7 @@ export const ProgramaProvider = ({ children }: IChildren) => {
   }
 
   return (
-    <ProgramaContext.Provider value={{ programas, cadastrarPrograma, pegarPrograma, deletarProgama, editarPrograma, pegarProgramaPorNome }}>
+    <ProgramaContext.Provider value={{ programas, cadastrarPrograma, pegarPrograma, deletarProgama, editarPrograma, pegarProgramaPorNome, mudaDashboard, setMudaDashboard }}>
       {children}
     </ProgramaContext.Provider>
   );

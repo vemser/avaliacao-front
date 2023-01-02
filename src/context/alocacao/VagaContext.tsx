@@ -80,24 +80,24 @@ export const VagaProvider = ({ children }: IChildren) => {
     }
   }
 
-  // const editarPrograma = async (programa: IProgramas, id: number) => {
-  //   try {
-  //     nProgress.start();
-  //     await API.put(`/programa/${id}`, programa);
-  //     toast.success("Programa atualizado com sucesso!", toastConfig);
-  //   } catch(error) {
-  //     let message = "Ops, algo deu errado!";
-  //     if (axios.isAxiosError(error) && error?.response) {
-  //       message = error.response.data.message;
-  //     }
-  //     toast.error(message, toastConfig);
-  //   } finally {
-  //     nProgress.done();
-  //   }
-  // }
+  const editarVaga = async (vaga: IVaga, id: number) => {
+    try {
+      nProgress.start();
+      await API.put(`/vaga/${id}`, vaga);
+      toast.success("Vaga atualizado com sucesso!", toastConfig);
+    } catch(error) {
+      let message = "Ops, algo deu errado!";
+      if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message;
+      }
+      toast.error(message, toastConfig);
+    } finally {
+      nProgress.done();
+    }
+  }
 
   return (
-    <VagaContext.Provider value={{ vagas, cadastrarVaga, pegarVagas, pegarVagaPorNome, deletarVaga }}>
+    <VagaContext.Provider value={{ vagas, cadastrarVaga, pegarVagas, pegarVagaPorNome, deletarVaga, editarVaga }}>
       {children}
     </VagaContext.Provider>
   );

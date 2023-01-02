@@ -9,27 +9,19 @@ import { IVaga } from '../../utils/VagaInterface/vaga';
 import { useVaga } from '../../context/Alocacao/VagaContext';
 import { usePrograma } from '../../context/Tecnico/ProgramaContext';
 import { useEffect } from 'react';
-
-const top100Films = [
-  { label: 'The Shawshank Redemption', year: 1994 },
-  { label: 'The Godfather', year: 1972 },
-  { label: 'The Godfather: Part II', year: 1974 },
-  { label: 'The Dark Knight', year: 2008 },
-  { label: '12 Angry Men', year: 1957 },
-  { label: "Schindler's List", year: 1993 },
-  { label: 'Pulp Fiction', year: 1994 }
-];
+import { useCliente } from '../../context/Alocacao/ClienteContext';
 
 export const CadastrarVaga = () => {
-  const navigate = useNavigate()
-  const { pegarPrograma, programas } = usePrograma()
+  const navigate = useNavigate();
+  const { pegarPrograma, programas } = usePrograma();
+  const { pegarCliente, cliente } = useCliente();
   const { register, handleSubmit, formState: { errors }, reset } = useForm<IVaga>({resolver: yupResolver(VagaSchema)});
   const { cadastrarVaga } = useVaga();
 
   const cadastrar = async (data: IVaga) => {
     data.dataCriacao = new Date().toISOString().split("T")[0];
-    data.idCliente = 2;
-    data.idPrograma = 1;
+    data.idCliente = parseInt(data.idCliente.toString().split(' ')[0]);
+    data.idPrograma = parseInt(data.idPrograma.toString().split(' ')[0]);
     await cadastrarVaga(data);
     reset();
     navigate(-1);
@@ -37,6 +29,7 @@ export const CadastrarVaga = () => {
 
   useEffect(() => {
     pegarPrograma(0, 999);
+    pegarCliente(0, 999);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -60,8 +53,8 @@ export const CadastrarVaga = () => {
             <Autocomplete
               disablePortal
               id="cliente"
-              options={top100Films}
               isOptionEqualToValue={(option, value) => option.label === value.label}     
+              options={cliente ? cliente.elementos.map(item => ({label: `${item.idCliente} - ${item.nome}`})) : []}
               renderInput={(params) => <TextField {...params}  label="Cliente" variant="filled" {...register("idCliente")} />}    
             />
             {errors.idCliente && <Typography id="erro-cliente-vaga" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.idCliente.message}</Typography>}

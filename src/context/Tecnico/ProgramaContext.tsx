@@ -25,7 +25,7 @@ export const ProgramaProvider = ({ children }: IChildren) => {
         message = error.response.data.message;
       }
       toast.error(message, toastConfig);
-    } finally{
+    } finally {
       nProgress.done();
     }
   }

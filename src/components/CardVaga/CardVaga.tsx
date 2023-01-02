@@ -49,7 +49,7 @@ export const CardVaga: React.FC<IVagaApi> = (props) => {
             Código: {props.idVaga}
           </Typography>
           <Box sx={{display: "flex", alignItems: "center", gap: 1}}>
-            <IconButton onClick={() => navigate("/editar-vaga")} >
+            <IconButton onClick={() => navigate("/editar-vaga", {state: props})} >
               <EditIcon/>
             </IconButton>
             <IconButton onClick={() => { handleOpen(); setIdDelete(props.idVaga) }}>

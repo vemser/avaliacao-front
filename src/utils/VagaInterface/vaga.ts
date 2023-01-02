@@ -16,6 +16,7 @@ export interface IVagaContext {
   pegarVagas: (pagina?: number, tamanho?: number) => Promise<void>,
   pegarVagaPorNome: (nome: string, pagina?: number, tamanho?: number) => Promise<void>,
   deletarVaga: (id: number) => Promise<void>,
+  editarVaga: (vaga: IVaga, id: number) => Promise<void>,
 }
 
 export interface IVagaObject {

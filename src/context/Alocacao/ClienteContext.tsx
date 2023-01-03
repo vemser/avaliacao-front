@@ -70,6 +70,20 @@ export const ClienteProvider = ({ children }: IChildren) => {
     }
   }
 
+  const editarCliente = async (cliente: ICadastrarCliente, id: number) => {
+    try {
+      nProgress.start();
+      await API.put(`/cliente/${id}`, cliente)
+      navigate("/lista-cliente")
+      toast.success("Cliente editado com sucesso!", toastConfig);
+    } catch (error) {
+      toast.error('Houve um erro inesperado.', toastConfig);
+    } finally {
+      nProgress.done();
+
+    }
+  }
+
   const deletarCliente = async (id: number | undefined) => {
     try {
       nProgress.start();
@@ -84,8 +98,8 @@ export const ClienteProvider = ({ children }: IChildren) => {
     }
   }
 
-  return (
-    <ClienteContext.Provider value={{ cadastrarCliente, pegarCliente, cliente, deletarCliente, pegarClientePorNome, pegarClientePorEmail }}>
+  return(
+    <ClienteContext.Provider value={{cadastrarCliente,pegarCliente,cliente,deletarCliente,pegarClientePorNome,pegarClientePorEmail,editarCliente}}>
       {children}
     </ClienteContext.Provider>
   )

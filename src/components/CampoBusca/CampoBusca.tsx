@@ -21,7 +21,13 @@ export const CampoBusca: React.FC<IProps> = ({ buscar, label, resetar }) => {
     sx={{ width: "250px"}}
     size="small"
     value={search ? search : ""}
-    onChange={(e) => { setSearch(e.target.value); setBuscou(false)}}
+    onChange={(e) => { 
+      setSearch(e.target.value);
+      if(e.target.value === "")
+        resetar();
+      else
+        setBuscou(false);
+    }}
     InputProps={{
       endAdornment: (
         <InputAdornment position="end">

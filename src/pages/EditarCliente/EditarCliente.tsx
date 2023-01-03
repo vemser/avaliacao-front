@@ -12,6 +12,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import logo from "../../assets/dbc-logo.webp";
 import { ClienteSchema } from '../../utils/schemas';
 import InputMask from 'react-input-mask';
+import { useCliente } from '../../context/Alocacao/ClienteContext';
 
 
 
@@ -19,6 +20,7 @@ import InputMask from 'react-input-mask';
 export const EditarCliente = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
+  const {editarCliente} = useCliente()
 
   const { register, handleSubmit, formState: { errors } } = useForm<ICadastrarCliente>({
     resolver: yupResolver(ClienteSchema),defaultValues: {
@@ -28,15 +30,15 @@ export const EditarCliente = () => {
     }
   });
 
-  const editarCliente = (data: ICadastrarCliente) => {
-    console.log(data)
+  const editaCliente = (data: ICadastrarCliente) => {
+    editarCliente(data, state.idCliente)
   }
 
   return (
     <Box component="section"sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
       <Titulo texto="Cadastrar Cliente" />
 
-      <Box component="form" onSubmit={handleSubmit(editarCliente)} sx={{
+      <Box component="form" onSubmit={handleSubmit(editaCliente)} sx={{
                 display: "flex", flexDirection: "column", alignItems: "center", backgroundColor: "var(--branco)", width: { xs: "95%", md: "70%", lg: "60%", xl: "50%" }, borderRadius: "10px", padding: {
                     xs: 3, sm: 5
                 }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: 3

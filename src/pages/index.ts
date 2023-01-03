@@ -33,3 +33,4 @@ export {EditarReservaAlocacao} from "./EditarReservaAlocacao/EditarReservaAlocac
 export {EditarCliente} from "./EditarCliente/EditarCliente"
 export {CadastrarVaga} from "./CadastrarVaga/CadastrarVaga"
 export {EditarAtividade} from "./EditarAtividade/EditarAtividade"
+export {ListarAtividade} from "./ListarAtividade/ListarAtividade"

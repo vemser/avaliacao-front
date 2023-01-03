@@ -8,7 +8,7 @@ import { MenuLateralContext } from "../../context/MenuLateralContext";
 import { useAuth } from "../../context/AuthContext";
 
 // icons
-import { ExitToApp, Menu, ThumbUpAlt, School, Event, Source, Terminal, WorkHistory, BusinessCenter, Feed, Settings, ExpandLess, ExpandMore, AssignmentInd, IntegrationInstructions, Group } from "@mui/icons-material";
+import { ExitToApp, Menu, ThumbUpAlt, School, Event, Source, Terminal, WorkHistory, BusinessCenter, Feed, Settings, ExpandLess, ExpandMore, AssignmentInd, IntegrationInstructions, Group, AutoStories } from "@mui/icons-material";
 
 import logo from '../../assets/dbc-logo.webp';
 
@@ -138,7 +138,7 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
                   </ListItemButton>
                   <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/atividades") }}>
                     <ListItemIcon>
-                      <Terminal sx={{ color: "var(--azul-escuro-dbc)" }} />
+                      <AutoStories sx={{ color: "var(--azul-escuro-dbc)" }} />
                     </ListItemIcon>
                     <ListItemText primary="Atividades" />
                   </ListItemButton>

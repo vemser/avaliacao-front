@@ -26,7 +26,7 @@ export const InstrutorProvider = ({children}: IChildren) => {
       nProgress.start()
       API.defaults.headers.common["Authorization"] = token;
       await API.post("/feedback/cadastrar-feedback",feedbacks)
-      navigate("/lista-feedback")
+      navigate("/feedbacks")
       toast.success("Feedback cadastrado com sucesso!", toastConfig);
     } catch (error) {
       toast.error("Campo nulo, ou preenchido de forma incorreta, tente de novo.", toastConfig);
@@ -55,7 +55,7 @@ export const InstrutorProvider = ({children}: IChildren) => {
       API.defaults.headers.common["Authorization"] = token;
       await API.put(`/feedback/editar-feedback/${id}`,dadosEditados)
       toast.success("Feedback editado com sucesso!", toastConfig);
-      navigate("/lista-feedback")
+      navigate("/feedbacks")
     } catch (error) {
       toast.error("Campo nulo, ou preenchido de forma incorreta, ou com id inválido, tente de novo.", toastConfig);
     } finally {

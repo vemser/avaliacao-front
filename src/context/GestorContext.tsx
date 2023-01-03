@@ -27,7 +27,7 @@ export const GestorProvider = ({children} : IChildren) =>{
       nProgress.start()
       API.defaults.headers.common["Authorization"] = token;
       await API.post("/acompanhamento/cadastrar-acompanhamento",acompanhamento)
-      navigate("/lista-acompanhamento")
+      navigate("/acompanhamentos")
       toast.success("Acompanhamento cadastrado com sucesso!", toastConfig);
     } catch (error) {
       toast.error("Campo nulo, ou preenchido de forma incorreta, tente de novo.", toastConfig);
@@ -57,7 +57,7 @@ export const GestorProvider = ({children} : IChildren) =>{
         headers: { Authorization: localStorage.getItem("token") }
       }).then((response) => {
         toast.success("Acompanhamento editado com sucesso!", toastConfig);
-        navigate('/lista-acompanhamento')
+        navigate('/acompanhamentos')
       })
     } catch (error) {
       toast.error("Você não possui credenciais para acessar essas informações.", toastConfig);
@@ -71,7 +71,7 @@ export const GestorProvider = ({children} : IChildren) =>{
       nProgress.start()
       API.defaults.headers.common["Authorization"] = token;
       await API.post("/avaliacao-acompanhamento/cadastrar-avaliacao",avalicao)
-      navigate("/dashboard/gestor")
+      navigate("/alunos")
       toast.success("Avaliação cadastrada com sucesso!", toastConfig);
     } catch (error) {
       toast.error("Campo nulo, ou preenchido de forma incorreta, tente de novo.", toastConfig);
@@ -87,7 +87,7 @@ export const GestorProvider = ({children} : IChildren) =>{
         headers: { Authorization: localStorage.getItem("token") }
       }).then((response) => {
         toast.success("Avaliação editada com sucesso!", toastConfig);
-        navigate("/dashboard/gestor")
+        navigate("/alunos")
       })
     } catch (error) {
       toast.error("Houve um erro inesperado.", toastConfig);

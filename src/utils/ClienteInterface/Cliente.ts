@@ -12,7 +12,8 @@ export interface IClienteContext {
   cliente: IClienteAPI | null,
   deletarCliente: (id: number | undefined) => Promise<void>,
   pegarClientePorNome: (nome: string, pagina?: number, tamanho?: number) => Promise<void>,
-  pegarClientePorEmail: (nome: string, pagina?: number, tamanho?: number) => Promise<void>
+  pegarClientePorEmail: (nome: string, pagina?: number, tamanho?: number) => Promise<void>,
+  editarCliente: (cliente: ICadastrarCliente, id: number) => Promise<void>
 }
 
 export interface IClienteAPI {

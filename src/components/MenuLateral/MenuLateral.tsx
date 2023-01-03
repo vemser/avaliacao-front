@@ -92,21 +92,21 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
               </ListItemButton>
               <Collapse in={openTab1} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                  <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/dashboard/instrutor") }}>
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/alunos") }}>
                     <ListItemIcon>
                       <School sx={{ color: "var(--azul-escuro-dbc)" }} />
                     </ListItemIcon>
                     <ListItemText primary="Alunos" />
                   </ListItemButton>
 
-                  <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/lista-feedback") }}>
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/feedbacks") }}>
                     <ListItemIcon>
                       <ThumbUpAlt sx={{ color: "var(--azul-escuro-dbc)" }} />
                     </ListItemIcon>
                     <ListItemText primary="Feedbacks" />
                   </ListItemButton>
 
-                  <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/lista-acompanhamento") }}>
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/acompanhamentos") }}>
                     <ListItemIcon>
                       <Event sx={{ color: "var(--azul-escuro-dbc)" }} />
                     </ListItemIcon>
@@ -124,17 +124,23 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
               </ListItemButton>
               <Collapse in={openTab2} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                  <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/dashboard/trilha-programa") }}>
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/trilhas-e-programas") }}>
                     <ListItemIcon>
                       <Source sx={{ color: "var(--azul-escuro-dbc)" }} />
                     </ListItemIcon>
                     <ListItemText primary="Trilhas e Programas" />
                   </ListItemButton>
-                  <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/lista-modulo") }}>
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/modulos") }}>
                     <ListItemIcon>
                       <Terminal sx={{ color: "var(--azul-escuro-dbc)" }} />
                     </ListItemIcon>
                     <ListItemText primary="Módulos" />
+                  </ListItemButton>
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/atividades") }}>
+                    <ListItemIcon>
+                      <Terminal sx={{ color: "var(--azul-escuro-dbc)" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Atividades" />
                   </ListItemButton>
                 </List>
               </Collapse>
@@ -148,19 +154,19 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
               </ListItemButton>
               <Collapse in={openTab3} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                  <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/lista-alocacao-reserva") }}>
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/alocacao-reserva") }}>
                     <ListItemIcon>
                       <WorkHistory sx={{ color: "var(--azul-escuro-dbc)" }} />
                     </ListItemIcon>
                     <ListItemText primary="Reserva e Alocação" />
                   </ListItemButton>
-                  <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/lista-cliente") }}>
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/clientes") }}>
                     <ListItemIcon>
                       <Group sx={{ color: "var(--azul-escuro-dbc)" }} />
                     </ListItemIcon>
                     <ListItemText primary="Clientes" />
                   </ListItemButton>
-                  <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/lista-vaga") }}>
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/vagas") }}>
                     <ListItemIcon>
                       <Feed sx={{ color: "var(--azul-escuro-dbc)" }} />
                     </ListItemIcon>

@@ -1,8 +1,11 @@
 import { Box, Stack, FormControl, TextField, Typography, InputLabel, Input, Button, Select, MenuItem, Autocomplete } from '@mui/material';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { BotaoVerde } from '../../components/BotaoVerde/BotaoVerde';
 import { Titulo } from '../../components/Titulo/Titulo';
+import { useCliente } from '../../context/Alocacao/ClienteContext';
+import { useVaga } from '../../context/Alocacao/VagaContext';
+import { useAluno } from '../../context/Comportamental/AlunoContext';
 
 
 const top100Films = [
@@ -18,6 +21,15 @@ const top100Films = [
 export const CadastrarReservaAlacocao = () => {
 
   const navigate = useNavigate()
+  const {pegarAluno, alunos} = useAluno()
+  const {pegarVagas, vagas} = useVaga()
+  const {pegarCliente, cliente} = useCliente()
+
+  useEffect(() => {
+    pegarAluno();
+    pegarVagas();
+    pegarCliente();
+  },[])
 
 
   return (
@@ -40,31 +52,16 @@ export const CadastrarReservaAlacocao = () => {
             />
           </FormControl>
 
-          <FormControl sx={{ width: { xs: "100%", md: "100%" } }} >
-            <Autocomplete
-              disablePortal
-              id="aluno"
-              options={top100Films}
-              renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />}
-            />
+          <FormControl sx={{ width: "100%" }} >
+            <Autocomplete disablePortal id="aluno" isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ( { label: `${aluno.idAluno} - ${aluno.nome}`})) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />
           </FormControl>
 
-          <FormControl sx={{ width: { xs: "100%", md: "100%" } }} >
-            <Autocomplete
-              disablePortal
-              id="vaga"
-              options={top100Films}
-              renderInput={(params) => <TextField {...params} label="Vaga" variant="filled" />}
-            />
+          <FormControl sx={{ width: "100%" }} >
+            <Autocomplete disablePortal id="vaga" isOptionEqualToValue={(option, value) => option.label === value.label} options={vagas ? vagas.elementos.map((vaga) => ( { label: `${vaga.idVaga} - ${vaga.nome}`})) : []} renderInput={(params) => <TextField {...params} label="Vaga" variant="filled" />} />
           </FormControl>
 
-          <FormControl sx={{ width: { xs: "100%", md: "100%" } }} >
-            <Autocomplete
-              disablePortal
-              id="cliente"
-              options={top100Films}
-              renderInput={(params) => <TextField {...params} label="Cliente" variant="filled" />}
-            />
+          <FormControl sx={{ width: "100%" }} >
+            <Autocomplete disablePortal id="cliente" isOptionEqualToValue={(option, value) => option.label === value.label} options={cliente ? cliente.elementos.map((clientes) => ( { label: `${clientes.idCliente} - ${clientes.nome}`})) : []} renderInput={(params) => <TextField {...params} label="Cliente" variant="filled" />} />
           </FormControl>
 
         </Stack>

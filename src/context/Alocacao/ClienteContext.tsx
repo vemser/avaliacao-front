@@ -10,18 +10,18 @@ import { toastConfig } from "../../utils/toast";
 
 export const ClienteContext = createContext({} as IClienteContext);
 
-export const ClienteProvider = ({children} :IChildren) => {
+export const ClienteProvider = ({ children }: IChildren) => {
 
   const navigate = useNavigate()
 
-  const [cliente, setCliente] = useState<IClienteAPI | null>( null)
+  const [cliente, setCliente] = useState<IClienteAPI | null>(null)
 
-  const cadastrarCliente = async (cliente: ICadastrarCliente) =>{
+  const cadastrarCliente = async (cliente: ICadastrarCliente) => {
     try {
       nProgress.start();
-      await API.post("cliente",cliente)
+      await API.post("cliente", cliente)
       toast.success("Cliente criado com sucesso!", toastConfig);
-      navigate("/lista-cliente")
+      navigate("/clientes")
     } catch (error) {
       toast.error('Houve um erro inesperado.', toastConfig);
     } finally {
@@ -33,7 +33,7 @@ export const ClienteProvider = ({children} :IChildren) => {
   const pegarCliente = async (pagina: number = 0, tamanho: number = 10) => {
     try {
       nProgress.start();
-      const {data} = await API.get(`cliente?pagina=${pagina}&tamanho=${tamanho}`)
+      const { data } = await API.get(`cliente?pagina=${pagina}&tamanho=${tamanho}`)
       setCliente(data)
     } catch (error) {
       toast.error('Houve um erro inesperado.', toastConfig);
@@ -42,28 +42,42 @@ export const ClienteProvider = ({children} :IChildren) => {
     }
   }
 
-  const pegarClientePorNome = async (nome: string,pagina: number = 0, tamanho: number = 10) =>{
+  const pegarClientePorNome = async (nome: string, pagina: number = 0, tamanho: number = 10) => {
     try {
       nProgress.start();
-      const {data} = await API.get(`/cliente/nome/${nome}?pagina=${pagina}&tamanho=${tamanho}`)
+      const { data } = await API.get(`/cliente/nome/${nome}?pagina=${pagina}&tamanho=${tamanho}`)
       setCliente(data)
     } catch (error) {
       toast.error('Houve um erro inesperado.', toastConfig);
-      
+
     } finally {
       nProgress.done();
 
     }
   }
 
-  const pegarClientePorEmail = async (nome: string,pagina: number = 0, tamanho: number = 10) =>{
+  const pegarClientePorEmail = async (nome: string, pagina: number = 0, tamanho: number = 10) => {
     try {
       nProgress.start();
-      const {data} = await API.get(`/cliente/email/${nome}?pagina=${pagina}&tamanho=${tamanho}`)
+      const { data } = await API.get(`/cliente/email/${nome}?pagina=${pagina}&tamanho=${tamanho}`)
       setCliente(data)
     } catch (error) {
       toast.error('Houve um erro inesperado.', toastConfig);
-      
+
+    } finally {
+      nProgress.done();
+
+    }
+  }
+
+  const editarCliente = async (cliente: ICadastrarCliente, id: number) => {
+    try {
+      nProgress.start();
+      await API.put(`/cliente/${id}`, cliente)
+      navigate("/clientes")
+      toast.success("Cliente editado com sucesso!", toastConfig);
+    } catch (error) {
+      toast.error('Houve um erro inesperado.', toastConfig);
     } finally {
       nProgress.done();
 
@@ -76,7 +90,7 @@ export const ClienteProvider = ({children} :IChildren) => {
       await API.delete(`/cliente/${id}`);
       toast.success("Cliente deletado com sucesso!", toastConfig);
       pegarCliente();
-    } catch(error) {
+    } catch (error) {
       toast.error('Houve um erro inesperado.', toastConfig);
 
     } finally {
@@ -85,7 +99,7 @@ export const ClienteProvider = ({children} :IChildren) => {
   }
 
   return(
-    <ClienteContext.Provider value={{cadastrarCliente,pegarCliente,cliente,deletarCliente,pegarClientePorNome,pegarClientePorEmail}}>
+    <ClienteContext.Provider value={{cadastrarCliente,pegarCliente,cliente,deletarCliente,pegarClientePorNome,pegarClientePorEmail,editarCliente}}>
       {children}
     </ClienteContext.Provider>
   )

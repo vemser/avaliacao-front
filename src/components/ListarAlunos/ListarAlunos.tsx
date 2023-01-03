@@ -8,8 +8,6 @@ import { Edit, DeleteForever } from "@mui/icons-material";
 import { useAluno } from "../../context/Comportamental/AlunoContext";
 import * as Componentes from "../../components";
 
-import { Titulo } from "../Titulo/Titulo";
-
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: { backgroundColor: theme.palette.common.black, color: theme.palette.common.white },
   [`&.${tableCellClasses.body}`]: { fontSize: 14 },
@@ -84,7 +82,7 @@ export const ListarAlunos: React.FC = () => {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
-      <Titulo texto="Alunos" />
+      <Componentes.Titulo texto="Alunos" />
 
       <Box sx={{ width: { xs: "95%", md: "80%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
 

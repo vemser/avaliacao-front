@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { Box, Typography, Stack, FormControl, InputLabel, Select, MenuItem, FormLabel, TextField, Button } from "@mui/material"
 
@@ -33,7 +33,11 @@ export const EditarAvaliacao = () => {
   const manipulaState = (event: string) => { setMudaRadio(event) }
   const resetFiltros = () => { setMudaRadio('') }
 
-  useEffect(() => { pegarAluno(); pegarAcompanhamento() }, [])
+  useEffect(() => { 
+    pegarAluno(); 
+    pegarAcompanhamento();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const { register, handleSubmit } = useForm<IEditarAvaliacaoForm>({
     resolver: yupResolver(EditarAvaliacaoSchema)

@@ -19,7 +19,7 @@ export const ClienteProvider = ({ children }: IChildren) => {
   const cadastrarCliente = async (cliente: ICadastrarCliente) => {
     try {
       nProgress.start();
-      await API.post("cliente", cliente)
+      await API.post("cliente", cliente, { headers: { Authorization: localStorage.getItem("token") }})
       toast.success("Cliente criado com sucesso!", toastConfig);
       navigate("/clientes")
     } catch (error) {
@@ -33,7 +33,7 @@ export const ClienteProvider = ({ children }: IChildren) => {
   const pegarCliente = async (pagina: number = 0, tamanho: number = 10) => {
     try {
       nProgress.start();
-      const { data } = await API.get(`cliente?pagina=${pagina}&tamanho=${tamanho}`)
+      const { data } = await API.get(`cliente?pagina=${pagina}&tamanho=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") }})
       setCliente(data)
     } catch (error) {
       toast.error('Houve um erro inesperado.', toastConfig);
@@ -45,7 +45,7 @@ export const ClienteProvider = ({ children }: IChildren) => {
   const pegarClientePorNome = async (nome: string, pagina: number = 0, tamanho: number = 10) => {
     try {
       nProgress.start();
-      const { data } = await API.get(`/cliente/nome/${nome}?pagina=${pagina}&tamanho=${tamanho}`)
+      const { data } = await API.get(`/cliente/nome/${nome}?pagina=${pagina}&tamanho=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") }})
       setCliente(data)
     } catch (error) {
       toast.error('Houve um erro inesperado.', toastConfig);
@@ -59,7 +59,7 @@ export const ClienteProvider = ({ children }: IChildren) => {
   const pegarClientePorEmail = async (nome: string, pagina: number = 0, tamanho: number = 10) => {
     try {
       nProgress.start();
-      const { data } = await API.get(`/cliente/email/${nome}?pagina=${pagina}&tamanho=${tamanho}`)
+      const { data } = await API.get(`/cliente/email/${nome}?pagina=${pagina}&tamanho=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") }})
       setCliente(data)
     } catch (error) {
       toast.error('Houve um erro inesperado.', toastConfig);
@@ -73,7 +73,7 @@ export const ClienteProvider = ({ children }: IChildren) => {
   const editarCliente = async (cliente: ICadastrarCliente, id: number) => {
     try {
       nProgress.start();
-      await API.put(`/cliente/${id}`, cliente)
+      await API.put(`/cliente/${id}`, cliente, { headers: { Authorization: localStorage.getItem("token") }})
       navigate("/clientes")
       toast.success("Cliente editado com sucesso!", toastConfig);
     } catch (error) {
@@ -87,7 +87,7 @@ export const ClienteProvider = ({ children }: IChildren) => {
   const deletarCliente = async (id: number | undefined) => {
     try {
       nProgress.start();
-      await API.delete(`/cliente/${id}`);
+      await API.delete(`/cliente/${id}`, { headers: { Authorization: localStorage.getItem("token") }});
       toast.success("Cliente deletado com sucesso!", toastConfig);
       pegarCliente();
     } catch (error) {

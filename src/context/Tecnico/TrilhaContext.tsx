@@ -21,7 +21,7 @@ export const TrilhaProvider = ({ children }: IChildren) => {
   const pegarTrilha = async (pagina: number = 0, tamanho: number = 10) => {
     try {
       nProgress.start();     
-      await API.get(`/trilha/lista-trilha-page?page=${pagina}&size=${tamanho}`).then((response) => {
+      await API.get(`/trilha/lista-trilha-page?page=${pagina}&size=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
         setTrilhas(response.data)
       })
     } catch (error) {
@@ -34,7 +34,7 @@ export const TrilhaProvider = ({ children }: IChildren) => {
   const pegarTrilhaFiltroNome = async (nome: string, pagina: number = 0, tamanho: number = 10) => {
     try {
       nProgress.start();
-      await API.get(`/trilha/lista-trilha-nome?nome=${nome}&page=${pagina}&size=${tamanho}`).then((response) => {
+      await API.get(`/trilha/lista-trilha-nome?nome=${nome}&page=${pagina}&size=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
         setTrilhas(response.data)
       })
     } catch (error) {
@@ -47,7 +47,7 @@ export const TrilhaProvider = ({ children }: IChildren) => {
   const cadastrarTrilha = async (dadosTrilha: IDadosTrilha) => {
     try {
       nProgress.start();
-      await API.post('/trilha', dadosTrilha).then((response) => {
+      await API.post('/trilha', dadosTrilha, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
         setMudaDashboard(false)
         navigate('/trilhas-e-programas');
         toast.success('Trilha foi cadastrada com sucesso.', toastConfig);
@@ -62,10 +62,10 @@ export const TrilhaProvider = ({ children }: IChildren) => {
   const editarTrilha = async (dadosTrilha: IDadosTrilha, idTrilha: number) => {
     try {
       nProgress.start();
-      await API.put(`/trilha/update/${idTrilha}`, dadosTrilha).then((response) => {
+      await API.put(`/trilha/update/${idTrilha}`, dadosTrilha, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
+        navigate('/trilhas-e-programas');
         toast.success('Trilha foi editada com sucesso.', toastConfig);
       });
-      navigate('/trilhas-e-programas');
     } catch (error) {
       toast.error('Houve um erro inesperado.', toastConfig);
     } finally {
@@ -76,7 +76,7 @@ export const TrilhaProvider = ({ children }: IChildren) => {
   const deletarTrilha = async (idTrilha: number | undefined) => {
     try {
       nProgress.start();
-      await API.delete(`/trilha/${idTrilha}`);
+      await API.delete(`/trilha/${idTrilha}`, { headers: { Authorization: localStorage.getItem("token") }});
       toast.success('Trilha desativada com sucesso.', toastConfig);
       pegarTrilha();
     } catch(error) {

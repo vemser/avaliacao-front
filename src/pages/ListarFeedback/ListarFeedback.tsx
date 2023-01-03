@@ -1,8 +1,6 @@
 import React, { useContext, useEffect } from "react"
 
-import { Box, Typography, Paper, TableContainer, Table, TableRow, TableCell, TableBody, TablePagination, styled, tableCellClasses, Button } from "@mui/material"
-
-import { Header } from "../../components/Header/Header"
+import { Box, Paper, TableContainer, Table, TableRow, TableCell, TableBody, TablePagination, styled, tableCellClasses, Button } from "@mui/material"
 
 import { InstrutorContext } from "../../context/InstrutorContext";
 import { Titulo } from "../../components/Titulo/Titulo";
@@ -43,7 +41,10 @@ export const ListarFeedback: React.FC = () => {
 
   const handleChangePage = async (event: unknown, newPage: number) => { await pegarFeedback(newPage); };
 
-  useEffect(() => { pegarFeedback(); }, [])
+  useEffect(() => { 
+    pegarFeedback();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [])
 
   // const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
   // if (infosUsuario.cargo !== "Instrutor") return <Navigate to="/" />

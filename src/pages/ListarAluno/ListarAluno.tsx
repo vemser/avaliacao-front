@@ -52,7 +52,10 @@ export const ListarAluno: React.FC = () => {
   const navigate = useNavigate();
   const { pegarAluno, alunos, deletarAluno } = useAluno();
 
-  useEffect(() => { pegarAluno() }, [])
+  useEffect(() => { 
+    pegarAluno(); 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // Funções Modal
   const [idDelete, setIdDelete] = useState<number | undefined>();

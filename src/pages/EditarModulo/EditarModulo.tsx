@@ -42,6 +42,7 @@ export const EditarModulo = () => {
     pegarTrilha(0, 999);
     pegarPrograma(0, 999);
     initialState()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   
   const { handleSubmit, register } = useForm();

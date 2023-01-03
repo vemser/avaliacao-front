@@ -60,7 +60,10 @@ export const ListarColaborador: React.FC = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  useEffect(() => { pegarColaborador() }, []);
+  useEffect(() => { 
+    pegarColaborador();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, []);
 
   // const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
   // if (infosUsuario.cargo !== "Admin") return <Navigate to="/" />

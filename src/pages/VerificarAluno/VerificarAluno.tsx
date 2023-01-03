@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from "react";
 
-import { Navigate, useLocation, useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 
-import { TablePagination, Box, Typography, Stack, Button, Paper, styled, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableRow, Avatar } from "@mui/material";
+import { TablePagination, Box, Typography, Stack, Button, Paper, styled, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableRow } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 
 import { GestorContext } from "../../context/GestorContext";
@@ -65,7 +65,11 @@ export const VerificarAluno: React.FC = () => {
   // Paginação Feedback
   const handleChangePageFeedBack = async (event: unknown, newPage: number) => { await pegarFeedbackPorID(state.idAluno, newPage); }
 
-  useEffect(() => { pegarAvaliacaoPorID(state.idAluno, 0); pegarFeedbackPorID(state.idAluno, 0); }, [])
+  useEffect(() => { 
+    pegarAvaliacaoPorID(state.idAluno, 0);
+    pegarFeedbackPorID(state.idAluno, 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
   // if (infosUsuario.cargo !== "Instrutor" && infosUsuario.cargo !== "Gestor de Pessoas") return <Navigate to="/" />

@@ -31,6 +31,7 @@ export const CadastrarAluno = () => {
   useEffect(() => {
     pegarTrilha(0, 999);
     pegarPrograma(0, 999);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const [tec, setTec] = useState<string>('')

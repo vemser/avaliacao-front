@@ -58,6 +58,7 @@ export const ListarCliente: React.FC = () => {
   const {pegarCliente, cliente,deletarCliente,pegarClientePorNome,pegarClientePorEmail} = useCliente()
   useEffect(()=>{
     pegarCliente();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
 
   const navigate = useNavigate();

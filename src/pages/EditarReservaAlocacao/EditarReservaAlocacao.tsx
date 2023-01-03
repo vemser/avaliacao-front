@@ -2,7 +2,6 @@ import { Box, Stack, FormControl, Autocomplete, TextField, InputLabel, Select, M
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import { Titulo } from '../../components';
-import { BotaoVerde } from '../../components/BotaoVerde/BotaoVerde';
 
 const top100Films = [
   { label: 'The Shawshank Redemption', year: 1994 },

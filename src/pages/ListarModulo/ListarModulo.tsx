@@ -55,7 +55,10 @@ export const ListarModulo = () => {
   const navigate = useNavigate();
   const { pegarModulo, pegarModuloPorID, deletarModulo, clonarModulo, modulo } = useModulo();
 
-  useEffect(() => { pegarModulo(); }, []);
+  useEffect(() => { 
+    pegarModulo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, []);
 
   const handleChangePage = async (event: unknown, newPage: number) => { await pegarModulo(newPage) };
 

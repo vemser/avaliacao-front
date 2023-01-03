@@ -38,6 +38,7 @@ export const CadastrarModulo = () => {
   useEffect(() => {
     pegarTrilha(0, 999);
     pegarPrograma(0, 999);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const { register, handleSubmit, formState: { errors } } = useForm<ICadastroModulo>();

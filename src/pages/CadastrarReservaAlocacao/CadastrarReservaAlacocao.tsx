@@ -1,12 +1,10 @@
-import { Box, Stack, FormControl, TextField, Typography, InputLabel, Input, Button, Select, MenuItem, Autocomplete } from '@mui/material';
+import { Box, Stack, FormControl, TextField, InputLabel, Button, Select, MenuItem, Autocomplete } from '@mui/material';
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { BotaoVerde } from '../../components/BotaoVerde/BotaoVerde';
 import { Titulo } from '../../components/Titulo/Titulo';
 import { useCliente } from '../../context/Alocacao/ClienteContext';
 import { useVaga } from '../../context/Alocacao/VagaContext';
 import { useAluno } from '../../context/Comportamental/AlunoContext';
-
 
 const top100Films = [
   { label: 'The Shawshank Redemption', year: 1994 },
@@ -29,6 +27,7 @@ export const CadastrarReservaAlacocao = () => {
     pegarAluno();
     pegarVagas();
     pegarCliente();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
 
 

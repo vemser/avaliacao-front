@@ -20,7 +20,7 @@ export const AlunoProvider = ({ children }: IChildren) => {
   const cadastrarAluno = async (dadosAluno: ICadastroAlunoAPI) => {
     try {
       nProgress.start();
-      await API.post('/aluno/cadastrar-aluno', dadosAluno).then((response) => {
+      await API.post('/aluno/cadastrar-aluno', dadosAluno, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
         navigate('/alunos');
         toast.success('Aluno(a) foi cadastrado(a) com sucesso.', toastConfig);
       })
@@ -34,7 +34,7 @@ export const AlunoProvider = ({ children }: IChildren) => {
   const pegarAluno = async (pagina: number = 0, tamanho: number = 10, filtros: string = '') => {
     try {
       nProgress.start();
-      await API.get(`/aluno/listar-alunos?page=${pagina}&size=${tamanho}${filtros}`).then((response) => {
+      await API.get(`/aluno/listar-alunos?page=${pagina}&size=${tamanho}${filtros}`, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
         setAlunos(response.data);
       })
     } catch (error) {
@@ -47,7 +47,7 @@ export const AlunoProvider = ({ children }: IChildren) => {
   const deletarAluno = async (idAluno: number | undefined) => {
     try {
       nProgress.start();
-      await API.delete(`/aluno/deletar/${idAluno}`);
+      await API.delete(`/aluno/deletar/${idAluno}`, { headers: { Authorization: localStorage.getItem("token") }});
       toast.success('Aluno desativado com sucesso.', toastConfig);
       pegarAluno()
     } catch (error) {

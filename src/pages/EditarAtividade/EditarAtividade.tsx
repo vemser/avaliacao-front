@@ -29,7 +29,7 @@ const MenuProps = {
 export const EditarAtividade = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { cadastrarAtividade, editarAtividade } = useAtividade();
+  const { editarAtividade } = useAtividade();
   const { pegarModulo, modulo } = useModulo();
   const { pegarPrograma, programas } = usePrograma();
   const { pegarAluno, alunos } = useAluno();

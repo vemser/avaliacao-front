@@ -21,7 +21,7 @@ export const AtividadeProvider = ({ children }: IChildren) => {
     try {
       nProgress.start();
       let novaData = { ...atividade, idPrograma: parseInt(atividade.idPrograma), dataCriacao: new Date().toISOString() }
-      await API.post(`/atividade`, novaData);
+      await API.post(`/atividade`, novaData, { headers: { Authorization: localStorage.getItem("token") }});
       toast.success("Atividade criado com sucesso!", toastConfig);
       navigate('/atividades');
     } catch (error) {
@@ -38,7 +38,7 @@ export const AtividadeProvider = ({ children }: IChildren) => {
   const pegarAtividade = async (pagina: number = 0, tamanho: number = 10) => {
     try {
       nProgress.start();
-      const { data } = await API.get(`/atividade/listar-paginado?page=${pagina}&size=${tamanho}`);
+      const { data } = await API.get(`/atividade/listar-paginado?page=${pagina}&size=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") }});
       setAtividades(data);
     } catch (error) {
       let message = "Ops, algo deu errado!";
@@ -54,7 +54,7 @@ export const AtividadeProvider = ({ children }: IChildren) => {
   const deletarAtividade = async (id: number) => {
     try {
       nProgress.start();
-      await API.delete(`/atividade/deletar-atividade?idAtividade=${id}`);
+      await API.delete(`/atividade/deletar-atividade?idAtividade=${id}`, { headers: { Authorization: localStorage.getItem("token") }});
       await pegarAtividade();
       toast.success("Atividade deletado com sucesso!", toastConfig);
     } catch (error) {
@@ -72,7 +72,7 @@ export const AtividadeProvider = ({ children }: IChildren) => {
     try {
       nProgress.start();
       let novaData = { ...atividade, idPrograma: parseInt(atividade.idPrograma), dataCriacao: new Date().toISOString() };
-      await API.put(`/atividade/update/${id}`, novaData);
+      await API.put(`/atividade/update/${id}`, novaData, { headers: { Authorization: localStorage.getItem("token") }});
       toast.success("Atividade atualizado com sucesso!", toastConfig);
       navigate(-1);
     } catch (error) {

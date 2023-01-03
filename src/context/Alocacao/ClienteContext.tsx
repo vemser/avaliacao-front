@@ -74,7 +74,7 @@ export const ClienteProvider = ({ children }: IChildren) => {
     try {
       nProgress.start();
       await API.put(`/cliente/${id}`, cliente)
-      navigate("/lista-cliente")
+      navigate("/clientes")
       toast.success("Cliente editado com sucesso!", toastConfig);
     } catch (error) {
       toast.error('Houve um erro inesperado.', toastConfig);

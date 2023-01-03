@@ -24,7 +24,7 @@ export const AtividadeProvider = ({ children }: IChildren) => {
       console.log(novaData)
       await API.post(`/atividade`, atividade);
       toast.success("Atividade criado com sucesso!", toastConfig);
-      navigate('/listar-atividade');
+      navigate('/atividades');
     } catch (error) {
       let message = "Ops, algo deu errado!";
       if (axios.isAxiosError(error) && error?.response) {

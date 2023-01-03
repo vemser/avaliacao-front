@@ -21,7 +21,7 @@ export const AlunoProvider = ({ children }: IChildren) => {
     try {
       nProgress.start();
       await API.post('/aluno/cadastrar-aluno', dadosAluno).then((response) => {
-        navigate('/dashboard/gestor');
+        navigate('/alunos');
         toast.success('Aluno(a) foi cadastrado(a) com sucesso.', toastConfig);
       })
     } catch (error) {

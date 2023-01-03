@@ -49,7 +49,7 @@ export const TrilhaProvider = ({ children }: IChildren) => {
       nProgress.start();
       await API.post('/trilha', dadosTrilha).then((response) => {
         setMudaDashboard(false)
-        navigate('dashboard/trilha-programa');
+        navigate('/trilhas-e-programas');
         toast.success('Trilha foi cadastrada com sucesso.', toastConfig);
       })
     } catch (error) {
@@ -65,7 +65,7 @@ export const TrilhaProvider = ({ children }: IChildren) => {
       await API.put(`/trilha/update/${idTrilha}`, dadosTrilha).then((response) => {
         toast.success('Trilha foi editada com sucesso.', toastConfig);
       });
-      navigate('/dashboard/trilha-programa');
+      navigate('/trilhas-e-programas');
     } catch (error) {
       toast.error('Houve um erro inesperado.', toastConfig);
     } finally {

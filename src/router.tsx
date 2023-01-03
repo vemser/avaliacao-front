@@ -27,10 +27,10 @@ function AppRoutes() {
             <Routes>
                 <Route index element={<Pages.Login />} />
                 <Route path="*" element={<Components.NotFound />} />
-                <Route path="/dashboard/undefined" element={<Components.Loading />} />
+                <Route path="/undefined" element={<Components.Loading />} />
 
                 <Route element={<Components.RotaPrivada />}>
-                  <Route path="/dashboard/trilha-programa" element={<Pages.TrilhaPrograma />} />
+                  <Route path="/trilhas-e-programas" element={<Pages.TrilhaPrograma />} />
                   <Route path="/cadastrar-trilha" element={<Pages.CadastrarTrilha />} />
                   <Route path="/cadastrar-programa" element={<Pages.CadastrarPrograma />} />
                   <Route path="/editar-trilha" element={<Pages.EditarTrilha />} />
@@ -44,29 +44,29 @@ function AppRoutes() {
                   <Route path="/cadastrar-cliente" element={<Pages.CadastrarCliente/>}/>
 
                   {/* Rotas admin */}
-                  <Route path="/dashboard/admin" element={<Pages.DashboardAdmin />} />
+                  <Route path="/colaboradores" element={<Pages.ListarColaborador />} />
                   <Route path="/detalhes-colaborador" element={<Pages.DetalhesColaborador />} />
 
                   {/* Rotas Gestor */}
-                  <Route path="/dashboard/gestor" element={<Pages.DashboardGestor />} />
+                  <Route path="/alunos" element={<Pages.ListarAluno />} />
                   <Route path="/cadastrar-aluno" element={<Pages.CadastrarAluno />} />
                   <Route path="/cadastrar-acompanhamento" element={<Pages.CadastrarAcompanhamento />} />
                   <Route path="/avaliar-acompanhamento" element={<Pages.AvaliarAcompanhamento />} />
-                  <Route path="/lista-acompanhamento" element={<Pages.ListarAcompanhamento />} />
+                  <Route path="/acompanhamentos" element={<Pages.ListarAcompanhamento />} />
                   <Route path="/editar-acompanhamento" element={<Pages.EditarAcompanhamento />} />
                   <Route path="/editar-avaliacao" element={<Pages.EditarAvaliacao />} />
                   <Route path="/editar-aluno" element={<Pages.EditarAluno />} />
 
                   {/* Rotas Instrutor */}
-                  <Route path="/dashboard/instrutor" element={<Pages.DashboardInstrutor />} />
+                  <Route path="/alunos" element={<Pages.ListarAluno />} />
                   <Route path="/cadastrar-aluno" element={<Pages.CadastrarAluno />} />
                   <Route path="/cadastrar-feedback" element={<Pages.CadastrarFeedback />} />
                   <Route path="/verificar-aluno" element={<Pages.VerificarAluno />} />
-                  <Route path="/lista-feedback" element={<Pages.ListarFeedback />} />
+                  <Route path="/feedbacks" element={<Pages.ListarFeedback />} />
                   <Route path="/editar-feedback" element={<Pages.EditarFeedback />} />
                         
                   {/* Novas Rotas Gerais */}
-                  <Route path="/lista-modulo" element={<Pages.ListarModulo />} />
+                  <Route path="/modulos" element={<Pages.ListarModulo />} />
                   <Route path="/cadastrar-modulo" element={<Pages.CadastrarModulo />} />
                   <Route path="/editar-modulo" element={<Pages.EditarModulo />} />
                         
@@ -74,14 +74,14 @@ function AppRoutes() {
                   <Route path="/editar-usuario" element={<Pages.EditarUsuario />} />
 
                   {/* Rotas de alocação/reserva */}
-                  <Route path="/lista-alocacao-reserva" element={<Pages.ListarAlocacao />} />
+                  <Route path="/alocacao-reserva" element={<Pages.ListarAlocacao />} />
                   <Route path="/editar-alocacao-reserva" element={<Pages.EditarReservaAlocacao />} />
 
                   {/* Rotas de cliente */}
-                  <Route path="/lista-cliente" element={<Pages.ListarCliente />} />
+                  <Route path="/clientes" element={<Pages.ListarCliente />} />
                   <Route path="/editar-cliente" element={<Pages.EditarCliente />} />
                   {/* Rotas de vagas */}
-                  <Route path="/lista-vaga" element={<Pages.ListarVaga />} />
+                  <Route path="/vagas" element={<Pages.ListarVaga />} />
 
 
               </Route>

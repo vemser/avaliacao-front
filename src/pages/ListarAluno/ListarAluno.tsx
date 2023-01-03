@@ -8,8 +8,6 @@ import { Edit, DeleteForever } from "@mui/icons-material";
 import { useAluno } from "../../context/Comportamental/AlunoContext";
 import * as Componentes from "../../components";
 
-import { Titulo } from "../Titulo/Titulo";
-
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: { backgroundColor: theme.palette.common.black, color: theme.palette.common.white },
   [`&.${tableCellClasses.body}`]: { fontSize: 14 },
@@ -50,7 +48,7 @@ const style = {
   p: 4,
 };
 
-export const ListarAlunos: React.FC = () => {
+export const ListarAluno: React.FC = () => {
   const navigate = useNavigate();
   const { pegarAluno, alunos, deletarAluno } = useAluno();
 
@@ -69,9 +67,9 @@ export const ListarAlunos: React.FC = () => {
   const handleChangePage = async (event: unknown, newPage: number) => { await pegarAluno(newPage); };
 
   const filtrosAluno = async (valor: any) => {
-    if(valor.includes("@")){
+    if (valor.includes("@")) {
       await pegarAluno(0, 10, `&email=${valor}`)
-    } else if(!isNaN(valor)) {
+    } else if (!isNaN(valor)) {
       await pegarAluno(0, 10, `&idAluno=${valor}`)
     } else {
       await pegarAluno(0, 10, `&nome=${valor}`);
@@ -84,11 +82,11 @@ export const ListarAlunos: React.FC = () => {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
-      <Titulo texto="Alunos" />
+      <Componentes.Titulo texto="Alunos" />
 
       <Box sx={{ width: { xs: "95%", md: "80%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
 
-        <Box sx={{ display: "flex", gap: 3, flexDirection: { xs: "column", md: "row" }, justifyContent: "space-between", alignItems: "center", width: "100%", marginBottom: "10px",paddingInline: 2 }}>
+        <Box sx={{ display: "flex", gap: 3, flexDirection: { xs: "column", md: "row" }, justifyContent: "space-between", alignItems: "center", width: "100%", marginBottom: "10px", paddingInline: 2 }}>
           <Componentes.CampoBusca label="Nome, Email ou Código" buscar={filtrosAluno} resetar={resetFiltroAluno} />
 
           <Button onClick={() => navigate("/cadastrar-aluno")} variant="contained" sx={{ width: "auto", paddingLeft: "15px", paddingRight: "15px", display: "flex", marginBottom: "10px", marginRight: "14px", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Aluno</Button>

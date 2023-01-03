@@ -1,7 +1,6 @@
 export { Login } from "./Login/Login";
-export { DashboardAdmin } from "./DashboardAdmin/DashboardAdmin";
-export { DashboardGestor } from "./DashboardGestor/DashboardGestor";
-export { DashboardInstrutor } from "./DashboardInstrutor/DashboardInstrutor";
+export { ListarColaborador } from "./ListarColaborador/ListarColaborador";
+export { ListarAluno } from "./ListarAluno/ListarAluno";
 export { CadastrarAluno } from "./CadastrarAluno/CadastrarAluno";
 export { CadastrarAcompanhamento } from "./CadastrarAcompanhamento/CadastrarAcompanhamento";
 export { VerificarAluno } from "./VerificarAluno/VerificarAluno";
@@ -15,7 +14,7 @@ export { ListarFeedback } from "./ListarFeedback/ListarFeedback";
 export { EditarAluno } from "./EditarAluno/EditarAluno";
 export { EditarAcompanhamento } from "./EditarAcompanhamento/EditarAcompanhamento";
 export { DetalhesColaborador } from "./DetalhesColaborador/DetalhesColaborador";
-export { TrilhaPrograma } from './Trilha-e-Programa/TrilhaPrograma';
+export { TrilhaPrograma } from './TrilhaEPrograma/TrilhaPrograma';
 export { CadastrarTrilha } from './CadastrarTrilhas/CadastrarTrilha';
 export { CadastrarPrograma } from './CadastrarProgramas/CadastrarPrograma';
 export { EditarTrilha } from './EditarTrilha/EditarTrilha';

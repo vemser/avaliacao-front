@@ -29,17 +29,32 @@ const MenuProps = {
 export const EditarAtividade = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { cadastrarAtividade } = useAtividade();
+  const { cadastrarAtividade, editarAtividade } = useAtividade();
   const { pegarModulo, modulo } = useModulo();
   const { pegarPrograma, programas } = usePrograma();
   const { pegarAluno, alunos } = useAluno();
   const { usuarioLogado } = useAuth();
   const [moduloSelecionado, setModuloSelecionado] = useState<number[]>([]);
   const [alunoSelecionado, setAlunoSelecionado] = useState<number[]>([]);
-  const { register, handleSubmit, formState: { errors } } = useForm<IAtividadeForm>({ resolver: yupResolver(atividadeSchema) });
+  const { register, handleSubmit, formState: { errors } } = useForm<IAtividadeForm>({
+    resolver: yupResolver(atividadeSchema), defaultValues: {
+      titulo: state.titulo,
+      idPrograma: state.programa.idPrograma,
+      pesoAtividade: state.pesoAtividade,
+      descricao: state.descricao,
+      dataEntrega: state.dataEntrega
+    }
+  });
 
   const cadastrar = async (data: IAtividadeForm) => {
-    await cadastrarAtividade({ ...data, modulos: moduloSelecionado, alunos: alunoSelecionado, nomeInstrutor: usuarioLogado.login.split('.')[0] });
+    await editarAtividade({ ...data, modulos: moduloSelecionado, alunos: alunoSelecionado, nomeInstrutor: usuarioLogado.login.split('.')[0] }, state.idAtividade);
+  }
+
+  const initialState = () => {
+    let resultModulos = state.modulos.map((modulo: any) => modulo.idModulo);
+    let resultAlunos = state.alunos.map((aluno: any) => aluno.idAluno);
+    setModuloSelecionado(resultModulos);
+    setAlunoSelecionado(resultAlunos);
   }
 
   const mudaModulo = (event: any) => {
@@ -65,6 +80,7 @@ export const EditarAtividade = () => {
   };
 
   useEffect(() => {
+    initialState();
     pegarModulo();
     pegarPrograma();
     pegarAluno();
@@ -90,7 +106,7 @@ export const EditarAtividade = () => {
 
           <FormControl sx={{ width: "100%" }} >
             <InputLabel id="programas-list">Programas</InputLabel>
-            <Select MenuProps={MenuProps} {...register("idPrograma")} defaultValue="" label="Programas" labelId="demo-simple-select-filled-label" id="aluno" >
+            <Select MenuProps={MenuProps} {...register("idPrograma")} defaultValue={state.programa.idPrograma} label="Programas" labelId="demo-simple-select-filled-label" id="aluno" >
               <MenuItem value="initial-trilha" disabled><em>Selecione um programa</em></MenuItem>
               {programas?.elementos.map((programas: any) => (
                 <MenuItem key={programas.idPrograma} id={`${programas.idPrograma}`} value={programas.idPrograma}>{programas.nome}</MenuItem>

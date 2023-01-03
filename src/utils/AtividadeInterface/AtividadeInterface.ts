@@ -52,6 +52,7 @@ export interface IAtividadeContext {
   cadastrarAtividade: (atividade: IAtividadeForm) => Promise<void>,
   pegarAtividade: (pagina?: number, tamanho?: number) => Promise<void>,
   deletarAtividade: (id: number) => Promise<void>,
+  editarAtividade: (atividade: IAtividadeForm, id: number) => Promise<void>,
 }
 
 export interface IAtividadeForm {

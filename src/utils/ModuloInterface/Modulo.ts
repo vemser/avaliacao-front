@@ -1,10 +1,11 @@
-import { StringifyOptions } from "querystring"
-
 export interface IModulo {
   pegarModulo: (pagina?: number, tamanho?: number) => Promise<void>,
   modulo: IModuloAPI | null,
   deletarModulo: (id: number | undefined) => Promise<void>,
-  cadastrarModulo: (dadosModulo: ICadastroModulo) => Promise<void>
+  cadastrarModulo: (dadosModulo: ICadastroModulo) => Promise<void>,
+  editarModulo: (dadosModulo: ICadastroModulo, id: number) => Promise<void>,
+  clonarModulo: (id: number) => Promise<void>,
+  pegarModuloPorID: (id: number, pagina?: number, tamanho?: number) => Promise<void>
 }
 
 export interface IModuloAPI {

@@ -39,6 +39,7 @@ function AppRoutes() {
                   <Route path="/cadastrar-vaga" element={<Pages.CadastrarVaga/>}/>
                   <Route path="/editar-vaga" element={<Pages.EditarVaga/>}/>
                   <Route path="/editar-atividade" element={<Pages.EditarAtividade/>}/>
+                  <Route path="/listar-atividade" element={<Pages.ListarAtividade/>}/>
 
                   <Route path="/cadastrar-reserva-alocacao" element={<Pages.CadastrarReservaAlacocao/>}/>
                   <Route path="/cadastrar-cliente" element={<Pages.CadastrarCliente/>}/>

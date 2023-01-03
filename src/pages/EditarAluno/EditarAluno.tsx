@@ -10,7 +10,7 @@ import { IMaskInput } from 'react-imask';
 
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { editarAlunoSchema } from '../../utils/schemas';
+import { editarAlunoSchema, trilhaSchema } from '../../utils/schemas';
 
 import { useTrilha } from '../../context/Tecnico/TrilhaContext';
 import { usePrograma } from '../../context/Tecnico/ProgramaContext';
@@ -57,7 +57,7 @@ export const EditarAluno = () => {
 
   const { programas, pegarPrograma } = usePrograma();
   const { trilhas, pegarTrilha } = useTrilha(); 
-
+  console.log(trilhas?.elementos.map((trilha) => trilha.idTrilha))
   useEffect(() => { 
     pegarPrograma();
     pegarTrilha();

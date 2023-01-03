@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { API } from "../../utils/api";
@@ -63,4 +63,8 @@ export const ModuloProvider = ({ children }: IChildren) => {
       {children}
     </ModuloContext.Provider>
   )
+}
+
+export const useModulo = () => {
+  return useContext(ModuloContext);
 }

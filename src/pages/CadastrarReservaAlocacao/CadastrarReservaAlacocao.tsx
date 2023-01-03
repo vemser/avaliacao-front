@@ -26,9 +26,9 @@ export const CadastrarReservaAlacocao = () => {
   const {pegarCliente, cliente} = useCliente()
 
   useEffect(() => {
-    pegarAluno();
-    pegarVagas();
-    pegarCliente();
+    pegarAluno(0,999);
+    pegarVagas(0,999);
+    pegarCliente(0,999);
   },[])
 
 

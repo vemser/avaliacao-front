@@ -34,10 +34,10 @@ export const CadastrarFeedback = () => {
   const {pegarAluno,alunos} = useAluno()
   const {pegarTrilha,trilhas} = useTrilha()
   useEffect(() => {
-    pegarPrograma();
-    pegarModulo();
-    pegarAluno();
-    pegarTrilha();
+    pegarPrograma(0,999);
+    pegarModulo(0,999);
+    pegarAluno(0,999);
+    pegarTrilha(0,999);
   }, [])
   
 

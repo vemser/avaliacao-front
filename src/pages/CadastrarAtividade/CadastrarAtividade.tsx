@@ -33,9 +33,9 @@ export const CadastrarAtividade = () => {
   const { pegarPrograma, programas } = usePrograma();
   const { pegarAluno, alunos } = useAluno();
   const { usuarioLogado } = useAuth();
+  const { register, handleSubmit, formState: { errors } } = useForm<IAtividadeForm>({ resolver: yupResolver(atividadeSchema) });
   const [moduloSelecionado, setModuloSelecionado] = useState<number[]>([]);
   const [alunoSelecionado, setAlunoSelecionado] = useState<number[]>([]);
-  const { register, handleSubmit, formState: { errors } } = useForm<IAtividadeForm>({ resolver: yupResolver(atividadeSchema) });
 
   const cadastrar = async (data: IAtividadeForm) => {
     await cadastrarAtividade({ ...data, modulos: moduloSelecionado, alunos: alunoSelecionado, nomeInstrutor: usuarioLogado.login.split('.')[0] });
@@ -64,9 +64,9 @@ export const CadastrarAtividade = () => {
   };
 
   useEffect(() => {
-    pegarModulo();
-    pegarPrograma();
-    pegarAluno();
+    pegarModulo(0, 999);
+    pegarPrograma(0, 999);
+    pegarAluno(0, 999);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -94,6 +94,7 @@ export const CadastrarAtividade = () => {
                 <MenuItem key={programas.idPrograma} id={`${programas.idPrograma}`} value={programas.idPrograma}>{programas.nome}</MenuItem>
               ))}
             </Select>
+            {errors.idPrograma && <Typography id="erro-nome-programa" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.idPrograma.message}</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
@@ -129,12 +130,14 @@ export const CadastrarAtividade = () => {
               {...register("descricao")}
             />
           </FormControl>
+          {errors.descricao && <Typography id="erro-nome-programa" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.descricao.message}</Typography>}
         </Stack>
 
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: "end" }}>
 
           <FormControl sx={{ width: "100%" }}>
             <TextField type="number" label="Peso atividade " placeholder='Digite o peso da atividade' id='peso' variant="filled" {...register("pesoAtividade")} />
+            {errors.pesoAtividade && <Typography id="erro-nome-programa" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.pesoAtividade.message}</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
@@ -160,6 +163,7 @@ export const CadastrarAtividade = () => {
           <FormControl sx={{ width: "100%" }}>
             <TextField type="datetime-local" label="Data/horário de entrega "
               placeholder='Digite uam data de entrega' id='data-entrega' variant="filled" InputLabelProps={{ shrink: true }} {...register("dataEntrega")} />
+            {errors.dataEntrega && <Typography id="erro-nome-programa" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.dataEntrega.message}</Typography>}
           </FormControl>
 
           <Box sx={{ display: "flex", width: "100%", justifyContent: { xs: "center", lg: "end" }, alignItems: { xs: "center", lg: "end" }, bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>

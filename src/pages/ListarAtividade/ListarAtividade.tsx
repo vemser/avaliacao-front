@@ -8,15 +8,17 @@ import { useAtividade } from '../../context/Tecnico/AtividadeContext';
 
 export const ListarAtividade: React.FC = () => {
   const navigate = useNavigate();
-  const { atividades, pegarAtividade } = useAtividade();
+  const { atividades, pegarAtividade, pegarAtividadePorId } = useAtividade();
 
   useEffect(() => {
     pegarAtividade();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const buscarPorNomeAtividade = async (valor: string) => {
-    await pegarAtividade();
+  const buscarPorNomeAtividade = async (valor: any) => {
+    if (!isNaN(valor)) {
+      await pegarAtividadePorId(valor)
+    }
   }
 
   const resetBuscaAtividade = async () => {

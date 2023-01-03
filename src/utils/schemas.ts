@@ -117,11 +117,19 @@ export const ClienteSchema = yup.object().shape({
 })
 
 export const VagaSchema = yup.object().shape({
-  nome: yup.string().required("Por favor, insira um nome para a vaga").min(3, "O nome deve 3 caracteres"),
+  nome: yup.string().required("Por favor, insira um nome para a vaga").min(3, "O nome ter deve 3 caracteres no mínimo"),
   quantidade: yup.number().typeError("Deve ser um número").required("Por favor, insira uma quantidade de vagas"),
   idPrograma: yup.string().required("Por favor, insira um programa"),
   idCliente: yup.string().required("Por favor, insira um cliente"),
   situacao: yup.string().required("Por favor, insira a situação da vaga"),
   dataAbertura: yup.string().required("Por favor, insira uma data de abertura"),
   dataFechamento: yup.string().required("Por favor, insira uma data de fechamento"),
+})
+
+export const atividadeSchema = yup.object().shape({
+  titulo: yup.string().required("Por favor, insira um título para a atividade").min(3, "O nome deve ter 3 caracteres no mínimo"),
+  pesoAtividade: yup.number().typeError("Deve ser um número").required("Por favor, insira um peso para a atividade"),
+  dataEntrega: yup.string().required("Por favor, insira uma data de entrega"),
+  idPrograma: yup.string().required("Por favor, selecione um programa"),
+  descricao: yup.string(),
 })

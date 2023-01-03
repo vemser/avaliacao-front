@@ -1,3 +1,11 @@
+export interface IAtividadeObject {
+  totalElementos: number;
+  quantidadePaginas: number;
+  pagina: number;
+  tamanho: number;
+  elementos: IAtividadeApi[];
+}
+
 export interface IAtividadeApi {
   idAtividade: number,
   nomeInstrutor: string,
@@ -18,7 +26,6 @@ export interface IAtividadeApi {
   },
   alunos: IAlunoAtividade[],
   modulos: IModuloAtividade[]
-
 }
 
 export interface IAlunoAtividade {
@@ -38,4 +45,22 @@ export interface IModuloAtividade {
   dataInicio: string,
   dataFim: string,
   ativo: "S" | "N"
+}
+
+export interface IAtividadeContext {
+  atividades: IAtividadeObject | null,
+  cadastrarAtividade: (atividade: IAtividadeForm) => Promise<void>,
+  pegarAtividade: (pagina?: number, tamanho?: number) => Promise<void>,
+  deletarAtividade: (id: number) => Promise<void>,
+}
+
+export interface IAtividadeForm {
+  titulo: string,
+  pesoAtividade: string,
+  dataEntrega: string,
+  descricao: string,
+  nomeInstrutor: string,
+  idPrograma: string,
+  modulos: number[],
+  alunos: number[]
 }

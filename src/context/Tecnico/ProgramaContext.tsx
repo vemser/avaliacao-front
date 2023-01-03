@@ -71,9 +71,10 @@ export const ProgramaProvider = ({ children }: IChildren) => {
   const deletarProgama = async (id: number) => {
     try {
       nProgress.start();
+      console.log(id)
       await API.delete(`/programa/${id}`);
-      toast.success("Programa deletado com sucesso!", toastConfig);
       await pegarPrograma();
+      toast.success("Programa deletado com sucesso!", toastConfig);
     } catch(error) {
       let message = "Ops, algo deu errado!";
       if (axios.isAxiosError(error) && error?.response) {

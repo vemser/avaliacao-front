@@ -1,15 +1,19 @@
-import { Box, Stack, FormControl, TextField, Button, InputLabel, Select, MenuItem, Autocomplete, OutlinedInput } from '@mui/material';
+import { Box, Stack, FormControl, TextField, Button, InputLabel, Select, MenuItem, Typography, OutlinedInput } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 import ListItemText from '@mui/material/ListItemText';
+import { Titulo } from '../../components/Titulo/Titulo';
+
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Titulo } from '../../components/Titulo/Titulo';
 import { useModulo } from '../../context/Tecnico/ModuloContext';
 import { usePrograma } from '../../context/Tecnico/ProgramaContext';
-
+import { useAtividade } from '../../context/Tecnico/AtividadeContext';
+import { useAuth } from "../../context/AuthContext";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAluno } from '../../context/Comportamental/AlunoContext';
+import { atividadeSchema } from '../../utils/schemas';
+import { IAtividadeForm } from '../../utils/AtividadeInterface/AtividadeInterface';
 
 const itemHeigth = 48;
 const itemPaddingTop = 8;
@@ -24,15 +28,17 @@ const MenuProps = {
 
 export const CadastrarAtividade = () => {
   const navigate = useNavigate()
+  const { cadastrarAtividade } = useAtividade();
   const { pegarModulo, modulo } = useModulo();
   const { pegarPrograma, programas } = usePrograma();
   const { pegarAluno, alunos } = useAluno();
+  const { usuarioLogado } = useAuth();
   const [moduloSelecionado, setModuloSelecionado] = useState<number[]>([]);
   const [alunoSelecionado, setAlunoSelecionado] = useState<number[]>([]);
-  const { register, handleSubmit, formState: { errors }, reset } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm<IAtividadeForm>({ resolver: yupResolver(atividadeSchema) });
 
-  const cadastrar = async (data: any) => {
-    const novaData = { ...data, idPrograma: parseInt(data.idPrograma), modulos: moduloSelecionado, alunos: alunoSelecionado }
+  const cadastrar = async (data: IAtividadeForm) => {
+    await cadastrarAtividade({ ...data, modulos: moduloSelecionado, alunos: alunoSelecionado, nomeInstrutor: usuarioLogado.login.split('.')[0] });
   }
 
   const mudaModulo = (event: any) => {
@@ -77,6 +83,7 @@ export const CadastrarAtividade = () => {
 
           <FormControl sx={{ width: "100%" }}>
             <TextField id="titulo-atividade" label="Título" placeholder="Digite um título para a atividade" variant="filled" {...register("titulo")} />
+            {errors.titulo && <Typography id="erro-nome-programa" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.titulo.message}</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
@@ -92,6 +99,7 @@ export const CadastrarAtividade = () => {
           <FormControl sx={{ width: "100%" }}>
             <InputLabel id="select-modulo">Módulos</InputLabel>
             <Select
+              MenuProps={MenuProps}
               id="select-modulo"
               multiple
               value={moduloSelecionado}

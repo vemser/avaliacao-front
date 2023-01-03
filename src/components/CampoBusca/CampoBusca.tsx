@@ -12,6 +12,12 @@ interface IProps {
 export const CampoBusca: React.FC<IProps> = ({ buscar, label, resetar }) => {
   const [search, setSearch] = useState<string | null>(null);
   const [buscou, setBuscou] = useState<boolean>(false);
+ 
+  const handleKeyPress = (event: any) => {
+    if (event.charCode === 13) {
+      if(search) { buscar(search); setBuscou(true) };
+    }
+  }
 
   return (
     <TextField
@@ -21,7 +27,16 @@ export const CampoBusca: React.FC<IProps> = ({ buscar, label, resetar }) => {
     sx={{ width: "250px"}}
     size="small"
     value={search ? search : ""}
-    onChange={(e) => { setSearch(e.target.value); setBuscou(false)}}
+    onKeyPress={handleKeyPress}
+    onChange={(e) => { 
+      setSearch(e.target.value);
+      if(e.target.value === "") {
+        resetar();
+        setBuscou(false);
+      }
+      else
+        setBuscou(false);
+    }}
     InputProps={{
       endAdornment: (
         <InputAdornment position="end">

@@ -28,11 +28,11 @@ export const ModuloProvider = ({ children }: IChildren) => {
     }
   }
 
-  const pegarModuloPorID = async (id: number, pagina: number = 0, tamanho: number = 10) => {
+  const pegarModuloPorID = async (id: number) => {
     try {
       nProgress.start()
-      const { data } = await API.get(`/modulo/lista-todos-modulos?page=${pagina}&size=${tamanho}&idModulo=${id}`)
-      setModulo(data)
+      const { data } = await API.get(`/modulo/find-id-modulo?idModulo=${id}`)
+      setModulo({ totalElementos: 1, quantidadePaginas: 1, pagina: 0, tamanho: 1, elementos: [data] })
     } catch (error) {
       toast.error("Houve algum erro.", toastConfig);
     } finally {

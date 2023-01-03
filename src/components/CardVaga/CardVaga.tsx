@@ -80,7 +80,7 @@ export const CardVaga: React.FC<IVagaApi> = (props) => {
         <Divider />
 
         <Typography sx={{textAlign: "center", fontSize: "13px"}}>
-        <b>{props.dataAbertura}</b> aberto até <b>{props.dataFechamento}</b>
+        <b>{props.dataAbertura.replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")}</b> aberto até <b>{props.dataFechamento.replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")}</b>
         </Typography>
         
         <Button variant="outlined" sx={{fontSize: "14px"}} disabled={props.situacao === "FECHADO" && true}>Reservar aluno para vaga</Button>

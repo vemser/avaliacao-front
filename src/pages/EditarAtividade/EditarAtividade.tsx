@@ -29,7 +29,7 @@ const MenuProps = {
 export const EditarAtividade = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { cadastrarAtividade, editarAtividade } = useAtividade();
+  const { editarAtividade } = useAtividade();
   const { pegarModulo, modulo } = useModulo();
   const { pegarPrograma, programas } = usePrograma();
   const { pegarAluno, alunos } = useAluno();
@@ -81,9 +81,9 @@ export const EditarAtividade = () => {
 
   useEffect(() => {
     initialState();
-    pegarModulo();
-    pegarPrograma();
-    pegarAluno();
+    pegarModulo(0, 999);
+    pegarPrograma(0, 999);
+    pegarAluno(0, 999);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -112,6 +112,7 @@ export const EditarAtividade = () => {
                 <MenuItem key={programas.idPrograma} id={`${programas.idPrograma}`} value={programas.idPrograma}>{programas.nome}</MenuItem>
               ))}
             </Select>
+            {errors.idPrograma && <Typography id="erro-nome-programa" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.idPrograma.message}</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
@@ -147,12 +148,14 @@ export const EditarAtividade = () => {
               {...register("descricao")}
             />
           </FormControl>
+          {errors.descricao && <Typography id="erro-nome-programa" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.descricao.message}</Typography>}
         </Stack>
 
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: "end" }}>
 
           <FormControl sx={{ width: "100%" }}>
             <TextField type="number" label="Peso atividade " placeholder='Digite o peso da atividade' id='peso' variant="filled" {...register("pesoAtividade")} />
+            {errors.pesoAtividade && <Typography id="erro-nome-programa" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.pesoAtividade.message}</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
@@ -178,6 +181,7 @@ export const EditarAtividade = () => {
           <FormControl sx={{ width: "100%" }}>
             <TextField type="datetime-local" label="Data/horário de entrega "
               placeholder='Digite uam data de entrega' id='data-entrega' variant="filled" InputLabelProps={{ shrink: true }} {...register("dataEntrega")} />
+            {errors.dataEntrega && <Typography id="erro-nome-programa" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.dataEntrega.message}</Typography>}
           </FormControl>
 
           <Box sx={{ display: "flex", width: "100%", justifyContent: { xs: "center", lg: "end" }, alignItems: { xs: "center", lg: "end" }, bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>

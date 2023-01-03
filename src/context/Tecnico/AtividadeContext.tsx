@@ -22,7 +22,7 @@ export const AtividadeProvider = ({ children }: IChildren) => {
       nProgress.start();
       let novaData = { ...atividade, idPrograma: parseInt(atividade.idPrograma), dataCriacao: new Date().toISOString() }
       await API.post(`/atividade`, novaData);
-      toast.success("Atividade criado com sucesso!", toastConfig);
+      toast.success("Atividade criada com sucesso!", toastConfig);
       navigate('/atividades');
     } catch (error) {
       let message = "Ops, algo deu errado!";
@@ -51,12 +51,28 @@ export const AtividadeProvider = ({ children }: IChildren) => {
     }
   }
 
+  const pegarAtividadePorId = async (id: number) => {
+    try {
+      nProgress.start();
+      const { data } = await API.get(`/atividade/find-id-atividade?idAtividade=${id}`);
+      setAtividades({ totalElementos: 1, quantidadePaginas: 1, pagina: 0, tamanho: 1, elementos: [data] })
+    } catch (error) {
+      let message = "Ops, algo deu errado!";
+      if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message;
+      }
+      toast.error(message, toastConfig);
+    } finally {
+      nProgress.done();
+    }
+  }
+
   const deletarAtividade = async (id: number) => {
     try {
       nProgress.start();
       await API.delete(`/atividade/deletar-atividade?idAtividade=${id}`);
       await pegarAtividade();
-      toast.success("Atividade deletado com sucesso!", toastConfig);
+      toast.success("Atividade deletada com sucesso!", toastConfig);
     } catch (error) {
       let message = "Ops, algo deu errado!";
       if (axios.isAxiosError(error) && error?.response) {
@@ -73,7 +89,7 @@ export const AtividadeProvider = ({ children }: IChildren) => {
       nProgress.start();
       let novaData = { ...atividade, idPrograma: parseInt(atividade.idPrograma), dataCriacao: new Date().toISOString() };
       await API.put(`/atividade/update/${id}`, novaData);
-      toast.success("Atividade atualizado com sucesso!", toastConfig);
+      toast.success("Atividade atualizada com sucesso!", toastConfig);
       navigate(-1);
     } catch (error) {
       let message = "Ops, algo deu errado!";
@@ -87,7 +103,7 @@ export const AtividadeProvider = ({ children }: IChildren) => {
   }
 
   return (
-    <AtividadeContext.Provider value={{ atividades, cadastrarAtividade, pegarAtividade, deletarAtividade, editarAtividade }}>
+    <AtividadeContext.Provider value={{ atividades, cadastrarAtividade, pegarAtividade, deletarAtividade, editarAtividade, pegarAtividadePorId }}>
       {children}
     </AtividadeContext.Provider>
   );

@@ -50,7 +50,7 @@ export const CardAtividade: React.FC<IAtividadeApi> = (props) => {
             Código: {props.idAtividade}
           </Typography>
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            <IconButton onClick={() => navigate("/editar-atividade")} >
+            <IconButton onClick={() => navigate("/editar-atividade", { state: props })} >
               <EditIcon />
             </IconButton>
             <IconButton onClick={() => { handleOpen(); setIdDelete(props.idAtividade) }}>

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Box, Button } from '@mui/material';
+import { Box, Button, TablePagination } from '@mui/material';
 
 import * as Components from "../../components";
 import { useAtividade } from '../../context/Tecnico/AtividadeContext';
@@ -23,6 +23,10 @@ export const ListarAtividade: React.FC = () => {
     await pegarAtividade();
   }
 
+  const mudarPagina = async (event: unknown, newPage: number) => {
+    await pegarAtividade(newPage)
+  }
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
       <Components.Titulo texto="Atividades" />
@@ -37,6 +41,8 @@ export const ListarAtividade: React.FC = () => {
         <Box sx={{ display: "flex", flexWrap: "wrap", width: "100%", justifyContent: "center", gap: "2rem", mt: 5 }}>
           {atividades?.elementos.map(item => <Components.CardAtividade key={item.idAtividade} {...item} />)}
         </Box>
+
+        <TablePagination rowsPerPageOptions={[]} component="div" count={atividades ? atividades.totalElementos : 0} rowsPerPage={atividades ? atividades.tamanho : 0} page={atividades ? atividades.pagina : 0} onPageChange={mudarPagina} />
       </Box>
     </Box>
   )

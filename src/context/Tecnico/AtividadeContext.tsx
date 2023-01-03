@@ -20,9 +20,8 @@ export const AtividadeProvider = ({ children }: IChildren) => {
   const cadastrarAtividade = async (atividade: IAtividadeForm) => {
     try {
       nProgress.start();
-      let novaData = { ...atividade, idPrograma: parseInt(atividade.idPrograma) }
-      console.log(novaData)
-      await API.post(`/atividade`, atividade);
+      let novaData = { ...atividade, idPrograma: parseInt(atividade.idPrograma), dataCriacao: new Date().toISOString() }
+      await API.post(`/atividade`, novaData);
       toast.success("Atividade criado com sucesso!", toastConfig);
       navigate('/atividades');
     } catch (error) {
@@ -52,26 +51,9 @@ export const AtividadeProvider = ({ children }: IChildren) => {
     }
   }
 
-  // const pegarProgramaPorNome = async (nome: string, pagina: number = 0, tamanho: number = 10) => {
-  //   try {
-  //     nProgress.start();
-  //     const { data } = await API.get(`/programa/list-nome?page=${pagina}&size=${tamanho}&nome=${nome}`);
-  //     setProgramas(data);
-  //   } catch(error) {
-  //     let message = "Ops, algo deu errado!";
-  //     if (axios.isAxiosError(error) && error?.response) {
-  //       message = error.response.data.message;
-  //     }
-  //     toast.error(message, toastConfig);
-  //   } finally {
-  //     nProgress.done();
-  //   }
-  // }
-
   const deletarAtividade = async (id: number) => {
     try {
       nProgress.start();
-      console.log(id)
       await API.delete(`/atividade/deletar-atividade?idAtividade=${id}`);
       await pegarAtividade();
       toast.success("Atividade deletado com sucesso!", toastConfig);
@@ -86,24 +68,26 @@ export const AtividadeProvider = ({ children }: IChildren) => {
     }
   }
 
-  // const editarPrograma = async (programa: IProgramas, id: number) => {
-  //   try {
-  //     nProgress.start();
-  //     await API.put(`/programa/${id}`, programa);
-  //     toast.success("Programa atualizado com sucesso!", toastConfig);
-  //   } catch(error) {
-  //     let message = "Ops, algo deu errado!";
-  //     if (axios.isAxiosError(error) && error?.response) {
-  //       message = error.response.data.message;
-  //     }
-  //     toast.error(message, toastConfig);
-  //   } finally {
-  //     nProgress.done();
-  //   }
-  // }
+  const editarAtividade = async (atividade: IAtividadeForm, id: number) => {
+    try {
+      nProgress.start();
+      let novaData = { ...atividade, idPrograma: parseInt(atividade.idPrograma), dataCriacao: new Date().toISOString() };
+      await API.put(`/atividade/update/${id}`, novaData);
+      toast.success("Atividade atualizado com sucesso!", toastConfig);
+      navigate(-1);
+    } catch (error) {
+      let message = "Ops, algo deu errado!";
+      if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message;
+      }
+      toast.error(message, toastConfig);
+    } finally {
+      nProgress.done();
+    }
+  }
 
   return (
-    <AtividadeContext.Provider value={{ atividades, cadastrarAtividade, pegarAtividade, deletarAtividade }}>
+    <AtividadeContext.Provider value={{ atividades, cadastrarAtividade, pegarAtividade, deletarAtividade, editarAtividade }}>
       {children}
     </AtividadeContext.Provider>
   );

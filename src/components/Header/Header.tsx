@@ -35,7 +35,7 @@ export const Header: React.FC = () => {
                 <MenuIcon />
               </IconButton>
               <Menu id="menu-responsivo-admin" anchorEl={anchorElNav} anchorOrigin={{ vertical: "bottom", horizontal: "left" }} keepMounted transformOrigin={{ vertical: "top", horizontal: "left" }} open={Boolean(anchorElNav)} onClose={handleCloseNavMenu} sx={{ display: { xs: "block", md: "none" } }}>
-                <MenuItem id="dashboard-responsivo-admin" onClick={() => { handleCloseNavMenu(); navigate("/dashboard/admin") }}>
+                  <MenuItem id="dashboard-responsivo-admin" onClick={() => { handleCloseNavMenu(); navigate("/colaboradores") }}>
                   <Typography textAlign="center">Dashboard</Typography>
                 </MenuItem>
                 <Divider />
@@ -56,7 +56,7 @@ export const Header: React.FC = () => {
                 <MenuIcon />
               </IconButton>
               <Menu id="menu-visible-admin" anchorEl={anchorElNav} anchorOrigin={{ vertical: "bottom", horizontal: "left" }} keepMounted transformOrigin={{ vertical: "top", horizontal: "left" }} open={Boolean(anchorElNav)} onClose={handleCloseNavMenu} sx={{ display: { xs: "none", md: "flex" } }}>
-                <MenuItem id="dashboard-visible-admin" onClick={() => { handleCloseNavMenu(); navigate("/dashboard/admin") }}>
+                <MenuItem id="dashboard-visible-admin" onClick={() => { handleCloseNavMenu(); navigate("/colaboradores") }}>
                   <Typography textAlign="center">Dashboard</Typography>
                 </MenuItem>
                 <Divider />
@@ -86,11 +86,11 @@ export const Header: React.FC = () => {
                 <MenuIcon />
               </IconButton>
               <Menu id="menu-responsivo-gestor" anchorEl={anchorElNav} anchorOrigin={{ vertical: "bottom", horizontal: "left" }} keepMounted transformOrigin={{ vertical: "top", horizontal: "left" }} open={Boolean(anchorElNav)} onClose={handleCloseNavMenu} sx={{ display: { xs: "block", md: "none" } }}>
-                <MenuItem id="dashboard-responsivo-gestor" onClick={() => { handleCloseNavMenu(); navigate("/dashboard/gestor") }}>
+                <MenuItem id="dashboard-responsivo-gestor" onClick={() => { handleCloseNavMenu(); navigate("/alunos") }}>
                   <Typography textAlign="center">Dashboard</Typography>
                 </MenuItem>
                 <Divider />
-                <MenuItem id="lista-acompanhamento-responsivo-gestor" onClick={() => { handleCloseNavMenu(); navigate("/lista-acompanhamento") }}>
+                <MenuItem id="lista-acompanhamento-responsivo-gestor" onClick={() => { handleCloseNavMenu(); navigate("/acompanhamentos") }}>
                   <Typography textAlign="center">Lista acompanhamentos</Typography>
                 </MenuItem>
                 <Divider />
@@ -119,11 +119,11 @@ export const Header: React.FC = () => {
                 <MenuIcon />
               </IconButton>
               <Menu id="menu-visible-gestor" anchorEl={anchorElNav} anchorOrigin={{ vertical: "bottom", horizontal: "left" }} keepMounted transformOrigin={{ vertical: "top", horizontal: "left" }} open={Boolean(anchorElNav)} onClose={handleCloseNavMenu} sx={{ display: { xs: "none", md: "flex" } }}>
-                <MenuItem id="dashboard-visible-gestor" onClick={() => { handleCloseNavMenu(); navigate("/dashboard/gestor") }}>
+                <MenuItem id="dashboard-visible-gestor" onClick={() => { handleCloseNavMenu(); navigate("/alunos") }}>
                   <Typography textAlign="center">Dashboard</Typography>
                 </MenuItem>
                 <Divider />
-                <MenuItem id="lista-acompanhamento-visible-gestor" onClick={() => { handleCloseNavMenu(); navigate("/lista-acompanhamento") }}>
+                <MenuItem id="lista-acompanhamento-visible-gestor" onClick={() => { handleCloseNavMenu(); navigate("/acompanhamentos") }}>
                   <Typography textAlign="center">Lista acompanhamentos</Typography>
                 </MenuItem>
                 <Divider />
@@ -161,11 +161,11 @@ export const Header: React.FC = () => {
                 <MenuIcon />
               </IconButton>
               <Menu id="menu-responsivo-instrutor" anchorEl={anchorElNav} anchorOrigin={{ vertical: "bottom", horizontal: "left" }} keepMounted transformOrigin={{ vertical: "top", horizontal: "left" }} open={Boolean(anchorElNav)} onClose={handleCloseNavMenu} sx={{ display: { xs: "block", md: "none" } }}>
-                <MenuItem id="dashboard-responsivo-instrutor" onClick={() => { handleCloseNavMenu(); navigate("/dashboard/instrutor") }}>
+                <MenuItem id="dashboard-responsivo-instrutor" onClick={() => { handleCloseNavMenu(); navigate("/alunos") }}>
                   <Typography textAlign="center">Dashboard</Typography>
                 </MenuItem>
                 <Divider />
-                <MenuItem id="dashboard-feedback-responsivo-instrutor" onClick={() => { handleCloseNavMenu(); navigate("/lista-feedback") }}>
+                <MenuItem id="dashboard-feedback-responsivo-instrutor" onClick={() => { handleCloseNavMenu(); navigate("/feedbacks") }}>
                   <Typography textAlign="center">Lista feedbacks</Typography>
                 </MenuItem>
                 <Divider />
@@ -190,11 +190,11 @@ export const Header: React.FC = () => {
                 <MenuIcon />
               </IconButton>
               <Menu id="menu-visible-instrutor" anchorEl={anchorElNav} anchorOrigin={{ vertical: "bottom", horizontal: "left" }} keepMounted transformOrigin={{ vertical: "top", horizontal: "left" }} open={Boolean(anchorElNav)} onClose={handleCloseNavMenu} sx={{ display: { xs: "none", md: "flex" } }}>
-                <MenuItem id="dashboard-visible-instrutor" onClick={() => { handleCloseNavMenu(); navigate("/dashboard/instrutor") }}>
+                <MenuItem id="dashboard-visible-instrutor" onClick={() => { handleCloseNavMenu(); navigate("/alunos") }}>
                   <Typography textAlign="center">Dashboard</Typography>
                 </MenuItem>
                 <Divider />
-                <MenuItem id="dashboard-feedbacks-visible-instrutor" onClick={() => { handleCloseNavMenu(); navigate("/lista-feedback") }}>
+                <MenuItem id="dashboard-feedbacks-visible-instrutor" onClick={() => { handleCloseNavMenu(); navigate("/feedbacks") }}>
                   <Typography textAlign="center">Lista feedbacks</Typography>
                 </MenuItem>
                 <Divider />

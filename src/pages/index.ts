@@ -1,7 +1,6 @@
 export { Login } from "./Login/Login";
-export { DashboardAdmin } from "./DashboardAdmin/DashboardAdmin";
-export { DashboardGestor } from "./DashboardGestor/DashboardGestor";
-export { DashboardInstrutor } from "./DashboardInstrutor/DashboardInstrutor";
+export { ListarColaborador } from "./ListarColaborador/ListarColaborador";
+export { ListarAluno } from "./ListarAluno/ListarAluno";
 export { CadastrarAluno } from "./CadastrarAluno/CadastrarAluno";
 export { CadastrarAcompanhamento } from "./CadastrarAcompanhamento/CadastrarAcompanhamento";
 export { VerificarAluno } from "./VerificarAluno/VerificarAluno";

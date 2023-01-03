@@ -44,7 +44,7 @@ export const ModuloProvider = ({ children }: IChildren) => {
     try {
       nProgress.start();
       await API.post("/modulo/adicionar", dadosModulo);
-      navigate("/lista-modulo");
+      navigate("/modulos");
       toast.success("Módulo cadastrado com sucesso!", toastConfig);
     } catch (error) {
       toast.error("Houve algum erro, cheque os dados e tente novamente.", toastConfig);
@@ -57,7 +57,7 @@ export const ModuloProvider = ({ children }: IChildren) => {
     try {
       nProgress.start();
       await API.put(`/modulo/editar?id=${id}`, dadosModulo);
-      navigate("/lista-modulo");
+      navigate("/modulos");
       toast.success("Módulo editado com sucesso!", toastConfig);
     } catch (error) {
       toast.error("Houve algum erro, cheque os dados e tente novamente.", toastConfig);

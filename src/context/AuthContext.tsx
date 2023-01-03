@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }: IChildren) => {
       localStorage.setItem("token", data);
       await pegarUsuarioLogado()
       toast.success("Seja bem-vindo(a)", toastConfig);
-      navigate("/dashboard/gestor")
+      navigate("/alunos")
     } catch (error) {
       toast.error("Desculpe, houve algum erro", toastConfig);
     } finally {
@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }: IChildren) => {
       }).then((response) => {
         setUsuarioLogado(response.data)
         toast.success("Foto editada com sucesso", toastConfig);
-        navigate('/dashboard/gestor')
+        navigate('/alunos')
       })
     } catch (error) {
       toast.error("Foto não enviada", toastConfig);

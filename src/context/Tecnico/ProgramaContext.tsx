@@ -23,7 +23,7 @@ export const ProgramaProvider = ({ children }: IChildren) => {
       nProgress.start();
       await API.post(`/programa`, programa);
       toast.success("Programa criado com sucesso!", toastConfig);
-      navigate('/dashboard/trilha-programa')
+      navigate('/trilhas-e-programas')
       setMudaDashboard(true)
     } catch (error) {
       let message = "Ops, algo deu errado!";

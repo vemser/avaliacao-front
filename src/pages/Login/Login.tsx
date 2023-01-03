@@ -37,7 +37,7 @@ export const Login = () => {
     }
   }
 
-  if (token) return <Navigate to={`/dashboard/gestor`} />
+  if (token) return <Navigate to={`/alunos`} />
 
   return (
     <Box id="container-global" component="section" sx={{ textAlign: "center", display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>

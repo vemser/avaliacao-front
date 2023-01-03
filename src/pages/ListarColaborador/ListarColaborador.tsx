@@ -47,7 +47,7 @@ const style = {
   p: 4,
 };
 
-export const DashboardAdmin: React.FC = () => {
+export const ListarColaborador: React.FC = () => {
   const navigate = useNavigate();
 
   const { colaborador, pegarColaborador, deletarColaborador, paginacaoColaborador } = useContext(AdminContext);

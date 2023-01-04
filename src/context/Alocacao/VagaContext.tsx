@@ -24,7 +24,6 @@ export const VagaProvider = ({ children }: IChildren) => {
       if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message;
       }
-      console.log(error)
       toast.error(message, toastConfig);
     } finally{
       nProgress.done();

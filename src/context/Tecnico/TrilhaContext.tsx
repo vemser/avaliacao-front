@@ -9,6 +9,7 @@ import { toastConfig } from "../../utils/toast";
 import { API } from "../../utils/api";
 import { IChildren, IDadosTrilha, ITrilha, ITrilhasAPI } from "../../utils/TrilhaInterface/trilha";
 import { usePrograma } from "./ProgramaContext";
+import axios from "axios";
 
 export const TrilhaContext = createContext({} as ITrilha);
 
@@ -25,7 +26,11 @@ export const TrilhaProvider = ({ children }: IChildren) => {
         setTrilhas(response.data)
       })
     } catch (error) {
-      toast.error('Houve um erro inesperado.', toastConfig);
+      let message = "Ops, algo deu errado!";
+      if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message;
+      }
+      toast.error(message, toastConfig);
     } finally {
       nProgress.done();
     }
@@ -38,7 +43,11 @@ export const TrilhaProvider = ({ children }: IChildren) => {
         setTrilhas(response.data)
       })
     } catch (error) {
-      toast.error('Houve um erro inesperado.', toastConfig);
+      let message = "Ops, algo deu errado!";
+      if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message;
+      }
+      toast.error(message, toastConfig);
     } finally {
       nProgress.done();
     }
@@ -53,7 +62,11 @@ export const TrilhaProvider = ({ children }: IChildren) => {
         toast.success('Trilha foi cadastrada com sucesso.', toastConfig);
       })
     } catch (error) {
-      toast.error('Houve um erro inesperado.', toastConfig);
+      let message = "Ops, algo deu errado!";
+      if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message;
+      }
+      toast.error(message, toastConfig);
     } finally {
       nProgress.done();
     }
@@ -67,7 +80,11 @@ export const TrilhaProvider = ({ children }: IChildren) => {
         toast.success('Trilha foi editada com sucesso.', toastConfig);
       });
     } catch (error) {
-      toast.error('Houve um erro inesperado.', toastConfig);
+      let message = "Ops, algo deu errado!";
+      if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message;
+      }
+      toast.error(message, toastConfig);
     } finally {
       nProgress.done();
     }
@@ -80,7 +97,11 @@ export const TrilhaProvider = ({ children }: IChildren) => {
       toast.success('Trilha desativada com sucesso.', toastConfig);
       pegarTrilha();
     } catch(error) {
-      toast.error('Houve um erro inesperado.', toastConfig);
+      let message = "Ops, algo deu errado!";
+      if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message;
+      }
+      toast.error(message, toastConfig);
     } finally {
       nProgress.done();
     }

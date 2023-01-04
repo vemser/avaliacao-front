@@ -9,6 +9,7 @@ import { IAlunosAPI, IChildren, IAluno } from "../../utils/AlunoInterface/aluno"
 import { useNavigate } from "react-router-dom";
 
 import { ICadastroAlunoAPI } from "../../utils/interface";
+import axios from "axios";
 
 export const AlunoContext = createContext({} as IAluno);
 
@@ -25,7 +26,11 @@ export const AlunoProvider = ({ children }: IChildren) => {
         toast.success('Aluno(a) foi cadastrado(a) com sucesso.', toastConfig);
       })
     } catch (error) {
-      toast.error('Houve um erro inesperado.', toastConfig);
+      let message = "Ops, algo deu errado!";
+      if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message;
+      }
+      toast.error(message, toastConfig);
     } finally {
       nProgress.done();
     }
@@ -39,7 +44,11 @@ export const AlunoProvider = ({ children }: IChildren) => {
         toast.success('Aluno(a) foi editado(a) com sucesso.', toastConfig);
       })
     } catch (error) {
-      toast.error('Houve um erro inesperado.', toastConfig);
+      let message = "Ops, algo deu errado!";
+      if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message;
+      }
+      toast.error(message, toastConfig);
     } finally {
       nProgress.done();
     }
@@ -52,7 +61,11 @@ export const AlunoProvider = ({ children }: IChildren) => {
         setAlunos(response.data);
       })
     } catch (error) {
-      toast.error('Houve um erro inesperado.', toastConfig);
+      let message = "Ops, algo deu errado!";
+      if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message;
+      }
+      toast.error(message, toastConfig);
     } finally {
       nProgress.done();
     }
@@ -65,7 +78,11 @@ export const AlunoProvider = ({ children }: IChildren) => {
       toast.success('Aluno desativado com sucesso.', toastConfig);
       pegarAluno()
     } catch (error) {
-      toast.error('Houve um erro inesperado.', toastConfig);
+      let message = "Ops, algo deu errado!";
+      if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message;
+      }
+      toast.error(message, toastConfig);
     } finally {
       nProgress.done();
     }

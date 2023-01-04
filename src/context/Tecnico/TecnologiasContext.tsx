@@ -7,13 +7,12 @@ import { toastConfig } from "../../utils/toast";
 import { API } from "../../utils/api";
 import { IChildren } from "../../utils/interface";
 import { ITecnologiaContext, ITecnologiasAPI } from "../../utils/TecnologiaInterface/tecnologia";
-import { useNavigate } from "react-router-dom";
+
+import axios from "axios";
 
 export const TecnologiaContext = createContext({} as ITecnologiaContext);
 
 export const TecnologiaProvider = ({ children }: IChildren) => {
-  const navigate = useNavigate();
-
   const [tecnologias, setTecnologias] = useState<ITecnologiasAPI | null>(null);
 
   const pegarTecnologia = async (pagina: number = 0, tamanho: number = 10) => {
@@ -23,7 +22,11 @@ export const TecnologiaProvider = ({ children }: IChildren) => {
         setTecnologias(response.data)
       })
     } catch (error) {
-      toast.error('Houve um erro inesperado.', toastConfig);
+      let message = "Ops, algo deu errado!";
+      if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message;
+      }
+      toast.error(message, toastConfig);
     } finally {
       nProgress.done();
     }
@@ -37,7 +40,11 @@ export const TecnologiaProvider = ({ children }: IChildren) => {
         pegarTecnologia();
       })
     } catch (error) {
-      toast.error('Houve um erro inesperado.', toastConfig);
+      let message = "Ops, algo deu errado!";
+      if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message;
+      }
+      toast.error(message, toastConfig);
     } finally {
       nProgress.done();
     }

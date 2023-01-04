@@ -9,6 +9,7 @@ import nProgress from "nprogress";
 
 import { ICadastroModulo, IModulo, IModuloAPI } from "../../utils/ModuloInterface/Modulo";
 import { IChildren } from "../../utils/interface";
+import axios from "axios";
 
 export const ModuloContext = createContext({} as IModulo);
 
@@ -22,7 +23,11 @@ export const ModuloProvider = ({ children }: IChildren) => {
       const { data } = await API.get(`/modulo/lista-todos-modulos?page=${pagina}&size=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") }})
       setModulo(data)
     } catch (error) {
-      toast.error("Houve algum erro.", toastConfig);
+      let message = "Ops, algo deu errado!";
+      if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message;
+      }
+      toast.error(message, toastConfig);
     } finally {
       nProgress.done()
     }
@@ -34,7 +39,11 @@ export const ModuloProvider = ({ children }: IChildren) => {
       const { data } = await API.get(`/modulo/find-id-modulo?idModulo=${id}`, { headers: { Authorization: localStorage.getItem("token") }})
       setModulo({ totalElementos: 1, quantidadePaginas: 1, pagina: 0, tamanho: 1, elementos: [data] })
     } catch (error) {
-      toast.error("Houve algum erro.", toastConfig);
+      let message = "Ops, algo deu errado!";
+      if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message;
+      }
+      toast.error(message, toastConfig);
     } finally {
       nProgress.done()
     }
@@ -47,7 +56,11 @@ export const ModuloProvider = ({ children }: IChildren) => {
       navigate("/modulos");
       toast.success("Módulo cadastrado com sucesso!", toastConfig);
     } catch (error) {
-      toast.error("Houve algum erro, cheque os dados e tente novamente.", toastConfig);
+      let message = "Ops, algo deu errado!";
+      if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message;
+      }
+      toast.error(message, toastConfig);
     } finally {
       nProgress.done();
     }
@@ -60,7 +73,11 @@ export const ModuloProvider = ({ children }: IChildren) => {
       navigate("/modulos");
       toast.success("Módulo editado com sucesso!", toastConfig);
     } catch (error) {
-      toast.error("Houve algum erro, cheque os dados e tente novamente.", toastConfig);
+      let message = "Ops, algo deu errado!";
+      if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message;
+      }
+      toast.error(message, toastConfig);
     } finally {
       nProgress.done();
     }
@@ -73,7 +90,11 @@ export const ModuloProvider = ({ children }: IChildren) => {
       toast.success("Módulo duplicado com sucesso!", toastConfig);
       pegarModulo();
     } catch (error) {
-      toast.error("Houve algum erro, cheque os dados e tente novamente.", toastConfig);
+      let message = "Ops, algo deu errado!";
+      if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message;
+      }
+      toast.error(message, toastConfig);
     } finally {
       nProgress.done();
     }
@@ -86,7 +107,11 @@ export const ModuloProvider = ({ children }: IChildren) => {
       toast.success("Modulo desativado com sucesso", toastConfig)
       pegarModulo()
     } catch (error) {
-      toast.error("Houve algum erro.", toastConfig);
+      let message = "Ops, algo deu errado!";
+      if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message;
+      }
+      toast.error(message, toastConfig);
     } finally {
       nProgress.done()
     }

@@ -1,3 +1,4 @@
+import axios from "axios";
 import nProgress from "nprogress";
 import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -23,7 +24,11 @@ export const ClienteProvider = ({ children }: IChildren) => {
       toast.success("Cliente criado com sucesso!", toastConfig);
       navigate("/clientes")
     } catch (error) {
-      toast.error('Houve um erro inesperado.', toastConfig);
+      let message = "Ops, algo deu errado!";
+      if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message;
+      }
+      toast.error(message, toastConfig);
     } finally {
       nProgress.done();
 
@@ -36,7 +41,11 @@ export const ClienteProvider = ({ children }: IChildren) => {
       const { data } = await API.get(`cliente?pagina=${pagina}&tamanho=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") }})
       setCliente(data)
     } catch (error) {
-      toast.error('Houve um erro inesperado.', toastConfig);
+      let message = "Ops, algo deu errado!";
+      if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message;
+      }
+      toast.error(message, toastConfig);
     } finally {
       nProgress.done();
     }
@@ -48,8 +57,11 @@ export const ClienteProvider = ({ children }: IChildren) => {
       const { data } = await API.get(`/cliente/nome/${nome}?pagina=${pagina}&tamanho=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") }})
       setCliente(data)
     } catch (error) {
-      toast.error('Houve um erro inesperado.', toastConfig);
-
+      let message = "Ops, algo deu errado!";
+      if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message;
+      }
+      toast.error(message, toastConfig);
     } finally {
       nProgress.done();
 
@@ -62,8 +74,11 @@ export const ClienteProvider = ({ children }: IChildren) => {
       const { data } = await API.get(`/cliente/email/${nome}?pagina=${pagina}&tamanho=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") }})
       setCliente(data)
     } catch (error) {
-      toast.error('Houve um erro inesperado.', toastConfig);
-
+      let message = "Ops, algo deu errado!";
+      if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message;
+      }
+      toast.error(message, toastConfig);
     } finally {
       nProgress.done();
 
@@ -77,7 +92,11 @@ export const ClienteProvider = ({ children }: IChildren) => {
       navigate("/clientes")
       toast.success("Cliente editado com sucesso!", toastConfig);
     } catch (error) {
-      toast.error('Houve um erro inesperado.', toastConfig);
+      let message = "Ops, algo deu errado!";
+      if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message;
+      }
+      toast.error(message, toastConfig);
     } finally {
       nProgress.done();
 
@@ -91,8 +110,11 @@ export const ClienteProvider = ({ children }: IChildren) => {
       toast.success("Cliente deletado com sucesso!", toastConfig);
       pegarCliente();
     } catch (error) {
-      toast.error('Houve um erro inesperado.', toastConfig);
-
+      let message = "Ops, algo deu errado!";
+      if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message;
+      }
+      toast.error(message, toastConfig);
     } finally {
       nProgress.done();
     }

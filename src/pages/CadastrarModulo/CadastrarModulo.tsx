@@ -7,13 +7,15 @@ import * as Componentes from '../../components/index';
 
 import logo from "../../assets/dbc-logo.webp";
 
-import { Box, Stack, FormControl, Button, InputLabel, Select, MenuItem, TextField, OutlinedInput, Checkbox, ListItemText, Typography } from '@mui/material';
+import { Box, Stack, FormControl, Button, InputLabel, Select, MenuItem, TextField, Checkbox, ListItemText, Typography } from '@mui/material';
 
 import { ICadastroModulo } from '../../utils/ModuloInterface/Modulo';
 
 import { useTrilha } from '../../context/Tecnico/TrilhaContext';
 import { useModulo } from '../../context/Tecnico/ModuloContext';
 import { usePrograma } from '../../context/Tecnico/ProgramaContext';
+import { moduloSchema } from '../../utils/schemas';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 const itemHeigth = 48;
 const itemPaddingTop = 8;
@@ -30,6 +32,7 @@ export const CadastrarModulo = () => {
   const navigate = useNavigate();
 
   const [programaSelecionado, setProgramaSelecionado] = useState<number[]>([]);
+  const [estadoErro, setEstadoErro] = useState<boolean>(false);
 
   const { pegarTrilha, trilhas } = useTrilha();
   const { pegarPrograma, programas } = usePrograma();
@@ -41,14 +44,25 @@ export const CadastrarModulo = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const { register, handleSubmit, formState: { errors } } = useForm<ICadastroModulo>();
+  const { register, handleSubmit, formState: { errors } } = useForm<ICadastroModulo>({
+    resolver: yupResolver(moduloSchema)
+  });
+
+  const erroPrograma = () => {
+    if(programaSelecionado.length > 0) {
+      setEstadoErro(false)
+    } else {
+      setEstadoErro(true) 
+    }
+  }
 
   const cadastrar = (data: any) => {
     const novoData = { ...data, idTrilha: parseInt(data.idTrilha), listPrograma: programaSelecionado }
-    cadastrarModulo(novoData)
+    if(programaSelecionado.length > 0) cadastrarModulo(novoData)
   }
 
   const handleChange = (event: any) => {
+    setEstadoErro(false)
     const {
       target: { value },
     } = event;
@@ -91,10 +105,12 @@ export const CadastrarModulo = () => {
                 <MenuItem key={trilha.idTrilha} id={`${trilha.idTrilha}`} value={trilha.idTrilha}>{trilha.nome}</MenuItem>
               ))}
             </Select>
+            {errors.idTrilha && <Typography id="erro-trilhaAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.idTrilha.message}</Typography>}
           </FormControl>
+
           <FormControl variant="filled" sx={{ width: "100%" }}>
-            <InputLabel id="demo-multiple-name-label">Programa</InputLabel>
-            <Select id="select-programa" MenuProps={MenuProps} multiple value={programaSelecionado} onChange={handleChange} input={<OutlinedInput label="Name" />} renderValue={(selected) => programas?.elementos.filter((programa) => selected.includes(programa.idPrograma)).map((programa) => programa.nome).join(', ')}>
+            <InputLabel id="select-programa">Programa</InputLabel>
+            <Select id="select-programa" MenuProps={MenuProps} multiple value={programaSelecionado} onChange={handleChange} renderValue={(selected) => programas?.elementos.filter((programa) => selected.includes(programa.idPrograma)).map((programa) => programa.nome).join(', ')}>
               <MenuItem value="initial-programa" disabled><em>Selecione um ou mais programas</em></MenuItem>
               {programas?.elementos.map((programa) => (
                 <MenuItem key={programa.idPrograma} value={programa.idPrograma}>
@@ -103,13 +119,14 @@ export const CadastrarModulo = () => {
                 </MenuItem>
               ))}
             </Select>
-            {errors.listPrograma && <Typography id="erro-listProgramaModulo" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.listPrograma.message}</Typography>}
+
+            {estadoErro && <Typography id="erro-programaAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">Por favor, escolha um programa</Typography>}
           </FormControl>
         </Stack>
         <Box sx={{ display: "flex", width: "100%", justifyContent: "center", alignItems: "center", bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>
           <Button type="button" onClick={() => { navigate(-1) }} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d " }, textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cancelar</Button>
 
-          <Button type="submit" variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cadastrar</Button>
+          <Button type='submit' onClick={() => { erroPrograma() }} variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cadastrar</Button>
         </Box>
       </Box>
     </Box>

@@ -90,7 +90,7 @@ export const EditarAtividade = () => {
 
   return (
     <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
-      <Titulo texto="Cadastrar Atividade" />
+      <Titulo texto="Editar Atividade" />
 
       <Box component="form" onSubmit={handleSubmit(cadastrar)} sx={{
         display: "flex", flexDirection: { xs: "column", lg: "row" }, justifyContent: "space-between", backgroundColor: "var(--branco)", width: { xs: "95%", md: "90%", lg: "85%" }, borderRadius: "10px", padding: {

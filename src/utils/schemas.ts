@@ -128,7 +128,7 @@ export const VagaSchema = yup.object().shape({
 
 export const atividadeSchema = yup.object().shape({
   titulo: yup.string().required("Por favor, insira um título para a atividade").min(3, "O nome deve ter 3 caracteres no mínimo"),
-  pesoAtividade: yup.number().typeError("Deve ser um número").required("Por favor, insira um peso para a atividade"),
+  pesoAtividade: yup.number().positive("Deve ser um número positivo").typeError("Deve ser um número").required("Por favor, insira um peso para a atividade"),
   dataEntrega: yup.string().required("Por favor, insira uma data de entrega"),
   idPrograma: yup.string().required("Por favor, selecione um programa"),
   descricao: yup.string().required("Por favor, insira uma descrição"),

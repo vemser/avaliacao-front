@@ -6,11 +6,14 @@ import { useForm } from "react-hook-form";
 
 import logo from "../../assets/dbc-logo.webp";
 
-import { Box, Stack, FormControl, Button, InputLabel, Select, MenuItem, TextField, OutlinedInput, Checkbox, ListItemText } from '@mui/material';
+import { Box, Stack, FormControl, Button, InputLabel, Select, MenuItem, TextField, OutlinedInput, Checkbox, ListItemText, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useTrilha } from '../../context/Tecnico/TrilhaContext';
 import { usePrograma } from '../../context/Tecnico/ProgramaContext';
 import { useModulo } from '../../context/Tecnico/ModuloContext';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { moduloSchema } from '../../utils/schemas';
+import { ICadastroModulo } from '../../utils/ModuloInterface/Modulo';
 
 const itemHeigth = 48;
 const itemPaddingTop = 8;
@@ -32,6 +35,7 @@ export const EditarModulo = () => {
   const { editarModulo } = useModulo();
 
   const [programaSelecionado, setProgramaSelecionado] = useState<number[]>([]);
+  const [estadoErro, setEstadoErro] = useState<boolean>(false);
 
   const initialState = () => {
     let result = state.listProgramaDTO.map((programas: any) => programas.idPrograma)
@@ -45,14 +49,25 @@ export const EditarModulo = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   
-  const { handleSubmit, register } = useForm();
+  const { handleSubmit, register, formState: { errors } } = useForm<ICadastroModulo>({
+    resolver: yupResolver(moduloSchema)
+  });
+
+  const erroPrograma = () => {
+    if(programaSelecionado.length > 0) {
+      setEstadoErro(false)
+    } else {
+      setEstadoErro(true) 
+    }
+  }
   
   const editar = (data: any) => {
     const novoData = { ...data, dataInicio: state.dataInicio, dataFim: state.dataFim, idTrilha: parseInt(data.idTrilha), listPrograma: programaSelecionado }
-    editarModulo(novoData, state.idModulo)
+    if(programaSelecionado.length > 0) editarModulo(novoData, state.idModulo)
   }
 
   const handleChange = (event: any) => {
+    setEstadoErro(false)
     const {
       target: { value },
     } = event;
@@ -74,6 +89,16 @@ export const EditarModulo = () => {
               <TextField id="nome-modulo" defaultValue={state.nome} label="Digite um nome" placeholder="Digite um nome" multiline variant="filled" {...register('nome')} />
             </FormControl>
 
+            <FormControl sx={{ width: "100%" }}>
+            <TextField id="dataInicio" label="Data Início" defaultValue={state.dataInicio} type="date" sx={{ width: "100%" }} InputLabelProps={{ shrink: true }} {...register("dataInicio")} />
+            {errors.dataInicio && <Typography id="erro-dataInicioModulo" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.dataInicio.message}</Typography>}
+          </FormControl>
+
+          <FormControl sx={{ width: "100%" }}>
+            <TextField id="dataFim" label="Data Fim" defaultValue={state.dataFim} type="date" sx={{ width: "100%" }} InputLabelProps={{ shrink: true }} {...register("dataFim")} />
+            {errors.dataFim && <Typography id="erro-dataFimModulo" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.dataFim.message}</Typography>}
+          </FormControl>
+
             <FormControl variant="filled" sx={{ width: "100%" }}>
               <InputLabel id="trilha-modulo">Selecione uma trilha</InputLabel>
               <Select MenuProps={MenuProps} {...register("idTrilha")} labelId="demo-simple-select-filled-label" id="trilha-modulo" defaultValue={state.trilhaDTO.idTrilha}>
@@ -82,11 +107,12 @@ export const EditarModulo = () => {
                   <MenuItem key={trilha.idTrilha} id={`id-trilha=${trilha.idTrilha}`} value={`${trilha.idTrilha}`}>{trilha.nome}</MenuItem>
                 ))}
               </Select>
+              {errors.idTrilha && <Typography id="erro-trilhaAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.idTrilha.message}</Typography>}
             </FormControl>
 
             <FormControl variant="filled" sx={{ width: "100%" }}>
-              <InputLabel id="demo-multiple-name-label" variant='filled'>Selecione o Programa</InputLabel>
-              <Select MenuProps={MenuProps} id="select-programa" multiple value={programaSelecionado} onChange={handleChange} input={<OutlinedInput label="Name" />} renderValue={(selected) => programas?.elementos.filter((programa) => selected.includes(programa.idPrograma)).map((programa) => programa.nome).join(', ')}>
+              <InputLabel id="select-programa" variant='filled'>Selecione o Programa</InputLabel>
+              <Select MenuProps={MenuProps} id="select-programa" multiple value={programaSelecionado} onChange={handleChange} renderValue={(selected) => programas?.elementos.filter((programa) => selected.includes(programa.idPrograma)).map((programa) => programa.nome).join(', ')}>
                 <MenuItem value="initial-programa" disabled><em>Selecione um ou mais programas</em></MenuItem>
                 {programas?.elementos.map((programa) => (
                   <MenuItem key={programa.idPrograma} value={programa.idPrograma}>
@@ -95,13 +121,14 @@ export const EditarModulo = () => {
                   </MenuItem>
                 ))}
               </Select>
+              {estadoErro && <Typography id="erro-programaAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">Por favor, escolha um programa</Typography>}
             </FormControl>
           </Stack>
 
           <Box sx={{ display: "flex", width: "100%", justifyContent: "center", alignItems: "center", bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>
             <Button type="button" onClick={() => { navigate(-1) }} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d " }, textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cancelar</Button>
 
-            <Button type="submit" variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Salvar</Button>
+            <Button type="submit"  onClick={() => { erroPrograma() }} variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Salvar</Button>
           </Box>
       </Box>
     </Box>

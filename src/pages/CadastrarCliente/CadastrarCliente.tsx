@@ -47,7 +47,7 @@ export const CadastrarCliente = () => {
           </FormControl>
 
           <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>
-            <TextField id="emailCliente" label="Email Cliente" {...register("email")} placeholder="Digite o email do cleinte" variant="filled"  />
+            <TextField id="emailCliente" label="Email Cliente" {...register("email")} placeholder="Digite o email do cliente" variant="filled"  />
             {errors.email && <Typography id="erro-nomeCliente" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.email.message}</Typography>}
           </FormControl>
 

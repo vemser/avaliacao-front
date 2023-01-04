@@ -54,19 +54,28 @@ const style = {
 export const ListarModulo = () => {
   const navigate = useNavigate();
   const { pegarModulo, pegarModuloPorFiltro, deletarModulo, clonarModulo, modulo } = useModulo();
+  const [inputFiltro, setInputFiltro] = useState<string>('');
 
   useEffect(() => { 
     pegarModulo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
    }, []);
 
-  const handleChangePage = async (event: unknown, newPage: number) => { await pegarModulo(newPage) };
-
-  const filtroModulo = async (valor: any) => {
-    if(!isNaN(valor)) {
-      await pegarModuloPorFiltro(0, 10, `&idModulo=${valor}`)
+  const handleChangePage = async (event: unknown, newPage: number) => {
+    if (inputFiltro) {
+      filtroModulo(inputFiltro, newPage)
     } else {
-      await pegarModuloPorFiltro(0, 10, `&nomeModulo=${valor}`);
+      await pegarModulo(newPage);
+    }
+  };
+
+  const filtroModulo = async (valor: any, pagina: number = 0, tamanho: number = 10) => {
+    setInputFiltro(valor);
+
+    if(!isNaN(valor)) {
+      await pegarModuloPorFiltro(pagina, tamanho, `&idModulo=${valor}`);
+    } else {
+      await pegarModuloPorFiltro(pagina, tamanho, `&nomeModulo=${valor}`);
     }
   }
 
@@ -101,7 +110,7 @@ export const ListarModulo = () => {
               <TableHead sx={{ backgroundColor: "#090F27" }}>
                 <TableRow>
                   {columns.map((column) => (
-                    <TableCell key={column.id} align={column.align} style={{ minWidth: "12.5%", fontWeight: "700", fontSize: "1rem", textAlign: "center", backgroundColor: "#090F27", color: "white" }}>
+                    <TableCell key={column.id} align={column.align} style={{ minWidth: "14.2%", fontWeight: "700", fontSize: "1rem", textAlign: "center", backgroundColor: "#090F27", color: "white" }}>
                       {column.label}
                     </TableCell>
                   ))}

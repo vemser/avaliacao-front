@@ -28,8 +28,8 @@ export const CadastrarVaga = () => {
   }
 
   useEffect(() => {
-    pegarPrograma(0, 999);
-    pegarCliente(0, 999);
+    pegarPrograma(0, programas?.totalElementos);
+    pegarCliente(0, cliente?.totalElementos);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

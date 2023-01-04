@@ -34,10 +34,11 @@ export const CadastrarFeedback = () => {
   const {pegarAluno,alunos} = useAluno()
   const {pegarTrilha,trilhas} = useTrilha()
   useEffect(() => {
-    pegarPrograma(0,999);
-    pegarModulo(0,999);
-    pegarAluno(0,999);
-    pegarTrilha(0,999);
+    pegarPrograma(0,programas?.totalElementos);
+    pegarModulo(0,modulo?.totalElementos);
+    pegarAluno(0,alunos?.totalElementos);
+    pegarTrilha(0,trilhas?.totalElementos);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   
 

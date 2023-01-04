@@ -64,9 +64,9 @@ export const CadastrarAtividade = () => {
   };
 
   useEffect(() => {
-    pegarModulo(0, 999);
-    pegarPrograma(0, 999);
-    pegarAluno(0, 999);
+    pegarModulo(0, modulo?.totalElementos);
+    pegarPrograma(0, programas?.totalElementos);
+    pegarAluno(0, alunos?.totalElementos);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

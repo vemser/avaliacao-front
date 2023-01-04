@@ -39,8 +39,8 @@ export const EditarModulo = () => {
   }
 
   useEffect(() => {
-    pegarTrilha(0, 999);
-    pegarPrograma(0, 999);
+    pegarTrilha(0, trilhas?.totalElementos);
+    pegarPrograma(0, programas?.totalElementos);
     initialState()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

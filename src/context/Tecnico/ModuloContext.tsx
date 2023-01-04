@@ -33,11 +33,12 @@ export const ModuloProvider = ({ children }: IChildren) => {
     }
   }
 
-  const pegarModuloPorID = async (id: number) => {
+  const pegarModuloPorFiltro = async (pagina: number = 0, tamanho: number = 10, filtros: string = '') => {
     try {
-      nProgress.start()
-      const { data } = await API.get(`/modulo/find-id-modulo?idModulo=${id}`, { headers: { Authorization: localStorage.getItem("token") }})
-      setModulo({ totalElementos: 1, quantidadePaginas: 1, pagina: 0, tamanho: 1, elementos: [data] })
+      nProgress.start();
+      await API.get(`/modulo/listar-id-nome?pagina=${pagina}&tamanho=${tamanho}${filtros}`, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
+        setModulo(response.data);
+      })
     } catch (error) {
       let message = "Ops, algo deu errado!";
       if (axios.isAxiosError(error) && error?.response) {
@@ -45,7 +46,7 @@ export const ModuloProvider = ({ children }: IChildren) => {
       }
       toast.error(message, toastConfig);
     } finally {
-      nProgress.done()
+      nProgress.done();
     }
   }
 
@@ -118,7 +119,7 @@ export const ModuloProvider = ({ children }: IChildren) => {
   }
 
   return (
-    <ModuloContext.Provider value={{ pegarModulo, modulo, deletarModulo, cadastrarModulo, editarModulo, pegarModuloPorID, clonarModulo }}>
+    <ModuloContext.Provider value={{ pegarModulo, modulo, deletarModulo, cadastrarModulo, editarModulo, pegarModuloPorFiltro, clonarModulo }}>
       {children}
     </ModuloContext.Provider>
   )

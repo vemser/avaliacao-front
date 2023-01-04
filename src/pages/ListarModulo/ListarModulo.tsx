@@ -53,7 +53,7 @@ const style = {
 
 export const ListarModulo = () => {
   const navigate = useNavigate();
-  const { pegarModulo, pegarModuloPorID, deletarModulo, clonarModulo, modulo } = useModulo();
+  const { pegarModulo, pegarModuloPorFiltro, deletarModulo, clonarModulo, modulo } = useModulo();
 
   useEffect(() => { 
     pegarModulo();
@@ -64,7 +64,9 @@ export const ListarModulo = () => {
 
   const filtroModulo = async (valor: any) => {
     if(!isNaN(valor)) {
-      await pegarModuloPorID(valor)
+      await pegarModuloPorFiltro(0, 10, `&idModulo=${valor}`)
+    } else {
+      await pegarModuloPorFiltro(0, 10, `&nomeModulo=${valor}`);
     }
   }
 

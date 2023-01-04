@@ -8,6 +8,11 @@ import { Box, Stack, FormControl, InputLabel, Select, MenuItem, TextField, Butto
 // import { EditarFeedbackSchema } from '../../utils/schemas'
 
 import { Titulo } from '../../components/Titulo/Titulo'
+import { useContext, useEffect } from 'react';
+import { useAluno } from '../../context/Comportamental/AlunoContext';
+import { ModuloContext } from '../../context/Tecnico/ModuloContext';
+import { usePrograma } from '../../context/Tecnico/ProgramaContext';
+import { useTrilha } from '../../context/Tecnico/TrilhaContext';
 
 // import logo from "../../assets/dbc-logo.webp";
 
@@ -23,18 +28,20 @@ import { Titulo } from '../../components/Titulo/Titulo'
 // const itemPaddingTop = 8;
 // // const MenuProps = { PaperProps: { style: { maxHeight: itemHeigth * 4.5 + itemPaddingTop, width: 250 } } };
 
-const top100Films = [
-  { label: 'The Shawshank Redemption', year: 1994 },
-  { label: 'The Godfather', year: 1972 },
-  { label: 'The Godfather: Part II', year: 1974 },
-  { label: 'The Dark Knight', year: 2008 },
-  { label: '12 Angry Men', year: 1957 },
-  { label: "Schindler's List", year: 1993 },
-  { label: 'Pulp Fiction', year: 1994 }
-];
-
 export const EditarFeedback = () => {
   const navigate = useNavigate();
+
+  const {pegarPrograma,programas} = usePrograma()
+  const { pegarModulo,modulo } = useContext(ModuloContext);
+  const {pegarAluno,alunos} = useAluno()
+  const {pegarTrilha,trilhas} = useTrilha()
+  useEffect(() => {
+    pegarPrograma(0,programas?.totalElementos);
+    pegarModulo(0,modulo?.totalElementos);
+    pegarAluno(0,alunos?.totalElementos);
+    pegarTrilha(0,trilhas?.totalElementos);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   // const { editarFeedback } = useContext(InstrutorContext);
   // const { pegarAluno, alunos } = useAluno();
   // const { state } = useLocation();
@@ -63,7 +70,7 @@ export const EditarFeedback = () => {
 
   return (
     <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
-      <Titulo texto="Cadastrar Feedback" />
+      <Titulo texto="Editar Feedback" />
 
       <Box component="form" sx={{
         display: "flex", flexDirection: { xs: "column", lg: "row" }, justifyContent: "space-between", backgroundColor: "var(--branco)", width: { xs: "95%", md: "90%", lg: "85%" }, borderRadius: "10px", padding: {
@@ -72,40 +79,20 @@ export const EditarFeedback = () => {
       }}>
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
-          <FormControl sx={{ width: { xs: "100%", md: "100%" } }} >
-            <Autocomplete
-              disablePortal
-              id="programa"
-              options={top100Films}
-              renderInput={(params) => <TextField {...params} label="Programa" variant="filled" />}
-            />
+        <FormControl sx={{ width: "100%" }} >
+            <Autocomplete disablePortal id="programa" isOptionEqualToValue={(option, value) => option.label === value.label} options={programas ? programas.elementos.map((programa) => ( { label: `${programa.idPrograma} - ${programa.nome}`})) : []} renderInput={(params) => <TextField {...params} label="Programa" variant="filled" />} />
           </FormControl>
 
-          <FormControl sx={{ width: { xs: "100%", md: "100%" } }} >
-            <Autocomplete
-              disablePortal
-              id="modulo"
-              options={top100Films}
-              renderInput={(params) => <TextField {...params} label="Módulo" variant="filled" />}
-            />
+          <FormControl sx={{ width: "100%" }} >
+            <Autocomplete disablePortal id="modulo" isOptionEqualToValue={(option, value) => option.label === value.label} options={modulo ? modulo.elementos.map((modulos) => ( { label: `${modulos.idModulo} - ${modulos.nome}`})) : []} renderInput={(params) => <TextField {...params} label="Módulo" variant="filled" />} />
           </FormControl>
 
-          <FormControl sx={{ width: { xs: "100%", md: "100%" } }} >
-            <Autocomplete
-              disablePortal
-              id="aluno"
-              options={top100Films}
-              renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />}
-            />
+          <FormControl sx={{ width: "100%" }} >
+            <Autocomplete disablePortal id="aluno" isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ( { label: `${aluno.idAluno} - ${aluno.nome}`})) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />
           </FormControl>
 
-          <FormControl sx={{ width: { xs: "100%", md: "100%" } }} >
-            <Autocomplete
-              disablePortal
-              id="trilha"
-              options={top100Films}
-              renderInput={(params) => <TextField {...params} label="Trilha" variant="filled" />}
-            />
+          <FormControl sx={{ width: "100%" }} >
+            <Autocomplete disablePortal id="trilha" isOptionEqualToValue={(option, value) => option.label === value.label} options={trilhas ? trilhas.elementos.map((trilha) => ( { label: `${trilha.idTrilha} - ${trilha.nome}`})) : []} renderInput={(params) => <TextField {...params} label="Trilha" variant="filled" />} />
           </FormControl>
         </Stack>
 

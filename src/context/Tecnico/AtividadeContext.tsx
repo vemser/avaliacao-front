@@ -22,7 +22,7 @@ export const AtividadeProvider = ({ children }: IChildren) => {
   const cadastrarAtividade = async (atividade: IAtividadeForm) => {
     try {
       nProgress.start();
-      let novaData = { ...atividade, idPrograma: parseInt(atividade.idPrograma), dataCriacao: new Date().toISOString(), nomeInstrutor: `${usuarioLogado.login.split(".")[0]} ${usuarioLogado.login.split(".")[1]}` }
+      let novaData = { ...atividade, idPrograma: parseInt(atividade.idPrograma), nomeInstrutor: `${usuarioLogado.login.split(".")[0]} ${usuarioLogado.login.split(".")[1]}` }
       await API.post(`/atividade`, novaData, { headers: { Authorization: localStorage.getItem("token") } });
       toast.success("Atividade criado com sucesso!", toastConfig);
       navigate('/atividades');
@@ -89,7 +89,7 @@ export const AtividadeProvider = ({ children }: IChildren) => {
   const editarAtividade = async (atividade: IAtividadeForm, id: number) => {
     try {
       nProgress.start();
-      let novaData = { ...atividade, idPrograma: parseInt(atividade.idPrograma), dataCriacao: new Date().toISOString() };
+      let novaData = { ...atividade, idPrograma: parseInt(atividade.idPrograma) };
       await API.put(`/atividade/update/${id}`, novaData, { headers: { Authorization: localStorage.getItem("token") } });
       toast.success("Atividade atualizado com sucesso!", toastConfig);
       navigate(-1);

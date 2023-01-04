@@ -15,11 +15,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { alunoSchema } from "../../utils/schemas";
 import { ICadastroAlunoForm } from "../../utils/interface";
 
-import DeleteIcon from '@mui/icons-material/Delete';
-
 import { useTrilha } from "../../context/Tecnico/TrilhaContext";
 import { usePrograma } from "../../context/Tecnico/ProgramaContext";
 import { useAluno } from "../../context/Comportamental/AlunoContext";
+import { useTecnologia } from "../../context/Tecnico/TecnologiasContext";
 
 export const CadastrarAluno = () => {
   const navigate = useNavigate();
@@ -27,27 +26,24 @@ export const CadastrarAluno = () => {
   const { cadastrarAluno } = useAluno();
   const { pegarTrilha, trilhas } = useTrilha();
   const { pegarPrograma, programas } = usePrograma();
+  const { pegarTecnologia, cadastrarTecnologia, tecnologias } = useTecnologia();
 
   useEffect(() => {
     pegarTrilha(0, 999);
     pegarPrograma(0, 999);
+    pegarTecnologia(0, 999);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const [tec, setTec] = useState<string>('')
-  const [mostrarTec, setMostrarTec] = useState<string[]>([])
+  const [inputTecnologia, setInputTecnologia] = useState<string>('')
+  const [tecnologiaSelecionada, setTecnologiaSelecionada] = useState<number[]>([]);
 
   const { register, handleSubmit, formState: { errors } } = useForm<ICadastroAlunoForm>({
     resolver: yupResolver(alunoSchema)
   });
 
-  const adicionarTecnologia = () => {
-    mostrarTec.includes(tec) ? alert("ja existe") : setMostrarTec([...mostrarTec, tec])
-    setTec("")
-  }
-
   const cadastroAluno = (data: ICadastroAlunoForm) => {
-    const novoData = { ...data, idTrilha: parseInt(data.idTrilha), idPrograma: parseInt(data.idPrograma.split(' ')[0]), tecnologias: [1] }
+    const novoData = { ...data, idTrilha: parseInt(data.idTrilha), idPrograma: parseInt(data.idPrograma.split(' ')[0]), tecnologias: tecnologiaSelecionada }
     cadastrarAluno(novoData)
   };
 
@@ -94,22 +90,16 @@ export const CadastrarAluno = () => {
         </Stack>
 
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: "end" }}>
-        {/* Corrigir tecnologia, get autocomplete */}
           <FormControl sx={{ width: { xs: "100%", md: "100%" }, display: "flex", flexDirection: "row", gap: "10px" }}>
-            <TextField sx={{ width: "90%" }} type="text" label='Tecnologias' placeholder='Digite uma tecnologia' id='tecnologias' value={tec} onChange={(e) => setTec(e.target.value)} variant="outlined" />
+            <Autocomplete sx={{ width: "90%" }} 
+            multiple disablePortal id="tecnologias" noOptionsText="Nenhuma opção encontrada. Cadastre a tecnologia"
+            onChange={(e, values) => setTecnologiaSelecionada(values.map((value) => value.id))}  
+            isOptionEqualToValue={(option, value) => option.label === value.label} 
+            options={tecnologias ? tecnologias.elementos.map((tecnologia) => ( { label: `${tecnologia.nome}`, id: tecnologia.idTecnologia})) : []} renderOption={(props, option) => ( <li {...props} key={option.id}>{option.label}</li> )} 
+            renderInput={(params) => <TextField {...params} label="Tecnologias" variant="filled" onChange={(e) => setInputTecnologia(e.target.value)} />} />
 
-            <Button id="botao-adiconar-tecnologia" variant={"contained"} sx={{ width: '10%', fontSize: "20px" }} onClick={adicionarTecnologia}>+</Button>
+            <Button id="botao-cadastrar-tecnologia" variant={"contained"} sx={{ width: '10%', fontSize: "20px" }} onClick={() => { if(inputTecnologia) cadastrarTecnologia({ nome: inputTecnologia }); setInputTecnologia('') }}>+</Button>
           </FormControl>
-
-          <Box sx={{ border: '1px solid #ababab', borderRadius: '5px', p: '5px', display: 'flex', width: '100%', height: '55px', overflowX: 'auto', alignItems: 'center', gap: '10px' }}>
-            {mostrarTec.map((el, index) => (
-              <Box key={index} sx={{ display: 'flex', alignItems: "center", border: '1px solid #ababab', borderRadius: '15px', p: '10px', height: '30px', gap: '5px' }}>{el}
-                <Box sx={{ width: '25px', height: '25px', borderRadius: '100%', background: 'red', display: 'flex', justigyContent: 'center', alignItems: 'center', cursor: 'pointer', color: 'white', paddingLeft: '2px' }} onClick={() => setMostrarTec(mostrarTec.filter(r => r !== el))}>
-                  <DeleteIcon sx={{ fontSize: "20px" }} />
-                </Box>
-              </Box>
-            ))}
-          </Box>
 
           <FormControl variant="filled" sx={{ width: "100%" }}>
             <InputLabel id="trilhaAluno">Trilha</InputLabel>
@@ -123,7 +113,9 @@ export const CadastrarAluno = () => {
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
-            <Autocomplete disablePortal id="programa" isOptionEqualToValue={(option, value) => option.label === value.label} options={programas ? programas.elementos.map((programa) => ( { label: `${programa.idPrograma} - ${programa.nome}`})) : []} renderInput={(params) => <TextField {...params} label="Programa" variant="filled" {...register("idPrograma")} />} />
+            <Autocomplete disablePortal id="programa" 
+            isOptionEqualToValue={(option, value) => option.label === value.label} 
+            options={programas ? programas.elementos.map((programa) => ( { label: `${programa.idPrograma} - ${programa.nome}`})) : []} renderInput={(params) => <TextField {...params} label="Programa" variant="filled" {...register("idPrograma")} />} />
             {errors.idPrograma && <Typography id="erro-programaAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.idPrograma.message}</Typography>}
           </FormControl>
 

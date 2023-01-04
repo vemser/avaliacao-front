@@ -19,7 +19,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 interface Column {
-  id: "codigo" | "nome" | "email" | "trilha" | "acoes";
+  id: "codigo" | "nome" | "email" | "trilha" | "situacao" | "acoes";
   label: string;
   minWidth?: number;
   align?: "right";
@@ -30,8 +30,9 @@ const columns: Column[] = [
   { id: "codigo", label: "Código", minWidth: 5 },
   { id: "nome", label: "Nome", minWidth: 5 },
   { id: "email", label: "Email", minWidth: 5 },
-  { id: "trilha", label: "Trilha", minWidth: 5, align: "right", format: (value: number) => value.toLocaleString("en-US") },
-  { id: "acoes", label: "Ações", minWidth: 5, align: "right", format: (value: number) => value.toLocaleString("en-US") }
+  { id: "trilha", label: "Trilha", minWidth: 5 },
+  { id: "situacao", label: "Situação", minWidth: 5 },
+  { id: "acoes", label: "Ações", minWidth: 5 }
 ];
 
 const style = {
@@ -101,7 +102,7 @@ export const ListarAluno: React.FC = () => {
               <TableHead sx={{ backgroundColor: "#090F27" }}>
                 <TableRow>
                   {columns.map((column) => (
-                    <TableCell key={column.id} align={column.align} style={{ minWidth: "25%", fontWeight: "700", fontSize: "1rem", textAlign: "center", backgroundColor: "#090F27", color: "white" }}>{column.label}</TableCell>
+                    <TableCell key={column.id} align={column.align} style={{ minWidth: "16.6%", fontWeight: "700", fontSize: "1rem", textAlign: "center", backgroundColor: "#090F27", color: "white" }}>{column.label}</TableCell>
                   ))}
                 </TableRow>
               </TableHead>
@@ -113,6 +114,7 @@ export const ListarAluno: React.FC = () => {
                     <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: aluno })} id="nome" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }}>{aluno.nome}</StyledTableCell>
                     <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: aluno })} id="email" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }}>{aluno.email}</StyledTableCell>
                     <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: aluno })} id="stack" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", textTransform: "capitalize" }}>{formatarTexto(aluno.trilha.nome)}</StyledTableCell>
+                    <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: aluno })} id="situacao" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", textTransform: "capitalize" }}>{formatarTexto(aluno.situacao)}</StyledTableCell>
                     <StyledTableCell id="acoes" sx={{ textAlign: "center" }}>
                       <Button id={`botao-editar-${aluno.idAluno}`} title="Deletar" onClick={() => navigate("/editar-aluno", { state: aluno })}><Edit /></Button>
                       <Button id={`botao-deletar-${aluno.idAluno}`} title="Deletar" onClick={() => { handleOpen(); setIdDelete(aluno.idAluno) }}><DeleteForever /></Button>

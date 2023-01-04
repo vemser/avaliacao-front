@@ -31,6 +31,20 @@ export const AlunoProvider = ({ children }: IChildren) => {
     }
   }
 
+  const editarAluno = async (dadosAluno: ICadastroAlunoAPI, id: number) => {
+    try {
+      nProgress.start();
+      await API.put(`/aluno/atualizar-aluno/${id}`, dadosAluno, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
+        navigate('/alunos');
+        toast.success('Aluno(a) foi editado(a) com sucesso.', toastConfig);
+      })
+    } catch (error) {
+      toast.error('Houve um erro inesperado.', toastConfig);
+    } finally {
+      nProgress.done();
+    }
+  }
+
   const pegarAluno = async (pagina: number = 0, tamanho: number = 10, filtros: string = '') => {
     try {
       nProgress.start();
@@ -58,7 +72,7 @@ export const AlunoProvider = ({ children }: IChildren) => {
   }
 
   return (
-    <AlunoContext.Provider value={{ alunos, pegarAluno, deletarAluno, cadastrarAluno }}>
+    <AlunoContext.Provider value={{ alunos, pegarAluno, deletarAluno, cadastrarAluno, editarAluno }}>
       {children}
     </AlunoContext.Provider>
   );

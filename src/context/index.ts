@@ -10,3 +10,4 @@ export { TrilhaProvider } from '../context/Tecnico/TrilhaContext';
 export { ClienteProvider } from "./Alocacao/ClienteContext";
 export { VagaProvider } from "./Alocacao/VagaContext";
 export { AtividadeProvider } from "./Tecnico/AtividadeContext";
+export { TecnologiaProvider } from './Tecnico/TecnologiasContext';

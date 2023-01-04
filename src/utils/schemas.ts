@@ -2,7 +2,9 @@ import * as yup from "yup";
 
 const regexEmail = /^[A-Za-z0-9._%+-]+@dbccompany.com.br$/;
 
-const regexEmailUserName = /^(?:([A-Za-z0-9._%+-]+@dbccompany.com.br)|([A-Za-z]+.[A-Za-z]+))$/
+const regexEmailUserName = /^(?:([A-Za-z0-9._%+-]+@dbccompany.com.br)|([A-Za-z]+.[A-Za-z]+))$/;
+
+const regexNome = /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$/;
 
 export const userSchema = yup.object().shape({
   username: yup.string().required("Por favor, digite seu usuário").matches(regexEmailUserName, "Precisa ser email @dbccompany.com.br ou usuário válido"),
@@ -10,10 +12,10 @@ export const userSchema = yup.object().shape({
 });
 
 export const alunoSchema = yup.object().shape({
-  nome: yup.string().required("Por favor, digite seu nome completo").min(3,"O nome deve conter no mínimo 3 caracteres"),
+  nome: yup.string().required("Por favor, digite seu nome completo").min(3,"O nome deve conter no mínimo 3 caracteres").matches(regexNome, 'Por favor, digite apenas letras.'),
   telefone: yup.string().required("Por favor, digite o telefone"),
-  cidade: yup.string().required("Por favor, digite sua Cidade"),
-  estado: yup.string().required("Por favor, digite seu Estado"),
+  cidade: yup.string().required("Por favor, digite sua Cidade").matches(regexNome, 'Por favor, digite apenas letras.'),
+  estado: yup.string().required("Por favor, digite seu Estado").matches(regexNome, 'Por favor, digite apenas letras.'),
   email: yup.string().required("Por favor, digite seu e-mail").email("Por favor, digite um e-mail válido").matches(regexEmail, "Só aceitamos email @dbccompany.com.br"),
   situacao: yup.string().required("Por favor, escolha uma situação"),
   descricao: yup.string().required("Por favor, digite uma descrição"),
@@ -22,16 +24,17 @@ export const alunoSchema = yup.object().shape({
 });
 
 export const trilhaSchema = yup.object().shape({
-  nome: yup.string().required("Por favor, digite o nome da Trilha").min(3,"O nome deve conter no mínimo 3 caracteres"),
+  nome: yup.string().required("Por favor, digite o nome da Trilha").min(3,"O nome deve conter no mínimo 3 caracteres").matches(regexNome, 'Por favor, digite apenas letras.'),
   descricao: yup.string()
 })
 
 export const editarAlunoSchema = yup.object().shape({
-  nome: yup.string().required("Por favor, digite seu nome completo").min(3,"O nome deve conter no mínimo 3 caracteres"),
+  nome: yup.string().required("Por favor, digite seu nome completo").min(3,"O nome deve conter no mínimo 3 caracteres").matches(regexNome, 'Por favor, digite apenas letras.'),
   email: yup.string().required("Por favor, digite seu e-mail").email("Por favor, digite um e-mail válido").matches(regexEmail, "Só aceitamos email @dbccompany.com.br"),
   trilha: Object({ nome: yup.string().required("Edição é obrigatória!") })
 });
 
+// tirar
 export const editarNomePerfil = yup.object().shape({
   nome: yup.string().required("Por favor, digite seu nome completo").min(3,"O nome deve conter no mínimo 3 caracteres")
 })
@@ -97,27 +100,27 @@ export const EditarFeedbackSchema = yup.object().shape({
 })
 
 export const ProgramaSchema = yup.object().shape({
-  nome:  yup.string().required("Por favor, insira um nome para a trilha").min(3, "O nome deve 3 caracteres"),
+  nome: yup.string().required("Por favor, insira um nome para a trilha").min(3, "O nome deve 3 caracteres"),
   descricao: yup.string(),
   dataInicio: yup.string().required("Por favor, insira uma data inicial"),
   dataFim: yup.string().required("Por favor, insira uma data final"),
 })
 
 export const moduloSchema = yup.object().shape({
-  nome: yup.string().required("Por favor, insira um nome para a trilha").min(3, "O nome deve 3 caracteres"),
+  nome: yup.string().required("Por favor, insira um nome para a trilha").min(3, "O nome deve 3 caracteres").matches(regexNome, 'Por favor, digite apenas letras.'),
   dataInicio: yup.string().required("Por favor, insira uma data inicial"),
   dataFim: yup.string().required("Por favor, insira uma data final"),
   idTrilha: yup.string().required("Por favor, selecione uma trilha")
 })
 
 export const ClienteSchema = yup.object().shape({
-  nome: yup.string().required("Por favor, digite o nome do cliente"),
-  email: yup.string().required("Por favor, digite o e-mail do cliente").email("Por favor, digite um e-mail válido").matches(regexEmail, "Só aceitamos email @dbccompany.com.br"),
+  nome: yup.string().required("Por favor, digite o nome do cliente").matches(regexNome, 'Por favor, digite apenas letras.'),
+  email: yup.string().required("Por favor, digite o e-mail do cliente").email("Por favor, digite um e-mail válido"),
   telefone: yup.string().required("Por favor, digite o telefone do cliente")
 })
 
 export const VagaSchema = yup.object().shape({
-  nome: yup.string().required("Por favor, insira um nome para a vaga").min(3, "O nome ter deve 3 caracteres no mínimo"),
+  nome: yup.string().required("Por favor, insira um nome para a vaga").min(3, "O nome ter deve 3 caracteres no mínimo").matches(regexNome, 'Por favor, digite apenas letras.'),
   quantidade: yup.number().typeError("Deve ser um número").required("Por favor, insira uma quantidade de vagas"),
   idPrograma: yup.string().required("Por favor, insira um programa"),
   idCliente: yup.string().required("Por favor, insira um cliente"),

@@ -17,6 +17,8 @@ import { ICadastroAlunoForm } from "../../utils/interface";
 import Autocomplete from '@mui/material/Autocomplete';
 import { useTecnologia } from '../../context/Tecnico/TecnologiasContext';
 import { useAluno } from '../../context/Comportamental/AlunoContext';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { alunoSchema } from '../../utils/schemas';
 
 const itemHeigth = 48;
 const itemPaddingTop = 8;
@@ -39,7 +41,9 @@ export const EditarAluno = () => {
     setTecnologiaSelecionada(result)
   }
 
-  const { register, handleSubmit, formState: { errors } } = useForm<ICadastroAlunoForm>();
+  const { register, handleSubmit, formState: { errors } } = useForm<ICadastroAlunoForm>({
+    resolver: yupResolver(alunoSchema)
+  });
 
   const editar = (data: ICadastroAlunoForm) => { 
     const novoData = { ...data, idTrilha: parseInt(data.idTrilha), idPrograma: data.idPrograma ? parseInt(data.idPrograma.split(' ')[0]) : state.programa.idPrograma, tecnologias: tecnologiaSelecionada }
@@ -85,15 +89,18 @@ export const EditarAluno = () => {
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField type="text" label="Cidade" defaultValue={state.cidade} {...register("cidade")} placeholder='Digite a cidade' id='cidade' variant="filled" />
+            <TextField type="text" label="Cidade" defaultValue={state.cidade} {...register("cidade")} placeholder='Digite a cidade' id='cidade' variant="filled" error={!!errors.cidade} />
+            {errors.cidade && <Typography id="erro-cidadeAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.cidade.message}</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField type="text" label="Estado" defaultValue={state.estado} {...register("estado")} placeholder='Digite o estado' id='estado' variant="filled" />
+            <TextField type="text" label="Estado" defaultValue={state.estado} {...register("estado")} placeholder='Digite o estado' id='estado' variant="filled" error={!!errors.estado} />
+            {errors.estado && <Typography id="erro-estadoAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.estado.message}</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField defaultValue={state.descricao} placeholder="Digite uma descrição" multiline rows={4} sx={{ width: "100%" }} id="descricao" label="Descrição" {...register("descricao")} variant='filled' />
+            <TextField defaultValue={state.descricao} placeholder="Digite uma descrição" multiline rows={4} sx={{ width: "100%" }} id="descricao" label="Descrição" {...register("descricao")} variant='filled' error={!!errors.descricao} />
+            {errors.descricao && <Typography id="erro-descricaoAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.descricao.message}</Typography>}
           </FormControl>
         </Stack>
 
@@ -113,7 +120,7 @@ export const EditarAluno = () => {
 
           <FormControl variant="filled" sx={{ width: "100%" }}>
             <InputLabel id="selectAluno">Trilha do Aluno</InputLabel>
-            <Select MenuProps={MenuProps} labelId="demo-simple-select-filled-label" defaultValue={state.trilha.idTrilha} id="select-trilha" {...register("idTrilha")}>
+            <Select MenuProps={MenuProps} labelId="demo-simple-select-filled-label" defaultValue={state.trilha.idTrilha} id="select-trilha" {...register("idTrilha")} error={!!errors.idTrilha}>
               {trilhas?.elementos.map((trilha) => (
                 <MenuItem key={trilha.idTrilha} id={`id-trilha=${trilha.idTrilha}`} value={`${trilha.idTrilha}`}>{trilha.nome}</MenuItem>
               ))}
@@ -132,12 +139,13 @@ export const EditarAluno = () => {
 
           <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>
             <InputLabel id="selectAluno">Situação</InputLabel>
-            <Select labelId="demo-simple-select-filled-label" defaultValue={state.situacao} {...register("situacao")} id="select-situacao">
+            <Select labelId="demo-simple-select-filled-label" defaultValue={state.situacao} error={!!errors.situacao} {...register("situacao")} id="select-situacao">
               <MenuItem id="disponivel" value="DISPONIVEL">Disponível</MenuItem>
               <MenuItem id="reservado" value="RESERVADO">Reservado</MenuItem>
               <MenuItem id="alocado" value="ALOCADO">Alocado</MenuItem>
               <MenuItem id="inativo" value="INATIVO">Inativo</MenuItem>
             </Select>
+            {errors.situacao && <Typography id="erro-situacaoAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.situacao.message}</Typography>}
           </FormControl>
 
           <Box sx={{ display: "flex", width: "100%", justifyContent: { xs: "center", lg: "end" }, alignItems: { xs: "center", lg: "end" }, bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>

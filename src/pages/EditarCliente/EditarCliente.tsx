@@ -25,8 +25,7 @@ export const EditarCliente = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<ICadastrarCliente>({
     resolver: yupResolver(ClienteSchema),defaultValues: {
      nome: state.nome,
-     email: state.email,
-     telefone: state.telefone
+     email: state.email
     }
   });
 
@@ -59,14 +58,8 @@ export const EditarCliente = () => {
 
           <div style={{width:"100%",display:"flex",flexDirection:"column",gap:"5px"}}>
             <label htmlFor="telefone">Digite seu telefone:</label>
-            <InputMask
-               style={{padding:"10px",border:"none",borderBottom:"1px solid gray",outline:"none"}}
-                mask="(99)99999-9999"
-                type="text"
-                id="telefone"
-                {...register("telefone")}
-              />
-              {errors.telefone && <Typography id="erro-nomeCliente" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.telefone.message}</Typography>}
+            <InputMask defaultValue={state.telefone} style={{padding:"10px",border:"none",borderBottom:"1px solid gray",outline:"none"}} mask="(99)99999-9999" type="text" id="telefone" {...register("telefone")} />
+            {errors.telefone && <Typography id="erro-nomeCliente" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.telefone.message}</Typography>}
           </div>
 
         </Stack>

@@ -5,7 +5,7 @@ export interface IModulo {
   cadastrarModulo: (dadosModulo: ICadastroModulo) => Promise<void>,
   editarModulo: (dadosModulo: ICadastroModulo, id: number) => Promise<void>,
   clonarModulo: (id: number) => Promise<void>,
-  pegarModuloPorID: (id: number, pagina?: number, tamanho?: number) => Promise<void>
+  pegarModuloPorFiltro: (pagina?: number, tamanho?: number, filtros?: string) => Promise<void>
 }
 
 export interface IModuloAPI {

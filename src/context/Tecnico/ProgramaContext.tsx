@@ -25,11 +25,13 @@ export const ProgramaProvider = ({ children }: IChildren) => {
       toast.success("Programa criado com sucesso!", toastConfig);
       navigate('/trilhas-e-programas')
       setMudaDashboard(true)
-    } catch (error) {
+    } catch (error: any) {
       let message = "Ops, algo deu errado!";
-      if (axios.isAxiosError(error) && error?.response) {
-        message = error.response.data.message;
-      }
+      if (error.response.status === 403) {
+        message = "Você não tem permissão para acessar esse recurso"
+      } else if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message || error.response.data.errors[0];
+      }  
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -41,11 +43,13 @@ export const ProgramaProvider = ({ children }: IChildren) => {
       nProgress.start();
       const { data } = await API.get(`/programa?page=${pagina}&size=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") }});
       setProgramas(data);
-    } catch(error) {
+    } catch (error: any) {
       let message = "Ops, algo deu errado!";
-      if (axios.isAxiosError(error) && error?.response) {
-        message = error.response.data.message;
-      }
+      if (error.response.status === 403) {
+        message = "Você não tem permissão para acessar esse recurso"
+      } else if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message || error.response.data.errors[0];
+      }  
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -57,11 +61,13 @@ export const ProgramaProvider = ({ children }: IChildren) => {
       nProgress.start();
       const { data } = await API.get(`/programa/list-nome?page=${pagina}&size=${tamanho}&nome=${nome}`, { headers: { Authorization: localStorage.getItem("token") }});
       setProgramas(data);
-    } catch(error) {
+    } catch (error: any) {
       let message = "Ops, algo deu errado!";
-      if (axios.isAxiosError(error) && error?.response) {
-        message = error.response.data.message;
-      }
+      if (error.response.status === 403) {
+        message = "Você não tem permissão para acessar esse recurso"
+      } else if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message || error.response.data.errors[0];
+      }  
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -75,11 +81,13 @@ export const ProgramaProvider = ({ children }: IChildren) => {
       await API.delete(`/programa/${id}`, { headers: { Authorization: localStorage.getItem("token") }});
       await pegarPrograma();
       toast.success("Programa deletado com sucesso!", toastConfig);
-    } catch(error) {
+    } catch (error: any) {
       let message = "Ops, algo deu errado!";
-      if (axios.isAxiosError(error) && error?.response) {
-        message = error.response.data.message;
-      }
+      if (error.response.status === 403) {
+        message = "Você não tem permissão para acessar esse recurso"
+      } else if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message || error.response.data.errors[0];
+      }  
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -91,11 +99,13 @@ export const ProgramaProvider = ({ children }: IChildren) => {
       nProgress.start();
       await API.put(`/programa/${id}`, programa, { headers: { Authorization: localStorage.getItem("token") }});
       toast.success("Programa atualizado com sucesso!", toastConfig);
-    } catch(error) {
+    } catch (error: any) {
       let message = "Ops, algo deu errado!";
-      if (axios.isAxiosError(error) && error?.response) {
-        message = error.response.data.message;
-      }
+      if (error.response.status === 403) {
+        message = "Você não tem permissão para acessar esse recurso"
+      } else if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message || error.response.data.errors[0];
+      }  
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();

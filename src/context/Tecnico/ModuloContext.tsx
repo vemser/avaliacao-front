@@ -22,30 +22,35 @@ export const ModuloProvider = ({ children }: IChildren) => {
       nProgress.start()
       const { data } = await API.get(`/modulo/lista-todos-modulos?page=${pagina}&size=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") }})
       setModulo(data)
-    } catch (error) {
+    } catch (error: any) {
       let message = "Ops, algo deu errado!";
-      if (axios.isAxiosError(error) && error?.response) {
-        message = error.response.data.message;
-      }
+      if (error.response.status === 403) {
+        message = "Você não tem permissão para acessar esse recurso"
+      } else if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message || error.response.data.errors[0];
+      }  
       toast.error(message, toastConfig);
     } finally {
       nProgress.done()
     }
   }
 
-  const pegarModuloPorID = async (id: number) => {
+  const pegarModuloPorFiltro = async (pagina: number = 0, tamanho: number = 10, filtros: string = '') => {
     try {
-      nProgress.start()
-      const { data } = await API.get(`/modulo/find-id-modulo?idModulo=${id}`, { headers: { Authorization: localStorage.getItem("token") }})
-      setModulo({ totalElementos: 1, quantidadePaginas: 1, pagina: 0, tamanho: 1, elementos: [data] })
-    } catch (error) {
+      nProgress.start();
+      await API.get(`/modulo/listar-id-nome?pagina=${pagina}&tamanho=${tamanho}${filtros}`, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
+        setModulo(response.data);
+      })
+    } catch (error: any) {
       let message = "Ops, algo deu errado!";
-      if (axios.isAxiosError(error) && error?.response) {
-        message = error.response.data.message;
-      }
+      if (error.response.status === 403) {
+        message = "Você não tem permissão para acessar esse recurso"
+      } else if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message || error.response.data.errors[0];
+      }  
       toast.error(message, toastConfig);
     } finally {
-      nProgress.done()
+      nProgress.done();
     }
   }
 
@@ -55,11 +60,13 @@ export const ModuloProvider = ({ children }: IChildren) => {
       await API.post("/modulo/adicionar", dadosModulo, { headers: { Authorization: localStorage.getItem("token") }});
       navigate("/modulos");
       toast.success("Módulo cadastrado com sucesso!", toastConfig);
-    } catch (error) {
+    } catch (error: any) {
       let message = "Ops, algo deu errado!";
-      if (axios.isAxiosError(error) && error?.response) {
-        message = error.response.data.message;
-      }
+      if (error.response.status === 403) {
+        message = "Você não tem permissão para acessar esse recurso"
+      } else if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message || error.response.data.errors[0];
+      }  
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -72,11 +79,13 @@ export const ModuloProvider = ({ children }: IChildren) => {
       await API.put(`/modulo/editar?id=${id}`, dadosModulo, { headers: { Authorization: localStorage.getItem("token") }});
       navigate("/modulos");
       toast.success("Módulo editado com sucesso!", toastConfig);
-    } catch (error) {
+    } catch (error: any) {
       let message = "Ops, algo deu errado!";
-      if (axios.isAxiosError(error) && error?.response) {
-        message = error.response.data.message;
-      }
+      if (error.response.status === 403) {
+        message = "Você não tem permissão para acessar esse recurso"
+      } else if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message || error.response.data.errors[0];
+      }  
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -89,11 +98,13 @@ export const ModuloProvider = ({ children }: IChildren) => {
       await API.post(`/modulo/clonar/${id}`, { headers: { Authorization: localStorage.getItem("token") }});
       toast.success("Módulo duplicado com sucesso!", toastConfig);
       pegarModulo();
-    } catch (error) {
+    } catch (error: any) {
       let message = "Ops, algo deu errado!";
-      if (axios.isAxiosError(error) && error?.response) {
-        message = error.response.data.message;
-      }
+      if (error.response.status === 403) {
+        message = "Você não tem permissão para acessar esse recurso"
+      } else if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message || error.response.data.errors[0];
+      }  
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -106,11 +117,13 @@ export const ModuloProvider = ({ children }: IChildren) => {
       await API.delete(`/modulo/desativar?idModulo=${id}`, { headers: { Authorization: localStorage.getItem("token") }});
       toast.success("Modulo desativado com sucesso", toastConfig)
       pegarModulo()
-    } catch (error) {
+    } catch (error: any) {
       let message = "Ops, algo deu errado!";
-      if (axios.isAxiosError(error) && error?.response) {
-        message = error.response.data.message;
-      }
+      if (error.response.status === 403) {
+        message = "Você não tem permissão para acessar esse recurso"
+      } else if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message || error.response.data.errors[0];
+      }  
       toast.error(message, toastConfig);
     } finally {
       nProgress.done()
@@ -118,7 +131,7 @@ export const ModuloProvider = ({ children }: IChildren) => {
   }
 
   return (
-    <ModuloContext.Provider value={{ pegarModulo, modulo, deletarModulo, cadastrarModulo, editarModulo, pegarModuloPorID, clonarModulo }}>
+    <ModuloContext.Provider value={{ pegarModulo, modulo, deletarModulo, cadastrarModulo, editarModulo, pegarModuloPorFiltro, clonarModulo }}>
       {children}
     </ModuloContext.Provider>
   )

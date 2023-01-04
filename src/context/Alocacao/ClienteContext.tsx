@@ -23,11 +23,13 @@ export const ClienteProvider = ({ children }: IChildren) => {
       await API.post("cliente", cliente, { headers: { Authorization: localStorage.getItem("token") }})
       toast.success("Cliente criado com sucesso!", toastConfig);
       navigate("/clientes")
-    } catch (error) {
+    } catch (error: any) {
       let message = "Ops, algo deu errado!";
-      if (axios.isAxiosError(error) && error?.response) {
-        message = error.response.data.message;
-      }
+      if (error.response.status === 403) {
+        message = "Você não tem permissão para acessar esse recurso"
+      } else if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message || error.response.data.errors[0];
+      }  
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -40,11 +42,13 @@ export const ClienteProvider = ({ children }: IChildren) => {
       nProgress.start();
       const { data } = await API.get(`cliente?pagina=${pagina}&tamanho=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") }})
       setCliente(data)
-    } catch (error) {
+    } catch (error: any) {
       let message = "Ops, algo deu errado!";
-      if (axios.isAxiosError(error) && error?.response) {
-        message = error.response.data.message;
-      }
+      if (error.response.status === 403) {
+        message = "Você não tem permissão para acessar esse recurso"
+      } else if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message || error.response.data.errors[0];
+      }  
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -56,11 +60,13 @@ export const ClienteProvider = ({ children }: IChildren) => {
       nProgress.start();
       const { data } = await API.get(`/cliente/nome/${nome}?pagina=${pagina}&tamanho=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") }})
       setCliente(data)
-    } catch (error) {
+    } catch (error: any) {
       let message = "Ops, algo deu errado!";
-      if (axios.isAxiosError(error) && error?.response) {
-        message = error.response.data.message;
-      }
+      if (error.response.status === 403) {
+        message = "Você não tem permissão para acessar esse recurso"
+      } else if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message || error.response.data.errors[0];
+      }  
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -73,11 +79,13 @@ export const ClienteProvider = ({ children }: IChildren) => {
       nProgress.start();
       const { data } = await API.get(`/cliente/email/${nome}?pagina=${pagina}&tamanho=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") }})
       setCliente(data)
-    } catch (error) {
+    } catch (error: any) {
       let message = "Ops, algo deu errado!";
-      if (axios.isAxiosError(error) && error?.response) {
-        message = error.response.data.message;
-      }
+      if (error.response.status === 403) {
+        message = "Você não tem permissão para acessar esse recurso"
+      } else if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message || error.response.data.errors[0];
+      }  
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -91,11 +99,13 @@ export const ClienteProvider = ({ children }: IChildren) => {
       await API.put(`/cliente/${id}`, cliente, { headers: { Authorization: localStorage.getItem("token") }})
       navigate("/clientes")
       toast.success("Cliente editado com sucesso!", toastConfig);
-    } catch (error) {
+    } catch (error: any) {
       let message = "Ops, algo deu errado!";
-      if (axios.isAxiosError(error) && error?.response) {
-        message = error.response.data.message;
-      }
+      if (error.response.status === 403) {
+        message = "Você não tem permissão para acessar esse recurso"
+      } else if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message || error.response.data.errors[0];
+      }  
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -109,11 +119,13 @@ export const ClienteProvider = ({ children }: IChildren) => {
       await API.delete(`/cliente/${id}`, { headers: { Authorization: localStorage.getItem("token") }});
       toast.success("Cliente deletado com sucesso!", toastConfig);
       pegarCliente();
-    } catch (error) {
+    } catch (error: any) {
       let message = "Ops, algo deu errado!";
-      if (axios.isAxiosError(error) && error?.response) {
-        message = error.response.data.message;
-      }
+      if (error.response.status === 403) {
+        message = "Você não tem permissão para acessar esse recurso"
+      } else if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message || error.response.data.errors[0];
+      }  
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();

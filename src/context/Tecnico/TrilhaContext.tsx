@@ -25,11 +25,13 @@ export const TrilhaProvider = ({ children }: IChildren) => {
       await API.get(`/trilha/lista-trilha-page?page=${pagina}&size=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
         setTrilhas(response.data)
       })
-    } catch (error) {
+    } catch (error: any) {
       let message = "Ops, algo deu errado!";
-      if (axios.isAxiosError(error) && error?.response) {
-        message = error.response.data.message;
-      }
+      if (error.response.status === 403) {
+        message = "Você não tem permissão para acessar esse recurso"
+      } else if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message || error.response.data.errors[0];
+      }  
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -42,11 +44,13 @@ export const TrilhaProvider = ({ children }: IChildren) => {
       await API.get(`/trilha/lista-trilha-nome?nome=${nome}&page=${pagina}&size=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
         setTrilhas(response.data)
       })
-    } catch (error) {
+    } catch (error: any) {
       let message = "Ops, algo deu errado!";
-      if (axios.isAxiosError(error) && error?.response) {
-        message = error.response.data.message;
-      }
+      if (error.response.status === 403) {
+        message = "Você não tem permissão para acessar esse recurso"
+      } else if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message || error.response.data.errors[0];
+      }  
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -61,11 +65,13 @@ export const TrilhaProvider = ({ children }: IChildren) => {
         navigate('/trilhas-e-programas');
         toast.success('Trilha foi cadastrada com sucesso.', toastConfig);
       })
-    } catch (error) {
+    } catch (error: any) {
       let message = "Ops, algo deu errado!";
-      if (axios.isAxiosError(error) && error?.response) {
-        message = error.response.data.message;
-      }
+      if (error.response.status === 403) {
+        message = "Você não tem permissão para acessar esse recurso"
+      } else if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message || error.response.data.errors[0];
+      }  
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -79,11 +85,13 @@ export const TrilhaProvider = ({ children }: IChildren) => {
         navigate('/trilhas-e-programas');
         toast.success('Trilha foi editada com sucesso.', toastConfig);
       });
-    } catch (error) {
+    } catch (error: any) {
       let message = "Ops, algo deu errado!";
-      if (axios.isAxiosError(error) && error?.response) {
-        message = error.response.data.message;
-      }
+      if (error.response.status === 403) {
+        message = "Você não tem permissão para acessar esse recurso"
+      } else if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message || error.response.data.errors[0];
+      }  
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -96,11 +104,13 @@ export const TrilhaProvider = ({ children }: IChildren) => {
       await API.delete(`/trilha/${idTrilha}`, { headers: { Authorization: localStorage.getItem("token") }});
       toast.success('Trilha desativada com sucesso.', toastConfig);
       pegarTrilha();
-    } catch(error) {
+    } catch (error: any) {
       let message = "Ops, algo deu errado!";
-      if (axios.isAxiosError(error) && error?.response) {
-        message = error.response.data.message;
-      }
+      if (error.response.status === 403) {
+        message = "Você não tem permissão para acessar esse recurso"
+      } else if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message || error.response.data.errors[0];
+      }  
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();

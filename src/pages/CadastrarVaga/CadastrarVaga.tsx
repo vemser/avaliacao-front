@@ -19,6 +19,7 @@ export const CadastrarVaga = () => {
   const { cadastrarVaga } = useVaga();
 
   const cadastrar = async (data: IVaga) => {
+    
     data.dataCriacao = new Date().toISOString().split("T")[0];
     data.idCliente = parseInt(data.idCliente.toString().split(' ')[0]);
     data.idPrograma = parseInt(data.idPrograma.toString().split(' ')[0]);

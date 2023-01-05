@@ -13,8 +13,7 @@ export interface IVaga {
 export interface IVagaContext {
   vagas: IVagaObject | null,
   cadastrarVaga: (vaga: IVaga) => Promise<void>,
-  pegarVagas: (pagina?: number, tamanho?: number) => Promise<void>,
-  pegarVagaPorNome: (nome: string, pagina?: number, tamanho?: number) => Promise<void>,
+  pegarVagas: (pagina?: number, tamanho?: number, filtros?: string) => Promise<void>
   deletarVaga: (id: number) => Promise<void>,
   editarVaga: (vaga: IVaga, id: number) => Promise<void>,
 }

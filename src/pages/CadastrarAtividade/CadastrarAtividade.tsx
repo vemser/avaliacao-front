@@ -27,7 +27,7 @@ const MenuProps = {
 };
 
 export const CadastrarAtividade = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { cadastrarAtividade } = useAtividade();
   const { pegarModulo, modulo } = useModulo();
   const { pegarPrograma, programas } = usePrograma();
@@ -112,9 +112,10 @@ export const CadastrarAtividade = () => {
             <InputLabel id="programas-list">Programas</InputLabel>
             <Select MenuProps={MenuProps} {...register("idPrograma")} defaultValue="" label="Programas" labelId="demo-simple-select-filled-label" id="aluno" >
               <MenuItem value="initial-trilha" disabled><em>Selecione um programa</em></MenuItem>
-              {programas?.elementos.map((programas: any) => (
-                <MenuItem key={programas.idPrograma} id={`${programas.idPrograma}`} value={programas.idPrograma}>{programas.nome}</MenuItem>
-              ))}
+              {programas?.elementos.map((programas: any) => {
+                if (programas.situacao === "ABERTO")
+                  return <MenuItem key={programas.idPrograma} id={`${programas.idPrograma}`} value={programas.idPrograma}>{programas.nome}</MenuItem>
+              })}
             </Select>
             {errors.idPrograma && <Typography id="erro-nome-programa" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.idPrograma.message}</Typography>}
           </FormControl>

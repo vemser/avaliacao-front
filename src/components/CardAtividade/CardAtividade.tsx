@@ -34,6 +34,13 @@ export const CardAtividade: React.FC<IAtividadeApi> = (props) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const dataFormatada = () => {
+    let data: string = props.dataEntrega.split("T")[0].replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1");
+    let hora: string | string[] = props.dataEntrega.split("T")[1].split(":");
+    hora = `${hora[0]}: ${hora[1]}`;
+    return `${data} - ${hora}`;
+  }
+
   return (
     <>
       <Box sx={{
@@ -69,13 +76,13 @@ export const CardAtividade: React.FC<IAtividadeApi> = (props) => {
             Peso: {props.pesoAtividade}
           </Typography>
           <Typography fontSize={15}>
-            Modulo: {props.modulos.map((modulo) => modulo.nome)}
+            Modulo: {props.modulos.map((modulo) => modulo.nome).join(", ")}
           </Typography>
           <Typography fontSize={15}>
-            Situação: <span style={{ color: `${props.situacao === "FECHADO" ? "#c62828" : "#2e7d32"}`, fontWeight: "bold" }}>{props.situacao}</span>
+            Situação: <span style={{ color: `${props.situacao === "FECHADO" ? "#c62828" : "#2e7d32"} `, fontWeight: "bold" }}>{props.situacao}</span>
           </Typography>
           <Typography fontSize={15}>
-            Data de entrega: <b>{props.dataEntrega.split("T")[0].replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")}</b>
+            Prazo de entrega: <b>{dataFormatada()}</b>
           </Typography>
           <Divider />
         </Box>

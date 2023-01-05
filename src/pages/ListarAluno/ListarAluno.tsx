@@ -78,7 +78,7 @@ export const ListarAluno: React.FC = () => {
     }
   };
 
-  const filtrosAluno = async (valor: any, pagina: number = 0, tamanho: number = 1) => {
+  const filtrosAluno = async (valor: any, pagina: number = 0, tamanho: number = 10) => {
     setInputFiltro(valor);
 
     if (valor.includes("@")) {

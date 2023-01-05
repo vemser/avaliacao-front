@@ -1,4 +1,4 @@
-export { RotaPrivada } from "./RotasPrivadas/RotasPrivadas";
+export  *  from "./RotasPrivadas/RotasPrivadas";
 export { Intermediaria } from "./Intermediaria/Intermediaria";
 export { NotFound } from "./NotFound/NotFound";
 export { Loading } from "./Loading/Loading";

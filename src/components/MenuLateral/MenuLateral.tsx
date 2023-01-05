@@ -26,6 +26,8 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
   const [openTab2, setOpenTab2] = React.useState(false);
   const [openTab3, setOpenTab3] = React.useState(false);
 
+  // console.log(usuarioLogado.cargos.some( (cargo: any) => cargo.descricao === "Administrador"))
+
   const handleClickTab1 = () => {
     setOpenTab1(!openTab1);
   };
@@ -42,6 +44,8 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
     pegarUsuarioLogado()
   }, []);
 
+  const infosUsuario = JSON.parse(localStorage.getItem("cargo") || "{}");
+  
   return (
     <>
       {mdDown && (
@@ -82,39 +86,45 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
 
           <Box flex="1">
             <List component="nav">
+            {infosUsuario.some( (cargo: string) => cargo === "Administrador" || cargo === "Coordenador" || cargo === "Gestão de pessoas" || cargo === "Instrutor" ) && 
+              (<>
+                  <ListItemButton onClick={handleClickTab1}>
+                      <ListItemIcon>
+                        <AssignmentInd sx={{ color: "var(--azul-forte-dbc)" }} />
+                      </ListItemIcon>
 
-              <ListItemButton onClick={handleClickTab1}>
-                <ListItemIcon>
-                  <AssignmentInd sx={{ color: "var(--azul-forte-dbc)" }} />
-                </ListItemIcon>
-                <ListItemText primary="Comportamental" />
-                {openTab1 ? <ExpandLess /> : <ExpandMore />}
-              </ListItemButton>
-              <Collapse in={openTab1} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                  <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/alunos") }}>
-                    <ListItemIcon>
-                      <School sx={{ color: "var(--azul-escuro-dbc)" }} />
-                    </ListItemIcon>
-                    <ListItemText primary="Alunos" />
-                  </ListItemButton>
+                      <ListItemText primary="Comportamental" />
+                      {openTab1 ? <ExpandLess /> : <ExpandMore />}
+                    </ListItemButton>
+                    <Collapse in={openTab1} timeout="auto" unmountOnExit>
+                      <List component="div" disablePadding>
+                        <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/alunos") }}>
+                          <ListItemIcon>
+                            <School sx={{ color: "var(--azul-escuro-dbc)" }} />
+                          </ListItemIcon>
+                          <ListItemText primary="Alunos" />
+                        </ListItemButton>
 
-                  <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/feedbacks") }}>
-                    <ListItemIcon>
-                      <ThumbUpAlt sx={{ color: "var(--azul-escuro-dbc)" }} />
-                    </ListItemIcon>
-                    <ListItemText primary="Feedbacks" />
-                  </ListItemButton>
+                        <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/feedbacks") }}>
+                          <ListItemIcon>
+                            <ThumbUpAlt sx={{ color: "var(--azul-escuro-dbc)" }} />
+                          </ListItemIcon>
+                          <ListItemText primary="Feedbacks" />
+                        </ListItemButton>
 
-                  <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/acompanhamentos") }}>
-                    <ListItemIcon>
-                      <Event sx={{ color: "var(--azul-escuro-dbc)" }} />
-                    </ListItemIcon>
-                    <ListItemText primary="Acompanhamentos" />
-                  </ListItemButton>
-                </List>
-              </Collapse>
+                        <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/acompanhamentos") }}>
+                          <ListItemIcon>
+                            <Event sx={{ color: "var(--azul-escuro-dbc)" }} />
+                          </ListItemIcon>
+                          <ListItemText primary="Acompanhamentos" />
+                        </ListItemButton>
+                      </List>
+                    </Collapse>
+              </>)} 
 
+              
+            {infosUsuario.some( (cargo: string) => cargo === "Administrador" || cargo === "Coordenador" || cargo === "Gestão de pessoas" || cargo === "Instrutor" ) && 
+            (<>
               <ListItemButton onClick={handleClickTab2}>
                 <ListItemIcon>
                   <IntegrationInstructions sx={{ color: "var(--azul-forte-dbc)" }} />
@@ -144,7 +154,10 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
                   </ListItemButton>
                 </List>
               </Collapse>
+            </>)}
 
+            {infosUsuario.some( (cargo: string) => cargo === "Administrador" || cargo === "Coordenador"  || cargo === "Gestão de pessoas") && 
+            (<>
               <ListItemButton onClick={handleClickTab3}>
                 <ListItemIcon>
                   <BusinessCenter sx={{ color: "var(--azul-forte-dbc)" }} />
@@ -174,6 +187,7 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
                   </ListItemButton>
                 </List>
               </Collapse>
+            </>)}
 
               <ListItemButton onClick={() => { navigate("/editar-usuario") }}>
                 <ListItemIcon>
@@ -190,6 +204,7 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
               </ListItemButton>
             </List>
           </Box>
+          
         </Box>
       </Drawer>
       <Box minHeight="100vh" marginLeft={mdDown ? 0 : theme.spacing(35)}>

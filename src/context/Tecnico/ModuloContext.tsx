@@ -94,6 +94,7 @@ export const ModuloProvider = ({ children }: IChildren) => {
 
   const clonarModulo = async (id: number) => {
     try {
+      console.log(id)
       nProgress.start();
       await API.post(`/modulo/clonar/${id}`, { headers: { Authorization: localStorage.getItem("token") }});
       toast.success("Módulo duplicado com sucesso!", toastConfig);
@@ -123,7 +124,7 @@ export const ModuloProvider = ({ children }: IChildren) => {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      }  
+      } 
       toast.error(message, toastConfig);
     } finally {
       nProgress.done()

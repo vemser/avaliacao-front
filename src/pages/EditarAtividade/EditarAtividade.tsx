@@ -123,7 +123,7 @@ export const EditarAtividade = () => {
             {errors.titulo && <Typography id="erro-nome-programa" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.titulo.message}</Typography>}
           </FormControl>
 
-          <FormControl sx={{ width: "100%" }} >
+          <FormControl sx={{ width: "100%" }} variant="filled" >
             <InputLabel id="programas-list">Programas</InputLabel>
             <Select MenuProps={MenuProps} {...register("idPrograma")} defaultValue={state.programa.idPrograma} label="Programas" labelId="demo-simple-select-filled-label" id="aluno" >
               <MenuItem value="initial-trilha" disabled><em>Selecione um programa</em></MenuItem>

@@ -39,8 +39,7 @@ export const AuthProvider = ({ children }: IChildren) => {
         headers: { Authorization: localStorage.getItem("token"), 'Content-Type': 'multipart/form-data' }
       }).then((response) => {
         setUsuarioLogado(response.data)
-        toast.success("Foto editada com sucesso", toastConfig);
-        navigate('/home')
+        toast.success("Foto atualizada com sucesso!", toastConfig);
       })
     } catch (error) {
       toast.error("Foto não enviada", toastConfig);

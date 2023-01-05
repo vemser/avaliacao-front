@@ -19,6 +19,7 @@ import { useTrilha } from "../../context/Tecnico/TrilhaContext";
 import { usePrograma } from "../../context/Tecnico/ProgramaContext";
 import { useAluno } from "../../context/Comportamental/AlunoContext";
 import { useTecnologia } from "../../context/Tecnico/TecnologiasContext";
+import { Label } from "@mui/icons-material";
 
 export const CadastrarAluno = () => {
   const navigate = useNavigate();
@@ -67,9 +68,8 @@ export const CadastrarAluno = () => {
             {errors.email && <Typography id="erro-emailAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.email.message}</Typography>}
           </FormControl>
 
-          <FormControl sx={{ width: "100%" }} variant="standard">
-            <label htmlFor="telefone">Telefone</label>
-            <InputMask style={{ padding: "10px", border: "none", outline: "none", borderBottom: "1px solid gray" }} mask="(99)99999-9999" type="text" id="telefone" placeholder="Digite seu telefone" {...register('telefone')} />
+          <FormControl sx={{ width: "100%" }} variant="filled">
+            <InputMask style={{ padding: "18px 13px", borderRadius: "4px 4px 0 0", backgroundColor: '#f0f0f0', border: "none", outline: "none", borderBottom: "1px solid gray", fontFamily: "Inter", fontSize: "1rem", color: "rgba(0, 0, 0, 0.87)" }} mask="(99)99999-9999"  type="text" id="telefone" placeholder="Telefone" {...register('telefone')} />
             {errors.telefone && <Typography id="erro-telefoneAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.telefone.message}</Typography>}
           </FormControl>
 

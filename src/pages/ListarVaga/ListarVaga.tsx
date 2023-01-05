@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Box, Button, TablePagination } from '@mui/material';
@@ -7,7 +7,8 @@ import * as Components from "../../components";
 import { useVaga } from '../../context/Alocacao/VagaContext';
 
 export const ListarVaga: React.FC = () => {
-  const { pegarVagas, pegarVagaPorNome, vagas } = useVaga();
+  const { pegarVagas, vagas } = useVaga();
+  const [inputFiltro, setInputFiltro] = useState<string>("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -15,8 +16,14 @@ export const ListarVaga: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const buscarPorNomeVaga = async (valor: string) => {
-    await pegarVagaPorNome(valor);
+  const filtrarVagas = async (valor: any, pagina: number = 0, tamanho: number = 10) => {
+    setInputFiltro(valor);
+
+    if (!isNaN(valor)) {
+      await pegarVagas(pagina, tamanho, `&idVaga=${valor}`)
+    } else {
+      await pegarVagas(pagina, tamanho, `&nome=${valor}`);
+    }
   }
 
   const resetBuscaVaga = async () => {
@@ -24,7 +31,11 @@ export const ListarVaga: React.FC = () => {
   }
 
   const mudarPagina = async (event: unknown, newPage: number) => {
-    await pegarVagas(newPage)
+    if (inputFiltro) {
+      await filtrarVagas(inputFiltro, newPage);
+    } else {
+      await pegarVagas(newPage);
+    }
   }
 
   return (
@@ -34,7 +45,7 @@ export const ListarVaga: React.FC = () => {
       <Box sx={{ width: { xs: "95%", md: "80%" }, backgroundColor: "var(--branco)", borderRadius: "10px", boxShadow: "10px 10px 10px var(--azul</Box>-escuro-dbc)", padding: "20px" }}>
 
         <Box sx={{ display: "flex", width: "100%", alignItems: "center", justifyContent: "space-between", gap: 2, flexDirection: { xs: "column", sm: "row" } }}>
-          <Components.CampoBusca label='Nome' buscar={buscarPorNomeVaga} resetar={resetBuscaVaga} />
+          <Components.CampoBusca label='Código ou Nome' buscar={filtrarVagas} resetar={resetBuscaVaga} />
           <Button variant="contained" onClick={() => navigate("/cadastrar-vaga")} sx={{ width: "auto", paddingLeft: "15px", paddingRight: "15px", display: "flex", marginBottom: "10px", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Vaga</Button>
         </Box>
 

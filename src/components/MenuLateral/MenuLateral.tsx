@@ -45,7 +45,7 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
   }, []);
 
   const infosUsuario = JSON.parse(localStorage.getItem("cargo") || "{}");
-  
+
   return (
     <>
       {mdDown && (
@@ -86,108 +86,109 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
 
           <Box flex="1">
             <List component="nav">
-            {infosUsuario.some( (cargo: string) => cargo === "Administrador" || cargo === "Coordenador" || cargo === "Gestão de pessoas" || cargo === "Instrutor" ) && 
-              (<>
+
+              {infosUsuario.some((cargo: string) => cargo === "Administrador" || cargo === "Coordenador" || cargo === "Gestão de pessoas" || cargo === "Instrutor") &&
+                (<>
                   <ListItemButton onClick={handleClickTab1}>
-                      <ListItemIcon>
-                        <AssignmentInd sx={{ color: "var(--azul-forte-dbc)" }} />
-                      </ListItemIcon>
+                    <ListItemIcon>
+                      <AssignmentInd sx={{ color: "var(--azul-forte-dbc)" }} />
+                    </ListItemIcon>
 
-                      <ListItemText primary="Comportamental" />
-                      {openTab1 ? <ExpandLess /> : <ExpandMore />}
-                    </ListItemButton>
-                    <Collapse in={openTab1} timeout="auto" unmountOnExit>
-                      <List component="div" disablePadding>
-                        <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/alunos") }}>
-                          <ListItemIcon>
-                            <School sx={{ color: "var(--azul-escuro-dbc)" }} />
-                          </ListItemIcon>
-                          <ListItemText primary="Alunos" />
-                        </ListItemButton>
+                    <ListItemText primary="Comportamental" />
+                    {openTab1 ? <ExpandLess /> : <ExpandMore />}
+                  </ListItemButton>
+                  <Collapse in={openTab1} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                      <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/alunos") }}>
+                        <ListItemIcon>
+                          <School sx={{ color: "var(--azul-escuro-dbc)" }} />
+                        </ListItemIcon>
+                        <ListItemText primary="Alunos" />
+                      </ListItemButton>
 
-                        <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/feedbacks") }}>
-                          <ListItemIcon>
-                            <ThumbUpAlt sx={{ color: "var(--azul-escuro-dbc)" }} />
-                          </ListItemIcon>
-                          <ListItemText primary="Feedbacks" />
-                        </ListItemButton>
+                      <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/feedbacks") }}>
+                        <ListItemIcon>
+                          <ThumbUpAlt sx={{ color: "var(--azul-escuro-dbc)" }} />
+                        </ListItemIcon>
+                        <ListItemText primary="Feedbacks" />
+                      </ListItemButton>
 
-                        <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/acompanhamentos") }}>
-                          <ListItemIcon>
-                            <Event sx={{ color: "var(--azul-escuro-dbc)" }} />
-                          </ListItemIcon>
-                          <ListItemText primary="Acompanhamentos" />
-                        </ListItemButton>
-                      </List>
-                    </Collapse>
-              </>)} 
+                      <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/acompanhamentos") }}>
+                        <ListItemIcon>
+                          <Event sx={{ color: "var(--azul-escuro-dbc)" }} />
+                        </ListItemIcon>
+                        <ListItemText primary="Acompanhamentos" />
+                      </ListItemButton>
+                    </List>
+                  </Collapse>
+                </>)}
 
-              
-            {infosUsuario.some( (cargo: string) => cargo === "Administrador" || cargo === "Coordenador" || cargo === "Gestão de pessoas" || cargo === "Instrutor" ) && 
-            (<>
-              <ListItemButton onClick={handleClickTab2}>
-                <ListItemIcon>
-                  <IntegrationInstructions sx={{ color: "var(--azul-forte-dbc)" }} />
-                </ListItemIcon>
-                <ListItemText primary="Técnico" />
-                {openTab2 ? <ExpandLess /> : <ExpandMore />}
-              </ListItemButton>
-              <Collapse in={openTab2} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                  <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/trilhas-e-programas") }}>
-                    <ListItemIcon>
-                      <Source sx={{ color: "var(--azul-escuro-dbc)" }} />
-                    </ListItemIcon>
-                    <ListItemText primary="Trilhas e Programas" />
-                  </ListItemButton>
-                  <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/modulos") }}>
-                    <ListItemIcon>
-                      <Terminal sx={{ color: "var(--azul-escuro-dbc)" }} />
-                    </ListItemIcon>
-                    <ListItemText primary="Módulos" />
-                  </ListItemButton>
-                  <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/atividades") }}>
-                    <ListItemIcon>
-                      <AutoStories sx={{ color: "var(--azul-escuro-dbc)" }} />
-                    </ListItemIcon>
-                    <ListItemText primary="Atividades" />
-                  </ListItemButton>
-                </List>
-              </Collapse>
-            </>)}
 
-            {infosUsuario.some( (cargo: string) => cargo === "Administrador" || cargo === "Coordenador"  || cargo === "Gestão de pessoas") && 
-            (<>
-              <ListItemButton onClick={handleClickTab3}>
-                <ListItemIcon>
-                  <BusinessCenter sx={{ color: "var(--azul-forte-dbc)" }} />
-                </ListItemIcon>
-                <ListItemText primary="Alocação" />
-                {openTab3 ? <ExpandLess /> : <ExpandMore />}
-              </ListItemButton>
-              <Collapse in={openTab3} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                  <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/alocacao-reserva") }}>
+              {infosUsuario.some((cargo: string) => cargo === "Administrador" || cargo === "Coordenador" || cargo === "Gestão de pessoas" || cargo === "Instrutor") &&
+                (<>
+                  <ListItemButton onClick={handleClickTab2}>
                     <ListItemIcon>
-                      <WorkHistory sx={{ color: "var(--azul-escuro-dbc)" }} />
+                      <IntegrationInstructions sx={{ color: "var(--azul-forte-dbc)" }} />
                     </ListItemIcon>
-                    <ListItemText primary="Reserva e Alocação" />
+                    <ListItemText primary="Técnico" />
+                    {openTab2 ? <ExpandLess /> : <ExpandMore />}
                   </ListItemButton>
-                  <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/clientes") }}>
+                  <Collapse in={openTab2} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                      <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/trilhas-e-programas") }}>
+                        <ListItemIcon>
+                          <Source sx={{ color: "var(--azul-escuro-dbc)" }} />
+                        </ListItemIcon>
+                        <ListItemText primary="Trilhas e Programas" />
+                      </ListItemButton>
+                      <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/modulos") }}>
+                        <ListItemIcon>
+                          <Terminal sx={{ color: "var(--azul-escuro-dbc)" }} />
+                        </ListItemIcon>
+                        <ListItemText primary="Módulos" />
+                      </ListItemButton>
+                      <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/atividades") }}>
+                        <ListItemIcon>
+                          <AutoStories sx={{ color: "var(--azul-escuro-dbc)" }} />
+                        </ListItemIcon>
+                        <ListItemText primary="Atividades" />
+                      </ListItemButton>
+                    </List>
+                  </Collapse>
+                </>)}
+
+              {infosUsuario.some((cargo: string) => cargo === "Administrador" || cargo === "Coordenador" || cargo === "Gestão de pessoas") &&
+                (<>
+                  <ListItemButton onClick={handleClickTab3}>
                     <ListItemIcon>
-                      <Group sx={{ color: "var(--azul-escuro-dbc)" }} />
+                      <BusinessCenter sx={{ color: "var(--azul-forte-dbc)" }} />
                     </ListItemIcon>
-                    <ListItemText primary="Clientes" />
+                    <ListItemText primary="Alocação" />
+                    {openTab3 ? <ExpandLess /> : <ExpandMore />}
                   </ListItemButton>
-                  <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/vagas") }}>
-                    <ListItemIcon>
-                      <Feed sx={{ color: "var(--azul-escuro-dbc)" }} />
-                    </ListItemIcon>
-                    <ListItemText primary="Vagas" />
-                  </ListItemButton>
-                </List>
-              </Collapse>
-            </>)}
+                  <Collapse in={openTab3} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                      <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/alocacao-reserva") }}>
+                        <ListItemIcon>
+                          <WorkHistory sx={{ color: "var(--azul-escuro-dbc)" }} />
+                        </ListItemIcon>
+                        <ListItemText primary="Reserva e Alocação" />
+                      </ListItemButton>
+                      <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/clientes") }}>
+                        <ListItemIcon>
+                          <Group sx={{ color: "var(--azul-escuro-dbc)" }} />
+                        </ListItemIcon>
+                        <ListItemText primary="Clientes" />
+                      </ListItemButton>
+                      <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/vagas") }}>
+                        <ListItemIcon>
+                          <Feed sx={{ color: "var(--azul-escuro-dbc)" }} />
+                        </ListItemIcon>
+                        <ListItemText primary="Vagas" />
+                      </ListItemButton>
+                    </List>
+                  </Collapse>
+                </>)}
 
               <ListItemButton onClick={() => { navigate("/editar-usuario") }}>
                 <ListItemIcon>
@@ -202,9 +203,10 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
                 </ListItemIcon>
                 <ListItemText primary="Sair" />
               </ListItemButton>
+
             </List>
           </Box>
-          
+
         </Box>
       </Drawer>
       <Box minHeight="100vh" marginLeft={mdDown ? 0 : theme.spacing(35)}>

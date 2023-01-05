@@ -56,6 +56,25 @@ export const ProgramaProvider = ({ children }: IChildren) => {
     }
   }
 
+  const pegarProgramaFiltroID = async (id: string) => {
+    try {
+      nProgress.start();
+      await API.get(`/programa/${id}`, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
+        setProgramas({ totalElementos: 1, quantidadePaginas: 1, pagina: 0, tamanho: 1, elementos: [response.data] })
+      })
+    } catch (error: any) {
+      let message = "Ops, algo deu errado!";
+      if (error.response.status === 403) {
+        message = "Você não tem permissão para acessar esse recurso"
+      } else if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message || error.response.data.errors[0];
+      }  
+      toast.error(message, toastConfig);
+    } finally {
+      nProgress.done();
+    }
+  }
+
   const pegarProgramaPorNome = async (nome: string, pagina: number = 0, tamanho: number = 10) => {
     try {
       nProgress.start();
@@ -113,7 +132,7 @@ export const ProgramaProvider = ({ children }: IChildren) => {
   }
 
   return (
-    <ProgramaContext.Provider value={{ programas, cadastrarPrograma, pegarPrograma, deletarProgama, editarPrograma, pegarProgramaPorNome, mudaDashboard, setMudaDashboard }}>
+    <ProgramaContext.Provider value={{ programas, cadastrarPrograma, pegarPrograma, deletarProgama, editarPrograma, pegarProgramaPorNome, pegarProgramaFiltroID, mudaDashboard, setMudaDashboard }}>
       {children}
     </ProgramaContext.Provider>
   );

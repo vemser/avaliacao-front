@@ -19,8 +19,7 @@ export const alunoSchema = yup.object().shape({
   email: yup.string().required("Por favor, digite seu e-mail").email("Por favor, digite um e-mail válido").matches(regexEmail, "Só aceitamos email @dbccompany.com.br"),
   situacao: yup.string().required("Por favor, escolha uma situação"),
   descricao: yup.string().required("Por favor, digite uma descrição"),
-  idTrilha: yup.string().required("Por favor, escolha uma trilha"),
-  idPrograma: yup.string().required('Por favor, escolha um programa'),
+  idTrilha: yup.string().required("Por favor, escolha uma trilha")
 });
 
 export const trilhaSchema = yup.object().shape({

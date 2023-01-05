@@ -14,6 +14,7 @@ export interface IProgramaContext {
   cadastrarPrograma: (programa: IProgramas) => Promise<void>;
   pegarPrograma: (pagina?: number, tamanho?: number) => Promise<void>;
   pegarProgramaPorNome: (nome: string, pagina?: number, tamanho?: number) => Promise<void>;
+  pegarProgramaFiltroID: (id: string) => Promise<void>;
   deletarProgama: (id: number) => Promise<void>;
   editarPrograma: (programa: IProgramas, id: number) => Promise<void>;
 }

@@ -4,6 +4,7 @@ export interface ITrilha {
   cadastrarTrilha: (dadosTrilha: IDadosTrilha) => Promise<void>,
   editarTrilha: (dadosTrilha: IDadosTrilha, idTrilha: number) => Promise<void>,
   pegarTrilhaFiltroNome: (nome: string, pagina?: number, tamanho?: number) => Promise<void>,
+  pegarTrilhaFiltroID: (id: string) => Promise<void>,
   trilhas: ITrilhasAPI | null
 }
 

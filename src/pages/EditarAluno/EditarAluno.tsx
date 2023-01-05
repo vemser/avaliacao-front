@@ -27,7 +27,7 @@ const MenuProps = { PaperProps: { style: { maxHeight: itemHeigth * 4.5 + itemPad
 export const EditarAluno = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
-
+  
   const { editarAluno } = useAluno();
   const { programas, pegarPrograma } = usePrograma();
   const { trilhas, pegarTrilha } = useTrilha(); 
@@ -35,6 +35,9 @@ export const EditarAluno = () => {
 
   const [inputTecnologia, setInputTecnologia] = useState<string>('')
   const [tecnologiaSelecionada, setTecnologiaSelecionada] = useState<any[]>([]);
+
+  const [estadoErro, setEstadoErro] = useState<boolean>(false);
+  const [dataAuxiliar, setDataAuxiliar] = useState<object | string | boolean>(state.programa);
 
   const initialState = () => {
     let result = state.tecnologias.map((tecnologia: any) => tecnologia.idTecnologia)
@@ -45,7 +48,25 @@ export const EditarAluno = () => {
     resolver: yupResolver(alunoSchema)
   });
 
+  const erroPrograma = () => {
+    if(dataAuxiliar) {
+      setEstadoErro(false)
+    } else {
+      setEstadoErro(true) 
+    }
+  }
+
+  const handleChange = (event: any) => {
+    setEstadoErro(false)
+    setDataAuxiliar(false)
+  };
+
   const editar = (data: ICadastroAlunoForm) => { 
+    setDataAuxiliar(data.idPrograma);
+
+    if(!data.idPrograma && !dataAuxiliar) return setEstadoErro(true);
+    setEstadoErro(false);
+
     const novoData = { ...data, idTrilha: parseInt(data.idTrilha), idPrograma: data.idPrograma ? parseInt(data.idPrograma.split(' ')[0]) : state.programa.idPrograma, tecnologias: tecnologiaSelecionada }
     editarAluno(novoData, state.idAluno)
   };
@@ -128,13 +149,14 @@ export const EditarAluno = () => {
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
-            <Autocomplete disablePortal id="programa" defaultValue={{ label: `${state.programa.idPrograma} - ${state.programa.nome}`, id: state.programa.idPrograma }} 
+            <Autocomplete disablePortal id="programa" onChange={handleChange}
+            defaultValue={{ label: `${state.programa.idPrograma} - ${state.programa.nome}`, id: state.programa.idPrograma }} 
             isOptionEqualToValue={(option) => option.label === `${state.programa.idPrograma} - ${state.programa.nome}`} 
             options={programas ? programas.elementos.map((programa) => ( { label: `${programa.idPrograma} - ${programa.nome}`, id: programa.idPrograma})) : []}
             renderOption={(props, option) => ( <li {...props} key={option.id}>{option.label}</li> )}
             renderInput={(params) => <TextField {...params} label="Programa" variant="filled" {...register("idPrograma")} />} />
             
-            {errors.idPrograma && <Typography id="erro-programaAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.idPrograma.message}</Typography>}
+            {estadoErro && <Typography id="erro-programaAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">Por favor, escolha um programa</Typography>}
           </FormControl>
 
           <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>
@@ -151,7 +173,7 @@ export const EditarAluno = () => {
           <Box sx={{ display: "flex", width: "100%", justifyContent: { xs: "center", lg: "end" }, alignItems: { xs: "center", lg: "end" }, bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>
             <Button type="button" onClick={() => { navigate(-1) }} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d" }, textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cancelar</Button>
 
-            <Button type="submit" variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Salvar</Button>
+            <Button type="submit" onClick={() => { erroPrograma() }} variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Salvar</Button>
           </Box>
         </Stack>
       </Box>

@@ -38,13 +38,34 @@ export const CadastrarAluno = () => {
   const [inputTecnologia, setInputTecnologia] = useState<string>('')
   const [tecnologiaSelecionada, setTecnologiaSelecionada] = useState<number[]>([]);
 
+  const [estadoErro, setEstadoErro] = useState<boolean>(false);
+  const [dataAuxiliar, setDataAuxiliar] = useState<string>();
+
   const { register, handleSubmit, formState: { errors } } = useForm<ICadastroAlunoForm>({
     resolver: yupResolver(alunoSchema)
   });
 
+  const erroPrograma = () => {
+    if(dataAuxiliar) {
+      setEstadoErro(false)
+    } else {
+      setEstadoErro(true) 
+    }
+  }
+
+  const handleChange = () => {
+    setEstadoErro(false)
+    setDataAuxiliar('')
+  };
+
   const cadastroAluno = (data: ICadastroAlunoForm) => {
+    setDataAuxiliar(data.idPrograma)
+
+    if(!data.idPrograma && !dataAuxiliar) return setEstadoErro(true);
+    setEstadoErro(false);
+
     const novoData = { ...data, idTrilha: parseInt(data.idTrilha), idPrograma: parseInt(data.idPrograma.split(' ')[0]), tecnologias: tecnologiaSelecionada }
-    cadastrarAluno(novoData)
+    cadastrarAluno(novoData);
   };
 
   // const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
@@ -113,10 +134,11 @@ export const CadastrarAluno = () => {
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
-            <Autocomplete disablePortal id="programa" 
+            <Autocomplete disablePortal id="programa" onChange={handleChange}
             isOptionEqualToValue={(option, value) => option.label === value.label} 
             options={programas ? programas.elementos.map((programa) => ( { label: `${programa.idPrograma} - ${programa.nome}`})) : []} renderInput={(params) => <TextField {...params} label="Programa" variant="filled" {...register("idPrograma")} />} />
-            {errors.idPrograma && <Typography id="erro-programaAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.idPrograma.message}</Typography>}
+
+            {estadoErro && <Typography id="erro-programaAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">Por favor, escolha um programa</Typography>}
           </FormControl>
 
           <FormControl variant="filled" sx={{ width: "100%" }}>
@@ -134,7 +156,7 @@ export const CadastrarAluno = () => {
           <Box sx={{ display: "flex", width: "100%", justifyContent: { xs: "center", lg: "end" }, alignItems: { xs: "center", lg: "end" }, bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>
             <Button type="button" onClick={() => { navigate(-1) }} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d " }, textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cancelar</Button>
 
-            <Button variant="contained" type="submit" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cadastrar</Button>
+            <Button variant="contained" onClick={() => { erroPrograma() }} type="submit" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cadastrar</Button>
           </Box>
         </Stack>
       </Box>

@@ -27,7 +27,7 @@ const MenuProps = {
 };
 
 export const CadastrarAtividade = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { cadastrarAtividade } = useAtividade();
   const { pegarModulo, modulo } = useModulo();
   const { pegarPrograma, programas } = usePrograma();
@@ -36,12 +36,17 @@ export const CadastrarAtividade = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<IAtividadeForm>({ resolver: yupResolver(atividadeSchema) });
   const [moduloSelecionado, setModuloSelecionado] = useState<number[]>([]);
   const [alunoSelecionado, setAlunoSelecionado] = useState<number[]>([]);
+  const [erroModulos, setErroModulos] = useState<boolean>(false);
+  const [erroAlunos, setErroAlunos] = useState<boolean>(false);
 
   const cadastrar = async (data: IAtividadeForm) => {
-    await cadastrarAtividade({ ...data, modulos: moduloSelecionado, alunos: alunoSelecionado, nomeInstrutor: usuarioLogado.login.split('.')[0] });
+    if (alunoSelecionado.length > 0 && moduloSelecionado.length > 0) {
+      await cadastrarAtividade({ ...data, modulos: moduloSelecionado, alunos: alunoSelecionado, nomeInstrutor: usuarioLogado.login.split('.')[0] });
+    }
   }
 
   const mudaModulo = (event: any) => {
+    setErroModulos(false);
     const {
       target: { value },
     } = event;
@@ -52,7 +57,24 @@ export const CadastrarAtividade = () => {
     }
   };
 
+  const checarErroAluno = () => {
+    if (alunoSelecionado.length > 0) {
+      setErroAlunos(false)
+    } else {
+      setErroAlunos(true)
+    }
+  }
+
+  const checarErroModulo = () => {
+    if (moduloSelecionado.length > 0) {
+      setErroModulos(false)
+    } else {
+      setErroModulos(true)
+    }
+  }
+
   const mudaAluno = (event: any) => {
+    setErroAlunos(false);
     const {
       target: { value },
     } = event;
@@ -90,9 +112,10 @@ export const CadastrarAtividade = () => {
             <InputLabel id="programas-list">Programas</InputLabel>
             <Select MenuProps={MenuProps} {...register("idPrograma")} defaultValue="" label="Programas" labelId="demo-simple-select-filled-label" id="aluno" >
               <MenuItem value="initial-trilha" disabled><em>Selecione um programa</em></MenuItem>
-              {programas?.elementos.map((programas: any) => (
-                <MenuItem key={programas.idPrograma} id={`${programas.idPrograma}`} value={programas.idPrograma}>{programas.nome}</MenuItem>
-              ))}
+              {programas?.elementos.map((programas: any) => {
+                if (programas.situacao === "ABERTO")
+                  return <MenuItem key={programas.idPrograma} id={`${programas.idPrograma}`} value={programas.idPrograma}>{programas.nome}</MenuItem>
+              })}
             </Select>
             {errors.idPrograma && <Typography id="erro-nome-programa" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.idPrograma.message}</Typography>}
           </FormControl>
@@ -108,7 +131,7 @@ export const CadastrarAtividade = () => {
               input={<OutlinedInput label="Módulos" />}
               renderValue={(selected) => modulo?.elementos.filter((modulo) => selected.includes(modulo.idModulo)).map((modulo) => modulo.nome).join(', ')}
             >
-              <MenuItem value="initial-programa" disabled><em>Selecione um ou mais módulos</em></MenuItem>
+              <MenuItem value="initial-modulo" disabled><em>Selecione um ou mais módulos</em></MenuItem>
               {modulo?.elementos.map((modulo) => (
                 <MenuItem key={modulo.idModulo} value={modulo.idModulo}>
                   <Checkbox checked={moduloSelecionado.indexOf(modulo.idModulo) > -1} />
@@ -116,6 +139,7 @@ export const CadastrarAtividade = () => {
                 </MenuItem>
               ))}
             </Select>
+            {erroModulos && <Typography id="erro-nome-modulo" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">Por favor, selecione um Módulo</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
@@ -150,7 +174,7 @@ export const CadastrarAtividade = () => {
               input={<OutlinedInput label="Alunos" />}
               renderValue={(selected) => alunos?.elementos.filter((alunos) => selected.includes(alunos.idAluno)).map((alunos) => alunos.nome).join(', ')}
             >
-              <MenuItem value="initial-programa" disabled><em>Selecione um ou mais alunos</em></MenuItem>
+              <MenuItem value="initial-aluno" disabled><em>Selecione um ou mais alunos</em></MenuItem>
               {alunos?.elementos.map((alunos) => (
                 <MenuItem key={alunos.idAluno} value={alunos.idAluno}>
                   <Checkbox checked={alunoSelecionado.indexOf(alunos.idAluno) > -1} />
@@ -158,6 +182,7 @@ export const CadastrarAtividade = () => {
                 </MenuItem>
               ))}
             </Select>
+            {erroAlunos && <Typography id="erro-nome-aluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">Por favor, selecione um Aluno</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
@@ -169,7 +194,7 @@ export const CadastrarAtividade = () => {
           <Box sx={{ display: "flex", width: "100%", justifyContent: { xs: "center", lg: "end" }, alignItems: { xs: "center", lg: "end" }, bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>
             <Button type="button" onClick={() => { navigate(-1) }} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d " }, textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cancelar</Button>
 
-            <Button type="submit" variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cadastrar</Button>
+            <Button type="submit" onClick={() => { checarErroModulo(); checarErroAluno() }} variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cadastrar</Button>
           </Box>
         </Stack>
       </Box>

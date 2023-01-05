@@ -8,7 +8,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useModulo } from '../../context/Tecnico/ModuloContext';
 import { usePrograma } from '../../context/Tecnico/ProgramaContext';
 import { useAtividade } from '../../context/Tecnico/AtividadeContext';
-import { useAuth } from "../../context/AuthContext";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAluno } from '../../context/Comportamental/AlunoContext';
@@ -33,9 +32,10 @@ export const EditarAtividade = () => {
   const { pegarModulo, modulo } = useModulo();
   const { pegarPrograma, programas } = usePrograma();
   const { pegarAluno, alunos } = useAluno();
-  const { usuarioLogado } = useAuth();
   const [moduloSelecionado, setModuloSelecionado] = useState<number[]>([]);
   const [alunoSelecionado, setAlunoSelecionado] = useState<number[]>([]);
+  const [erroModulos, setErroModulos] = useState<boolean>(false);
+  const [erroAlunos, setErroAlunos] = useState<boolean>(false);
   const { register, handleSubmit, formState: { errors } } = useForm<IAtividadeForm>({
     resolver: yupResolver(atividadeSchema), defaultValues: {
       titulo: state.titulo,
@@ -46,8 +46,9 @@ export const EditarAtividade = () => {
     }
   });
 
-  const cadastrar = async (data: IAtividadeForm) => {
-    await editarAtividade({ ...data, modulos: moduloSelecionado, alunos: alunoSelecionado, nomeInstrutor: usuarioLogado.login.split('.')[0] }, state.idAtividade);
+  const editar = async (data: IAtividadeForm) => {
+    if (alunoSelecionado.length > 0 && moduloSelecionado.length > 0)
+      await editarAtividade({ ...data, modulos: moduloSelecionado, alunos: alunoSelecionado }, state.idAtividade);
   }
 
   const initialState = () => {
@@ -58,6 +59,7 @@ export const EditarAtividade = () => {
   }
 
   const mudaModulo = (event: any) => {
+    setErroModulos(false);
     const {
       target: { value },
     } = event;
@@ -69,6 +71,7 @@ export const EditarAtividade = () => {
   };
 
   const mudaAluno = (event: any) => {
+    setErroAlunos(false);
     const {
       target: { value },
     } = event;
@@ -78,6 +81,22 @@ export const EditarAtividade = () => {
       );
     }
   };
+
+  const checarErroAluno = () => {
+    if (alunoSelecionado.length > 0) {
+      setErroAlunos(false)
+    } else {
+      setErroAlunos(true)
+    }
+  }
+
+  const checarErroModulo = () => {
+    if (moduloSelecionado.length > 0) {
+      setErroModulos(false)
+    } else {
+      setErroModulos(true)
+    }
+  }
 
   useEffect(() => {
     initialState();
@@ -92,7 +111,7 @@ export const EditarAtividade = () => {
     <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
       <Titulo texto="Editar Atividade" />
 
-      <Box component="form" onSubmit={handleSubmit(cadastrar)} sx={{
+      <Box component="form" onSubmit={handleSubmit(editar)} sx={{
         display: "flex", flexDirection: { xs: "column", lg: "row" }, justifyContent: "space-between", backgroundColor: "var(--branco)", width: { xs: "95%", md: "90%", lg: "85%" }, borderRadius: "10px", padding: {
           xs: 3, sm: 5
         }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: { xs: 3, xl: 8 }
@@ -134,6 +153,7 @@ export const EditarAtividade = () => {
                 </MenuItem>
               ))}
             </Select>
+            {erroModulos && <Typography id="erro-nome-modulo" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">Por favor, selecione um Módulo</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
@@ -168,7 +188,7 @@ export const EditarAtividade = () => {
               input={<OutlinedInput label="Alunos" />}
               renderValue={(selected) => alunos?.elementos.filter((alunos) => selected.includes(alunos.idAluno)).map((alunos) => alunos.nome).join(', ')}
             >
-              <MenuItem value="initial-programa" disabled><em>Selecione um ou mais alunos</em></MenuItem>
+              <MenuItem value="initial-aluno" disabled><em>Selecione um ou mais alunos</em></MenuItem>
               {alunos?.elementos.map((alunos) => (
                 <MenuItem key={alunos.idAluno} value={alunos.idAluno}>
                   <Checkbox checked={alunoSelecionado.indexOf(alunos.idAluno) > -1} />
@@ -176,6 +196,7 @@ export const EditarAtividade = () => {
                 </MenuItem>
               ))}
             </Select>
+            {erroAlunos && <Typography id="erro-nome-aluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">Por favor, selecione um Aluno</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
@@ -187,7 +208,7 @@ export const EditarAtividade = () => {
           <Box sx={{ display: "flex", width: "100%", justifyContent: { xs: "center", lg: "end" }, alignItems: { xs: "center", lg: "end" }, bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>
             <Button type="button" onClick={() => { navigate(-1) }} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d " }, textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cancelar</Button>
 
-            <Button type="submit" variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Salvar</Button>
+            <Button type="submit" onClick={() => { checarErroAluno(); checarErroModulo() }} variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Salvar</Button>
           </Box>
         </Stack>
       </Box>

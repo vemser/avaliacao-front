@@ -83,8 +83,7 @@ export const EditarAluno = () => {
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
-            <label htmlFor="telefone">Telefone</label>
-            <InputMask style={{ padding: "10px", border: "none", outline: "none", borderBottom: "1px solid gray" }} mask="(99)99999-9999" type="text" id="telefone" defaultValue={state.telefone} placeholder="Digite seu telefone" {...register('telefone')} />
+            <InputMask style={{ padding: "18px 13px", borderRadius: "4px 4px 0 0", backgroundColor: '#f0f0f0', border: "none", outline: "none", borderBottom: "1px solid gray", fontFamily: "Inter", fontSize: "1rem", color: "rgba(0, 0, 0, 0.87)" }} mask="(99)99999-9999" type="text" id="telefone" defaultValue={state.telefone} placeholder="Telefone" {...register('telefone')} />
             {errors.telefone && <Typography id="erro-telefoneAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.telefone.message}</Typography>}
           </FormControl>
 

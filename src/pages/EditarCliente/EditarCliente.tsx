@@ -47,18 +47,17 @@ export const EditarCliente = () => {
         <Stack component="div" spacing={3} sx={{ width: "100%", display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
           <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>
-            <TextField id="nomeCliente" label="Nome Cliente" {...register("nome")} placeholder="Digite o nome do cleinte" variant="filled"  />
+            <TextField id="nomeCliente" label="Nome" {...register("nome")} placeholder="Digite o nome do cliente" variant="filled" />
             {errors.nome && <Typography id="erro-nomeCliente" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.nome.message}</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>
-            <TextField id="emailCliente" label="Email Cliente" {...register("email")} placeholder="Digite o email do cleinte" variant="filled"  />
+            <TextField id="emailCliente" label="E-mail" {...register("email")} placeholder="Digite o e-mail do cliente" variant="filled" />
             {errors.email && <Typography id="erro-nomeCliente" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.email.message}</Typography>}
           </FormControl>
 
           <div style={{width:"100%",display:"flex",flexDirection:"column",gap:"5px"}}>
-            <label htmlFor="telefone">Digite seu telefone:</label>
-            <InputMask defaultValue={state.telefone} style={{padding:"10px",border:"none",borderBottom:"1px solid gray",outline:"none"}} mask="(99)99999-9999" type="text" id="telefone" {...register("telefone")} />
+            <InputMask defaultValue={state.telefone} style={{ padding: "18px 13px", borderRadius: "4px 4px 0 0", backgroundColor: '#f0f0f0', border: "none", outline: "none", borderBottom: "1px solid gray", fontFamily: "Inter", fontSize: "1rem", color: "rgba(0, 0, 0, 0.87)" }} mask="(99)99999-9999" type="text" id="telefone" placeholder='Telefone' {...register("telefone")} />
             {errors.telefone && <Typography id="erro-nomeCliente" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.telefone.message}</Typography>}
           </div>
 

@@ -30,7 +30,7 @@ export const CadastrarAtividade = () => {
   const navigate = useNavigate()
   const { cadastrarAtividade } = useAtividade();
   const { pegarModulo, modulo } = useModulo();
-  const { pegarPrograma, programas } = usePrograma();
+  const { pegarProgramaAtivo, programas } = usePrograma();
   const { pegarAluno, alunos } = useAluno();
   const { usuarioLogado } = useAuth();
   const { register, handleSubmit, formState: { errors } } = useForm<IAtividadeForm>({ resolver: yupResolver(atividadeSchema) });
@@ -65,7 +65,7 @@ export const CadastrarAtividade = () => {
 
   useEffect(() => {
     pegarModulo(0, modulo?.totalElementos);
-    pegarPrograma(0, programas?.totalElementos);
+    pegarProgramaAtivo(0, programas?.totalElementos);
     pegarAluno(0, alunos?.totalElementos);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

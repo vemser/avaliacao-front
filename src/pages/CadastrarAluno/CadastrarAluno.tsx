@@ -25,12 +25,12 @@ export const CadastrarAluno = () => {
 
   const { cadastrarAluno } = useAluno();
   const { pegarTrilha, trilhas } = useTrilha();
-  const { pegarPrograma, programas } = usePrograma();
+  const { pegarProgramaAtivo, programas } = usePrograma();
   const { pegarTecnologia, cadastrarTecnologia, tecnologias } = useTecnologia();
 
   useEffect(() => {
     pegarTrilha(0, 999);
-    pegarPrograma(0, 999);
+    pegarProgramaAtivo(0, 999);
     pegarTecnologia(0, 999);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

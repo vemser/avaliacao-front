@@ -13,7 +13,7 @@ import { useCliente } from '../../context/Alocacao/ClienteContext';
 
 export const CadastrarVaga = () => {
   const navigate = useNavigate();
-  const { pegarPrograma, programas } = usePrograma();
+  const { pegarProgramaAtivo, programas } = usePrograma();
   const { pegarCliente, cliente } = useCliente();
   const { register, handleSubmit, formState: { errors }, reset } = useForm<IVaga>({resolver: yupResolver(VagaSchema)});
   const { cadastrarVaga } = useVaga();
@@ -29,7 +29,7 @@ export const CadastrarVaga = () => {
   }
 
   useEffect(() => {
-    pegarPrograma(0, programas?.totalElementos);
+    pegarProgramaAtivo(0, programas?.totalElementos);
     pegarCliente(0, cliente?.totalElementos);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

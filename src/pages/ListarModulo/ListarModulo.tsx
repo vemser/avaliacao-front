@@ -20,7 +20,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 interface Column {
-  id: "idModulo" | "nome" | "trilha" | "programa" | "dataInicio" | "dataFim" | "acoes";
+  id: "idModulo" | "nome" | "trilha" | "programa" | "acoes";
   label: string;
   minWidth?: number;
   align?: "right";
@@ -32,8 +32,6 @@ const columns: Column[] = [
   { id: "nome", label: "Nome", minWidth: 5 },
   { id: "trilha", label: "Trilha", minWidth: 5 },
   { id: "programa", label: "Programa", minWidth: 5 },
-  { id: "dataInicio", label: "Data de Início", minWidth: 5 },
-  { id: "dataFim", label: "Data Final", minWidth: 5, align: "right", format: (value: number) => value.toLocaleString("en-US") },
   { id: "acoes", label: "Ações", minWidth: 5, align: "right", format: (value: number) => value.toLocaleString("en-US") }
 ];
 
@@ -110,7 +108,7 @@ export const ListarModulo = () => {
               <TableHead sx={{ backgroundColor: "#090F27" }}>
                 <TableRow>
                   {columns.map((column) => (
-                    <TableCell key={column.id} align={column.align} style={{ minWidth: "14.2%", fontWeight: "700", fontSize: "1rem", textAlign: "center", backgroundColor: "#090F27", color: "white" }}>
+                    <TableCell key={column.id} align={column.align} style={{ minWidth: "20%", fontWeight: "700", fontSize: "1rem", textAlign: "center", backgroundColor: "#090F27", color: "white" }}>
                       {column.label}
                     </TableCell>
                   ))}
@@ -130,13 +128,8 @@ export const ListarModulo = () => {
                       {data.listProgramaDTO.map((programa) => `${programa.nome}`).join(', ')}
                     </StyledTableCell>
 
-                    <StyledTableCell id="nome" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", width: { md: "200px" } }} scope="row">{data.dataInicio.replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")}</StyledTableCell>
-
-                    <StyledTableCell id="nome" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", width: { md: "200px" } }} scope="row">{data.dataFim.replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")}</StyledTableCell>
-
                     <StyledTableCell id="acoes" sx={{ textAlign: "center" }}>
                       <Button id={`botao-editar-modulo`} title="Editar" onClick={() => { navigate("/editar-modulo", { state: data }) }}><Edit /></Button>
-                      <Button id={`botao-duplicar-modulo`} title="Duplicar" onClick={() => clonarModulo(data.idModulo)}><ContentCopy /></Button>
                       <Button id={`botao-deletar-modulo`} title="Deletar" onClick={() => { handleOpen(); setIdDelete(data.idModulo) }}><DeleteForever /></Button>
                     </StyledTableCell>
                   </StyledTableRow>

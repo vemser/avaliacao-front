@@ -89,16 +89,6 @@ export const EditarModulo = () => {
               <TextField id="nome-modulo" defaultValue={state.nome} label="Digite um nome" placeholder="Digite um nome" multiline variant="filled" {...register('nome')} />
             </FormControl>
 
-            <FormControl sx={{ width: "100%" }}>
-            <TextField id="dataInicio" label="Data Início" defaultValue={state.dataInicio} type="date" sx={{ width: "100%" }} InputLabelProps={{ shrink: true }} {...register("dataInicio")} />
-            {errors.dataInicio && <Typography id="erro-dataInicioModulo" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.dataInicio.message}</Typography>}
-          </FormControl>
-
-          <FormControl sx={{ width: "100%" }}>
-            <TextField id="dataFim" label="Data Fim" defaultValue={state.dataFim} type="date" sx={{ width: "100%" }} InputLabelProps={{ shrink: true }} {...register("dataFim")} />
-            {errors.dataFim && <Typography id="erro-dataFimModulo" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.dataFim.message}</Typography>}
-          </FormControl>
-
             <FormControl variant="filled" sx={{ width: "100%" }}>
               <InputLabel id="trilha-modulo">Selecione uma trilha</InputLabel>
               <Select MenuProps={MenuProps} {...register("idTrilha")} labelId="demo-simple-select-filled-label" id="trilha-modulo" defaultValue={state.trilhaDTO.idTrilha}>

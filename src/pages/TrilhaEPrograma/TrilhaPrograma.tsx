@@ -45,7 +45,7 @@ export const TrilhaPrograma = () => {
 
               <Componentes.CampoBusca label="Nome" buscar={buscarPorNomeTrilha} resetar={resetBuscaTrilha}/>
 
-              <Button onClick={() => navigate("/cadastrar-trilha")} variant="contained" sx={{ width: { xs: "260px", md: "auto" }, display: "flex", marginRight: { xs: "0", md: "14px" }, textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Trilha</Button>
+            <Button onClick={() => navigate("/cadastrar-trilha")} variant="contained" sx={{ width: { xs: "260px", md: "auto" }, display: "flex", whiteSpace: "nowrap", marginRight: { xs: "0", md: "14px" }, textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Trilha</Button>
             </Box>
 
             <Paper sx={{ width: "100%", borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px" }}>
@@ -65,7 +65,7 @@ export const TrilhaPrograma = () => {
               
               <Componentes.CampoBusca label="Nome" buscar={buscarPorNomePrograma} resetar={resetBuscaPrograma} />
 
-              <Button onClick={() => navigate("/cadastrar-programa")} variant="contained" sx={{ width: { xs: "260px", md: "auto" }, display: "flex", marginRight: { xs: "0", md: "14px" }, textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Programa</Button>
+              <Button onClick={() => navigate("/cadastrar-programa")} variant="contained" sx={{ width: { xs: "260px", md: "auto" }, display: "flex", whiteSpace: "nowrap", marginRight: { xs: "0", md: "14px" }, textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Programa</Button>
             </Box>
 
             <Paper sx={{ width: "100%", borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px" }}>

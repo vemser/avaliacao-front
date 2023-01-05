@@ -51,9 +51,9 @@ export const EditarAluno = () => {
   };
 
   useEffect(() => { 
-    pegarPrograma(0, 999);
-    pegarTrilha(0, 999);
-    pegarTecnologia(0, 999);
+    pegarPrograma(0, programas?.totalElementos);
+    pegarTrilha(0, trilhas?.totalElementos);
+    pegarTecnologia(0, tecnologias?.totalElementos);
     initialState();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Box, Button, TablePagination } from '@mui/material';
@@ -9,13 +9,15 @@ import { useAtividade } from '../../context/Tecnico/AtividadeContext';
 export const ListarAtividade: React.FC = () => {
   const navigate = useNavigate();
   const { atividades, pegarAtividade, pegarAtividadePorId } = useAtividade();
+  const [inputFiltro, setInputFiltro] = useState<string>('');
 
   useEffect(() => {
     pegarAtividade();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const buscarPorNomeAtividade = async (valor: any) => {
+  const buscarPorFiltro = async (valor: any, pagina: number = 0, tamanho: number = 10) => {
+    setInputFiltro(valor);
     if (!isNaN(valor)) {
       await pegarAtividadePorId(valor)
     }
@@ -26,7 +28,11 @@ export const ListarAtividade: React.FC = () => {
   }
 
   const mudarPagina = async (event: unknown, newPage: number) => {
-    await pegarAtividade(newPage)
+    if (inputFiltro) {
+      await buscarPorFiltro(inputFiltro, newPage);
+    } else {
+      await pegarAtividade(newPage);
+    }
   }
 
   return (
@@ -36,7 +42,7 @@ export const ListarAtividade: React.FC = () => {
       <Box sx={{ width: { xs: "95%", md: "80%" }, backgroundColor: "var(--branco)", borderRadius: "10px", boxShadow: "10px 10px 10px var(--azul</Box>-escuro-dbc)", padding: "20px" }}>
 
         <Box sx={{ display: "flex", width: "100%", alignItems: "center", justifyContent: "space-between", gap: 2, flexDirection: { xs: "column", sm: "row" } }}>
-          <Components.CampoBusca label='Nome' buscar={buscarPorNomeAtividade} resetar={resetBuscaAtividade} />
+          <Components.CampoBusca label='Nome' buscar={buscarPorFiltro} resetar={resetBuscaAtividade} />
           <Button variant="contained" onClick={() => navigate("/cadastrar-atividade")} sx={{ width: "auto", paddingLeft: "15px", paddingRight: "15px", display: "flex", marginBottom: "10px", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Atividade</Button>
         </Box>
 

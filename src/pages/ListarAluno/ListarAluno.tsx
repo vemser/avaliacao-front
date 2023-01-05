@@ -55,8 +55,8 @@ export const ListarAluno: React.FC = () => {
 
   const [inputFiltro, setInputFiltro] = useState<string>('');
 
-  useEffect(() => { 
-    pegarAluno(); 
+  useEffect(() => {
+    pegarAluno();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -70,7 +70,7 @@ export const ListarAluno: React.FC = () => {
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
   }
 
-  const handleChangePage = async (event: unknown, newPage: number) => { 
+  const handleChangePage = async (event: unknown, newPage: number) => {
     if (inputFiltro) {
       filtrosAluno(inputFiltro, newPage)
     } else {

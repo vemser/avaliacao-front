@@ -32,7 +32,7 @@ export const AtividadeProvider = ({ children }: IChildren) => {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      }  
+      }
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -50,7 +50,7 @@ export const AtividadeProvider = ({ children }: IChildren) => {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      }  
+      }
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -68,7 +68,7 @@ export const AtividadeProvider = ({ children }: IChildren) => {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      }  
+      }
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -87,7 +87,7 @@ export const AtividadeProvider = ({ children }: IChildren) => {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      }  
+      }
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -97,7 +97,7 @@ export const AtividadeProvider = ({ children }: IChildren) => {
   const editarAtividade = async (atividade: IAtividadeForm, id: number) => {
     try {
       nProgress.start();
-      let novaData = { ...atividade, idPrograma: parseInt(atividade.idPrograma) };
+      let novaData = { ...atividade, idPrograma: parseInt(atividade.idPrograma), nomeInstrutor: `${usuarioLogado.login.split(".")[0]} ${usuarioLogado.login.split(".")[1]}` };
       await API.put(`/atividade/update/${id}`, novaData, { headers: { Authorization: localStorage.getItem("token") } });
       toast.success("Atividade atualizado com sucesso!", toastConfig);
       navigate(-1);
@@ -107,7 +107,7 @@ export const AtividadeProvider = ({ children }: IChildren) => {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      }  
+      }
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();

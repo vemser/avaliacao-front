@@ -53,6 +53,8 @@ export const ListarAluno: React.FC = () => {
   const navigate = useNavigate();
   const { pegarAluno, alunos, deletarAluno } = useAluno();
 
+  const [inputFiltro, setInputFiltro] = useState<string>('');
+
   useEffect(() => { 
     pegarAluno(); 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -68,15 +70,23 @@ export const ListarAluno: React.FC = () => {
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
   }
 
-  const handleChangePage = async (event: unknown, newPage: number) => { await pegarAluno(newPage); };
-
-  const filtrosAluno = async (valor: any) => {
-    if (valor.includes("@")) {
-      await pegarAluno(0, 10, `&email=${valor}`)
-    } else if (!isNaN(valor)) {
-      await pegarAluno(0, 10, `&idAluno=${valor}`)
+  const handleChangePage = async (event: unknown, newPage: number) => { 
+    if (inputFiltro) {
+      filtrosAluno(inputFiltro, newPage)
     } else {
-      await pegarAluno(0, 10, `&nome=${valor}`);
+      await pegarAluno(newPage);
+    }
+  };
+
+  const filtrosAluno = async (valor: any, pagina: number = 0, tamanho: number = 1) => {
+    setInputFiltro(valor);
+
+    if (valor.includes("@")) {
+      await pegarAluno(pagina, tamanho, `&email=${valor}`)
+    } else if (!isNaN(valor)) {
+      await pegarAluno(pagina, tamanho, `&idAluno=${valor}`)
+    } else {
+      await pegarAluno(pagina, tamanho, `&nome=${valor}`);
     }
   }
 

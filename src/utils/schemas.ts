@@ -4,7 +4,7 @@ const regexEmail = /^[A-Za-z0-9._%+-]+@dbccompany.com.br$/;
 
 const regexEmailUserName = /^(?:([A-Za-z0-9._%+-]+@dbccompany.com.br)|([A-Za-z]+.[A-Za-z]+))$/;
 
-const regexNome = /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$/;
+const regexNome = /^(?=[^a-z0-9])|(?=[A-Za-z0-9])/;
 
 export const userSchema = yup.object().shape({
   username: yup.string().required("Por favor, digite seu usuário").matches(regexEmailUserName, "Precisa ser email @dbccompany.com.br ou usuário válido"),

@@ -24,9 +24,9 @@ export const CadastrarReservaAlacocao = () => {
   const {pegarCliente, cliente} = useCliente()
 
   useEffect(() => {
-    pegarAluno(0,999);
-    pegarVagas(0,999);
-    pegarCliente(0,999);
+    pegarAluno(0,alunos?.totalElementos);
+    pegarVagas(0,vagas?.totalElementos);
+    pegarCliente(0,cliente?.totalElementos);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
 

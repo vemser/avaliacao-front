@@ -13,11 +13,11 @@ export const VagaContext = createContext({} as IVagaContext);
 
 export const VagaProvider = ({ children }: IChildren) => {
   const [vagas, setVagas] = useState<IVagaObject | null>(null)
-  
+
   const cadastrarVaga = async (vaga: IVaga) => {
     try {
       nProgress.start();
-      await API.post(`/vaga`, vaga, { headers: { Authorization: localStorage.getItem("token") }});
+      await API.post(`/vaga`, vaga, { headers: { Authorization: localStorage.getItem("token") } });
       toast.success("Vaga criado com sucesso!", toastConfig);
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
@@ -25,35 +25,17 @@ export const VagaProvider = ({ children }: IChildren) => {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      }  
-      toast.error(message, toastConfig);
-    } finally{
-      nProgress.done();
-    }
-  }
-
-  const pegarVagas = async (pagina: number = 0, tamanho: number = 10) => {
-    try {
-      nProgress.start();
-      const { data } = await API.get(`/vaga?pagina=${pagina}&tamanho=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") }});
-      setVagas(data);
-    } catch (error: any) {
-      let message = "Ops, algo deu errado!";
-      if (error.response.status === 403) {
-        message = "Você não tem permissão para acessar esse recurso"
-      } else if (axios.isAxiosError(error) && error?.response) {
-        message = error.response.data.message || error.response.data.errors[0];
-      }  
+      }
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
     }
   }
 
-  const pegarVagaPorNome = async (nome: string, pagina: number = 0, tamanho: number = 10) => {
+  const pegarVagas = async (pagina: number = 0, tamanho: number = 10, filtros: string = '') => {
     try {
       nProgress.start();
-      const { data } = await API.get(`/vaga/nome/${nome}?pagina=${pagina}&tamanho=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") }});
+      const { data } = await API.get(`/vaga/listar-id-nome?pagina=${pagina}&tamanho=${tamanho}${filtros}`, { headers: { Authorization: localStorage.getItem("token") } });
       setVagas(data);
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
@@ -61,7 +43,7 @@ export const VagaProvider = ({ children }: IChildren) => {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      }  
+      }
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -71,7 +53,7 @@ export const VagaProvider = ({ children }: IChildren) => {
   const deletarVaga = async (id: number) => {
     try {
       nProgress.start();
-      await API.delete(`/vaga/${id}`, { headers: { Authorization: localStorage.getItem("token") }});
+      await API.delete(`/vaga/desativar/${id}`, { headers: { Authorization: localStorage.getItem("token") } });
       toast.success("Vaga deletada com sucesso!", toastConfig);
       await pegarVagas();
     } catch (error: any) {
@@ -80,7 +62,7 @@ export const VagaProvider = ({ children }: IChildren) => {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      }  
+      }
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -90,7 +72,7 @@ export const VagaProvider = ({ children }: IChildren) => {
   const editarVaga = async (vaga: IVaga, id: number) => {
     try {
       nProgress.start();
-      await API.put(`/vaga/${id}`, vaga, { headers: { Authorization: localStorage.getItem("token") }});
+      await API.put(`/vaga/${id}`, vaga, { headers: { Authorization: localStorage.getItem("token") } });
       toast.success("Vaga atualizado com sucesso!", toastConfig);
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
@@ -98,7 +80,7 @@ export const VagaProvider = ({ children }: IChildren) => {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      }  
+      }
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -106,7 +88,7 @@ export const VagaProvider = ({ children }: IChildren) => {
   }
 
   return (
-    <VagaContext.Provider value={{ vagas, cadastrarVaga, pegarVagas, pegarVagaPorNome, deletarVaga, editarVaga }}>
+    <VagaContext.Provider value={{ vagas, cadastrarVaga, pegarVagas, deletarVaga, editarVaga }}>
       {children}
     </VagaContext.Provider>
   );

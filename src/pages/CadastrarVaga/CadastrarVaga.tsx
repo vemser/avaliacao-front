@@ -13,7 +13,7 @@ import { useCliente } from '../../context/Alocacao/ClienteContext';
 
 export const CadastrarVaga = () => {
   const navigate = useNavigate();
-  const { pegarPrograma, programas } = usePrograma();
+  const { pegarProgramaAtivo, programas } = usePrograma();
   const { pegarCliente, cliente } = useCliente();
   const { register, handleSubmit, formState: { errors }, reset } = useForm<IVaga>({resolver: yupResolver(VagaSchema)});
   const { cadastrarVaga } = useVaga();
@@ -29,7 +29,7 @@ export const CadastrarVaga = () => {
   }
 
   useEffect(() => {
-    pegarPrograma(0, programas?.totalElementos);
+    pegarProgramaAtivo(0, programas?.totalElementos);
     pegarCliente(0, cliente?.totalElementos);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -83,13 +83,13 @@ export const CadastrarVaga = () => {
 
           <FormControl sx={{ width: "100%" }}>
             <TextField 
-            id="dataAbertura" label="Data de Abertura" type="date" sx={{ width: "100%" }} InputLabelProps={{ shrink: true }} {...register("dataAbertura")}/>
+              id="dataAbertura" label="Data de Abertura" type="date" sx={{ width: "100%" }} InputLabelProps={{ shrink: true }} {...register("dataAbertura")} variant="filled" />
             {errors.dataAbertura && <Typography id="erro-dataAbertura" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.dataAbertura.message}</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
             <TextField 
-            id="dataFechamento" label="Data de Fechamento" type="date" sx={{ width: "100%" }} InputLabelProps={{ shrink: true }} {...register("dataFechamento")}/>
+              id="dataFechamento" label="Data de Fechamento" type="date" sx={{ width: "100%" }} InputLabelProps={{ shrink: true }} {...register("dataFechamento")} variant="filled" />
             {errors.dataFechamento && <Typography id="erro-dataFechamento" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.dataFechamento.message}</Typography>}
           </FormControl>
 

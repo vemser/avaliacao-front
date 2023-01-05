@@ -19,18 +19,19 @@ import { useTrilha } from "../../context/Tecnico/TrilhaContext";
 import { usePrograma } from "../../context/Tecnico/ProgramaContext";
 import { useAluno } from "../../context/Comportamental/AlunoContext";
 import { useTecnologia } from "../../context/Tecnico/TecnologiasContext";
+import { Label } from "@mui/icons-material";
 
 export const CadastrarAluno = () => {
   const navigate = useNavigate();
 
   const { cadastrarAluno } = useAluno();
   const { pegarTrilha, trilhas } = useTrilha();
-  const { pegarPrograma, programas } = usePrograma();
+  const { pegarProgramaAtivo, programas } = usePrograma();
   const { pegarTecnologia, cadastrarTecnologia, tecnologias } = useTecnologia();
 
   useEffect(() => {
     pegarTrilha(0, trilhas?.totalElementos);
-    pegarPrograma(0, programas?.totalElementos);
+    pegarProgramaAtivo(0, programas?.totalElementos);
     pegarTecnologia(0, tecnologias?.totalElementos);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -38,13 +39,34 @@ export const CadastrarAluno = () => {
   const [inputTecnologia, setInputTecnologia] = useState<string>('')
   const [tecnologiaSelecionada, setTecnologiaSelecionada] = useState<number[]>([]);
 
+  const [estadoErro, setEstadoErro] = useState<boolean>(false);
+  const [dataAuxiliar, setDataAuxiliar] = useState<string>();
+
   const { register, handleSubmit, formState: { errors } } = useForm<ICadastroAlunoForm>({
     resolver: yupResolver(alunoSchema)
   });
 
+  const erroPrograma = () => {
+    if(dataAuxiliar) {
+      setEstadoErro(false)
+    } else {
+      setEstadoErro(true) 
+    }
+  }
+
+  const handleChange = () => {
+    setEstadoErro(false)
+    setDataAuxiliar('')
+  };
+
   const cadastroAluno = (data: ICadastroAlunoForm) => {
+    setDataAuxiliar(data.idPrograma)
+
+    if(!data.idPrograma && !dataAuxiliar) return setEstadoErro(true);
+    setEstadoErro(false);
+
     const novoData = { ...data, idTrilha: parseInt(data.idTrilha), idPrograma: parseInt(data.idPrograma.split(' ')[0]), tecnologias: tecnologiaSelecionada }
-    cadastrarAluno(novoData)
+    cadastrarAluno(novoData);
   };
 
   // const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
@@ -67,9 +89,8 @@ export const CadastrarAluno = () => {
             {errors.email && <Typography id="erro-emailAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.email.message}</Typography>}
           </FormControl>
 
-          <FormControl sx={{ width: "100%" }} variant="standard">
-            <label htmlFor="telefone">Telefone</label>
-            <InputMask style={{ padding: "10px", border: "none", outline: "none", borderBottom: "1px solid gray" }} mask="(99)99999-9999" type="text" id="telefone" placeholder="Digite seu telefone" {...register('telefone')} />
+          <FormControl sx={{ width: "100%" }} variant="filled">
+            <InputMask style={{ padding: "18px 13px", borderRadius: "4px 4px 0 0", backgroundColor: '#f0f0f0', border: "none", outline: "none", borderBottom: "1px solid gray", fontFamily: "Inter", fontSize: "1rem", color: "rgba(0, 0, 0, 0.87)" }} mask="(99)99999-9999"  type="text" id="telefone" placeholder="Telefone" {...register('telefone')} />
             {errors.telefone && <Typography id="erro-telefoneAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.telefone.message}</Typography>}
           </FormControl>
 
@@ -113,10 +134,11 @@ export const CadastrarAluno = () => {
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
-            <Autocomplete disablePortal id="programa" 
+            <Autocomplete disablePortal id="programa" onChange={handleChange}
             isOptionEqualToValue={(option, value) => option.label === value.label} 
             options={programas ? programas.elementos.map((programa) => ( { label: `${programa.idPrograma} - ${programa.nome}`})) : []} renderInput={(params) => <TextField {...params} label="Programa" variant="filled" {...register("idPrograma")} />} />
-            {errors.idPrograma && <Typography id="erro-programaAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.idPrograma.message}</Typography>}
+
+            {estadoErro && <Typography id="erro-programaAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">Por favor, escolha um programa</Typography>}
           </FormControl>
 
           <FormControl variant="filled" sx={{ width: "100%" }}>
@@ -134,7 +156,7 @@ export const CadastrarAluno = () => {
           <Box sx={{ display: "flex", width: "100%", justifyContent: { xs: "center", lg: "end" }, alignItems: { xs: "center", lg: "end" }, bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>
             <Button type="button" onClick={() => { navigate(-1) }} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d " }, textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cancelar</Button>
 
-            <Button variant="contained" type="submit" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cadastrar</Button>
+            <Button variant="contained" onClick={() => { erroPrograma() }} type="submit" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cadastrar</Button>
           </Box>
         </Stack>
       </Box>

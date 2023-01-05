@@ -96,7 +96,8 @@ export const ModuloProvider = ({ children }: IChildren) => {
     try {
       console.log(id)
       nProgress.start();
-      await API.post(`/modulo/clonar/${id}`, { headers: { Authorization: localStorage.getItem("token") }});
+      API.defaults.headers.common["Authorization"] = localStorage.getItem("token");
+      await API.post(`/modulo/clonar/${id}`);
       toast.success("Módulo duplicado com sucesso!", toastConfig);
       pegarModulo();
     } catch (error: any) {

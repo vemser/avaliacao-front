@@ -43,8 +43,6 @@ export interface IListProgramaDTO {
 
 export interface ICadastroModulo {
   nome: string,
-  dataInicio: string,
-  dataFim: string,
   idTrilha: number,
   listPrograma: number[]
 }

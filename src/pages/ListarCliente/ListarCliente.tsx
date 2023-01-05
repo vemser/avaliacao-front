@@ -33,7 +33,7 @@ interface Column {
 const columns: Column[] = [
   { id: "codigo", label: "Código", minWidth: 5 },
   { id: "nome", label: "Nome", minWidth: 5 },
-  { id: "email", label: "Email", minWidth: 5 },
+  { id: "email", label: "E-mail", minWidth: 5 },
   { id: "telefone", label: "Telefone", minWidth: 5 },
   { id: "situacao", label: "Situação", minWidth: 5 },
   { id: "acoes", label: "Ações", minWidth: 5, align: "right", format: (value: number) => value.toLocaleString("en-US") }
@@ -89,7 +89,7 @@ export const ListarCliente: React.FC = () => {
       <Box sx={{ width: { xs: "95%", md: "80%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
 
       <Box sx={{ display: "flex", gap: 3, flexDirection: { xs: "column", md: "row" }, justifyContent: "space-between", alignItems: "center", width: "100%", marginBottom: "10px",paddingInline: 2 }}>
-        <Componentes.CampoBusca label="Nome ou Email" buscar={buscarPorNomeCliente} resetar={resetBuscaCliente}/>
+        <Componentes.CampoBusca label="E-mail ou Nome" buscar={buscarPorNomeCliente} resetar={resetBuscaCliente}/>
 
 
         <Button onClick={() => navigate("/cadastrar-cliente")} variant="contained" sx={{ width: "auto", paddingLeft: "15px", paddingRight: "15px", display: "flex", marginBottom: "10px", marginRight: "14px", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Cliente</Button>

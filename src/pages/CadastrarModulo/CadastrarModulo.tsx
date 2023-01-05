@@ -35,12 +35,12 @@ export const CadastrarModulo = () => {
   const [estadoErro, setEstadoErro] = useState<boolean>(false);
 
   const { pegarTrilha, trilhas } = useTrilha();
-  const { pegarPrograma, programas } = usePrograma();
+  const { pegarProgramaAtivo, programas } = usePrograma();
   const { cadastrarModulo } = useModulo();
 
   useEffect(() => {
     pegarTrilha(0, trilhas?.totalElementos);
-    pegarPrograma(0, programas?.totalElementos);
+    pegarProgramaAtivo(0, programas?.totalElementos);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -49,16 +49,16 @@ export const CadastrarModulo = () => {
   });
 
   const erroPrograma = () => {
-    if(programaSelecionado.length > 0) {
+    if (programaSelecionado.length > 0) {
       setEstadoErro(false)
     } else {
-      setEstadoErro(true) 
+      setEstadoErro(true)
     }
   }
 
   const cadastrar = (data: any) => {
     const novoData = { ...data, idTrilha: parseInt(data.idTrilha), listPrograma: programaSelecionado }
-    if(programaSelecionado.length > 0) cadastrarModulo(novoData)
+    if (programaSelecionado.length > 0) cadastrarModulo(novoData)
   }
 
   const handleChange = (event: any) => {
@@ -87,16 +87,6 @@ export const CadastrarModulo = () => {
             {errors.nome && <Typography id="erro-nomeModulo" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.nome.message}</Typography>}
           </FormControl>
 
-          <FormControl sx={{ width: "100%" }}>
-            <TextField id="dataInicio" label="Data Início" type="date" sx={{ width: "100%" }} InputLabelProps={{ shrink: true }} {...register("dataInicio")} />
-            {errors.dataInicio && <Typography id="erro-dataInicioModulo" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.dataInicio.message}</Typography>}
-          </FormControl>
-
-          <FormControl sx={{ width: "100%" }}>
-            <TextField id="dataFim" label="Data Fim" type="date" sx={{ width: "100%" }} InputLabelProps={{ shrink: true }} {...register("dataFim")} />
-            {errors.dataFim && <Typography id="erro-dataFimModulo" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.dataFim.message}</Typography>}
-          </FormControl>
-
           <FormControl variant="filled" sx={{ width: "100%" }}>
             <InputLabel id="aluno">Trilha</InputLabel>
             <Select MenuProps={MenuProps} {...register("idTrilha")} defaultValue="" labelId="demo-simple-select-filled-label" id="aluno" >
@@ -112,12 +102,15 @@ export const CadastrarModulo = () => {
             <InputLabel id="select-programa">Programa</InputLabel>
             <Select id="select-programa" MenuProps={MenuProps} multiple value={programaSelecionado} onChange={handleChange} renderValue={(selected) => programas?.elementos.filter((programa) => selected.includes(programa.idPrograma)).map((programa) => programa.nome).join(', ')}>
               <MenuItem value="initial-programa" disabled><em>Selecione um ou mais programas</em></MenuItem>
-              {programas?.elementos.map((programa) => (
-                <MenuItem key={programa.idPrograma} value={programa.idPrograma}>
-                  <Checkbox checked={programaSelecionado.indexOf(programa.idPrograma) > -1} />
-                  <ListItemText primary={programa.nome} />
-                </MenuItem>
-              ))}
+              {programas?.elementos.map((programa) => {
+                return (
+                  <MenuItem key={programa.idPrograma} value={programa.idPrograma}>
+                    <Checkbox checked={programaSelecionado.indexOf(programa.idPrograma) > -1} />
+                    <ListItemText primary={programa.nome} />
+                  </MenuItem>
+                )
+              }
+              )}
             </Select>
 
             {estadoErro && <Typography id="erro-programaAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">Por favor, escolha um programa</Typography>}

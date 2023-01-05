@@ -90,7 +90,7 @@ export const VerificarAluno: React.FC = () => {
               <Typography sx={{ whiteSpace: "wrap", overflow: "hidden", textOverflow: "ellipsis" }}>Trilha: <span style={{ fontWeight: 600 }}>{state.trilha.nome}</span></Typography>
             </Box>
             <Box sx={{ width: { xs: "100%", md: "auto" }, textAlign: "center" }}>
-              <Typography sx={{ whiteSpace: "wrap", overflow: "hidden", textOverflow: "ellipsis" }}>Email: <span style={{ fontWeight: 600 }}>{state.email}</span></Typography>
+              <Typography sx={{ whiteSpace: "wrap", overflow: "hidden", textOverflow: "ellipsis" }}>E-mail: <span style={{ fontWeight: 600 }}>{state.email}</span></Typography>
             </Box>
           </Box>
 

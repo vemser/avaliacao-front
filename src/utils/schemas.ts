@@ -12,11 +12,11 @@ export const userSchema = yup.object().shape({
 });
 
 export const alunoSchema = yup.object().shape({
-  nome: yup.string().required("Por favor, digite seu nome completo").min(3,"O nome deve conter no mínimo 3 caracteres").matches(regexNome, 'Por favor, digite apenas letras.'),
+  nome: yup.string().required("Por favor, digite o nome completo").min(3,"O nome deve conter no mínimo 3 caracteres").matches(regexNome, 'Por favor, digite apenas letras.'),
   telefone: yup.string().required("Por favor, digite o telefone"),
-  cidade: yup.string().required("Por favor, digite sua Cidade").matches(regexNome, 'Por favor, digite apenas letras.'),
-  estado: yup.string().required("Por favor, digite seu Estado").matches(regexNome, 'Por favor, digite apenas letras.'),
-  email: yup.string().required("Por favor, digite seu e-mail").email("Por favor, digite um e-mail válido").matches(regexEmail, "Só aceitamos email @dbccompany.com.br"),
+  cidade: yup.string().required("Por favor, digite a cidade").matches(regexNome, 'Por favor, digite apenas letras.'),
+  estado: yup.string().required("Por favor, digite o estado").matches(regexNome, 'Por favor, digite apenas letras.'),
+  email: yup.string().required("Por favor, digite o e-mail DBC").email("Por favor, digite um e-mail válido").matches(regexEmail, "Necessário ser e-mail @dbccompany.com.br"),
   situacao: yup.string().required("Por favor, escolha uma situação"),
   descricao: yup.string().required("Por favor, digite uma descrição"),
   idTrilha: yup.string().required("Por favor, escolha uma trilha")
@@ -28,8 +28,8 @@ export const trilhaSchema = yup.object().shape({
 })
 
 export const editarAlunoSchema = yup.object().shape({
-  nome: yup.string().required("Por favor, digite seu nome completo").min(3,"O nome deve conter no mínimo 3 caracteres").matches(regexNome, 'Por favor, digite apenas letras.'),
-  email: yup.string().required("Por favor, digite seu e-mail").email("Por favor, digite um e-mail válido").matches(regexEmail, "Só aceitamos email @dbccompany.com.br"),
+  nome: yup.string().required("Por favor, digite o nome completo").min(3,"O nome deve conter no mínimo 3 caracteres").matches(regexNome, 'Por favor, digite apenas letras.'),
+  email: yup.string().required("Por favor, digite o e-mail").email("Por favor, digite um e-mail válido").matches(regexEmail, "Necessário ser e-mail @dbccompany.com.br"),
   trilha: Object({ nome: yup.string().required("Edição é obrigatória!") })
 });
 
@@ -39,14 +39,14 @@ export const editarNomePerfil = yup.object().shape({
 })
 
 export const colaboradorSchema = yup.object().shape({
-  nome: yup.string().required("Por favor, digite seu nome completo").min(3,"O nome deve conter no mínimo 3 caracteres"),
-  email: yup.string().required("Por favor, digite seu e-mail").email("Por favor, digite um e-mail válido").matches(regexEmail, "Só aceitamos email @dbccompany.com.br"),
+  nome: yup.string().required("Por favor, digite o nome completo").min(3,"O nome deve conter no mínimo 3 caracteres"),
+  email: yup.string().required("Por favor, digite o e-mail").email("Por favor, digite um e-mail válido").matches(regexEmail, "Necessário ser e-mail @dbccompany.com.br"),
   cargo: yup.string().required("Por favor, escolha um dos tipos de perfil.").nullable()
 });
 
 export const editarColaboradorSchema = yup.object().shape({
-  nome: yup.string().required("Por favor, digite seu nome completo").min(3,"O nome deve conter no mínimo 3 caracteres"),
-  email: yup.string().required("Por favor, digite seu e-mail").email("Por favor, digite um e-mail válido").matches(regexEmail, "Só aceitamos email @dbccompany.com.br")
+  nome: yup.string().required("Por favor, digite o nome completo").min(3,"O nome deve conter no mínimo 3 caracteres"),
+  email: yup.string().required("Por favor, digite o e-mail").email("Por favor, digite um e-mail válido").matches(regexEmail, "Necessário ser e-mail @dbccompany.com.br")
 });
 
 export const redefinirSenhaSchema = yup.object().shape({
@@ -106,9 +106,7 @@ export const ProgramaSchema = yup.object().shape({
 })
 
 export const moduloSchema = yup.object().shape({
-  nome: yup.string().required("Por favor, insira um nome para a trilha").min(3, "O nome deve 3 caracteres").matches(regexNome, 'Por favor, digite apenas letras.'),
-  dataInicio: yup.string().required("Por favor, insira uma data inicial"),
-  dataFim: yup.string().required("Por favor, insira uma data final"),
+  nome: yup.string().required("Por favor, insira um nome para a trilha").matches(regexNome, 'Por favor, digite apenas letras.'),
   idTrilha: yup.string().required("Por favor, selecione uma trilha")
 })
 

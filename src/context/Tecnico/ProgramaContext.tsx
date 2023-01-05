@@ -15,7 +15,7 @@ export const ProgramaContext = createContext({} as IProgramaContext);
 export const ProgramaProvider = ({ children }: IChildren) => {
   const navigate = useNavigate();
   
-  const [programas, setProgramas] = useState<IObjectProgramas | null>(null)
+  const [programas, setProgramas] = useState<IObjectProgramas | null>(null);
   const [mudaDashboard, setMudaDashboard] = useState<boolean>(false);
   
   const cadastrarPrograma = async (programa: IProgramas) => {
@@ -69,6 +69,26 @@ export const ProgramaProvider = ({ children }: IChildren) => {
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
       }  
+      toast.error(message, toastConfig);
+    } finally {
+      nProgress.done();
+    }
+  }
+
+  const pegarProgramaAtivo = async (pagina: number = 0, tamanho: number = 10) => {
+    try {
+      nProgress.start();
+      const { data } = await API.get(`/programa?page=${pagina}&size=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") } });
+      let programasAtivos = data;
+      programasAtivos.elementos = programasAtivos.elementos.filter((programa: any) => programa.situacao === "ABERTO");
+      setProgramas(programasAtivos);
+    } catch (error: any) {
+      let message = "Ops, algo deu errado!";
+      if (error.response.status === 403) {
+        message = "Você não tem permissão para acessar esse recurso"
+      } else if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message || error.response.data.errors[0];
+      }
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -132,7 +152,7 @@ export const ProgramaProvider = ({ children }: IChildren) => {
   }
 
   return (
-    <ProgramaContext.Provider value={{ programas, cadastrarPrograma, pegarPrograma, deletarProgama, editarPrograma, pegarProgramaPorNome, pegarProgramaFiltroID, mudaDashboard, setMudaDashboard }}>
+    <ProgramaContext.Provider value={{ programas, cadastrarPrograma, pegarPrograma, deletarProgama, editarPrograma, pegarProgramaPorNome, pegarProgramaFiltroID, mudaDashboard, setMudaDashboard, pegarProgramaAtivo }}>
       {children}
     </ProgramaContext.Provider>
   );

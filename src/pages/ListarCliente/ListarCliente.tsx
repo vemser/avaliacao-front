@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
-import { TableCell, tableCellClasses, TableRow, Box, Paper, TableContainer, Table,Modal, TableBody, Button, TablePagination, styled, TableHead } from "@mui/material";
+import { TableCell, tableCellClasses, TableRow, Box, Paper, TableContainer, Table, Modal, TableBody, Button, TablePagination, styled, TableHead } from "@mui/material";
 
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -55,45 +55,45 @@ const style = {
 
 export const ListarCliente: React.FC = () => {
 
-  const {pegarCliente, cliente,deletarCliente,pegarClientePorNome,pegarClientePorEmail} = useCliente()
-  useEffect(()=>{
+  const { pegarCliente, cliente, deletarCliente, pegarClientePorNome, pegarClientePorEmail } = useCliente()
+  useEffect(() => {
     pegarCliente();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+  }, [])
 
   const navigate = useNavigate();
   const handleChangePage = async (event: unknown, newPage: number) => { await pegarCliente(newPage) };
 
-   // Funções Modal
-   const [idDelete, setIdDelete] = useState<number | undefined>(0);
-   const [open, setOpen] = useState(false);
-   const handleOpen = () => setOpen(true);
-   const handleClose = () => setOpen(false);
+  // Funções Modal
+  const [idDelete, setIdDelete] = useState<number | undefined>(0);
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
-   const buscarPorNomeCliente = async (valor: string) => {
-    if(valor.includes("@")){
+  const buscarPorNomeCliente = async (valor: string) => {
+    if (valor.includes("@")) {
       await pegarClientePorEmail(valor)
     } else {
       await pegarClientePorNome(valor);
     }
   }
 
-   const resetBuscaCliente = async () => {
+  const resetBuscaCliente = async () => {
     await pegarCliente();
   }
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
+    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
       <Titulo texto="Clientes" />
 
       <Box sx={{ width: { xs: "95%", md: "80%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
 
-      <Box sx={{ display: "flex", gap: 3, flexDirection: { xs: "column", md: "row" }, justifyContent: "space-between", alignItems: "center", width: "100%", marginBottom: "10px",paddingInline: 2 }}>
-        <Componentes.CampoBusca label="E-mail ou Nome" buscar={buscarPorNomeCliente} resetar={resetBuscaCliente}/>
+        <Box sx={{ display: "flex", gap: 3, flexDirection: { xs: "column", md: "row" }, justifyContent: "space-between", alignItems: "center", width: "100%", marginBottom: "10px", paddingInline: 2 }}>
+          <Componentes.CampoBusca label="E-mail ou Nome" buscar={buscarPorNomeCliente} resetar={resetBuscaCliente} />
 
 
-        <Button onClick={() => navigate("/cadastrar-cliente")} variant="contained" sx={{ width: "auto", paddingLeft: "15px", paddingRight: "15px", display: "flex", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Cliente</Button>
-      </Box>
+          <Button onClick={() => navigate("/cadastrar-cliente")} variant="contained" sx={{ width: "auto", paddingLeft: "15px", paddingRight: "15px", display: "flex", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Cliente</Button>
+        </Box>
 
         <Paper sx={{ width: "100%", borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px" }}>
           <TableContainer sx={{ maxHeight: 430 }}>
@@ -121,10 +121,10 @@ export const ListarCliente: React.FC = () => {
 
                     <StyledTableCell id={`situacao-${cliente.idCliente}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} >{cliente.ativo === "S" ? "Ativo" : cliente.ativo === "N" ? "Inativo" : ""}</StyledTableCell>
 
-                    <StyledTableCell id={`situacao-${cliente.idCliente}`} sx={{ textAlign: "center" }}>
+                    <StyledTableCell id={`situacao-${cliente.idCliente}`} sx={{ justifyContent: "center", minWidth: "150px", display: "flex", wrap: "nowrap" }}>
                       <Button id={`botao-cliente-${cliente.idCliente}`} onClick={() => navigate("/editar-cliente", { state: cliente })} title="Editar cliente"><EditIcon /></Button>
                       <Button id={`botao-deletar-${cliente.idCliente}`} onClick={() => { handleOpen(); setIdDelete(cliente.idCliente) }} title="Deletar"><DeleteForeverIcon /></Button></StyledTableCell>
-                    
+
                   </StyledTableRow>
                 ))}
               </TableBody>
@@ -135,15 +135,15 @@ export const ListarCliente: React.FC = () => {
           <TablePagination rowsPerPageOptions={[]} component="div" count={cliente ? cliente.totalElementos : 0} rowsPerPage={cliente ? cliente.tamanho : 0} page={cliente ? cliente.pagina : 0} onPageChange={handleChangePage} />
 
           {/* Modal Confirmar Delete */}
-        <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-titulo" aria-describedby="modal-modal-description" sx={{ backdropFilter: "blur(10px)" }}>
-          <Box sx={style}>
-            <Typography id="modal-modal-titulo" variant="h6" component="h2" color="error">Você realmente deseja excluir?</Typography>
-            <Box sx={{ display: "flex", gap: 2, alignItems: "center", justifyContent: "center" }}>
-              <Button id="botao-confirmar-modal" onClick={() => { deletarCliente(idDelete); handleClose(); }} size="medium" color="success" type="submit" sx={{ mt: 2 }} variant="contained">Confirmar</Button>
-              <Button id="botao-fechar-modal" onClick={handleClose} size="medium" type="submit" sx={{ mt: 2 }} variant="contained">Fechar</Button>
+          <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-titulo" aria-describedby="modal-modal-description" sx={{ backdropFilter: "blur(10px)" }}>
+            <Box sx={style}>
+              <Typography id="modal-modal-titulo" variant="h6" component="h2" color="error">Você realmente deseja excluir?</Typography>
+              <Box sx={{ display: "flex", gap: 2, alignItems: "center", justifyContent: "center" }}>
+                <Button id="botao-confirmar-modal" onClick={() => { deletarCliente(idDelete); handleClose(); }} size="medium" color="success" type="submit" sx={{ mt: 2 }} variant="contained">Confirmar</Button>
+                <Button id="botao-fechar-modal" onClick={handleClose} size="medium" type="submit" sx={{ mt: 2 }} variant="contained">Fechar</Button>
+              </Box>
             </Box>
-          </Box>
-        </Modal>
+          </Modal>
         </Paper>
 
       </Box>

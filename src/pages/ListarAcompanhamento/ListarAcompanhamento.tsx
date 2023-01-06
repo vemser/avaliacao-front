@@ -43,7 +43,7 @@ export const ListarAcompanhamento = () => {
   useEffect(() => { pegarAcompanhamento() }, [])
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
+    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
       <Titulo texto="Acompanhamentos" />
 
       <Box sx={{ width: { xs: "95%", md: "80%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
@@ -53,7 +53,7 @@ export const ListarAcompanhamento = () => {
         <Paper sx={{ width: "100%", borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px" }}>
           <TableContainer sx={{ maxHeight: 430 }}>
             <Table stickyHeader aria-label="sticky table">
-              
+
               <TableHead sx={{ backgroundColor: "#090F27" }} >
                 <TableRow>
                   {columns.map((column) => (
@@ -78,7 +78,7 @@ export const ListarAcompanhamento = () => {
                     <StyledTableCell id={`cargo-${acompanhamentos.idAcompanhamento}`} sx={{ textAlign: "center" }}><Button id={`botao-avaliar-acompanhamento-${acompanhamentos.idAcompanhamento}`}
                       onClick={() => { navigate("/editar-acompanhamento", { state: acompanhamentos }) }}
                       title="Avaliar acompanhamento"><EditIcon /></Button></StyledTableCell>
-                    
+
                   </StyledTableRow>
                 ))}
               </TableBody>

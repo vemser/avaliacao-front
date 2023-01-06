@@ -41,17 +41,17 @@ export const ListarFeedback: React.FC = () => {
 
   const handleChangePage = async (event: unknown, newPage: number) => { await pegarFeedback(newPage); };
 
-  useEffect(() => { 
+  useEffect(() => {
     pegarFeedback();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [])
+  }, [])
 
   // const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
   // if (infosUsuario.cargo !== "Instrutor") return <Navigate to="/" />
 
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
+    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
       <Titulo texto="Feedbacks" />
 
       <Box sx={{ width: { xs: "95%", md: "80%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
@@ -75,7 +75,7 @@ export const ListarFeedback: React.FC = () => {
                   <StyledTableRow key={data.idFeedBack}>
 
                     <StyledTableCell id={`idFeedback-${data.idFeedBack}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row">{data.idFeedBack}</StyledTableCell>
-                    
+
                     <StyledTableCell id={`nome-${data.idFeedBack}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }}>{data.alunoDTO.nome}</StyledTableCell>
 
                     <StyledTableCell id={`tipo-${data.idFeedBack}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }}>{formatarTexto(data.tipo)}</StyledTableCell>

@@ -20,12 +20,12 @@ import { useCliente } from '../../context/Alocacao/ClienteContext';
 export const EditarCliente = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const {editarCliente} = useCliente()
+  const { editarCliente } = useCliente()
 
   const { register, handleSubmit, formState: { errors } } = useForm<ICadastrarCliente>({
-    resolver: yupResolver(ClienteSchema),defaultValues: {
-     nome: state.nome,
-     email: state.email
+    resolver: yupResolver(ClienteSchema), defaultValues: {
+      nome: state.nome,
+      email: state.email
     }
   });
 
@@ -34,14 +34,14 @@ export const EditarCliente = () => {
   }
 
   return (
-    <Box component="section"sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
+    <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
       <Titulo texto={`Editar ${state.nome}`} />
 
       <Box component="form" onSubmit={handleSubmit(editaCliente)} sx={{
-                display: "flex", flexDirection: "column", alignItems: "center", backgroundColor: "var(--branco)", width: { xs: "95%", md: "70%", lg: "60%", xl: "50%" }, borderRadius: "10px", padding: {
-                    xs: 3, sm: 5
-                }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: 3
-            }}>
+        display: "flex", flexDirection: "column", alignItems: "center", backgroundColor: "var(--branco)", width: { xs: "95%", md: "70%", lg: "60%", xl: "50%" }, borderRadius: "10px", padding: {
+          xs: 3, sm: 5
+        }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: 3
+      }}>
         <img src={logo} alt="Logo DBC" width={150} />
 
         <Stack component="div" spacing={3} sx={{ width: "100%", display: "flex", alignItems: { xs: "start", md: "start" } }}>
@@ -56,7 +56,7 @@ export const EditarCliente = () => {
             {errors.email && <Typography id="erro-nomeCliente" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.email.message}</Typography>}
           </FormControl>
 
-          <div style={{width:"100%",display:"flex",flexDirection:"column",gap:"5px"}}>
+          <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: "5px" }}>
             <InputMask defaultValue={state.telefone} style={{ padding: "18px 13px", borderRadius: "4px 4px 0 0", backgroundColor: '#f0f0f0', border: "none", outline: "none", borderBottom: "1px solid gray", fontFamily: "Inter", fontSize: "1rem", color: "rgba(0, 0, 0, 0.87)" }} mask="(99)99999-9999" type="text" id="telefone" placeholder='Telefone' {...register("telefone")} />
             {errors.telefone && <Typography id="erro-nomeCliente" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.telefone.message}</Typography>}
           </div>
@@ -66,7 +66,7 @@ export const EditarCliente = () => {
           <Button type="button" onClick={() => { navigate(-1) }} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d " }, textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cancelar</Button>
 
           <Button type="submit" variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Salvar</Button>
-       </Box>
+        </Box>
 
       </Box>
     </Box>

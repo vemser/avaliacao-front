@@ -96,7 +96,7 @@ export const ListarAluno: React.FC = () => {
   }
 
   return (
-    <Box sx={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
+    <Box sx={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
       <Componentes.Titulo texto="Alunos" />
 
       <Box sx={{ width: { xs: "95%", md: "80%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
@@ -136,7 +136,7 @@ export const ListarAluno: React.FC = () => {
 
                     <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: aluno })} id="situacao" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", textTransform: "capitalize", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{formatarTexto(aluno.situacao)}</StyledTableCell>
 
-                    <StyledTableCell id="acoes" sx={{ justifyContent: "center", maxWidth: "200px", display: "flex", wrap: "nowrap" }}>
+                    <StyledTableCell id="acoes" sx={{ justifyContent: "center", minWidth: "150px", display: "flex", wrap: "nowrap" }}>
                       <Button id={`botao-editar-${aluno.idAluno}`} title="Deletar" onClick={() => navigate("/editar-aluno", { state: aluno })}><Edit /></Button>
                       <Button id={`botao-deletar-${aluno.idAluno}`} title="Deletar" onClick={() => { handleOpen(); setIdDelete(aluno.idAluno) }}><DeleteForever /></Button>
                     </StyledTableCell>

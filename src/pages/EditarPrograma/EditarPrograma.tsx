@@ -31,7 +31,7 @@ export const EditarPrograma: React.FC = () => {
   }
 
   return (
-    <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
+    <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
       <Titulo texto="Editar Programa" />
 
       <Box component="form" onSubmit={handleSubmit(editar)} sx={{
@@ -52,7 +52,7 @@ export const EditarPrograma: React.FC = () => {
 
         <FormControl sx={{ width: "100%" }} variant="filled">
           <InputLabel>Situação</InputLabel>
-            <Select labelId="demo-simple-select-filled-label" defaultValue={state.situacao} id="situacao-programa" {...register("situacao")}  >
+          <Select labelId="demo-simple-select-filled-label" defaultValue={state.situacao} id="situacao-programa" {...register("situacao")}  >
             <MenuItem value="ABERTO" >Aberto</MenuItem>
             <MenuItem value="FECHADO">Fechado</MenuItem>
           </Select>

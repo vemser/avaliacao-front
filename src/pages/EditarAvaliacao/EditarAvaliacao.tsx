@@ -33,8 +33,8 @@ export const EditarAvaliacao = () => {
   const manipulaState = (event: string) => { setMudaRadio(event) }
   const resetFiltros = () => { setMudaRadio('') }
 
-  useEffect(() => { 
-    pegarAluno(); 
+  useEffect(() => {
+    pegarAluno();
     pegarAcompanhamento();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -55,7 +55,7 @@ export const EditarAvaliacao = () => {
   // if (infosUsuario.cargo !== "Gestor de Pessoas") return <Navigate to="/" />
 
   return (
-    <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
+    <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
       <Titulo texto="Editar Avaliação" />
 
       <Box component="form" onSubmit={handleSubmit(editAvaliacao)} sx={{

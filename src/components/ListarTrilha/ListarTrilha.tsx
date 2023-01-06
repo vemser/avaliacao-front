@@ -35,7 +35,7 @@ const columns: Column[] = [
   { id: "codigo", label: "Código", minWidth: 5 },
   { id: "nome", label: "Nome da Trilha", minWidth: 5 },
   { id: "descricao", label: "Descrição", minWidth: 5 },
-  { id: "acoes", label: "Ações", minWidth: 5 }
+  { id: "acoes", label: "Ações", minWidth: 5, align: "right", format: (value: number) => value.toLocaleString("en-US") }
 ];
 
 const style = {
@@ -62,7 +62,7 @@ export const ListarTrilha = () => {
 
   const [inputFiltro, setInputFiltro] = useState<string>('');
 
-  const handleChangePage = async (event: unknown, newPage: number) => { 
+  const handleChangePage = async (event: unknown, newPage: number) => {
     if (inputFiltro) {
       filtrosTrilha(inputFiltro, newPage)
     } else {
@@ -102,7 +102,7 @@ export const ListarTrilha = () => {
         <Box sx={{ display: "flex", gap: 3, flexDirection: { xs: "column", md: "row" }, justifyContent: "space-between", alignItems: "center", width: "100%", marginBottom: "10px" }}>
           <Button onClick={trocarTabela} id="botao-swap" variant='outlined' sx={{ width: { xs: "260px", md: "auto" }, display: "flex", marginLeft: { xs: "0", md: "14px" }, textTransform: "capitalize", fontSize: "1rem" }}>Programas<SwapHorizIcon /></Button>
 
-          <Componentes.CampoBusca label="Código ou Nome" buscar={filtrosTrilha} resetar={resetBuscaTrilha}/>
+          <Componentes.CampoBusca label="Código ou Nome" buscar={filtrosTrilha} resetar={resetBuscaTrilha} />
 
           <Button onClick={() => navigate("/cadastrar-trilha")} variant="contained" sx={{ minWidth: { xs: "260px", md: "160px" }, display: "flex", marginRight: { xs: "0", md: "14px" }, textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Trilha</Button>
         </Box>
@@ -114,7 +114,7 @@ export const ListarTrilha = () => {
               <TableHead sx={{ backgroundColor: "#090F27" }}>
                 <TableRow>
                   {columns.map((column) => (
-                    <TableCell key={column.id} align={column.align} style={{ minWidth: "25%", fontWeight: "700", fontSize: "1rem", textAlign: "center", backgroundColor: "#090F27", color: "white" }}>{column.label}</TableCell>
+                    <TableCell key={column.id} align={column.align} style={{ minWidth: "33.3%", fontWeight: "700", fontSize: "1rem", textAlign: "center", backgroundColor: "#090F27", color: "white" }}>{column.label}</TableCell>
                   ))}
                 </TableRow>
               </TableHead>
@@ -124,17 +124,21 @@ export const ListarTrilha = () => {
                   <StyledTableRow key={trilha.idTrilha}>
 
                     <StyledTableCell id="id-trilha" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} component="td" scope="row">{trilha.idTrilha}</StyledTableCell>
-                    
-                    <StyledTableCell id="nome-trilha" sx={{ textAlign: "center", fontWeight
-                      : "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} component="td" scope="row">{trilha.nome}</StyledTableCell>
 
-                    <Tooltip title={trilha.descricao} PopperProps={{sx: {marginTop: "-25px !important"}}} arrow>
+                    <Tooltip title={trilha.descricao} PopperProps={{ sx: { marginTop: "-25px !important" } }} arrow>
+                      <StyledTableCell id="nome-trilha" sx={{
+                        textAlign: "center", fontWeight
+                          : "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px"
+                      }} component="td" scope="row">{trilha.nome}</StyledTableCell>
+                    </Tooltip>
+
+                    <Tooltip title={trilha.descricao} PopperProps={{ sx: { marginTop: "-25px !important" } }} arrow>
                       <StyledTableCell id="descricao-trilha" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{trilha.descricao ? trilha.descricao : "Sem descrição"}</StyledTableCell>
                     </Tooltip>
 
-                    <StyledTableCell id="acoes-trilha" sx={{ justifyContent: "center", maxWidth: "200px", display: "flex", wrap: "nowrap" }}>
+                    <StyledTableCell id="acoes-trilha" sx={{ justifyContent: "center", minWidth: "150px", display: "flex", wrap: "nowrap" }}>
                       <Button id={`botao-editar-${trilha.idTrilha}`} title="Editar" onClick={() => navigate("/editar-trilha", { state: trilha })}><EditIcon /></Button>
-                      
+
                       <Button id={`botao-deletar-${trilha.idTrilha}`} title="Deletar" onClick={() => { handleOpen(); setIdDelete(trilha.idTrilha) }}><DeleteForeverIcon /></Button>
                     </StyledTableCell>
 

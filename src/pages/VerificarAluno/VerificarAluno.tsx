@@ -57,9 +57,9 @@ export const VerificarAluno: React.FC = () => {
   const { state } = useLocation();
 
   const { pegarAvaliacaoPorID, avaliacoesPorID, paginacaoAvaliacao } = useContext(GestorContext);
-  const { pegarFeedbackPorID, feedbackPorID,  paginacaoFeedback } = useContext(InstrutorContext)
+  const { pegarFeedbackPorID, feedbackPorID, paginacaoFeedback } = useContext(InstrutorContext)
 
-   // Paginação Avaliacao
+  // Paginação Avaliacao
   const handleChangePageAvaliacao = async (event: unknown, newPage: number) => { await pegarAvaliacaoPorID(state.idAluno, newPage); }
 
   // Paginação Feedback
@@ -75,10 +75,10 @@ export const VerificarAluno: React.FC = () => {
   // if (infosUsuario.cargo !== "Instrutor" && infosUsuario.cargo !== "Gestor de Pessoas") return <Navigate to="/" />
 
   return (
-    <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
+    <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
       <Titulo texto={`Detalhes de ${state.nome}`} />
 
-    <Box component="div" sx={{ width: { xs: "95%", md: "80%" }, display: "flex", alignItems: "end", flexDirection: "column", padding: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
+      <Box component="div" sx={{ width: { xs: "95%", md: "80%" }, display: "flex", alignItems: "end", flexDirection: "column", padding: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
 
         <Stack component="div" spacing={3} sx={{ width: "100%", display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
@@ -95,12 +95,12 @@ export const VerificarAluno: React.FC = () => {
           </Box>
 
           <Typography sx={{ fontWeight: 700, color: "var(--azul-claro-dbc)", fontSize: "22px", marginBottom: "-15px !important", userSelect: "none" }}>Feedbacks:</Typography>
-          
+
           <Paper sx={{ width: "100%" }}>
             <TableContainer sx={{ maxHeight: { xs: 600, md: 200 }, boxShadow: "5px 5px 5px solid light-gray" }}>
               <Table stickyHeader aria-label="sticky table">
 
-              <TableHead sx={{ backgroundColor: "#090F27" }}>
+                <TableHead sx={{ backgroundColor: "#090F27" }}>
                   <TableRow>
                     {columnsFeedback.map((column) => (
                       <TableCell key={column.id} align={column.align} style={{ minWidth: "20%", fontWeight: "700", fontSize: "1rem", textAlign: "center", backgroundColor: "#090F27", color: "white" }}>{column.label}</TableCell>
@@ -132,7 +132,7 @@ export const VerificarAluno: React.FC = () => {
           {/* Tabela Avaliações */}
 
           <Typography sx={{ fontWeight: 700, color: "var(--azul-claro-dbc)", fontSize: "22px", marginBottom: "-15px !important", userSelect: "none" }}>Avaliações:</Typography>
-          
+
           <Paper sx={{ width: "100%", marginBottom: "15px" }}>
             <TableContainer sx={{ maxHeight: { xs: 600, md: 200 }, boxShadow: "5px 5px 5px solid light-gray" }}>
               <Table stickyHeader aria-label="sticky table">

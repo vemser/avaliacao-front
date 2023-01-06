@@ -38,20 +38,20 @@ const columns: Column[] = [
 
 // dados 
 const dados = [
-  {idAlocacao: 10000, aluno:"nomeX", vaga: "vagaY", cliente: "clienteZ", situacao: "ALOCADO"},
-  {idAlocacao: 1000, aluno:"nomeX", vaga: "vagaY", cliente: "clienteZ", situacao: "DISPONIVEL"},
-  {idAlocacao: 100, aluno:"nomeX", vaga: "vagaY", cliente: "clienteZ", situacao: "INATIVO"},
-  {idAlocacao: 10, aluno:"nomeX", vaga: "vagaY", cliente: "clienteZ", situacao: "FINALIZADO"},
-  {idAlocacao: 1, aluno:"nomeX", vaga: "vagaY", cliente: "clienteZ", situacao: "RESERVADO"}
+  { idAlocacao: 10000, aluno: "nomeX", vaga: "vagaY", cliente: "clienteZ", situacao: "ALOCADO" },
+  { idAlocacao: 1000, aluno: "nomeX", vaga: "vagaY", cliente: "clienteZ", situacao: "DISPONIVEL" },
+  { idAlocacao: 100, aluno: "nomeX", vaga: "vagaY", cliente: "clienteZ", situacao: "INATIVO" },
+  { idAlocacao: 10, aluno: "nomeX", vaga: "vagaY", cliente: "clienteZ", situacao: "FINALIZADO" },
+  { idAlocacao: 1, aluno: "nomeX", vaga: "vagaY", cliente: "clienteZ", situacao: "RESERVADO" }
 ]
 
 export const ListarAlocacao: React.FC = () => {
   const navigate = useNavigate();
- const handleChangePage = () => console.log("Fazer paginação");
-  
+  const handleChangePage = () => console.log("Fazer paginação");
+
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
-        <Titulo texto="Reserva e Alocação"/>
+    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
+      <Titulo texto="Reserva e Alocação" />
 
       <Box sx={{ width: { xs: "95%", md: "80%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
 
@@ -80,14 +80,14 @@ export const ListarAlocacao: React.FC = () => {
                     <StyledTableCell id={`vaga-${alocacao.idAlocacao}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{alocacao.vaga}</StyledTableCell>
 
                     <StyledTableCell id={`cliente-${alocacao.idAlocacao}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} >{alocacao.cliente}</StyledTableCell>
-                    
+
                     <StyledTableCell id={`situacao-${alocacao.idAlocacao}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} >{alocacao.situacao}</StyledTableCell>
-                    
-                    <StyledTableCell id={`situacao-${alocacao.idAlocacao}`} sx={{ textAlign: "center" }}>
-                      <Button id={`botao-alocacao-reserva-${alocacao.idAlocacao}`}onClick={() => navigate("/editar-alocacao-reserva", { state: alocacao })} title="Editar Alocacao"><EditIcon /></Button>
+
+                    <StyledTableCell id={`situacao-${alocacao.idAlocacao}`} sx={{ justifyContent: "center", minWidth: "150px", display: "flex", wrap: "nowrap" }}>
+                      <Button id={`botao-alocacao-reserva-${alocacao.idAlocacao}`} onClick={() => navigate("/editar-alocacao-reserva", { state: alocacao })} title="Editar Alocacao"><EditIcon /></Button>
                       <Button id={`botao-deletar-${alocacao.idAlocacao}`} title="Deletar"><DeleteForeverIcon /></Button></StyledTableCell>
-                    
-                  </StyledTableRow> 
+
+                  </StyledTableRow>
                 ))}
               </TableBody>
             </Table>
@@ -97,7 +97,7 @@ export const ListarAlocacao: React.FC = () => {
           <TablePagination rowsPerPageOptions={[]} component="div" count={0} rowsPerPage={0} page={0} onPageChange={handleChangePage} />
         </Paper>
 
-        </Box>
       </Box>
+    </Box>
   );
 };

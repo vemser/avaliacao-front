@@ -60,16 +60,16 @@ export const ListarColaborador: React.FC = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  useEffect(() => { 
+  useEffect(() => {
     pegarColaborador();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, []);
+  }, []);
 
   // const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
   // if (infosUsuario.cargo !== "Admin") return <Navigate to="/" />
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
+    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
       <Titulo texto="Colaboradores" />
 
       <Box sx={{ width: { xs: "95%", md: "80%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
@@ -98,7 +98,7 @@ export const ListarColaborador: React.FC = () => {
 
                     <StyledTableCell onClick={() => navigate("/detalhes-colaborador", { state: data })} id="cargo" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }}>{data.cargo}</StyledTableCell>
 
-                    <StyledTableCell id="acoes" sx={{ justifyContent: "center", maxWidth: "200px", display: "flex", wrap: "nowrap" }}>
+                    <StyledTableCell id="acoes" sx={{ justifyContent: "center", minWidth: "150px", display: "flex", wrap: "nowrap" }}>
                       <Button id={`botao-deletar-admin-${data.idUsuario}`} onClick={() => { handleOpen(); setIdDelete(data.idUsuario) }} title="Deletar"><DeleteForeverIcon /></Button>
                     </StyledTableCell>
 

@@ -19,7 +19,7 @@ export const EditarReservaAlocacao = () => {
 
   return (
     <>
-      <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
+      <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
         <Titulo texto="Editar Reserva e Alocação" />
 
         <Box component="form" sx={{
@@ -34,36 +34,36 @@ export const EditarReservaAlocacao = () => {
                 disablePortal
                 id="alocacao"
                 options={top100Films}
-                renderInput={(params) => <TextField {...params} label="Alocações"  variant="filled"  />}
+                renderInput={(params) => <TextField {...params} label="Alocações" variant="filled" />}
               />
-            </FormControl>  
+            </FormControl>
 
             <FormControl sx={{ width: "100%" }} >
               <Autocomplete
                 disablePortal
                 id="aluno"
                 options={top100Films}
-                renderInput={(params) => <TextField {...params} label="Aluno"  variant="filled"  />}
+                renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />}
               />
-            </FormControl>  
+            </FormControl>
 
             <FormControl sx={{ width: "100%" }} >
               <Autocomplete
                 disablePortal
                 id="vaga"
                 options={top100Films}
-                renderInput={(params) => <TextField {...params} label="Vaga"  variant="filled"  />}
+                renderInput={(params) => <TextField {...params} label="Vaga" variant="filled" />}
               />
-            </FormControl>  
+            </FormControl>
 
             <FormControl sx={{ width: "100%" }} >
               <Autocomplete
                 disablePortal
                 id="cliente"
                 options={top100Films}
-                renderInput={(params) => <TextField {...params} label="Cliente"  variant="filled"  />}
+                renderInput={(params) => <TextField {...params} label="Cliente" variant="filled" />}
               />
-            </FormControl>  
+            </FormControl>
 
             <FormControl variant="filled" sx={{ width: "100%" }}>
               <InputLabel id="selectAluno">Situação</InputLabel>
@@ -80,12 +80,12 @@ export const EditarReservaAlocacao = () => {
 
           <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: "end" }}>
 
-          <FormControl sx={{ width: "100%" }}>
-            <TextField
+            <FormControl sx={{ width: "100%" }}>
+              <TextField
                 placeholder="Digite uma descrição"
                 multiline
                 rows={4}
-                sx={{width: "100%"}}
+                sx={{ width: "100%" }}
                 id="descricao"
                 label="Descrição"
                 variant='filled'
@@ -93,11 +93,11 @@ export const EditarReservaAlocacao = () => {
             </FormControl>
 
             <FormControl sx={{ width: "100%" }}>
-            <TextField
+              <TextField
                 placeholder="Digite um motivo"
                 multiline
                 rows={4}
-                sx={{width: "100%"}}
+                sx={{ width: "100%" }}
                 id="motivo"
                 label="Motivo da edição"
                 variant='filled'

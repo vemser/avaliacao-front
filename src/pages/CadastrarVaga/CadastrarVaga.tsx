@@ -15,11 +15,11 @@ export const CadastrarVaga = () => {
   const navigate = useNavigate();
   const { pegarProgramaAtivo, programas } = usePrograma();
   const { pegarCliente, cliente } = useCliente();
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<IVaga>({resolver: yupResolver(VagaSchema)});
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<IVaga>({ resolver: yupResolver(VagaSchema) });
   const { cadastrarVaga } = useVaga();
 
   const cadastrar = async (data: IVaga) => {
-    
+
     data.dataCriacao = new Date().toISOString().split("T")[0];
     data.idCliente = parseInt(data.idCliente.toString().split(' ')[0]);
     data.idPrograma = parseInt(data.idPrograma.toString().split(' ')[0]);
@@ -31,11 +31,11 @@ export const CadastrarVaga = () => {
   useEffect(() => {
     pegarProgramaAtivo(0, programas?.totalElementos);
     pegarCliente(0, cliente?.totalElementos);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
-    <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
+    <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
       <Titulo texto="Cadastrar Vaga" />
 
       <Box component="form" onSubmit={handleSubmit(cadastrar)} sx={{
@@ -46,7 +46,7 @@ export const CadastrarVaga = () => {
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField id="nomeVaga" label="Nome da vaga" placeholder="Digite o nome da vaga" variant="filled" {...register("nome")}/>
+            <TextField id="nomeVaga" label="Nome da vaga" placeholder="Digite o nome da vaga" variant="filled" {...register("nome")} />
             {errors.nome && <Typography id="erro-nome-vaga" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.nome.message}</Typography>}
           </FormControl>
 
@@ -54,9 +54,9 @@ export const CadastrarVaga = () => {
             <Autocomplete
               disablePortal
               id="cliente"
-              isOptionEqualToValue={(option, value) => option.label === value.label}     
-              options={cliente ? cliente.elementos.map(item => ({label: `${item.idCliente} - ${item.nome}`})) : []}
-              renderInput={(params) => <TextField {...params}  label="Cliente" variant="filled" {...register("idCliente")} />}    
+              isOptionEqualToValue={(option, value) => option.label === value.label}
+              options={cliente ? cliente.elementos.map(item => ({ label: `${item.idCliente} - ${item.nome}` })) : []}
+              renderInput={(params) => <TextField {...params} label="Cliente" variant="filled" {...register("idCliente")} />}
             />
             {errors.idCliente && <Typography id="erro-cliente-vaga" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.idCliente.message}</Typography>}
           </FormControl>
@@ -65,16 +65,16 @@ export const CadastrarVaga = () => {
             <Autocomplete
               disablePortal
               id="programa"
-              isOptionEqualToValue={(option, value) => option.label === value.label}  
-              options={programas ? programas.elementos.map(item => ({label: `${item.idPrograma} - ${item.nome}`})) : []}
+              isOptionEqualToValue={(option, value) => option.label === value.label}
+              options={programas ? programas.elementos.map(item => ({ label: `${item.idPrograma} - ${item.nome}` })) : []}
               renderInput={(params) => <TextField {...params} {...register("idPrograma")} label="Programa" variant="filled" />}
             />
             {errors.idPrograma && <Typography id="erro-programa-vaga" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.idPrograma.message}</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField 
-            id="vagaTotais"  type="number" label="Quantidade de vagas" placeholder="Digite a quantidade de vagas" variant="filled" {...register("quantidade")}/>
+            <TextField
+              id="vagaTotais" type="number" label="Quantidade de vagas" placeholder="Digite a quantidade de vagas" variant="filled" {...register("quantidade")} />
             {errors.quantidade && <Typography id="erro-quantidade-vaga" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.quantidade.message}</Typography>}
           </FormControl>
         </Stack>
@@ -82,13 +82,13 @@ export const CadastrarVaga = () => {
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: "end" }}>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField 
+            <TextField
               id="dataAbertura" label="Data de Abertura" type="date" sx={{ width: "100%" }} InputLabelProps={{ shrink: true }} {...register("dataAbertura")} variant="filled" />
             {errors.dataAbertura && <Typography id="erro-dataAbertura" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.dataAbertura.message}</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField 
+            <TextField
               id="dataFechamento" label="Data de Fechamento" type="date" sx={{ width: "100%" }} InputLabelProps={{ shrink: true }} {...register("dataFechamento")} variant="filled" />
             {errors.dataFechamento && <Typography id="erro-dataFechamento" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.dataFechamento.message}</Typography>}
           </FormControl>

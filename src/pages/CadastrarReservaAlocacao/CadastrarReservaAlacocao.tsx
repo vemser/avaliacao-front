@@ -19,20 +19,20 @@ const top100Films = [
 export const CadastrarReservaAlacocao = () => {
 
   const navigate = useNavigate()
-  const {pegarAluno, alunos} = useAluno()
-  const {pegarVagas, vagas} = useVaga()
-  const {pegarCliente, cliente} = useCliente()
+  const { pegarAluno, alunos } = useAluno()
+  const { pegarVagas, vagas } = useVaga()
+  const { pegarCliente, cliente } = useCliente()
 
   useEffect(() => {
-    pegarAluno(0,alunos?.totalElementos);
-    pegarVagas(0,vagas?.totalElementos);
-    pegarCliente(0,cliente?.totalElementos);
+    pegarAluno(0, alunos?.totalElementos);
+    pegarVagas(0, vagas?.totalElementos);
+    pegarCliente(0, cliente?.totalElementos);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+  }, [])
 
 
   return (
-    <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
+    <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
       <Titulo texto="Cadastrar Reserva e Alocação" />
 
       <Box component="form" sx={{
@@ -52,15 +52,15 @@ export const CadastrarReservaAlacocao = () => {
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
-            <Autocomplete disablePortal id="aluno" isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ( { label: `${aluno.idAluno} - ${aluno.nome}`})) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />
+            <Autocomplete disablePortal id="aluno" isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: `${aluno.idAluno} - ${aluno.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
-            <Autocomplete disablePortal id="vaga" isOptionEqualToValue={(option, value) => option.label === value.label} options={vagas ? vagas.elementos.map((vaga) => ( { label: `${vaga.idVaga} - ${vaga.nome}`})) : []} renderInput={(params) => <TextField {...params} label="Vaga" variant="filled" />} />
+            <Autocomplete disablePortal id="vaga" isOptionEqualToValue={(option, value) => option.label === value.label} options={vagas ? vagas.elementos.map((vaga) => ({ label: `${vaga.idVaga} - ${vaga.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Vaga" variant="filled" />} />
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
-            <Autocomplete disablePortal id="cliente" isOptionEqualToValue={(option, value) => option.label === value.label} options={cliente ? cliente.elementos.map((clientes) => ( { label: `${clientes.idCliente} - ${clientes.nome}`})) : []} renderInput={(params) => <TextField {...params} label="Cliente" variant="filled" />} />
+            <Autocomplete disablePortal id="cliente" isOptionEqualToValue={(option, value) => option.label === value.label} options={cliente ? cliente.elementos.map((clientes) => ({ label: `${clientes.idCliente} - ${clientes.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Cliente" variant="filled" />} />
           </FormControl>
 
         </Stack>

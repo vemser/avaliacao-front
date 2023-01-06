@@ -8,7 +8,7 @@ export const TrilhaPrograma = () => {
   const { mudaDashboard } = usePrograma();
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
+    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
       {!mudaDashboard &&
         <>
           <Componentes.Titulo texto="Trilhas" />

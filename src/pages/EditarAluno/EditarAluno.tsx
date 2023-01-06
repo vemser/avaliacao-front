@@ -22,15 +22,15 @@ import { alunoSchema } from '../../utils/schemas';
 
 const itemHeigth = 48;
 const itemPaddingTop = 8;
-const MenuProps = { PaperProps: { style: { maxHeight: itemHeigth * 4.5 + itemPaddingTop, width: 250 }}};
+const MenuProps = { PaperProps: { style: { maxHeight: itemHeigth * 4.5 + itemPaddingTop, width: 250 } } };
 
 export const EditarAluno = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
-  
+
   const { editarAluno } = useAluno();
   const { programas, pegarPrograma } = usePrograma();
-  const { trilhas, pegarTrilha } = useTrilha(); 
+  const { trilhas, pegarTrilha } = useTrilha();
   const { pegarTecnologia, cadastrarTecnologia, tecnologias } = useTecnologia();
 
   const [inputTecnologia, setInputTecnologia] = useState<string>('')
@@ -49,10 +49,10 @@ export const EditarAluno = () => {
   });
 
   const erroPrograma = () => {
-    if(dataAuxiliar) {
+    if (dataAuxiliar) {
       setEstadoErro(false)
     } else {
-      setEstadoErro(true) 
+      setEstadoErro(true)
     }
   }
 
@@ -61,17 +61,17 @@ export const EditarAluno = () => {
     setDataAuxiliar(false)
   };
 
-  const editar = (data: ICadastroAlunoForm) => { 
+  const editar = (data: ICadastroAlunoForm) => {
     setDataAuxiliar(data.idPrograma);
 
-    if(!data.idPrograma && !dataAuxiliar) return setEstadoErro(true);
+    if (!data.idPrograma && !dataAuxiliar) return setEstadoErro(true);
     setEstadoErro(false);
 
     const novoData = { ...data, idTrilha: parseInt(data.idTrilha), idPrograma: data.idPrograma ? parseInt(data.idPrograma.split(' ')[0]) : state.programa.idPrograma, tecnologias: tecnologiaSelecionada }
     editarAluno(novoData, state.idAluno)
   };
 
-  useEffect(() => { 
+  useEffect(() => {
     pegarPrograma(0, programas?.totalElementos);
     pegarTrilha(0, trilhas?.totalElementos);
     pegarTecnologia(0, tecnologias?.totalElementos);
@@ -83,7 +83,7 @@ export const EditarAluno = () => {
   // if (infosUsuario.cargo !== "Gestor de Pessoas" && infosUsuario.cargo !== "Instrutor") return <Navigate to="/" />
 
   return (
-    <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
+    <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
       <Titulo texto={`Editar ${state.nome}`} />
 
       <Box component="form" onSubmit={handleSubmit(editar)} sx={{
@@ -128,14 +128,14 @@ export const EditarAluno = () => {
           <FormControl sx={{ width: { xs: "100%", md: "100%" }, display: "flex", flexDirection: "row", gap: "10px" }}>
             <Autocomplete sx={{ width: "90%" }} defaultValue={state.tecnologias.map((tecnologia: any) => ({ label: tecnologia.nome, id: tecnologia.idTecnologia }))}
               multiple disablePortal id="tecnologias" noOptionsText="Nenhuma opção encontrada. Cadastre a tecnologia"
-              onChange={(e, values) => setTecnologiaSelecionada(values.map((value) => value.id))}  
-              isOptionEqualToValue={(option, value) => option.label === value.label} 
-              options={tecnologias ? tecnologias.elementos.map((tecnologia) => ( { label: `${tecnologia.nome}`, id: tecnologia.idTecnologia})) : []} 
-              renderOption={(props, option) => ( <li {...props} key={option.id}>{option.label}</li> )} 
-              renderInput={(params) => <TextField {...params} label="Tecnologias" variant="filled" onChange={(e) => setInputTecnologia(e.target.value)} />} 
+              onChange={(e, values) => setTecnologiaSelecionada(values.map((value) => value.id))}
+              isOptionEqualToValue={(option, value) => option.label === value.label}
+              options={tecnologias ? tecnologias.elementos.map((tecnologia) => ({ label: `${tecnologia.nome}`, id: tecnologia.idTecnologia })) : []}
+              renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
+              renderInput={(params) => <TextField {...params} label="Tecnologias" variant="filled" onChange={(e) => setInputTecnologia(e.target.value)} />}
             />
 
-            <Button id="botao-cadastrar-tecnologia" variant={"contained"} sx={{ width: '10%', fontSize: "20px" }} onClick={() => { if(inputTecnologia) cadastrarTecnologia({ nome: inputTecnologia }); setInputTecnologia('') }}>+</Button>
+            <Button id="botao-cadastrar-tecnologia" variant={"contained"} sx={{ width: '10%', fontSize: "20px" }} onClick={() => { if (inputTecnologia) cadastrarTecnologia({ nome: inputTecnologia }); setInputTecnologia('') }}>+</Button>
           </FormControl>
 
           <FormControl variant="filled" sx={{ width: "100%" }}>
@@ -149,12 +149,12 @@ export const EditarAluno = () => {
 
           <FormControl sx={{ width: "100%" }} >
             <Autocomplete disablePortal id="programa" onChange={handleChange}
-            defaultValue={{ label: `${state.programa.idPrograma} - ${state.programa.nome}`, id: state.programa.idPrograma }} 
-            isOptionEqualToValue={(option) => option.label === `${state.programa.idPrograma} - ${state.programa.nome}`} 
-            options={programas ? programas.elementos.map((programa) => ( { label: `${programa.idPrograma} - ${programa.nome}`, id: programa.idPrograma})) : []}
-            renderOption={(props, option) => ( <li {...props} key={option.id}>{option.label}</li> )}
-            renderInput={(params) => <TextField {...params} label="Programa" variant="filled" {...register("idPrograma")} />} />
-            
+              defaultValue={{ label: `${state.programa.idPrograma} - ${state.programa.nome}`, id: state.programa.idPrograma }}
+              isOptionEqualToValue={(option) => option.label === `${state.programa.idPrograma} - ${state.programa.nome}`}
+              options={programas ? programas.elementos.map((programa) => ({ label: `${programa.idPrograma} - ${programa.nome}`, id: programa.idPrograma })) : []}
+              renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
+              renderInput={(params) => <TextField {...params} label="Programa" variant="filled" {...register("idPrograma")} />} />
+
             {estadoErro && <Typography id="erro-programaAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">Por favor, escolha um programa</Typography>}
           </FormControl>
 

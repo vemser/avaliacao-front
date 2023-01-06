@@ -125,7 +125,7 @@ export const ListarTrilha = () => {
 
                     <StyledTableCell id="id-trilha" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} component="td" scope="row">{trilha.idTrilha}</StyledTableCell>
 
-                    <Tooltip title={trilha.descricao} PopperProps={{ sx: { marginTop: "-25px !important" } }} arrow>
+                    <Tooltip title={trilha.nome} PopperProps={{ sx: { marginTop: "-25px !important" } }} arrow>
                       <StyledTableCell id="nome-trilha" sx={{
                         textAlign: "center", fontWeight
                           : "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px"

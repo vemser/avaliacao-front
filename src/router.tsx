@@ -10,18 +10,18 @@ import 'nprogress/nprogress.css';
 
 function AppRoutes() {
   return (
-    <>
-      <BrowserRouter basename={process.env.PUBLIC_URL}>
-        <ToastContainer />
-        <Context.AuthProvider>
-          <Context.ProgramaProvider>
-            <Context.MenuLateralProvider>
-              <Context.AdminProvider>
-                <Context.AlunoProvider>
-                  <Context.GestorProvider>
-                    <Context.InstrutorProvider>
-                      <Context.ModuloProvider>
-                        <Context.TrilhaProvider>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
+      <ToastContainer />
+      <Context.AuthProvider>
+        <Context.ProgramaProvider>
+          <Context.MenuLateralProvider>
+            <Context.AdminProvider>
+              <Context.AlunoProvider>
+                <Context.GestorProvider>
+                  <Context.InstrutorProvider>
+                    <Context.ModuloProvider>
+                      <Context.TrilhaProvider>
+                        <Context.FeedbackProvider>
                           <Context.ClienteProvider>
                             <Context.VagaProvider>
                               <Context.AtividadeProvider>
@@ -36,10 +36,10 @@ function AppRoutes() {
                                       <Route path="/home" element={<Pages.TelaPrinciapl />} />
                                       <Route path="/editar-usuario" element={<Pages.EditarUsuario />} />
 
-                                      <Route element={<Components.ComportamentalRotas/>}>
+                                      <Route element={<Components.ComportamentalRotas />}>
                                         <Route path="/alunos" element={<Pages.ListarAluno />} />
                                         <Route path="/cadastrar-aluno" element={<Pages.CadastrarAluno />} />
-                                        <Route path="/editar-aluno" element={<Pages.EditarAluno />} />  
+                                        <Route path="/editar-aluno" element={<Pages.EditarAluno />} />
                                         <Route path="/verificar-aluno" element={<Pages.VerificarAluno />} />
                                         <Route path="/feedbacks" element={<Pages.ListarFeedback />} />
                                         <Route path="/cadastrar-feedback" element={<Pages.CadastrarFeedback />} />
@@ -51,7 +51,7 @@ function AppRoutes() {
                                         <Route path="/editar-avaliacao" element={<Pages.EditarAvaliacao />} />
                                       </Route>
 
-                                      <Route element={<Components.TecnicoRotas/>}>
+                                      <Route element={<Components.TecnicoRotas />}>
                                         <Route path="/trilhas-e-programas" element={<Pages.TrilhaPrograma />} />
                                         <Route path="/cadastrar-trilha" element={<Pages.CadastrarTrilha />} />
                                         <Route path="/cadastrar-programa" element={<Pages.CadastrarPrograma />} />
@@ -65,7 +65,7 @@ function AppRoutes() {
                                         <Route path="/editar-atividade" element={<Pages.EditarAtividade />} />
                                       </Route>
 
-                                      <Route element={<Components.AlocacaoRotas/>}>
+                                      <Route element={<Components.AlocacaoRotas />}>
                                         <Route path="/cadastrar-vaga" element={<Pages.CadastrarVaga />} />
                                         <Route path="/editar-vaga" element={<Pages.EditarVaga />} />
                                         <Route path="/cadastrar-reserva-alocacao" element={<Pages.CadastrarReservaAlacocao />} />
@@ -83,17 +83,17 @@ function AppRoutes() {
                               </Context.AtividadeProvider>
                             </Context.VagaProvider>
                           </Context.ClienteProvider>
-                        </Context.TrilhaProvider>
-                      </Context.ModuloProvider>
-                    </Context.InstrutorProvider>
-                  </Context.GestorProvider>
-                </Context.AlunoProvider>
-              </Context.AdminProvider>
-            </Context.MenuLateralProvider>
-          </Context.ProgramaProvider>
-        </Context.AuthProvider>
-      </BrowserRouter>
-    </>
+                        </Context.FeedbackProvider>
+                      </Context.TrilhaProvider>
+                    </Context.ModuloProvider>
+                  </Context.InstrutorProvider>
+                </Context.GestorProvider>
+              </Context.AlunoProvider>
+            </Context.AdminProvider>
+          </Context.MenuLateralProvider>
+        </Context.ProgramaProvider>
+      </Context.AuthProvider>
+    </BrowserRouter>
   );
 }
 

@@ -24,7 +24,7 @@ export const CampoBusca: React.FC<IProps> = ({ buscar, label, resetar }) => {
     id="campo-busca-home"
     variant="outlined"
     label={label}
-    sx={{ width: "250px"}}
+    sx={{ width: "250px" }}
     size="small"
     value={search ? search : ""}
     onKeyPress={handleKeyPress}
@@ -39,7 +39,7 @@ export const CampoBusca: React.FC<IProps> = ({ buscar, label, resetar }) => {
     }}
     InputProps={{
       endAdornment: (
-        <InputAdornment position="end">
+        <InputAdornment position="end" sx={{ marginRight: "-12px" }}>
           {
             !buscou ?
             <IconButton onClick={() => { if(search) { buscar(search); setBuscou(true) } }}>

@@ -29,7 +29,8 @@ export interface IModuloElementos {
 export interface ITrilhaDTO {
   idTrilha: number,
   descricao: string,
-  nome: string
+  nome: string,
+  ativo: string
 }
 
 export interface IListProgramaDTO {

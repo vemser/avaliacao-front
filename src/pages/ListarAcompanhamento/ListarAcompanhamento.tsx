@@ -40,7 +40,10 @@ export const ListarAcompanhamento = () => {
 
   const handleChangePage = async (event: unknown, newPage: number) => { await pegarAcompanhamento(newPage); };
 
-  useEffect(() => { pegarAcompanhamento() }, [])
+  useEffect(() => { 
+    // pegarAcompanhamento()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>

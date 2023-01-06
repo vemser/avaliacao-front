@@ -52,8 +52,6 @@ export const EditarAvaliacao = () => {
     }
   }
 
-  // if (infosUsuario.cargo !== "Gestor de Pessoas") return <Navigate to="/" />
-
   return (
     <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
       <Titulo texto="Editar Avaliação" />

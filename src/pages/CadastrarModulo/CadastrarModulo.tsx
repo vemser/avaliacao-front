@@ -16,6 +16,7 @@ import { useModulo } from '../../context/Tecnico/ModuloContext';
 import { usePrograma } from '../../context/Tecnico/ProgramaContext';
 import { moduloSchema } from '../../utils/schemas';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { ITrilhasElementos } from '../../utils/TrilhaInterface/trilha';
 
 const itemHeigth = 48;
 const itemPaddingTop = 8;
@@ -91,7 +92,7 @@ export const CadastrarModulo = () => {
             <InputLabel id="aluno">Trilha</InputLabel>
             <Select MenuProps={MenuProps} {...register("idTrilha")} defaultValue="" labelId="demo-simple-select-filled-label" id="aluno" >
               <MenuItem value="initial-trilha" disabled><em>Selecione a trilha do módulo</em></MenuItem>
-              {trilhas?.elementos.map((trilha: any) => (
+              {trilhas?.elementos.map((trilha: ITrilhasElementos) => (
                 <MenuItem key={trilha.idTrilha} id={`${trilha.idTrilha}`} value={trilha.idTrilha}>{trilha.nome}</MenuItem>
               ))}
             </Select>

@@ -9,4 +9,5 @@ export { CampoBusca } from "./CampoBusca/CampoBusca";
 export { ListarTrilha } from "./ListarTrilha/ListarTrilha";
 export { ListarPrograma } from "./ListarPrograma/ListarPrograma";
 export { CardAtividade } from "./CardAtividade/CardAtividade";
-export { CardFeedback } from './CardFeedback/CardFeedback';
+export { CardFeedback } from './CardFeedback/CardFeedback';;
+export {CardAtividadeAluno} from "./CardAtividadeAluno/CardAtividadeAluno";

@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import { MenuLateralContext } from "../../context/MenuLateralContext";
 import { useAuth } from "../../context/AuthContext";
 
-// icons
 import { ExitToApp, Menu, ThumbUpAlt, School, Event, Source, Terminal, WorkHistory, BusinessCenter, Feed, Settings, ExpandLess, ExpandMore, AssignmentInd, IntegrationInstructions, Group, AutoStories } from "@mui/icons-material";
 
 import logo from '../../assets/dbc-logo.webp';
@@ -17,7 +16,7 @@ interface IProps {
 }
 
 export const MenuLateral: React.FC<IProps> = ({ children }) => {
-  const { usuarioLogout, usuarioLogado, pegarUsuarioLogado } = useAuth();
+  const { usuarioLogout, cargos, decodificarJWT, usuarioLogado, pegarUsuarioLogado } = useAuth();
   const { isOpen, toggleOpen } = useContext(MenuLateralContext);
   const navigate = useNavigate();
   const theme = useTheme();
@@ -25,8 +24,6 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
   const [openTab1, setOpenTab1] = React.useState(false);
   const [openTab2, setOpenTab2] = React.useState(false);
   const [openTab3, setOpenTab3] = React.useState(false);
-
-  // console.log(usuarioLogado.cargos.some( (cargo: any) => cargo.descricao === "Administrador"))
 
   const handleClickTab1 = () => {
     setOpenTab1(!openTab1);
@@ -42,10 +39,9 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
 
   useEffect(() => {
     pegarUsuarioLogado();
+    decodificarJWT();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const infosUsuario = JSON.parse(localStorage.getItem("cargo") || "{}");
 
   return (
     <>
@@ -88,7 +84,7 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
           <Box flex="1">
             <List component="nav">
 
-              {infosUsuario.some((cargo: string) => cargo === "Administrador" || cargo === "Coordenador" || cargo === "Gestão de pessoas" || cargo === "Instrutor") &&
+              {cargos.some((cargo: string) => cargo === "ROLE_ADMIN" || cargo === "ROLE_GESTOR" || cargo === "Gestão de pessoas" || cargo === "ROLE_INSTRUTOR") &&
                 (<>
                   <ListItemButton onClick={handleClickTab1}>
                     <ListItemIcon>
@@ -125,7 +121,7 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
                 </>)}
 
 
-              {infosUsuario.some((cargo: string) => cargo === "Administrador" || cargo === "Coordenador" || cargo === "Gestão de pessoas" || cargo === "Instrutor") &&
+              {cargos.some((cargo: string) => cargo === "ROLE_ADMIN" || cargo === "ROLE_GESTOR" || cargo === "Gestão de pessoas" || cargo === "ROLE_INSTRUTOR") &&
                 (<>
                   <ListItemButton onClick={handleClickTab2}>
                     <ListItemIcon>
@@ -158,7 +154,7 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
                   </Collapse>
                 </>)}
 
-              {infosUsuario.some((cargo: string) => cargo === "Administrador" || cargo === "Coordenador" || cargo === "Gestão de pessoas") &&
+              {cargos.some((cargo: string) => cargo === "ROLE_ADMIN" || cargo === "ROLE_GESTOR" || cargo === "Gestão de pessoas") &&
                 (<>
                   <ListItemButton onClick={handleClickTab3}>
                     <ListItemIcon>

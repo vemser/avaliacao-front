@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Box, Typography, Paper, TableContainer, TablePagination, Table, TableRow, TableCell, TableBody, Button, Modal, styled, tableCellClasses, TableHead } from "@mui/material";
 
-import { Edit, DeleteForever, ContentCopy } from "@mui/icons-material";
+import { Edit, DeleteForever } from "@mui/icons-material";
 
 import * as Componentes from "../../components";
 
@@ -51,7 +51,7 @@ const style = {
 
 export const ListarModulo = () => {
   const navigate = useNavigate();
-  const { pegarModulo, pegarModuloPorFiltro, deletarModulo, clonarModulo, modulo } = useModulo();
+  const { pegarModulo, pegarModuloPorFiltro, deletarModulo, modulo } = useModulo();
   const [inputFiltro, setInputFiltro] = useState<string>('');
 
   useEffect(() => {

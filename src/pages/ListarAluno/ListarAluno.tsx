@@ -1,13 +1,14 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
 import { Paper, TableContainer, Table, TableRow, TableCell, TableBody, Button, TablePagination, tableCellClasses, Box, Typography, Modal, styled, TableHead, Tooltip } from "@mui/material";
 import { Edit, DeleteForever } from "@mui/icons-material";
 
-import { useAluno } from "../../context/Comportamental/AlunoContext";
 import * as Componentes from "../../components";
-import { maxWidth } from "@mui/system";
+
+import { useAluno } from "../../context/Comportamental/AlunoContext";
+import { IAlunosElementos } from "../../utils/AlunoInterface/aluno";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: { backgroundColor: theme.palette.common.black, color: theme.palette.common.white },
@@ -119,7 +120,7 @@ export const ListarAluno: React.FC = () => {
               </TableHead>
 
               <TableBody>
-                {alunos?.elementos.map((aluno: any) => (
+                {alunos?.elementos.map((aluno: IAlunosElementos) => (
                   <StyledTableRow sx={{ ":hover": { opacity: "0.7", cursor: "pointer" } }} key={aluno.idAluno}>
 
                     <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: aluno })} id="codigo" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} component="td" scope="row">{aluno.idAluno}</StyledTableCell>

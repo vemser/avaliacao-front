@@ -26,6 +26,7 @@ function AppRoutes() {
                             <Context.VagaProvider>
                               <Context.AtividadeProvider>
                                 <Context.TecnologiaProvider>
+                                  <Context.ReservaAlocacaoProvider>
                                   <Routes>
                                     <Route index element={<Pages.Login />} />
                                     <Route path="*" element={<Components.NotFound />} />
@@ -35,6 +36,7 @@ function AppRoutes() {
                                       <Route path="*" element={<Components.NotFound />} />
                                       <Route path="/home" element={<Pages.TelaPrinciapl />} />
                                       <Route path="/editar-usuario" element={<Pages.EditarUsuario />} />
+                                      <Route path="/atividades-aluno" element={<Pages.ListarAtividadeAluno />} />
 
                                       <Route element={<Components.ComportamentalRotas />}>
                                         <Route path="/alunos" element={<Pages.ListarAluno />} />
@@ -77,8 +79,11 @@ function AppRoutes() {
                                         <Route path="/editar-alocacao-reserva" element={<Pages.EditarReservaAlocacao />} />
                                       </Route>
 
+                                      <Route path="/entregar-atividade" element={<Pages.EditarAtividadeAluno />} />
                                     </Route>
                                   </Routes>
+
+                                  </Context.ReservaAlocacaoProvider>
                                 </Context.TecnologiaProvider>
                               </Context.AtividadeProvider>
                             </Context.VagaProvider>

@@ -94,7 +94,6 @@ export const ModuloProvider = ({ children }: IChildren) => {
 
   const clonarModulo = async (id: number) => {
     try {
-      console.log(id)
       nProgress.start();
       API.defaults.headers.common["Authorization"] = localStorage.getItem("token");
       await API.post(`/modulo/clonar/${id}`);

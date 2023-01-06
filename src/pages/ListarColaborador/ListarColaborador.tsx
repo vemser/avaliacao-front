@@ -65,9 +65,6 @@ export const ListarColaborador: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
-  // if (infosUsuario.cargo !== "Admin") return <Navigate to="/" />
-
   return (
     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
       <Titulo texto="Colaboradores" />

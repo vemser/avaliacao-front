@@ -57,6 +57,24 @@ export const AtividadeProvider = ({ children }: IChildren) => {
     }
   }
 
+  const pegarAtividadeAluno = async (situacao: string, pagina: number = 0, tamanho: number = 10) => {
+    try {
+      nProgress.start();
+      const { data } = await API.get(`/atividade/listar-por-situacao-paginada?page=${pagina}&size=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") } });
+      setAtividades(data);
+    } catch (error: any) {
+      let message = "Ops, algo deu errado!";
+      if (error.response.status === 403) {
+        message = "Você não tem permissão para acessar esse recurso"
+      } else if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message || error.response.data.errors[0];
+      }
+      toast.error(message, toastConfig);
+    } finally {
+      nProgress.done();
+    }
+  }
+
   const pegarAtividadePorId = async (id: number) => {
     try {
       nProgress.start();
@@ -115,7 +133,7 @@ export const AtividadeProvider = ({ children }: IChildren) => {
   }
 
   return (
-    <AtividadeContext.Provider value={{ atividades, cadastrarAtividade, pegarAtividade, deletarAtividade, editarAtividade, pegarAtividadePorId }}>
+    <AtividadeContext.Provider value={{ atividades, cadastrarAtividade, pegarAtividade, deletarAtividade, editarAtividade, pegarAtividadePorId, pegarAtividadeAluno }}>
       {children}
     </AtividadeContext.Provider>
   );

@@ -26,7 +26,9 @@ export interface IAuth {
   usuarioLogout: () => void,
   editarPerfil: (imagem: FormData) => Promise<void>,
   pegarUsuarioLogado: () => Promise<void>,
-  usuarioLogado: any | undefined
+  decodificarJWT: () => Promise<any>,
+  usuarioLogado: any | undefined,
+  cargos: string[],
 }
 
 export interface IAdmin {
@@ -264,3 +266,7 @@ export interface IListarAlunos {
   foto: string | null
 }
 
+export interface ICargosLista {
+  nome: string,
+  descricao: string
+}

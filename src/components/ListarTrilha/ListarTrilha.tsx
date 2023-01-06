@@ -12,6 +12,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import TableHead from '@mui/material/TableHead';
 import { useTrilha } from '../../context/Tecnico/TrilhaContext';
 import { usePrograma } from '../../context/Tecnico/ProgramaContext';
+import { ITrilhasElementos } from '../../utils/TrilhaInterface/trilha';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: { backgroundColor: theme.palette.common.black, color: theme.palette.common.white },
@@ -120,7 +121,7 @@ export const ListarTrilha = () => {
               </TableHead>
 
               <TableBody>
-                {trilhas?.elementos.map((trilha: any) => (
+                {trilhas?.elementos.map((trilha: ITrilhasElementos) => (
                   <StyledTableRow key={trilha.idTrilha}>
 
                     <StyledTableCell id="id-trilha" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} component="td" scope="row">{trilha.idTrilha}</StyledTableCell>

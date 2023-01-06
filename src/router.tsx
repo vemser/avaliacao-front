@@ -77,6 +77,7 @@ function AppRoutes() {
                                         <Route path="/editar-alocacao-reserva" element={<Pages.EditarReservaAlocacao />} />
                                       </Route>
 
+                                      <Route path="/entregar-atividade" element={<Pages.EditarAtividadeAluno />} />
                                     </Route>
                                   </Routes>
                                 </Context.TecnologiaProvider>

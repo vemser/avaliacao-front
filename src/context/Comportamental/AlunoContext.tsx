@@ -18,6 +18,7 @@ export const AlunoProvider = ({ children }: IChildren) => {
 
   const [alunos, setAlunos] = useState<IAlunosAPI | null>(null);
 
+
   const cadastrarAluno = async (dadosAluno: ICadastroAlunoAPI) => {
     try {
       nProgress.start();
@@ -77,6 +78,30 @@ export const AlunoProvider = ({ children }: IChildren) => {
     }
   }
 
+  const pegarAlunoDisponivel = async (pagina: number = 0, tamanho: number = 10) => {
+    try {
+      nProgress.start();
+      const { data } = await API.get(`/aluno/listar-alunos?page=${pagina}&size=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") } });
+      let alunoDisponivel = data;
+      alunoDisponivel.elementos = alunoDisponivel.elementos.filter((aluno: any) => aluno.situacao === "DISPONIVEL");
+      setAlunos(alunoDisponivel);
+    } catch (error: any) {
+      let message = "Ops, algo deu errado!";
+      if (error.response.status === 403) {
+        message = "Você não tem permissão para acessar esse recurso"
+      } else if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message || error.response.data.errors[0];
+      }
+      toast.error(message, toastConfig);
+    } finally {
+      nProgress.done();
+    }
+  }
+  
+
+
+  
+
   const deletarAluno = async (idAluno: number | undefined) => {
     try {
       nProgress.start();
@@ -97,7 +122,7 @@ export const AlunoProvider = ({ children }: IChildren) => {
   }
 
   return (
-    <AlunoContext.Provider value={{ alunos, pegarAluno, deletarAluno, cadastrarAluno, editarAluno }}>
+    <AlunoContext.Provider value={{ alunos, pegarAluno, deletarAluno, cadastrarAluno, editarAluno,pegarAlunoDisponivel }}>
       {children}
     </AlunoContext.Provider>
   );

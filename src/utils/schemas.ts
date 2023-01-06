@@ -131,5 +131,5 @@ export const atividadeSchema = yup.object().shape({
   pesoAtividade: yup.number().positive("Deve ser um número positivo").typeError("Deve ser um número").required("Por favor, insira um peso para a atividade"),
   dataEntrega: yup.string().required("Por favor, insira uma data de entrega"),
   idPrograma: yup.string().required("Por favor, selecione um programa"),
-  descricao: yup.string().required("Por favor, insira uma descrição"),
+  descricao: yup.string().required("Por favor, insira uma descrição")
 })

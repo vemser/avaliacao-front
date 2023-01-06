@@ -79,9 +79,6 @@ export const EditarAluno = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
-  // if (infosUsuario.cargo !== "Gestor de Pessoas" && infosUsuario.cargo !== "Instrutor") return <Navigate to="/" />
-
   return (
     <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
       <Titulo texto={`Editar ${state.nome}`} />
@@ -128,7 +125,7 @@ export const EditarAluno = () => {
           <FormControl sx={{ width: { xs: "100%", md: "100%" }, display: "flex", flexDirection: "row", gap: "10px" }}>
             <Autocomplete sx={{ width: "90%" }} defaultValue={state.tecnologias.map((tecnologia: any) => ({ label: tecnologia.nome, id: tecnologia.idTecnologia }))}
               multiple disablePortal id="tecnologias" noOptionsText="Nenhuma opção encontrada. Cadastre a tecnologia"
-              onChange={(e, values) => setTecnologiaSelecionada(values.map((value) => value.id))}
+              onChange={(e, values) => { if (values.length === 0) setTecnologiaSelecionada([]); setTecnologiaSelecionada(values.map((value) => value.id)) }}
               isOptionEqualToValue={(option, value) => option.label === value.label}
               options={tecnologias ? tecnologias.elementos.map((tecnologia) => ({ label: `${tecnologia.nome}`, id: tecnologia.idTecnologia })) : []}
               renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}

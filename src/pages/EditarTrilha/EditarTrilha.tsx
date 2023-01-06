@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { Box, FormControl, TextField, Button } from '@mui/material';
+import { Box, FormControl, TextField, Button, Typography } from '@mui/material';
 
 import { Titulo } from '../../components/Titulo/Titulo';
 
@@ -20,7 +20,7 @@ export const EditarTrilha = () => {
 
   const { state } = useLocation();
 
-  const { register, handleSubmit } = useForm<IDadosTrilha>({
+  const { register, handleSubmit, formState: { errors } } = useForm<IDadosTrilha>({
     resolver: yupResolver(trilhaSchema)
   });
 
@@ -39,6 +39,7 @@ export const EditarTrilha = () => {
 
         <FormControl sx={{ width: "100%" }}>
           <TextField id="editar-nome-trilha" {...register('nome')} label="Nome da Trilha" defaultValue={state.nome} variant="filled" />
+          {errors.nome && <Typography id="erro-nome-trilha" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.nome.message}</Typography>}
         </FormControl>
         <FormControl sx={{ width: "100%" }}>
           <TextField id="editar-descricao-trilha" {...register('descricao')} label="Descrição da Trilha" multiline rows={4} defaultValue={state.descricao} variant="filled" />

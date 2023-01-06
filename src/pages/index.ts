@@ -36,3 +36,4 @@ export {EditarAtividade} from "./EditarAtividade/EditarAtividade"
 export {ListarAtividade} from "./ListarAtividade/ListarAtividade"
 export {TelaPrinciapl} from "./TelaPrincipal/TelaPrinciapl"
 export {ListarAtividadeAluno} from "./ListarAtividadeAluno/ListarAtividadeAluno"
+export { EditarAtividadeAluno } from './EditarAtividadeAluno/EditarAtividadeAluno'

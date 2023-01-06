@@ -37,7 +37,7 @@ export const CardAtividade: React.FC<IAtividadeApi> = (props) => {
   const dataFormatada = () => {
     let data: string = props.dataEntrega.split("T")[0].replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1");
     let hora: string | string[] = props.dataEntrega.split("T")[1].split(":");
-    hora = `${hora[0]}: ${hora[1]}`;
+    hora = `${hora[0]}:${hora[1]}`;
     return `${data} - ${hora}`;
   }
 

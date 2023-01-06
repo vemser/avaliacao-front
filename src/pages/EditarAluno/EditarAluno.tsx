@@ -19,6 +19,7 @@ import { useTecnologia } from '../../context/Tecnico/TecnologiasContext';
 import { useAluno } from '../../context/Comportamental/AlunoContext';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { alunoSchema } from '../../utils/schemas';
+import { ITecnologiasAluno } from '../../utils/AlunoInterface/aluno';
 
 const itemHeigth = 48;
 const itemPaddingTop = 8;
@@ -34,13 +35,13 @@ export const EditarAluno = () => {
   const { pegarTecnologia, cadastrarTecnologia, tecnologias } = useTecnologia();
 
   const [inputTecnologia, setInputTecnologia] = useState<string>('')
-  const [tecnologiaSelecionada, setTecnologiaSelecionada] = useState<any[]>([]);
+  const [tecnologiaSelecionada, setTecnologiaSelecionada] = useState<number[]>([]);
 
   const [estadoErro, setEstadoErro] = useState<boolean>(false);
   const [dataAuxiliar, setDataAuxiliar] = useState<object | string | boolean>(state.programa);
 
   const initialState = () => {
-    let result = state.tecnologias.map((tecnologia: any) => tecnologia.idTecnologia)
+    let result = state.tecnologias.map((tecnologia: ITecnologiasAluno) => tecnologia.idTecnologia)
     setTecnologiaSelecionada(result)
   }
 
@@ -56,7 +57,7 @@ export const EditarAluno = () => {
     }
   }
 
-  const handleChange = (event: any) => {
+  const handleChange = () => {
     setEstadoErro(false)
     setDataAuxiliar(false)
   };
@@ -78,9 +79,6 @@ export const EditarAluno = () => {
     initialState();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
-  // if (infosUsuario.cargo !== "Gestor de Pessoas" && infosUsuario.cargo !== "Instrutor") return <Navigate to="/" />
 
   return (
     <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
@@ -126,7 +124,7 @@ export const EditarAluno = () => {
 
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: "end" }}>
           <FormControl sx={{ width: { xs: "100%", md: "100%" }, display: "flex", flexDirection: "row", gap: "10px" }}>
-            <Autocomplete sx={{ width: "90%" }} defaultValue={state.tecnologias.map((tecnologia: any) => ({ label: tecnologia.nome, id: tecnologia.idTecnologia }))}
+            <Autocomplete sx={{ width: "90%" }} defaultValue={state.tecnologias.map((tecnologia: ITecnologiasAluno) => ({ label: tecnologia.nome, id: tecnologia.idTecnologia }))}
               multiple disablePortal id="tecnologias" noOptionsText="Nenhuma opção encontrada. Cadastre a tecnologia"
               onChange={(e, values) => setTecnologiaSelecionada(values.map((value) => value.id))}  
               isOptionEqualToValue={(option, value) => option.label === value.label} 

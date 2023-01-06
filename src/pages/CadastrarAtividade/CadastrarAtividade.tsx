@@ -14,6 +14,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useAluno } from '../../context/Comportamental/AlunoContext';
 import { atividadeSchema } from '../../utils/schemas';
 import { IAtividadeForm } from '../../utils/AtividadeInterface/AtividadeInterface';
+import { IProgramas } from '../../utils/programaInterface';
 
 const itemHeigth = 48;
 const itemPaddingTop = 8;
@@ -112,7 +113,7 @@ export const CadastrarAtividade = () => {
             <InputLabel id="programas-list">Programas</InputLabel>
             <Select MenuProps={MenuProps} {...register("idPrograma")} defaultValue="" label="Programas" labelId="demo-simple-select-filled-label" id="aluno" >
               <MenuItem value="initial-trilha" disabled><em>Selecione um programa</em></MenuItem>
-              {programas?.elementos.map((programas: any) => 
+              {programas?.elementos.map((programas: IProgramas) => 
                 <MenuItem key={programas.idPrograma} id={`${programas.idPrograma}`} value={programas.idPrograma}>{programas.nome}</MenuItem>
               )}
             </Select>

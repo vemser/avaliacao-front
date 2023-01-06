@@ -264,3 +264,7 @@ export interface IListarAlunos {
   foto: string | null
 }
 
+export interface ICargosLista {
+  nome: string,
+  descricao: string
+}

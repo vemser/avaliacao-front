@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 
-import { IAuth, IChildren, IUsuario, IUsuarioLogado } from "../utils/interface";
+import { IAuth, ICargosLista, IChildren, IUsuario, IUsuarioLogado } from "../utils/interface";
 
 import nProgress from 'nprogress';
 import { toast } from "react-toastify";
@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }: IChildren) => {
       await AuthAPI.get("/usuario/logged-user", { headers: { Authorization: localStorage.getItem("token") }
        }).then((response) => {
         setUsuarioLogado(response.data)
-        const arrayCargos = response.data.cargos.map((cargo: any) => cargo.descricao)
+        const arrayCargos = response.data.cargos.map((cargo: ICargosLista) => cargo.descricao)
         localStorage.setItem("cargo", JSON.stringify(arrayCargos))
       })
     } catch (error) {

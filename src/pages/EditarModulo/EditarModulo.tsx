@@ -13,7 +13,7 @@ import { usePrograma } from '../../context/Tecnico/ProgramaContext';
 import { useModulo } from '../../context/Tecnico/ModuloContext';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { moduloSchema } from '../../utils/schemas';
-import { ICadastroModulo } from '../../utils/ModuloInterface/Modulo';
+import { ICadastroModulo, IListProgramaDTO } from '../../utils/ModuloInterface/Modulo';
 
 const itemHeigth = 48;
 const itemPaddingTop = 8;
@@ -38,7 +38,7 @@ export const EditarModulo = () => {
   const [estadoErro, setEstadoErro] = useState<boolean>(false);
 
   const initialState = () => {
-    let result = state.listProgramaDTO.map((programas: any) => programas.idPrograma)
+    let result = state.listProgramaDTO.map((programas: IListProgramaDTO) => programas.idPrograma)
     setProgramaSelecionado(result)
   }
 

@@ -26,7 +26,9 @@ export interface IAuth {
   usuarioLogout: () => void,
   editarPerfil: (imagem: FormData) => Promise<void>,
   pegarUsuarioLogado: () => Promise<void>,
-  usuarioLogado: any | undefined
+  decodificarJWT: () => Promise<any>,
+  usuarioLogado: any | undefined,
+  cargos: string[],
 }
 
 export interface IAdmin {

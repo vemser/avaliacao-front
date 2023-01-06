@@ -8,4 +8,5 @@ export { CardVaga } from "./CardVaga/CardVaga";
 export { CampoBusca } from "./CampoBusca/CampoBusca";
 export { ListarTrilha } from "./ListarTrilha/ListarTrilha";
 export { ListarPrograma } from "./ListarPrograma/ListarPrograma";
-export {CardAtividade} from "./CardAtividade/CardAtividade"
+export {CardAtividade} from "./CardAtividade/CardAtividade";
+export {CardAtividadeAluno} from "./CardAtividadeAluno/CardAtividadeAluno";

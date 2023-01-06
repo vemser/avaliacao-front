@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 
-import { IAuth, ICargosLista, IChildren, IUsuario, IUsuarioLogado } from "../utils/interface";
+import { IAuth, IChildren, IUsuario, IUsuarioLogado } from "../utils/interface";
 
 import nProgress from 'nprogress';
 import { toast } from "react-toastify";
@@ -13,8 +13,9 @@ export const AuthContext = createContext({} as IAuth);
 
 export const AuthProvider = ({ children }: IChildren) => {
   const navigate = useNavigate();
-
-  const [usuarioLogado, setUsuarioLogado] = useState<IUsuarioLogado>({ cargo: [""], idUsuario: 0, imagem: "", login: ""
+  const [cargos, setCargos] = useState<string[]>([]);
+  const [usuarioLogado, setUsuarioLogado] = useState<IUsuarioLogado>({
+    cargo: [""], idUsuario: 0, imagem: "", login: ""
   });
 
   const usuarioLogin = async (infoUser: IUsuario) => {
@@ -22,7 +23,8 @@ export const AuthProvider = ({ children }: IChildren) => {
       nProgress.start();
       const { data } = await AuthAPI.post("/usuario/login", infoUser);
       localStorage.setItem("token", data);
-      await pegarUsuarioLogado()
+      await decodificarJWT();
+      await pegarUsuarioLogado();
       toast.success("Seja bem-vindo(a)", toastConfig);
       navigate("/home")
     } catch (error) {
@@ -31,7 +33,21 @@ export const AuthProvider = ({ children }: IChildren) => {
       nProgress.done();
     }
   }
-  
+
+  const decodificarJWT = async () => {
+    try {
+      let token = localStorage.getItem("token");
+      if (token) {
+        let decodedJWT = JSON.parse(atob(token.split('.')[1]));
+        let roles = decodedJWT.cargos;
+
+        setCargos(roles);
+      }
+    } catch (error) {
+      setCargos([]);
+    }
+  }
+
   const editarPerfil = async (imagem: FormData) => {
     try {
       nProgress.start()
@@ -50,17 +66,16 @@ export const AuthProvider = ({ children }: IChildren) => {
 
   const pegarUsuarioLogado = async () => {
     try {
-      await AuthAPI.get("/usuario/logged-user", { headers: { Authorization: localStorage.getItem("token") }
-       }).then((response) => {
-        setUsuarioLogado(response.data)
-        const arrayCargos = response.data.cargos.map((cargo: ICargosLista) => cargo.descricao)
-        localStorage.setItem("cargo", JSON.stringify(arrayCargos))
+      await AuthAPI.get("/usuario/logged-user", {
+        headers: { Authorization: localStorage.getItem("token") }
+      }).then((response) => {
+        setUsuarioLogado(response.data);
       })
     } catch (error) {
       toast.error("Você não tem permissão para acessar este recurso.", toastConfig);
     }
   }
-  
+
   const usuarioLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('cargo');
@@ -68,7 +83,7 @@ export const AuthProvider = ({ children }: IChildren) => {
   };
 
   return (
-    <AuthContext.Provider value={{ usuarioLogin, usuarioLogado, usuarioLogout, editarPerfil, pegarUsuarioLogado }}>
+    <AuthContext.Provider value={{ usuarioLogin, cargos, usuarioLogado, usuarioLogout, editarPerfil, pegarUsuarioLogado, decodificarJWT }}>
       {children}
     </AuthContext.Provider>
   );

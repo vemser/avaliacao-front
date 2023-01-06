@@ -16,7 +16,7 @@ interface IProps {
 }
 
 export const MenuLateral: React.FC<IProps> = ({ children }) => {
-  const { usuarioLogout, usuarioLogado, pegarUsuarioLogado } = useAuth();
+  const { usuarioLogout, cargos, decodificarJWT, usuarioLogado, pegarUsuarioLogado } = useAuth();
   const { isOpen, toggleOpen } = useContext(MenuLateralContext);
   const navigate = useNavigate();
   const theme = useTheme();
@@ -39,10 +39,9 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
 
   useEffect(() => {
     pegarUsuarioLogado();
+    decodificarJWT();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const infosUsuario = JSON.parse(localStorage.getItem("cargo") || "{}");
 
   return (
     <>
@@ -85,7 +84,7 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
           <Box flex="1">
             <List component="nav">
 
-              {infosUsuario.some((cargo: string) => cargo === "Administrador" || cargo === "Coordenador" || cargo === "Gestão de pessoas" || cargo === "Instrutor") &&
+              {cargos.some((cargo: string) => cargo === "ROLE_ADMIN" || cargo === "ROLE_GESTOR" || cargo === "Gestão de pessoas" || cargo === "ROLE_INSTRUTOR") &&
                 (<>
                   <ListItemButton onClick={handleClickTab1}>
                     <ListItemIcon>
@@ -122,7 +121,7 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
                 </>)}
 
 
-              {infosUsuario.some((cargo: string) => cargo === "Administrador" || cargo === "Coordenador" || cargo === "Gestão de pessoas" || cargo === "Instrutor") &&
+              {cargos.some((cargo: string) => cargo === "ROLE_ADMIN" || cargo === "ROLE_GESTOR" || cargo === "Gestão de pessoas" || cargo === "ROLE_INSTRUTOR") &&
                 (<>
                   <ListItemButton onClick={handleClickTab2}>
                     <ListItemIcon>
@@ -155,7 +154,7 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
                   </Collapse>
                 </>)}
 
-              {infosUsuario.some((cargo: string) => cargo === "Administrador" || cargo === "Coordenador" || cargo === "Gestão de pessoas") &&
+              {cargos.some((cargo: string) => cargo === "ROLE_ADMIN" || cargo === "ROLE_GESTOR" || cargo === "Gestão de pessoas") &&
                 (<>
                   <ListItemButton onClick={handleClickTab3}>
                     <ListItemIcon>

@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import { MenuLateralContext } from "../../context/MenuLateralContext";
 import { useAuth } from "../../context/AuthContext";
 
-// icons
 import { ExitToApp, Menu, ThumbUpAlt, School, Event, Source, Terminal, WorkHistory, BusinessCenter, Feed, Settings, ExpandLess, ExpandMore, AssignmentInd, IntegrationInstructions, Group, AutoStories } from "@mui/icons-material";
 
 import logo from '../../assets/dbc-logo.webp';
@@ -25,8 +24,6 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
   const [openTab1, setOpenTab1] = React.useState(false);
   const [openTab2, setOpenTab2] = React.useState(false);
   const [openTab3, setOpenTab3] = React.useState(false);
-
-  // console.log(usuarioLogado.cargos.some( (cargo: any) => cargo.descricao === "Administrador"))
 
   const handleClickTab1 = () => {
     setOpenTab1(!openTab1);

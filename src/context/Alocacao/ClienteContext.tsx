@@ -8,7 +8,6 @@ import { ICadastrarCliente, IClienteAPI, IClienteContext } from "../../utils/Cli
 import { IChildren } from "../../utils/interface";
 import { toastConfig } from "../../utils/toast";
 
-
 export const ClienteContext = createContext({} as IClienteContext);
 
 export const ClienteProvider = ({ children }: IChildren) => {
@@ -33,7 +32,6 @@ export const ClienteProvider = ({ children }: IChildren) => {
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
-
     }
   }
 

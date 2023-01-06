@@ -7,7 +7,7 @@ export interface ICadastrarCliente {
 
 
 export interface IClienteContext {
-  cadastrarCliente: (cliente: any) => Promise<void>,
+  cadastrarCliente: (cliente: ICadastrarCliente) => Promise<void>,
   pegarCliente: (pagina?: number, tamanho?: number) => Promise<void>,
   cliente: IClienteAPI | null,
   deletarCliente: (id: number | undefined) => Promise<void>,

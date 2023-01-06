@@ -80,7 +80,7 @@ export const ProgramaProvider = ({ children }: IChildren) => {
       nProgress.start();
       const { data } = await API.get(`/programa?page=${pagina}&size=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") } });
       let programasAtivos = data;
-      programasAtivos.elementos = programasAtivos.elementos.filter((programa: any) => programa.situacao === "ABERTO");
+      programasAtivos.elementos = programasAtivos.elementos.filter((programa: IProgramas) => programa.situacao === "ABERTO");
       setProgramas(programasAtivos);
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
@@ -116,7 +116,6 @@ export const ProgramaProvider = ({ children }: IChildren) => {
   const deletarProgama = async (id: number) => {
     try {
       nProgress.start();
-      console.log(id)
       await API.delete(`/programa/${id}`, { headers: { Authorization: localStorage.getItem("token") }});
       await pegarPrograma();
       toast.success("Programa deletado com sucesso!", toastConfig);

@@ -55,7 +55,8 @@ export const CardAtividadeAluno: React.FC = () => {
           opacity: [0.6],
           cursor: "pointer",
         },
-      }}>
+      }}
+        onClick={() => { navigate("/entregar-atividade") }}>
         <Typography sx={{ textAlign: "center", fontWeight: "bold", fontSize: "18px" }}>
           Titulo
         </Typography>

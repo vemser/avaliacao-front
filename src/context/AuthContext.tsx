@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 import { IAuth, IChildren, IUsuario, IUsuarioLogado } from "../utils/interface";
 

@@ -5,7 +5,8 @@ export interface IAluno {
   deletarAluno: (idAluno: number | undefined) => Promise<void>,
   cadastrarAluno: (dadosAluno: ICadastroAlunoAPI) => Promise<void>,
   editarAluno: (dadosAluno: ICadastroAlunoAPI, id: number) => Promise<void>,
-  alunos: IAlunosAPI | null
+  alunos: IAlunosAPI | null,
+  pegarAlunoDisponivel: (pagina?: number, tamanho?: number) => Promise<void>
 }
 
 export interface IChildren {

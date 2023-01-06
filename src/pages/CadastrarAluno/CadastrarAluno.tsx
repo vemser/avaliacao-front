@@ -142,9 +142,6 @@ export const CadastrarAluno = () => {
             <Select labelId="demo-simple-select-filled-label" defaultValue="" id="situacao" error={!!errors.situacao} {...register("situacao")}>
               <MenuItem value="initial-situacao" disabled><em>Selecione uma situação inicial para o aluno</em></MenuItem>
               <MenuItem id="disponivel" value="DISPONIVEL">Disponível</MenuItem>
-              <MenuItem id="reservado" value="RESERVADO">Reservado</MenuItem>
-              <MenuItem id="alocado" value="ALOCADO">Alocado</MenuItem>
-              <MenuItem id="inativo" value="INATIVO">Inativo</MenuItem>
             </Select>
             {errors.situacao && <Typography id="erro-situacaoAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.situacao.message}</Typography>}
           </FormControl>

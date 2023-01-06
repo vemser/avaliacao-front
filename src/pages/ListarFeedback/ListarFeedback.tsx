@@ -42,13 +42,9 @@ export const ListarFeedback: React.FC = () => {
   const handleChangePage = async (event: unknown, newPage: number) => { await pegarFeedback(newPage); };
 
   useEffect(() => {
-    pegarFeedback();
+    // pegarFeedback();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  // const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
-  // if (infosUsuario.cargo !== "Instrutor") return <Navigate to="/" />
-
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>

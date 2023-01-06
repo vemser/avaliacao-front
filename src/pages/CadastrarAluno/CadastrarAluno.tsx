@@ -46,10 +46,10 @@ export const CadastrarAluno = () => {
   });
 
   const erroPrograma = () => {
-    if(dataAuxiliar) {
+    if (dataAuxiliar) {
       setEstadoErro(false)
     } else {
-      setEstadoErro(true) 
+      setEstadoErro(true)
     }
   }
 
@@ -61,15 +61,12 @@ export const CadastrarAluno = () => {
   const cadastroAluno = (data: ICadastroAlunoForm) => {
     setDataAuxiliar(data.idPrograma)
 
-    if(!data.idPrograma && !dataAuxiliar) return setEstadoErro(true);
+    if (!data.idPrograma && !dataAuxiliar) return setEstadoErro(true);
     setEstadoErro(false);
 
     const novoData = { ...data, idTrilha: parseInt(data.idTrilha), idPrograma: parseInt(data.idPrograma.split(' ')[0]), tecnologias: tecnologiaSelecionada }
     cadastrarAluno(novoData);
   };
-
-  // const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
-  // if (infosUsuario.cargo !== "Instrutor" && infosUsuario.cargo !== "Gestor de Pessoas") return <Navigate to="/" />
 
   return (
     <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "calc(100vh - 64px)", paddingTop: "80px", paddingBottom: "50px" }}>
@@ -89,7 +86,7 @@ export const CadastrarAluno = () => {
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} variant="filled">
-            <InputMask style={{ padding: "18px 13px", borderRadius: "4px 4px 0 0", backgroundColor: '#f0f0f0', border: "none", outline: "none", borderBottom: "1px solid gray", fontFamily: "Inter", fontSize: "1rem", color: "rgba(0, 0, 0, 0.87)" }} mask="(99)99999-9999"  type="text" id="telefone" placeholder="Telefone" {...register('telefone')} />
+            <InputMask style={{ padding: "18px 13px", borderRadius: "4px 4px 0 0", backgroundColor: '#f0f0f0', border: "none", outline: "none", borderBottom: "1px solid gray", fontFamily: "Inter", fontSize: "1rem", color: "rgba(0, 0, 0, 0.87)" }} mask="(99)99999-9999" type="text" id="telefone" placeholder="Telefone" {...register('telefone')} />
             {errors.telefone && <Typography id="erro-telefoneAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.telefone.message}</Typography>}
           </FormControl>
 
@@ -111,14 +108,14 @@ export const CadastrarAluno = () => {
 
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: "end" }}>
           <FormControl sx={{ width: { xs: "100%", md: "100%" }, display: "flex", flexDirection: "row", gap: "10px" }}>
-            <Autocomplete sx={{ width: "90%" }} 
-            multiple disablePortal id="tecnologias" noOptionsText="Nenhuma opção encontrada. Cadastre a tecnologia"
-            onChange={(e, values) => setTecnologiaSelecionada(values.map((value) => value.id))}  
-            isOptionEqualToValue={(option, value) => option.label === value.label} 
-            options={tecnologias ? tecnologias.elementos.map((tecnologia) => ( { label: `${tecnologia.nome}`, id: tecnologia.idTecnologia})) : []} renderOption={(props, option) => ( <li {...props} key={option.id}>{option.label}</li> )} 
-            renderInput={(params) => <TextField {...params} label="Tecnologias" variant="filled" onChange={(e) => setInputTecnologia(e.target.value)} />} />
+            <Autocomplete sx={{ width: "90%" }}
+              multiple disablePortal id="tecnologias" noOptionsText="Nenhuma opção encontrada. Cadastre a tecnologia"
+              onChange={(e, values) => { if (values.length === 0) setTecnologiaSelecionada([]); setTecnologiaSelecionada(values.map((value) => value.id)) }}
+              isOptionEqualToValue={(option, value) => option.label === value.label}
+              options={tecnologias ? tecnologias.elementos.map((tecnologia) => ({ label: `${tecnologia.nome}`, id: tecnologia.idTecnologia })) : []} renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
+              renderInput={(params) => <TextField {...params} label="Tecnologias" variant="filled" onChange={(e) => setInputTecnologia(e.target.value)} />} />
 
-            <Button id="botao-cadastrar-tecnologia" variant={"contained"} sx={{ width: '10%', fontSize: "20px" }} onClick={() => { if(inputTecnologia) cadastrarTecnologia({ nome: inputTecnologia }); setInputTecnologia('') }}>+</Button>
+            <Button id="botao-cadastrar-tecnologia" variant={"contained"} sx={{ width: '10%', fontSize: "20px" }} onClick={() => { if (inputTecnologia) cadastrarTecnologia({ nome: inputTecnologia }); setInputTecnologia('') }}>+</Button>
           </FormControl>
 
           <FormControl variant="filled" sx={{ width: "100%" }}>
@@ -134,8 +131,8 @@ export const CadastrarAluno = () => {
 
           <FormControl sx={{ width: "100%" }} >
             <Autocomplete disablePortal id="programa" onChange={handleChange}
-            isOptionEqualToValue={(option, value) => option.label === value.label} 
-            options={programas ? programas.elementos.map((programa) => ( { label: `${programa.idPrograma} - ${programa.nome}`})) : []} renderInput={(params) => <TextField {...params} label="Programa" variant="filled" {...register("idPrograma")} />} />
+              isOptionEqualToValue={(option, value) => option.label === value.label}
+              options={programas ? programas.elementos.map((programa) => ({ label: `${programa.idPrograma} - ${programa.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Programa" variant="filled" {...register("idPrograma")} />} />
 
             {estadoErro && <Typography id="erro-programaAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">Por favor, escolha um programa</Typography>}
           </FormControl>

@@ -68,9 +68,6 @@ export const CadastrarAluno = () => {
     cadastrarAluno(novoData);
   };
 
-  // const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
-  // if (infosUsuario.cargo !== "Instrutor" && infosUsuario.cargo !== "Gestor de Pessoas") return <Navigate to="/" />
-
   return (
     <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
       <Titulo texto="Cadastrar Aluno" />

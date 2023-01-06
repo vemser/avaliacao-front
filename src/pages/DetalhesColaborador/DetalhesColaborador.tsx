@@ -7,9 +7,6 @@ import { Box, Stack, Typography, Avatar } from '@mui/material';
 export const DetalhesColaborador = () => {
   const { state } = useLocation()
 
-  // const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
-  // if (infosUsuario.cargo !== "Admin") return <Navigate to="/" />
-
   return (
     <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
       <Titulo texto={`Detalhes de ${state.nome}`} />

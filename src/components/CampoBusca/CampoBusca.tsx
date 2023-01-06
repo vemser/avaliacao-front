@@ -13,7 +13,7 @@ export const CampoBusca: React.FC<IProps> = ({ buscar, label, resetar }) => {
   const [search, setSearch] = useState<string | null>(null);
   const [buscou, setBuscou] = useState<boolean>(false);
  
-  const handleKeyPress = (event: any) => {
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.charCode === 13) {
       if(search) { buscar(search); setBuscou(true) };
     }

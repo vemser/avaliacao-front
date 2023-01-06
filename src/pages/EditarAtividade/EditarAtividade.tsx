@@ -12,7 +12,10 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAluno } from '../../context/Comportamental/AlunoContext';
 import { atividadeSchema } from '../../utils/schemas';
-import { IAtividadeForm } from '../../utils/AtividadeInterface/AtividadeInterface';
+
+import { IAtividadeForm, IModuloAtividade } from '../../utils/AtividadeInterface/AtividadeInterface';
+import { IAlunosElementos } from '../../utils/AlunoInterface/aluno';
+import { IProgramas } from '../../utils/programaInterface';
 
 const itemHeigth = 48;
 const itemPaddingTop = 8;
@@ -52,8 +55,8 @@ export const EditarAtividade = () => {
   }
 
   const initialState = () => {
-    let resultModulos = state.modulos.map((modulo: any) => modulo.idModulo);
-    let resultAlunos = state.alunos.map((aluno: any) => aluno.idAluno);
+    let resultModulos = state.modulos.map((modulo: IModuloAtividade) => modulo.idModulo);
+    let resultAlunos = state.alunos.map((aluno: IAlunosElementos) => aluno.idAluno);
     setModuloSelecionado(resultModulos);
     setAlunoSelecionado(resultAlunos);
   }
@@ -127,7 +130,7 @@ export const EditarAtividade = () => {
             <InputLabel id="programas-list">Programas</InputLabel>
             <Select MenuProps={MenuProps} {...register("idPrograma")} defaultValue={state.programa.idPrograma} label="Programas" labelId="demo-simple-select-filled-label" id="aluno" >
               <MenuItem value="initial-trilha" disabled><em>Selecione um programa</em></MenuItem>
-              {programas?.elementos.map((programas: any) => (
+              {programas?.elementos.map((programas: IProgramas) => (
                 <MenuItem key={programas.idPrograma} id={`${programas.idPrograma}`} value={programas.idPrograma}>{programas.nome}</MenuItem>
               ))}
             </Select>

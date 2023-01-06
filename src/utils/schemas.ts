@@ -133,3 +133,9 @@ export const atividadeSchema = yup.object().shape({
   idPrograma: yup.string().required("Por favor, selecione um programa"),
   descricao: yup.string().required("Por favor, insira uma descrição"),
 })
+
+export const reservaAlocacaoSchema = yup.object().shape({
+  situacao: yup.string().required("Por favor, insira a situação da vaga"),
+  descricao: yup.string().required("Por favor, insira uma descrição"),
+})
+

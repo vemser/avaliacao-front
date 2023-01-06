@@ -91,12 +91,17 @@ export const ListarColaborador: React.FC = () => {
               <TableBody>
                 {colaborador.map((data) => (
                   <StyledTableRow sx={{ ":hover": { opacity: "0.7", cursor: "pointer" } }} key={data.idUsuario}>
+
                     <StyledTableCell onClick={() => navigate("/detalhes-colaborador", { state: data })} id="nome" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", width: { md: "340px" } }} scope="row">{data.nome}</StyledTableCell>
+
                     <StyledTableCell onClick={() => navigate("/detalhes-colaborador", { state: data })} id="email" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100px" }}>{data.email}</StyledTableCell>
+
                     <StyledTableCell onClick={() => navigate("/detalhes-colaborador", { state: data })} id="cargo" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }}>{data.cargo}</StyledTableCell>
-                    <StyledTableCell id="acoes" sx={{ textAlign: "center" }}>
+
+                    <StyledTableCell id="acoes" sx={{ justifyContent: "center", maxWidth: "200px", display: "flex", wrap: "nowrap" }}>
                       <Button id={`botao-deletar-admin-${data.idUsuario}`} onClick={() => { handleOpen(); setIdDelete(data.idUsuario) }} title="Deletar"><DeleteForeverIcon /></Button>
                     </StyledTableCell>
+
                   </StyledTableRow>
                 ))}
               </TableBody>

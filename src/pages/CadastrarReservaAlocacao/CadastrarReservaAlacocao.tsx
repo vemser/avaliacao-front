@@ -81,7 +81,7 @@ export const CadastrarReservaAlacocao = () => {
 
           <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>
             <InputLabel id="selectAluno">Situação</InputLabel>
-            <Select labelId="demo-simple-select-filled-label" defaultValue="initial-stack" id="select-trilha" >
+            <Select labelId="demo-simple-select-filled-label" defaultValue="" id="select-trilha" >
               <MenuItem value="initial-stack" disabled><em>Selecione uma situação</em></MenuItem>
               <MenuItem id="reservado" value="RESERVADO">Reservado</MenuItem>
               <MenuItem id="alocado" value="ALOCADO">Alocado</MenuItem>

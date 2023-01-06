@@ -34,7 +34,7 @@ const columns: Column[] = [
   { id: "nome", label: "Nome do Programa", minWidth: 5 },
   { id: "descricao", label: "Descrição", minWidth: 5 },
   { id: "situacao", label: "Situação", minWidth: 5 },
-  { id: "dataInicio", label: "Data de Inicio", minWidth: 5 },
+  { id: "dataInicio", label: "Data de Início", minWidth: 5 },
   { id: "dataFim", label: "Data de Fim", minWidth: 5 },
   { id: "acoes", label: "Ações", minWidth: 5, align: "right", format: (value: number) => value.toLocaleString("en-US") }
 ];
@@ -109,7 +109,7 @@ export const ListarPrograma = () => {
           
           <Componentes.CampoBusca label="Código ou Nome" buscar={filtrosTrilha} resetar={resetBuscaTrilha} />
 
-          <Button onClick={() => navigate("/cadastrar-programa")} variant="contained" sx={{ width: { xs: "260px", md: "auto" }, display: "flex", marginRight: { xs: "0", md: "14px" }, textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Programa</Button>
+          <Button onClick={() => navigate("/cadastrar-programa")} variant="contained" sx={{ minWidth: { xs: "260px", md: "190px" }, display: "flex", marginRight: { xs: "0", md: "14px" }, textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Programa</Button>
         </Box>
 
         <Paper sx={{ width: "100%", borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px" }}>
@@ -131,15 +131,19 @@ export const ListarPrograma = () => {
 
                   <StyledTableCell id="nome-programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row">{programa.nome}</StyledTableCell>
 
-                  <Tooltip title={programa.descricao} PopperProps={{sx: {marginTop: "-35px !important"}}} arrow>
+                  <Tooltip title={programa.descricao} PopperProps={{sx: {marginTop: "-25px !important"}}} arrow>
                     <StyledTableCell id="descricao-programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{programa.descricao ? programa.descricao : "Sem descrição"}</StyledTableCell>
                   </Tooltip>
+                  
                   <StyledTableCell id="situacao-programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{formatarTexto(programa.situacao)}</StyledTableCell>
+
                   <StyledTableCell id="dataInicio-programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{programa.dataInicio.replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")}</StyledTableCell>
+
                   <StyledTableCell id="dataFim-programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{programa.dataFim.replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")}</StyledTableCell>
 
-                  <StyledTableCell id="acoes-programa" sx={{ textAlign: "center" }}>
+                  <StyledTableCell id="acoes-programa" sx={{ justifyContent: "center", maxWidth: "200px", display: "flex", wrap: "nowrap" }}>
                     <Button id={`botao-editar-${programa.idPrograma}`} title="Editar" onClick={() => navigate("/editar-programa", { state: programa })}><EditIcon /></Button>
+                    
                     <Button id={`botao-deletar-${programa.idPrograma}`} title="Deletar" onClick={() => { handleOpen(); setIdDelete(programa.idPrograma) }}><DeleteForeverIcon /></Button>
                   </StyledTableCell>
 

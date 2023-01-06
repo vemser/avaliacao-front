@@ -57,7 +57,7 @@ export const CardVaga: React.FC<IVagaApi> = (props) => {
             </IconButton>
           </Box>
         </Box>
-        <Typography sx={{textAlign: "center", fontWeight: "bold", fontSize: "18px"}}>
+        <Typography sx={{textAlign: "center", fontWeight: "bold", fontSize: "18px", color: "var(--azul-forte-dbc)"}}>
           {props.nome}
         </Typography>
 
@@ -65,16 +65,16 @@ export const CardVaga: React.FC<IVagaApi> = (props) => {
 
         <Box sx={{width: "100%", display: "flex", flexDirection: "column", justifyContent: "center", margin: "auto", gap: "1rem"}}>
         <Typography fontSize={15}>
-          Total de vagas: {props.quantidade}
+          Total de vagas: <span style={{ fontWeight: 600 }}>{props.quantidade}</span>
         </Typography>
         <Typography fontSize={15}>
-          Vagas disponíveis: {props.quantidadeAlocados}
+          Vagas disponíveis: <span style={{ fontWeight: 600 }}>{props.quantidadeAlocados}</span>
         </Typography>
         <Typography fontSize={15}>
           Situação: <span style={{color: `${props.situacao === "FECHADO" ? "#c62828": "#2e7d32"}`, fontWeight: "bold"}}>{props.situacao}</span>
         </Typography>
         <Typography fontSize={15}>
-          Cliente: {props.cliente.nome}
+          Cliente: <span style={{ fontWeight: 600 }}>{props.cliente.nome}</span>
         </Typography>
 
         <Divider />

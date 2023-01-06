@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 
 import { useLocation, useNavigate } from "react-router-dom"
 
@@ -65,11 +65,11 @@ export const VerificarAluno: React.FC = () => {
   // Paginação Feedback
   const handleChangePageFeedBack = async (event: unknown, newPage: number) => { await pegarFeedbackPorID(state.idAluno, newPage); }
 
-  useEffect(() => { 
-    pegarAvaliacaoPorID(state.idAluno, 0);
-    pegarFeedbackPorID(state.idAluno, 0);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  // useEffect(() => { 
+  //   pegarAvaliacaoPorID(state.idAluno, 0);
+  //   pegarFeedbackPorID(state.idAluno, 0);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [])
 
   // const infosUsuario = JSON.parse(localStorage.getItem("infoUsuario") || "{}");
   // if (infosUsuario.cargo !== "Instrutor" && infosUsuario.cargo !== "Gestor de Pessoas") return <Navigate to="/" />

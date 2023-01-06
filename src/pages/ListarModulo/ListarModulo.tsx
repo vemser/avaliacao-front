@@ -54,10 +54,10 @@ export const ListarModulo = () => {
   const { pegarModulo, pegarModuloPorFiltro, deletarModulo, clonarModulo, modulo } = useModulo();
   const [inputFiltro, setInputFiltro] = useState<string>('');
 
-  useEffect(() => { 
+  useEffect(() => {
     pegarModulo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, []);
+  }, []);
 
   const handleChangePage = async (event: unknown, newPage: number) => {
     if (inputFiltro) {
@@ -70,7 +70,7 @@ export const ListarModulo = () => {
   const filtroModulo = async (valor: any, pagina: number = 0, tamanho: number = 10) => {
     setInputFiltro(valor);
 
-    if(!isNaN(valor)) {
+    if (!isNaN(valor)) {
       await pegarModuloPorFiltro(pagina, tamanho, `&idModulo=${valor}`);
     } else {
       await pegarModuloPorFiltro(pagina, tamanho, `&nomeModulo=${valor}`);
@@ -95,11 +95,11 @@ export const ListarModulo = () => {
 
       <Box sx={{ width: { xs: "95%", md: "80%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
 
-      <Box sx={{ display: "flex", gap: 3, flexDirection: { xs: "column", md: "row" }, justifyContent: "space-between", alignItems: "center", width: "100%", marginBottom: "10px",paddingInline: 2 }}>
-        <Componentes.CampoBusca label="Código ou Nome" buscar={filtroModulo} resetar={resetFiltroModulo} />
+        <Box sx={{ display: "flex", gap: 3, flexDirection: { xs: "column", md: "row" }, justifyContent: "space-between", alignItems: "center", width: "100%", marginBottom: "10px", paddingInline: 2 }}>
+          <Componentes.CampoBusca label="Código ou Nome" buscar={filtroModulo} resetar={resetFiltroModulo} />
 
-        <Button onClick={() => navigate("/cadastrar-modulo")} variant="contained" sx={{ width: "auto", paddingLeft: "15px", paddingRight: "15px", display: "flex", marginBottom: "10px", marginRight: "14px", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Módulo</Button>
-      </Box>
+          <Button onClick={() => navigate("/cadastrar-modulo")} variant="contained" sx={{ width: "auto", paddingLeft: "15px", paddingRight: "15px", display: "flex", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Módulo</Button>
+        </Box>
 
         <Paper sx={{ width: "100%", borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px" }}>
           <TableContainer id="tabela-admin" sx={{ maxHeight: 430 }}>
@@ -118,17 +118,17 @@ export const ListarModulo = () => {
               <TableBody>
                 {modulo?.elementos.map((data) => (
                   <StyledTableRow key={data.idModulo}>
-                    <StyledTableCell id="nome" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} scope="row">{data.idModulo}</StyledTableCell>
+                    <StyledTableCell id="nome" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} scope="row">{data.idModulo}</StyledTableCell>
 
-                    <StyledTableCell id="programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", width: { md: "200px" } }}>{data.nome}</StyledTableCell>
+                    <StyledTableCell id="programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{data.nome}</StyledTableCell>
 
-                    <StyledTableCell id="trilha" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100px" }}>{data.trilhaDTO.nome}</StyledTableCell>
+                    <StyledTableCell id="trilha" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{data.trilhaDTO.nome}</StyledTableCell>
 
-                    <StyledTableCell id="programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", width: { md: "200px" } }}>
+                    <StyledTableCell id="programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>
                       {data.listProgramaDTO.map((programa) => `${programa.nome}`).join(', ')}
                     </StyledTableCell>
 
-                    <StyledTableCell id="acoes" sx={{ textAlign: "center" }}>
+                    <StyledTableCell id="acoes" sx={{ justifyContent: "center", maxWidth: "200px", display: "flex", wrap: "nowrap" }}>
                       <Button id={`botao-editar-modulo`} title="Editar" onClick={() => { navigate("/editar-modulo", { state: data }) }}><Edit /></Button>
                       <Button id={`botao-deletar-modulo`} title="Deletar" onClick={() => { handleOpen(); setIdDelete(data.idModulo) }}><DeleteForever /></Button>
                     </StyledTableCell>
@@ -139,12 +139,12 @@ export const ListarModulo = () => {
           </TableContainer>
 
           <TablePagination rowsPerPageOptions={[]} component="div" count={modulo ? modulo.totalElementos : 0} rowsPerPage={modulo ? modulo.tamanho : 0} page={modulo ? modulo.pagina : 0} onPageChange={handleChangePage} />
-            
+
           <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-titulo" aria-describedby="modal-modal-description" sx={{ backdropFilter: "blur(10px)" }}>
             <Box sx={style}>
               <Typography id="modal-modal-titulo" variant="h6" component="h2" color="error">Você realmente deseja excluir?</Typography>
               <Box sx={{ display: "flex", gap: 2, alignItems: "center", justifyContent: "center" }}>
-                <Button id="botao-confirmar-modal" onClick={() => { if(idDelete) deletar(idDelete); handleClose(); }} size="medium" color="success" type="submit" sx={{ mt: 2 }} variant="contained">Confirmar</Button>
+                <Button id="botao-confirmar-modal" onClick={() => { if (idDelete) deletar(idDelete); handleClose(); }} size="medium" color="success" type="submit" sx={{ mt: 2 }} variant="contained">Confirmar</Button>
                 <Button id="botao-fechar-modal" onClick={handleClose} size="medium" type="submit" sx={{ mt: 2 }} variant="contained">Fechar</Button>
               </Box>
             </Box>

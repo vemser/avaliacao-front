@@ -19,7 +19,6 @@ import { useTrilha } from "../../context/Tecnico/TrilhaContext";
 import { usePrograma } from "../../context/Tecnico/ProgramaContext";
 import { useAluno } from "../../context/Comportamental/AlunoContext";
 import { useTecnologia } from "../../context/Tecnico/TecnologiasContext";
-import { Label } from "@mui/icons-material";
 
 export const CadastrarAluno = () => {
   const navigate = useNavigate();

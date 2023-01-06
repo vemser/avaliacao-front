@@ -72,14 +72,21 @@ export const ListarAlocacao: React.FC = () => {
               <TableBody>
                 {dados.map((alocacao) => (
                   <StyledTableRow key={alocacao.idAlocacao}>
-                    <StyledTableCell sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row"> {alocacao.idAlocacao}</StyledTableCell>
-                    <StyledTableCell id={`aluno-${alocacao.idAlocacao}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} >{alocacao.aluno}</StyledTableCell>
-                    <StyledTableCell id={`vaga-${alocacao.idAlocacao}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }}>{alocacao.vaga}</StyledTableCell>
-                    <StyledTableCell id={`cliente-${alocacao.idAlocacao}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem"}} >{alocacao.cliente}</StyledTableCell>
-                    <StyledTableCell id={`situacao-${alocacao.idAlocacao}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem"}} >{alocacao.situacao}</StyledTableCell>
+
+                    <StyledTableCell sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} component="td" scope="row"> {alocacao.idAlocacao}</StyledTableCell>
+
+                    <StyledTableCell id={`aluno-${alocacao.idAlocacao}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} >{alocacao.aluno}</StyledTableCell>
+
+                    <StyledTableCell id={`vaga-${alocacao.idAlocacao}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{alocacao.vaga}</StyledTableCell>
+
+                    <StyledTableCell id={`cliente-${alocacao.idAlocacao}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} >{alocacao.cliente}</StyledTableCell>
+                    
+                    <StyledTableCell id={`situacao-${alocacao.idAlocacao}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} >{alocacao.situacao}</StyledTableCell>
+                    
                     <StyledTableCell id={`situacao-${alocacao.idAlocacao}`} sx={{ textAlign: "center" }}>
                       <Button id={`botao-alocacao-reserva-${alocacao.idAlocacao}`}onClick={() => navigate("/editar-alocacao-reserva", { state: alocacao })} title="Editar Alocacao"><EditIcon /></Button>
                       <Button id={`botao-deletar-${alocacao.idAlocacao}`} title="Deletar"><DeleteForeverIcon /></Button></StyledTableCell>
+                    
                   </StyledTableRow> 
                 ))}
               </TableBody>

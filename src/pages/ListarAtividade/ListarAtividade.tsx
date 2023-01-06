@@ -43,7 +43,8 @@ export const ListarAtividade: React.FC = () => {
 
         <Box sx={{ display: "flex", width: "100%", alignItems: "center", justifyContent: "space-between", gap: 2, flexDirection: { xs: "column", sm: "row" } }}>
           <Components.CampoBusca label='Código' buscar={buscarPorFiltro} resetar={resetBuscaAtividade} />
-          <Button variant="contained" onClick={() => navigate("/cadastrar-atividade")} sx={{ width: "auto", paddingLeft: "15px", paddingRight: "15px", display: "flex", marginBottom: "10px", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Atividade</Button>
+
+          <Button variant="contained" onClick={() => navigate("/cadastrar-atividade")} sx={{ width: "auto", display: "flex", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Atividade</Button>
         </Box>
 
         <Box sx={{ display: "flex", flexWrap: "wrap", width: "100%", justifyContent: "center", gap: "2rem", mt: 5 }}>

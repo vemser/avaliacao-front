@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
-import { Paper, TableContainer, Table, TableRow, TableCell, TableBody, Button, TablePagination, tableCellClasses, Box, Typography, Modal, styled, TableHead } from "@mui/material";
+import { Paper, TableContainer, Table, TableRow, TableCell, TableBody, Button, TablePagination, tableCellClasses, Box, Typography, Modal, styled, TableHead, Tooltip } from "@mui/material";
 import { Edit, DeleteForever } from "@mui/icons-material";
 
 import { useAluno } from "../../context/Comportamental/AlunoContext";
 import * as Componentes from "../../components";
+import { maxWidth } from "@mui/system";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: { backgroundColor: theme.palette.common.black, color: theme.palette.common.white },
@@ -103,7 +104,7 @@ export const ListarAluno: React.FC = () => {
         <Box sx={{ display: "flex", gap: 3, flexDirection: { xs: "column", md: "row" }, justifyContent: "space-between", alignItems: "center", width: "100%", marginBottom: "10px", paddingInline: 2 }}>
           <Componentes.CampoBusca label="Código, E-mail ou Nome" buscar={filtrosAluno} resetar={resetFiltroAluno} />
 
-          <Button onClick={() => navigate("/cadastrar-aluno")} variant="contained" sx={{ width: "auto", paddingLeft: "15px", paddingRight: "15px", display: "flex", marginBottom: "10px", marginRight: "14px", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Aluno</Button>
+          <Button onClick={() => navigate("/cadastrar-aluno")} variant="contained" sx={{ width: "auto", paddingLeft: "15px", paddingRight: "15px", display: "flex", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Aluno</Button>
         </Box>
 
         <Paper sx={{ width: "100%", borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px" }}>
@@ -120,12 +121,22 @@ export const ListarAluno: React.FC = () => {
               <TableBody>
                 {alunos?.elementos.map((aluno: any) => (
                   <StyledTableRow sx={{ ":hover": { opacity: "0.7", cursor: "pointer" } }} key={aluno.idAluno}>
-                    <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: aluno })} id="codigo" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row">{aluno.idAluno}</StyledTableCell>
-                    <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: aluno })} id="nome" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }}>{aluno.nome}</StyledTableCell>
-                    <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: aluno })} id="email" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }}>{aluno.email}</StyledTableCell>
-                    <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: aluno })} id="stack" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", textTransform: "capitalize" }}>{formatarTexto(aluno.trilha.nome)}</StyledTableCell>
-                    <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: aluno })} id="situacao" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", textTransform: "capitalize" }}>{formatarTexto(aluno.situacao)}</StyledTableCell>
-                    <StyledTableCell id="acoes" sx={{ textAlign: "center" }}>
+
+                    <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: aluno })} id="codigo" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} component="td" scope="row">{aluno.idAluno}</StyledTableCell>
+
+                    <Tooltip title={aluno.nome} PopperProps={{ sx: { marginTop: "-25px !important" } }} arrow>
+                      <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: aluno })} id="nome" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{aluno.nome}</StyledTableCell>
+                    </Tooltip>
+
+                    <Tooltip title={aluno.email} PopperProps={{ sx: { marginTop: "-25px !important" } }} arrow>
+                      <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: aluno })} id="email" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{aluno.email}</StyledTableCell>
+                    </Tooltip>
+
+                    <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: aluno })} id="stack" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", textTransform: "capitalize", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{formatarTexto(aluno.trilha.nome)}</StyledTableCell>
+
+                    <StyledTableCell onClick={() => navigate("/verificar-aluno", { state: aluno })} id="situacao" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", textTransform: "capitalize", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{formatarTexto(aluno.situacao)}</StyledTableCell>
+
+                    <StyledTableCell id="acoes" sx={{ justifyContent: "center", maxWidth: "200px", display: "flex", wrap: "nowrap" }}>
                       <Button id={`botao-editar-${aluno.idAluno}`} title="Deletar" onClick={() => navigate("/editar-aluno", { state: aluno })}><Edit /></Button>
                       <Button id={`botao-deletar-${aluno.idAluno}`} title="Deletar" onClick={() => { handleOpen(); setIdDelete(aluno.idAluno) }}><DeleteForever /></Button>
                     </StyledTableCell>

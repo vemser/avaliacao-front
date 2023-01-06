@@ -41,7 +41,8 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
   };
 
   useEffect(() => {
-    pegarUsuarioLogado()
+    pegarUsuarioLogado();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const infosUsuario = JSON.parse(localStorage.getItem("cargo") || "{}");

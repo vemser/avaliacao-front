@@ -92,7 +92,7 @@ export const ListarCliente: React.FC = () => {
         <Componentes.CampoBusca label="E-mail ou Nome" buscar={buscarPorNomeCliente} resetar={resetBuscaCliente}/>
 
 
-        <Button onClick={() => navigate("/cadastrar-cliente")} variant="contained" sx={{ width: "auto", paddingLeft: "15px", paddingRight: "15px", display: "flex", marginBottom: "10px", marginRight: "14px", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Cliente</Button>
+        <Button onClick={() => navigate("/cadastrar-cliente")} variant="contained" sx={{ width: "auto", paddingLeft: "15px", paddingRight: "15px", display: "flex", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Cliente</Button>
       </Box>
 
         <Paper sx={{ width: "100%", borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px" }}>
@@ -110,14 +110,21 @@ export const ListarCliente: React.FC = () => {
               <TableBody>
                 {cliente?.elementos.map((cliente) => (
                   <StyledTableRow key={cliente.idCliente}>
-                    <StyledTableCell sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row"> {cliente.idCliente}</StyledTableCell>
-                    <StyledTableCell id={`aluno-${cliente.idCliente}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} >{cliente.nome}</StyledTableCell>
-                    <StyledTableCell id={`vaga-${cliente.idCliente}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }}>{cliente.email}</StyledTableCell>
-                    <StyledTableCell id={`cliente-${cliente.idCliente}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} >{cliente.telefone}</StyledTableCell>
-                    <StyledTableCell id={`situacao-${cliente.idCliente}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} >{cliente.ativo === "S" ? "Ativo" : cliente.ativo === "N" ? "Inativo" : ""}</StyledTableCell>
+
+                    <StyledTableCell sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} component="td" scope="row"> {cliente.idCliente}</StyledTableCell>
+
+                    <StyledTableCell id={`aluno-${cliente.idCliente}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} >{cliente.nome}</StyledTableCell>
+
+                    <StyledTableCell id={`vaga-${cliente.idCliente}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{cliente.email}</StyledTableCell>
+
+                    <StyledTableCell id={`cliente-${cliente.idCliente}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} >{cliente.telefone}</StyledTableCell>
+
+                    <StyledTableCell id={`situacao-${cliente.idCliente}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} >{cliente.ativo === "S" ? "Ativo" : cliente.ativo === "N" ? "Inativo" : ""}</StyledTableCell>
+
                     <StyledTableCell id={`situacao-${cliente.idCliente}`} sx={{ textAlign: "center" }}>
                       <Button id={`botao-cliente-${cliente.idCliente}`} onClick={() => navigate("/editar-cliente", { state: cliente })} title="Editar cliente"><EditIcon /></Button>
                       <Button id={`botao-deletar-${cliente.idCliente}`} onClick={() => { handleOpen(); setIdDelete(cliente.idCliente) }} title="Deletar"><DeleteForeverIcon /></Button></StyledTableCell>
+                    
                   </StyledTableRow>
                 ))}
               </TableBody>

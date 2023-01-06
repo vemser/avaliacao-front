@@ -73,9 +73,13 @@ export const ListarFeedback: React.FC = () => {
               <TableBody>
                 {feedback.map((data) => (
                   <StyledTableRow key={data.idFeedBack}>
+
                     <StyledTableCell id={`idFeedback-${data.idFeedBack}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row">{data.idFeedBack}</StyledTableCell>
+                    
                     <StyledTableCell id={`nome-${data.idFeedBack}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }}>{data.alunoDTO.nome}</StyledTableCell>
+
                     <StyledTableCell id={`tipo-${data.idFeedBack}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }}>{formatarTexto(data.tipo)}</StyledTableCell>
+
                   </StyledTableRow>
                 ))}
               </TableBody>

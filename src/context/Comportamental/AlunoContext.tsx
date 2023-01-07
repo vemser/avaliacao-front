@@ -22,7 +22,7 @@ export const AlunoProvider = ({ children }: IChildren) => {
       nProgress.start();
       await API.post('/aluno/cadastrar-aluno', dadosAluno, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
         navigate('/alunos');
-        toast.success('Aluno(a) foi cadastrado(a) com sucesso.', toastConfig);
+        toast.success('Aluno cadastrado com sucesso!', toastConfig);
       })
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
@@ -42,7 +42,7 @@ export const AlunoProvider = ({ children }: IChildren) => {
       nProgress.start();
       await API.put(`/aluno/atualizar-aluno/${id}`, dadosAluno, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
         navigate('/alunos');
-        toast.success('Aluno(a) foi editado(a) com sucesso.', toastConfig);
+        toast.success('Aluno editado com sucesso!', toastConfig);
       })
     } catch (error: any) {
       let message = "Ops, algo deu errado!";

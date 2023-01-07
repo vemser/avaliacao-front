@@ -38,7 +38,7 @@ export const TecnologiaProvider = ({ children }: IChildren) => {
     try {
       nProgress.start();     
       await API.post('/tecnologia', dadosTecnologia, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
-        toast.success('Tecnologia cadastrada com sucesso.', toastConfig);
+        toast.success('Tecnologia cadastrada com sucesso!', toastConfig);
         pegarTecnologia();
       })
     } catch (error: any) {

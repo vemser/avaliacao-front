@@ -98,7 +98,7 @@ export const AtividadeProvider = ({ children }: IChildren) => {
       nProgress.start();
       await API.delete(`/atividade/deletar-atividade?idAtividade=${id}`, { headers: { Authorization: localStorage.getItem("token") } });
       await pegarAtividade();
-      toast.success("Atividade deletada com sucesso!", toastConfig);
+      toast.success("Atividade desativada com sucesso!", toastConfig);
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
       if (error.response.status === 403) {

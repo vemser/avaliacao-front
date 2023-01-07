@@ -54,7 +54,7 @@ export const VagaProvider = ({ children }: IChildren) => {
     try {
       nProgress.start();
       await API.delete(`/vaga/desativar/${id}`, { headers: { Authorization: localStorage.getItem("token") } });
-      toast.success("Vaga deletada com sucesso!", toastConfig);
+      toast.success("Vaga desativada com sucesso!", toastConfig);
       await pegarVagas();
     } catch (error: any) {
       let message = "Ops, algo deu errado!";

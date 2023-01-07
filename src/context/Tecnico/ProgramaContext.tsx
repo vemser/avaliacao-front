@@ -118,7 +118,7 @@ export const ProgramaProvider = ({ children }: IChildren) => {
       nProgress.start();
       await API.delete(`/programa/${id}`, { headers: { Authorization: localStorage.getItem("token") }});
       await pegarPrograma();
-      toast.success("Programa deletado com sucesso!", toastConfig);
+      toast.success("Programa desativado com sucesso!", toastConfig);
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
       if (error.response.status === 403) {

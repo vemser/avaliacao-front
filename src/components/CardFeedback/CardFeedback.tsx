@@ -14,12 +14,12 @@ const style = {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 400,
+    width: 320,
     bgcolor: "background.paper",
     border: "none",
     borderRadius: "5px",
     textAlign: "center",
-    boxShadow: 24,
+    boxShadow: 20,
     p: 4,
 };
 
@@ -40,6 +40,7 @@ export const CardFeedback: React.FC<IFeedbackElementos> = (props) => {
             <Box sx={{
                 display: "flex",
                 flexDirection: "column",
+                justifyContent: "center",
                 backgroundColor: "#f5f5f5",
                 width: "280px",
                 padding: "15px 20px",
@@ -61,33 +62,36 @@ export const CardFeedback: React.FC<IFeedbackElementos> = (props) => {
                 </Box>
 
                 <Typography sx={{ textAlign: "center", fontSize: "18px" }}>
-                     <span style={{ fontWeight: "bold", color: `${props.situacao === "POSITIVO" ? "#2e7d32" : "#c62828"} ` }}>Feedback {formatarTexto(props.situacao)}</span>
+                    <span style={{ fontWeight: "bold", color: `${props.situacao === "POSITIVO" ? "#2e7d32" : "#c62828"} ` }}>Feedback {formatarTexto(props.situacao)}</span>
                 </Typography>
 
                 <Divider />
 
                 <Box sx={{ width: "100%", display: "flex", flexDirection: "column", justifyContent: "center", margin: "auto", gap: "1rem" }}>
                     <Typography fontSize={15}>
+                        Criado por: <span style={{ fontWeight: 600 }}>{formatarNomeCompleto(props.nomeInstrutor)}</span>
+                    </Typography>
+                    <Typography fontSize={15}>
                         Aluno: <span style={{ fontWeight: 600 }}>{formatarNomeCompleto(props.alunoDTO.nome)}</span>
                     </Typography>
                     <Typography fontSize={15}>
                         Descrição: <span style={{ fontWeight: 600 }}>{props.descricao}</span>
                     </Typography>
-                
-                <Divider />
 
-                <Typography sx={{ textAlign: "center", fontSize: "13px" }}>
-                    Data do feedback: <b>{props.data.replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")}</b>
+                    <Divider />
+
+                    <Typography sx={{ textAlign: "center", fontSize: "13px" }}>
+                        Data do feedback: <b>{props.data.replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")}</b>
                     </Typography>
                 </Box>
             </Box>
 
-            <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-titulo" aria-describedby="modal-modal-description" sx={{ backdropFilter: "blur(10px)" }}>
+            <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-titulo" aria-describedby="modal-modal-description" sx={{ backdropFilter: "blur(6px)" }}>
                 <Box sx={style}>
-                    <Typography id="modal-modal-titulo" variant="h6" component="h2" color="error">Você realmente deseja excluir?</Typography>
-                    <Box sx={{ display: "flex", gap: 2, alignItems: "center", justifyContent: "center" }}>
-                        <Button id="botao-confirmar-modal" onClick={() => { if (idDelete) deletarFeedback(idDelete); handleClose(); }} size="medium" color="success" type="submit" sx={{ mt: 2 }} variant="contained">Confirmar</Button>
-                        <Button id="botao-fechar-modal" onClick={handleClose} size="medium" type="submit" sx={{ mt: 2 }} variant="contained">Fechar</Button>
+                    <Typography id="modal-modal-titulo" variant="h6" sx={{ fontWeight: 600, userSelect: "none", marginBottom: "10px", color: "var(--azul-forte-dbc)", fontSize: "1.4rem" }}>Você tem certeza?</Typography>
+                    <Box sx={{ display: "flex", width: "100%", justifyContent: "center", alignItems: "center", bottom: 0, paddingTop: "20px", gap: 2, flexDirection: "column" }}>
+                        <Button type="button" onClick={() => { if (idDelete) deletarFeedback(idDelete); handleClose(); }} variant="contained" color="error" sx={{ textTransform: "capitalize", fontSize: "1.05rem", width: "180px" }}>Deletar</Button>
+                        <Button type="button" onClick={handleClose} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d" }, textTransform: "capitalize", fontSize: "1.05rem", width: "180px" }}>Cancelar</Button>
                     </Box>
                 </Box>
             </Modal>

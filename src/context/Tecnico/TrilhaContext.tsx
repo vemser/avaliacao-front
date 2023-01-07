@@ -82,7 +82,7 @@ export const TrilhaProvider = ({ children }: IChildren) => {
       await API.post('/trilha', dadosTrilha, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
         setMudaDashboard(false)
         navigate('/trilhas-e-programas');
-        toast.success('Trilha foi cadastrada com sucesso.', toastConfig);
+        toast.success('Trilha cadastrada com sucesso!', toastConfig);
       })
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
@@ -121,7 +121,7 @@ export const TrilhaProvider = ({ children }: IChildren) => {
     try {
       nProgress.start();
       await API.delete(`/trilha/${idTrilha}`, { headers: { Authorization: localStorage.getItem("token") }});
-      toast.success('Trilha desativada com sucesso.', toastConfig);
+      toast.success('Trilha desativada com sucesso!', toastConfig);
       pegarTrilha();
     } catch (error: any) {
       let message = "Ops, algo deu errado!";

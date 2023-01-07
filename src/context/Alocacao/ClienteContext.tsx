@@ -115,7 +115,7 @@ export const ClienteProvider = ({ children }: IChildren) => {
     try {
       nProgress.start();
       await API.delete(`/cliente/${id}`, { headers: { Authorization: localStorage.getItem("token") }});
-      toast.success("Cliente deletado com sucesso!", toastConfig);
+      toast.success("Cliente desativado com sucesso!", toastConfig);
       pegarCliente();
     } catch (error: any) {
       let message = "Ops, algo deu errado!";

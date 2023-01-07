@@ -24,6 +24,7 @@ export interface IFeedbackElementos {
     idFeedBack: number,
     descricao: string,
     situacao: string,
+    nomeInstrutor: string,
     data: string,
     alunoDTO: IAlunosElementos,
     programaDTO: IProgramas,

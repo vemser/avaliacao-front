@@ -116,7 +116,7 @@ export const ModuloProvider = ({ children }: IChildren) => {
     try {
       nProgress.start()
       await API.delete(`/modulo/desativar?idModulo=${id}`, { headers: { Authorization: localStorage.getItem("token") }});
-      toast.success("Modulo desativado com sucesso", toastConfig)
+      toast.success("Módulo desativado com sucesso!", toastConfig)
       pegarModulo()
     } catch (error: any) {
       let message = "Ops, algo deu errado!";

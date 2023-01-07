@@ -32,7 +32,7 @@ export const AdminProvider = ({ children }: IChildren) => {
       nProgress.start();
       API.defaults.headers.common["Authorization"] = localStorage.getItem("token");
       await API.delete(`/administrador/delete/${id}`);
-      toast.success("Colaborador desativado com sucesso.", toastConfig);
+      toast.success("Colaborador desativado com sucesso!", toastConfig);
       pegarColaborador()
     } catch (error) {
       toast.error('Você não tem autorização para remover este colaborador.', toastConfig);

@@ -51,33 +51,37 @@ export const CardAtividadeAluno: React.FC = () => {
         gap: "0.75rem",
         boxShadow: shadow,
         borderRadius: "10px",
+        transition: "0.5s",
         '&:hover': {
-          opacity: [0.6],
-          cursor: "pointer",
+          opacity: [0.7],
+          transform: "translateY(-4px)",
+          transition: "0.5s",
+          cursor: "pointer"
         },
       }}
         onClick={() => { navigate("/entregar-atividade") }}>
         <Typography sx={{ textAlign: "center", fontWeight: "bold", fontSize: "18px" }}>
-          Titulo
+          Título
         </Typography>
 
         <Divider />
 
         <Box sx={{ width: "100%", display: "flex", flexDirection: "column", justifyContent: "center", margin: "auto", gap: "1rem" }}>
           <Typography fontSize={15}>
-            Nota: 0/10
+            Nota: <span style={{ fontWeight: 600 }}>0/10</span>
           </Typography>
           <Typography fontSize={15}>
-            Modulo: React, Mui
+            Modulo: <span style={{ fontWeight: 600 }}>React, Mui</span>
           </Typography>
           <Typography fontSize={15}>
             Situação: <span style={{ color: "#c62828", fontWeight: "bold" }}>Pendente</span>
           </Typography>
-          <Typography fontSize={15}>
+          <Divider />
+          <Typography sx={{ textAlign: "center", fontSize: "13px" }}>
             Prazo de entrega: <b>20/10/2023 - 17:30</b>
           </Typography>
         </Box>
-        <Divider />
+        
       </Box>
 
       {/* <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-titulo" aria-describedby="modal-modal-description" sx={{ backdropFilter: "blur(10px)" }}>

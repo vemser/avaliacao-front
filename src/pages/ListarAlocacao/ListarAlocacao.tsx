@@ -53,6 +53,9 @@ export const ListarAlocacao: React.FC = () => {
     await pegarReservaAlocacao();
   }
 
+  function formatarTexto(str: string) {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  }
 
   useEffect(()=> {
     pegarReservaAlocacao()
@@ -98,7 +101,7 @@ export const ListarAlocacao: React.FC = () => {
 
                     <StyledTableCell id={`cliente`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} >{alocacao?.vaga.cliente.nome}</StyledTableCell>
                     
-                    <StyledTableCell id={`situacao`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} >{alocacao.situacao}</StyledTableCell>
+                    <StyledTableCell id={`situacao`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} >{formatarTexto(alocacao.situacao)}</StyledTableCell>
                     
                     <StyledTableCell id={`editar-reserva`} sx={{ textAlign: "center" }}>
                       <Button id={`botao-alocacao-reserva-${alocacao.idReservaAlocacao}`}onClick={() => navigate("/editar-alocacao-reserva", { state: alocacao })} title="Editar Alocacao"><EditIcon /></Button>

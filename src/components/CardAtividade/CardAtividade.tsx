@@ -41,6 +41,16 @@ export const CardAtividade: React.FC<IAtividadeApi> = (props) => {
     return `${data} - ${hora}`;
   }
 
+  function formatarNomeCompleto(str: string) {
+    const words = str.split(" ");
+
+    for (let i = 0; i < words.length; i++) {
+      words[i] = words[i][0].toUpperCase() + words[i].substr(1);
+    }
+
+    return words.join(" ");
+  }
+
   return (
     <>
       <Box sx={{
@@ -73,7 +83,7 @@ export const CardAtividade: React.FC<IAtividadeApi> = (props) => {
 
         <Box sx={{ width: "100%", display: "flex", flexDirection: "column", justifyContent: "center", margin: "auto", gap: "1rem" }}>
           <Typography fontSize={15}>
-            Criada por: <span style={{ fontWeight: 600 }}>{props.nomeInstrutor}</span>
+            Criada por: <span style={{ fontWeight: 600 }}>{formatarNomeCompleto(props.nomeInstrutor)}</span>
           </Typography>
           <Typography fontSize={15}>
             Peso: <span style={{ fontWeight: 600 }}>{props.pesoAtividade}</span>
@@ -82,7 +92,7 @@ export const CardAtividade: React.FC<IAtividadeApi> = (props) => {
             Módulo: <span style={{ fontWeight: 600 }}>{props.modulos.map((modulo) => modulo.nome).join(", ")}</span>
           </Typography>
           <Typography fontSize={15}>
-            Situação: <span style={{ color: `${props.ativo === "S" ? "#2e7d32" : "#c62828"} `, fontWeight: "bold" }}>{props.ativo === "S" ? "ATIVA" : "INATIVA"}</span>
+            Situação: <span style={{ color: `${props.ativo === "S" ? "#2e7d32" : "#c62828"} `, fontWeight: "bold" }}>{props.ativo === "S" ? "Ativa" : "Inativa"}</span>
           </Typography>
           <Typography fontSize={15}>
             Descrição: <span style={{ fontWeight: 600 }}>{props.descricao}</span>

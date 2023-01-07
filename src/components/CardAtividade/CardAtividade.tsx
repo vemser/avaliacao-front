@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { Box, Button, Divider, IconButton, Modal, Typography } from "@mui/material";
-
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+
+import { Box, Button, Divider, IconButton, Modal, Typography } from "@mui/material";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import EditIcon from "@mui/icons-material/Edit";
+
 import { IAtividadeApi } from '../../utils/AtividadeInterface/AtividadeInterface';
 import { useAtividade } from '../../context/Tecnico/AtividadeContext';
-
 
 const style = {
   position: "absolute" as const,
@@ -53,7 +53,7 @@ export const CardAtividade: React.FC<IAtividadeApi> = (props) => {
         boxShadow: shadow, borderRadius: "10px"
       }}>
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <Typography>
+          <Typography sx={{ fontSize: 15 }}>
             Código: {props.idAtividade}
           </Typography>
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
@@ -73,18 +73,24 @@ export const CardAtividade: React.FC<IAtividadeApi> = (props) => {
 
         <Box sx={{ width: "100%", display: "flex", flexDirection: "column", justifyContent: "center", margin: "auto", gap: "1rem" }}>
           <Typography fontSize={15}>
-            Peso: {props.pesoAtividade}
+            Criada por: <span style={{ fontWeight: 600 }}>{props.nomeInstrutor}</span>
           </Typography>
           <Typography fontSize={15}>
-            Modulo: {props.modulos.map((modulo) => modulo.nome).join(", ")}
+            Peso: <span style={{ fontWeight: 600 }}>{props.pesoAtividade}</span>
           </Typography>
           <Typography fontSize={15}>
-            Situação: <span style={{ color: `${props.situacao === "FECHADO" ? "#c62828" : "#2e7d32"} `, fontWeight: "bold" }}>{props.situacao}</span>
+            Módulo: <span style={{ fontWeight: 600 }}>{props.modulos.map((modulo) => modulo.nome).join(", ")}</span>
           </Typography>
           <Typography fontSize={15}>
-            Prazo de entrega: <b>{dataFormatada()}</b>
+            Situação: <span style={{ color: `${props.ativo === "S" ? "#2e7d32" : "#c62828"} `, fontWeight: "bold" }}>{props.ativo === "S" ? "ATIVA" : "INATIVA"}</span>
+          </Typography>
+          <Typography fontSize={15}>
+            Descrição: <span style={{ fontWeight: 600 }}>{props.descricao}</span>
           </Typography>
           <Divider />
+          <Typography sx={{ textAlign: "center", fontSize: "13px" }}>
+            Prazo de entrega: <b>{dataFormatada()}</b>
+          </Typography>
         </Box>
       </Box>
 

@@ -45,7 +45,7 @@ export const CardVaga: React.FC<IVagaApi> = (props) => {
         boxShadow: shadow, borderRadius: "10px"
       }}>
         <Box sx={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
-          <Typography>
+          <Typography sx={{ fontSize: 15 }}>
             Código: {props.idVaga}
           </Typography>
           <Box sx={{display: "flex", alignItems: "center", gap: 1}}>

@@ -15,9 +15,7 @@ export const AlunoContext = createContext({} as IAluno);
 
 export const AlunoProvider = ({ children }: IChildren) => {
   const navigate = useNavigate();
-
   const [alunos, setAlunos] = useState<IAlunosAPI | null>(null);
-
 
   const cadastrarAluno = async (dadosAluno: ICadastroAlunoAPI) => {
     try {
@@ -97,16 +95,11 @@ export const AlunoProvider = ({ children }: IChildren) => {
       nProgress.done();
     }
   }
-  
-
-
-  
 
   const deletarAluno = async (idAluno: number | undefined) => {
     try {
-      nProgress.start();
       await API.delete(`/aluno/deletar/${idAluno}`, { headers: { Authorization: localStorage.getItem("token") }});
-      toast.success('Aluno desativado com sucesso.', toastConfig);
+      toast.success('Aluno desativado com sucesso!', toastConfig);
       pegarAluno()
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
@@ -116,8 +109,6 @@ export const AlunoProvider = ({ children }: IChildren) => {
         message = error.response.data.message || error.response.data.errors[0];
       }  
       toast.error(message, toastConfig);
-    } finally {
-      nProgress.done();
     }
   }
 

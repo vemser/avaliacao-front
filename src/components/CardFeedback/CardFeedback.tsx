@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Box, Button, Divider, IconButton, Modal, Typography } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
+import { FeedbackContext } from '../../context/Comportamental/FeedbackContext';
 import { IFeedbackElementos } from '../../utils/FeedbackInterface/Feedback';
-import { formatarTexto } from '../../utils/functions';
+import { formatarTexto, formatarNomeCompleto } from '../../utils/functions';
 
 const style = {
     position: "absolute" as const,
@@ -24,6 +25,7 @@ const style = {
 
 export const CardFeedback: React.FC<IFeedbackElementos> = (props) => {
     const navigate = useNavigate();
+    const { deletarFeedback } = useContext(FeedbackContext);
 
     const shadow = "rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px"
 
@@ -66,7 +68,7 @@ export const CardFeedback: React.FC<IFeedbackElementos> = (props) => {
 
                 <Box sx={{ width: "100%", display: "flex", flexDirection: "column", justifyContent: "center", margin: "auto", gap: "1rem" }}>
                     <Typography fontSize={15}>
-                        Aluno: <span style={{ fontWeight: 600 }}>{props.alunoDTO.nome}</span>
+                        Aluno: <span style={{ fontWeight: 600 }}>{formatarNomeCompleto(props.alunoDTO.nome)}</span>
                     </Typography>
                     <Typography fontSize={15}>
                         Descrição: <span style={{ fontWeight: 600 }}>{props.descricao}</span>
@@ -84,7 +86,7 @@ export const CardFeedback: React.FC<IFeedbackElementos> = (props) => {
                 <Box sx={style}>
                     <Typography id="modal-modal-titulo" variant="h6" component="h2" color="error">Você realmente deseja excluir?</Typography>
                     <Box sx={{ display: "flex", gap: 2, alignItems: "center", justifyContent: "center" }}>
-                        {/* <Button id="botao-confirmar-modal" onClick={() => { if (idDelete) deletarAtividade(idDelete); handleClose(); }} size="medium" color="success" type="submit" sx={{ mt: 2 }} variant="contained">Confirmar</Button> */}
+                        <Button id="botao-confirmar-modal" onClick={() => { if (idDelete) deletarFeedback(idDelete); handleClose(); }} size="medium" color="success" type="submit" sx={{ mt: 2 }} variant="contained">Confirmar</Button>
                         <Button id="botao-fechar-modal" onClick={handleClose} size="medium" type="submit" sx={{ mt: 2 }} variant="contained">Fechar</Button>
                     </Box>
                 </Box>

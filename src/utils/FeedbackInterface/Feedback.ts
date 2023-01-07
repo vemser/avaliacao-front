@@ -4,6 +4,7 @@ import { ITrilhaDTO, IListProgramaDTO } from "../ModuloInterface/Modulo";
 
 export interface IFeedback {
     pegarFeedback: (pagina?: number, tamanho?: number, filtros?: string) => Promise<void>,
+    deletarFeedback: (idFeedback: number | undefined) => Promise<void>,
     feedback: IFeedbackAPI | null
 }
 

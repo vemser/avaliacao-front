@@ -24,7 +24,7 @@ export const AtividadeProvider = ({ children }: IChildren) => {
       nProgress.start();
       let novaData = { ...atividade, idPrograma: parseInt(atividade.idPrograma), nomeInstrutor: `${usuarioLogado.login.split(".")[0]} ${usuarioLogado.login.split(".")[1]}` }
       await API.post(`/atividade`, novaData, { headers: { Authorization: localStorage.getItem("token") } });
-      toast.success("Atividade criado com sucesso!", toastConfig);
+      toast.success("Atividade criada com sucesso!", toastConfig);
       navigate('/atividades');
     } catch (error: any) {
       let message = "Ops, algo deu errado!";

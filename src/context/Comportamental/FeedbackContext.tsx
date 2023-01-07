@@ -35,8 +35,25 @@ export const FeedbackProvider = ({ children }: IChildren) => {
         }
     }
 
+    const deletarFeedback = async (idFeedback: number | undefined) => {
+        try {
+            await API.delete(`/feedback/desativar-feedback/${idFeedback}`, { headers: { Authorization: localStorage.getItem("token") } });
+
+            pegarFeedback();
+            toast.success('Feedback desativado com sucesso!', toastConfig);
+        } catch (error: any) {
+            let message = "Ops, algo deu errado!";
+            if (error.response.status === 403) {
+                message = "Você não tem permissão para acessar esse recurso"
+            } else if (axios.isAxiosError(error) && error?.response) {
+                message = error.response.data.message || error.response.data.errors[0];
+            }
+            toast.error(message, toastConfig);
+        }
+    }
+
     return (
-        <FeedbackContext.Provider value={{ pegarFeedback, feedback }}>
+        <FeedbackContext.Provider value={{ pegarFeedback, deletarFeedback, feedback }}>
             {children}
         </FeedbackContext.Provider>
     );

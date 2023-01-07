@@ -9,6 +9,7 @@ import { GestorContext } from "../../context/GestorContext";
 import { InstrutorContext } from "../../context/InstrutorContext";
 import { Titulo } from "../../components/Titulo/Titulo";
 import TableHead from "@mui/material/TableHead";
+import { formatarNomeCompleto } from "../../utils/functions";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: { backgroundColor: theme.palette.common.black, color: theme.palette.common.white },
@@ -73,7 +74,7 @@ export const VerificarAluno: React.FC = () => {
 
   return (
     <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
-      <Titulo texto={`Detalhes de ${state.nome}`} />
+      <Titulo texto={`Detalhes de ${formatarNomeCompleto(state.nome)}`} />
 
       <Box component="div" sx={{ width: { xs: "95%", md: "80%" }, display: "flex", alignItems: "end", flexDirection: "column", padding: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
 

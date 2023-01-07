@@ -9,6 +9,7 @@ import * as Componentes from "../../components";
 
 import { useAluno } from "../../context/Comportamental/AlunoContext";
 import { IAlunosElementos } from "../../utils/AlunoInterface/aluno";
+import { formatarTexto } from "../../utils/functions";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: { backgroundColor: theme.palette.common.black, color: theme.palette.common.white },
@@ -67,10 +68,6 @@ export const ListarAluno: React.FC = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
-  function formatarTexto(str: string) {
-    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-  }
 
   const handleChangePage = async (event: unknown, newPage: number) => {
     if (inputFiltro) {

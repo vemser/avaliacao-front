@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { Box, Button, Divider, IconButton, Modal, Typography } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -7,6 +7,7 @@ import EditIcon from "@mui/icons-material/Edit";
 
 import { IAtividadeApi } from '../../utils/AtividadeInterface/AtividadeInterface';
 import { useAtividade } from '../../context/Tecnico/AtividadeContext';
+import { formatarNomeCompleto } from '../../utils/functions';
 
 const style = {
   position: "absolute" as const,
@@ -39,16 +40,6 @@ export const CardAtividade: React.FC<IAtividadeApi> = (props) => {
     let hora: string | string[] = props.dataEntrega.split("T")[1].split(":");
     hora = `${hora[0]}:${hora[1]}`;
     return `${data} - ${hora}`;
-  }
-
-  function formatarNomeCompleto(str: string) {
-    const words = str.split(" ");
-
-    for (let i = 0; i < words.length; i++) {
-      words[i] = words[i][0].toUpperCase() + words[i].substr(1);
-    }
-
-    return words.join(" ");
   }
 
   return (

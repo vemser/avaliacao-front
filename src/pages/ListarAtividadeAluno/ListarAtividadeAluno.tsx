@@ -6,6 +6,7 @@ import { Box, Button, TablePagination, FormControl, InputLabel, Select, MenuItem
 import * as Components from "../../components";
 import { useAtividade } from '../../context/Tecnico/AtividadeContext';
 import { useAuth } from '../../context/AuthContext';
+import { formatarTexto } from '../../utils/functions';
 
 export const ListarAtividadeAluno: React.FC = () => {
   const navigate = useNavigate();
@@ -27,10 +28,6 @@ export const ListarAtividadeAluno: React.FC = () => {
 
   const mudarPagina = async (event: unknown, newPage: number) => {
 
-  }
-
-  function formatarTexto(str: string) {
-    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
   }
 
   return (

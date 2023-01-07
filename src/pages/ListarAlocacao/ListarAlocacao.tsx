@@ -9,6 +9,7 @@ import { Titulo } from "../../components/Titulo/Titulo";
 import { useReservaAlocacao } from "../../context/Alocacao/ReservaAlocacaoContext";
 
 import * as Componentes from "../../components";
+import { formatarTexto } from "../../utils/functions";
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -51,10 +52,6 @@ export const ListarAlocacao: React.FC = () => {
 
   const resetBuscaAlocacao = async () => {
     await pegarReservaAlocacao();
-  }
-
-  function formatarTexto(str: string) {
-    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
   }
 
   useEffect(()=> {

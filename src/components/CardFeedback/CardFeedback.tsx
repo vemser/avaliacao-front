@@ -5,7 +5,8 @@ import { Box, Button, Divider, IconButton, Modal, Typography } from "@mui/materi
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
-import { IFeedbackAPI, IFeedbackElementos } from '../../utils/FeedbackInterface/Feedback';
+import { IFeedbackElementos } from '../../utils/FeedbackInterface/Feedback';
+import { formatarTexto } from '../../utils/functions';
 
 const style = {
     position: "absolute" as const,
@@ -31,10 +32,6 @@ export const CardFeedback: React.FC<IFeedbackElementos> = (props) => {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
-    function formatarTexto(str: string) {
-        return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-    }
 
     return (
         <>

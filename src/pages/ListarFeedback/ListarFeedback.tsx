@@ -12,17 +12,13 @@ export const ListarFeedback: React.FC = () => {
   const { pegarFeedback, feedback } = useContext(FeedbackContext);
   const [inputFiltro, setInputFiltro] = useState<string>('');
 
-  function formatarTexto(str: string) {
-    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-  }
-
   const handleChangePage = async (event: unknown, newPage: number) => {
     if (inputFiltro) {
       filtrarFeedback(inputFiltro, newPage)
     } else {
-      await pegarFeedback(newPage);
+      await pegarFeedback(newPage)
     }
-  };
+  }
 
   const filtrarFeedback = async (valor: any, pagina: number = 0, tamanho: number = 10) => {
     setInputFiltro(valor);
@@ -30,7 +26,7 @@ export const ListarFeedback: React.FC = () => {
     if (!isNaN(valor)) {
       await pegarFeedback(pagina, tamanho, `&idFeedback=${valor}`)
     } else {
-      await pegarFeedback(pagina, tamanho, `&nome=${valor}`);
+      await pegarFeedback(pagina, tamanho, `&nome=${valor}`)
     }
   }
 
@@ -39,7 +35,7 @@ export const ListarFeedback: React.FC = () => {
   }
 
   useEffect(() => {
-    // pegarFeedback();
+    pegarFeedback();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -56,8 +52,8 @@ export const ListarFeedback: React.FC = () => {
         </Box>
 
         <Box sx={{ display: "flex", flexWrap: "wrap", width: "100%", justifyContent: "center", gap: "2rem", mt: 5 }}>
-          {feedback?.elementos.map(item => <Components.CardFeedback key={item.idFeedBack} {...item} />
-          )}
+          {feedback ? feedback?.elementos.map(item => <Components.CardFeedback key={item.idFeedBack} {...item}/>) :
+            <span style={{ color: "gray", userSelect: "none", textAlign: "center" }}>Nenhum feedback encontrado.</span> }
         </Box>
 
         <TablePagination rowsPerPageOptions={[]} component="div" count={feedback ? feedback.totalElementos : 0} rowsPerPage={feedback ? feedback.tamanho : 0} page={feedback ? feedback.pagina : 0} onPageChange={handleChangePage} />

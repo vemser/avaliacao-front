@@ -11,6 +11,7 @@ import EditIcon from "@mui/icons-material/Edit";
 
 import { usePrograma } from '../../context/Tecnico/ProgramaContext';
 import { IProgramas } from '../../utils/programaInterface';
+import { formatarTexto } from '../../utils/functions';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: { backgroundColor: theme.palette.common.black, color: theme.palette.common.white },
@@ -91,10 +92,6 @@ export const ListarPrograma = () => {
   }
 
   const deletar = async (id: number) => { await deletarProgama(id) }
-
-  function formatarTexto(str: string) {
-    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-  }
 
   useEffect(() => {
     pegarPrograma()

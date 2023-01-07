@@ -20,6 +20,7 @@ import { useAluno } from '../../context/Comportamental/AlunoContext';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { alunoSchema } from '../../utils/schemas';
 import { ITecnologiasAluno } from '../../utils/AlunoInterface/aluno';
+import { formatarNomeCompleto } from '../../utils/functions';
 
 const itemHeigth = 48;
 const itemPaddingTop = 8;
@@ -82,7 +83,7 @@ export const EditarAluno = () => {
 
   return (
     <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
-      <Titulo texto={`Editar ${state.nome}`} />
+      <Titulo texto={`Editar ${formatarNomeCompleto(state.nome)}`} />
 
       <Box component="form" onSubmit={handleSubmit(editar)} sx={{
         display: "flex", flexDirection: { xs: "column", lg: "row" }, justifyContent: "space-between", backgroundColor: "var(--branco)", width: { xs: "95%", md: "90%", lg: "85%" }, borderRadius: "10px", padding: {

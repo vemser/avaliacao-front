@@ -48,7 +48,7 @@ export const ListarFeedback: React.FC = () => {
         <Box sx={{ display: "flex", width: "100%", alignItems: "center", justifyContent: "space-between", gap: 2, flexDirection: { xs: "column", sm: "row" } }}>
           <Components.CampoBusca label='Código ou Nome do Aluno' buscar={filtrarFeedback} resetar={resetarFiltroFeedback} />
 
-          <Button variant="contained" onClick={() => navigate("/cadastrar-vaga")} sx={{ width: "auto", display: "flex", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Feedback</Button>
+          <Button variant="contained" onClick={() => navigate("/cadastrar-feedback")} sx={{ width: "auto", display: "flex", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Feedback</Button>
         </Box>
 
         <Box sx={{ display: "flex", flexWrap: "wrap", width: "100%", justifyContent: "center", gap: "2rem", mt: 5 }}>

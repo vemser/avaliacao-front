@@ -6,9 +6,8 @@ import { IFeedbackElementos } from "../../utils/FeedbackInterface/Feedback";
 
 import * as Componentes from "../../components";
 
-import { Box, TablePagination, Button, Paper, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, tableCellClasses, Modal, styled, Tooltip, Typography } from "@mui/material";
-import { Edit, DeleteForever } from "@mui/icons-material";
-import { IAlunosElementos } from "../../utils/AlunoInterface/aluno";
+import { Box, TablePagination, Button, Paper, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, tableCellClasses, Modal, styled, Tooltip, Typography, Autocomplete, TextField } from "@mui/material";
+import { Edit, DeleteForever, ExpandMore, ExpandLess } from "@mui/icons-material";
 import { formatarTexto } from "../../utils/functions";
 
 export const ListarFeedback: React.FC = () => {
@@ -16,6 +15,7 @@ export const ListarFeedback: React.FC = () => {
   const { pegarFeedback, feedback } = useContext(FeedbackContext);
   const { deletarFeedback } = useContext(FeedbackContext);
   const [inputFiltro, setInputFiltro] = useState<string>('');
+  const [estadoFiltro, setEstadoFiltro] = useState<boolean>(false);
 
   const handleChangePage = async (event: unknown, newPage: number) => {
     if (inputFiltro) {
@@ -92,6 +92,15 @@ export const ListarFeedback: React.FC = () => {
     p: 4,
   };
 
+  const top100Films = [
+    { label: 'The Shawshank Redemption', year: 1994 },
+    { label: 'The Godfather', year: 1972 },
+    { label: 'The Godfather: Part II', year: 1974 },
+    { label: 'The Dark Knight', year: 2008 },
+    { label: '12 Angry Men', year: 1957 },
+    { label: "Schindler's List", year: 1993 },
+    { label: 'Pulp Fiction', year: 1994 }]
+
   return (
     <Box sx={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
       <Componentes.Titulo texto="Feedbacks" />
@@ -99,10 +108,53 @@ export const ListarFeedback: React.FC = () => {
       <Box sx={{ width: { xs: "95%", md: "90%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
 
         <Box sx={{ display: "flex", gap: 3, flexDirection: { xs: "column", md: "row" }, justifyContent: "space-between", alignItems: "center", width: "100%", marginBottom: "10px", paddingInline: 2 }}>
-          <Componentes.CampoBusca label="Código ou Aluno" buscar={filtrarFeedback} resetar={resetarFiltroFeedback} />
+          <Button onClick={() => { setEstadoFiltro(!estadoFiltro) }} id="botao-swap" variant='outlined' sx={{ width: "120px", display: "flex", textTransform: "capitalize", justifyContent: "space-between", fontSize: "1rem" }}>Filtros{estadoFiltro ? <ExpandLess /> : <ExpandMore />}</Button>
 
-          <Button onClick={() => navigate("/cadastrar-feedback")} variant="contained" sx={{ width: "auto", paddingLeft: "15px", paddingRight: "15px", display: "flex", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Feedback</Button>
+          <Button onClick={() => navigate("/cadastrar-feedback")} variant="contained" sx={{ width: "auto", display: "flex", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Feedback</Button>
         </Box>
+
+        {estadoFiltro &&
+          <Box sx={{ display: "flex", gap: 3, flexDirection: "row", alignItems: "center", width: "100%", marginBottom: "10px", paddingInline: 2, marginTop: "10px", flexWrap: "wrap" }}>
+            <Autocomplete
+              size="small"
+              disablePortal
+              id="combo-box-demo"
+              options={top100Films}
+              sx={{ minWidth: 200, display: "flex" }}
+              renderInput={(params) => <TextField {...params} label="Movie" />}
+            />
+
+            <Autocomplete
+              size="small"
+              disablePortal
+              id="combo-box-demo"
+              options={top100Films}
+              sx={{ minWidth: 200, display: "flex" }}
+              renderInput={(params) => <TextField {...params} label="Movie" />}
+            />
+
+            <Autocomplete
+              size="small"
+              disablePortal
+              id="combo-box-demo"
+              options={top100Films}
+              sx={{ minWidth: 200, display: "flex" }}
+              renderInput={(params) => <TextField {...params} label="Movie" />}
+            />
+
+            <Autocomplete
+              size="small"
+              disablePortal
+              id="combo-box-demo"
+              options={top100Films}
+              sx={{ minWidth: 200, display: "flex" }}
+              renderInput={(params) => <TextField {...params} label="Movie" />}
+            />
+
+            <Button variant="outlined" sx={{ width: "auto", display: "flex", textTransform: "capitalize", fontSize: "1rem" }}>Resetar Filtro</Button>
+
+            <Button variant="contained" sx={{ width: "auto", display: "flex", textTransform: "capitalize", fontSize: "1rem" }}>Pesquisar</Button>
+          </Box>}
 
         <Paper sx={{ width: "100%", borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px" }}>
           <TableContainer sx={{ maxHeight: 430 }}>

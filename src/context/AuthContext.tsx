@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 import { IAuth, IChildren, IUsuario, IUsuarioLogado } from "../utils/interface";
 
@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }: IChildren) => {
       await decodificarJWT();
       await pegarUsuarioLogado();
       toast.success("Seja bem-vindo(a)", toastConfig);
-      navigate("/home")
+      navigate("/alunos");
     } catch (error) {
       toast.error("Desculpe, houve algum erro", toastConfig);
     } finally {

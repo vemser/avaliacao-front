@@ -90,7 +90,6 @@ export const CadastrarAluno = () => {
 
           <FormControl sx={{ width: "100%" }} variant="filled">
             <InputMask style={{ padding: "18px 13px", borderRadius: "4px 4px 0 0", backgroundColor: '#f0f0f0', border: "none", outline: "none", borderBottom: "1px solid gray", fontFamily: "Inter", fontSize: "1rem", color: "rgba(0, 0, 0, 0.87)" }} mask="(99)99999-9999" type="text" id="telefone" placeholder="Telefone" {...register('telefone')} />
-            <InputMask style={{ padding: "18px 13px", borderRadius: "4px 4px 0 0", backgroundColor: '#f0f0f0', border: "none", outline: "none", borderBottom: "1px solid gray", fontFamily: "Inter", fontSize: "1rem", color: "rgba(0, 0, 0, 0.87)" }} mask="(99)99999-9999" type="text" id="telefone" placeholder="Telefone" {...register('telefone')} />
             {errors.telefone && <Typography id="erro-telefoneAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.telefone.message}</Typography>}
           </FormControl>
 
@@ -119,7 +118,6 @@ export const CadastrarAluno = () => {
               options={tecnologias ? tecnologias.elementos.map((tecnologia) => ({ label: `${tecnologia.nome}`, id: tecnologia.idTecnologia })) : []} renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
               renderInput={(params) => <TextField {...params} label="Tecnologias" variant="filled" onChange={(e) => setInputTecnologia(e.target.value)} />} />
 
-            <Button id="botao-cadastrar-tecnologia" variant={"contained"} sx={{ width: '10%', fontSize: "20px" }} onClick={() => { if (inputTecnologia) cadastrarTecnologia({ nome: inputTecnologia }); setInputTecnologia('') }}>+</Button>
             <Button id="botao-cadastrar-tecnologia" variant={"contained"} sx={{ width: '10%', fontSize: "20px" }} onClick={() => { if (inputTecnologia) cadastrarTecnologia({ nome: inputTecnologia }); setInputTecnologia('') }}>+</Button>
           </FormControl>
 

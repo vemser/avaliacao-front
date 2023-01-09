@@ -51,6 +51,8 @@ function AppRoutes() {
                                         <Route path="/acompanhamentos" element={<Pages.ListarAcompanhamento />} />
                                         <Route path="/editar-acompanhamento" element={<Pages.EditarAcompanhamento />} />
                                         <Route path="/editar-avaliacao" element={<Pages.EditarAvaliacao />} />
+                                        <Route path="/avaliacoes" element={<Pages.ListarAvaliacao />} />
+                                        <Route path="/cadastrar-avaliacao" element={<Pages.CadastrarAvaliacao/>}/>
                                       </Route>
 
                                       <Route element={<Components.TecnicoRotas />}>

@@ -7,7 +7,6 @@ export { VerificarAluno } from "./VerificarAluno/VerificarAluno";
 export { AvaliarAcompanhamento } from "./AvaliarAcompanhamento/AvaliarAcompanhamento";
 export { CadastrarFeedback } from "./CadastrarFeedback/CadastrarFeedback";
 export { ListarAcompanhamento } from "./ListarAcompanhamento/ListarAcompanhamento";
-export { EditarAvaliacao } from "./EditarAvaliacao/EditarAvaliacao";
 export { EditarFeedback } from "./EditarFeedback/EditarFeedback";
 export { EditarUsuario } from "./EditarUsuario/EditarUsuario";
 export { ListarFeedback } from "./ListarFeedback/ListarFeedback";
@@ -37,3 +36,6 @@ export {ListarAtividade} from "./ListarAtividade/ListarAtividade"
 export {TelaPrinciapl} from "./TelaPrincipal/TelaPrinciapl"
 export {ListarAtividadeAluno} from "./ListarAtividadeAluno/ListarAtividadeAluno"
 export { EditarAtividadeAluno } from './EditarAtividadeAluno/EditarAtividadeAluno'
+export {ListarAvaliacao} from "./ListarAvaliacao/ListarAvaliacao"
+export {CadastrarAvaliacao} from "./CadastrarAvaliacao/CadastrarAvaliacao"
+export {EditarAvaliacao} from "./EditarAvaliacao/EditarAvaliacao";

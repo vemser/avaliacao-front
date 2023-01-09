@@ -33,7 +33,7 @@ const top100Films = [
   { label: 'Pulp Fiction', year: 1994 }
 ];
 
-export const EditarAvaliacao = () => {
+export const CadastrarAvaliacao = () => {
   const navigate = useNavigate();
   
   const { pegarProgramaAtivo, programas } = usePrograma();
@@ -54,7 +54,7 @@ export const EditarAvaliacao = () => {
 
   return (
     <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
-        <Componentes.Titulo texto="Editar avalicação" />
+        <Componentes.Titulo texto="Cadastrar avalicação" />
 
 
       <Box component="form"  sx={{
@@ -70,7 +70,6 @@ export const EditarAvaliacao = () => {
             id="acompanhemnto"
             options={top100Films}
             renderInput={(params) => <TextField {...params} label="Acompanhamento" variant="filled"/>}
-            disabled
           />
           </FormControl>
 
@@ -81,7 +80,6 @@ export const EditarAvaliacao = () => {
               isOptionEqualToValue={(option, value) => option.label === value.label}
               options={programas ? programas.elementos.map(item => ({ label: `${item.idPrograma} - ${item.nome}` })) : []}
               renderInput={(params) => <TextField {...params}  label="Programa" variant="filled" />}
-              disabled
             />
           </FormControl>
 
@@ -92,12 +90,11 @@ export const EditarAvaliacao = () => {
               isOptionEqualToValue={(option, value) => option.label === value.label}
               options={trilhas ? trilhas.elementos.map(item => ({ label: `${item.idTrilha} - ${item.nome}` })) : []}
               renderInput={(params) => <TextField {...params}  label="Trilha" variant="filled" />}
-              disabled
             />
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
-            <Autocomplete disablePortal id="aluno" isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: `${aluno.idAluno} - ${aluno.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} disabled />
+            <Autocomplete disablePortal id="aluno" isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: `${aluno.idAluno} - ${aluno.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />
           </FormControl>
 
         </Stack>
@@ -120,7 +117,8 @@ export const EditarAvaliacao = () => {
 
           <FormControl sx={{ width: "100%" }}>
             <TextField
-              id="dataAvalicao" label="Data" type="date" defaultValue={novaData} sx={{ width: "100%" }} InputLabelProps={{ shrink: true }} variant="filled" disabled />
+              id="dataAvalicao" label="Data" type="date" defaultValue={novaData} sx={{ width: "100%" }} InputLabelProps={{ shrink: true }} variant="filled" />
+
           </FormControl>
 
           <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>

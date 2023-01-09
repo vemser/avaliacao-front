@@ -16,7 +16,6 @@ import { useModulo } from '../../context/Tecnico/ModuloContext';
 import { usePrograma } from '../../context/Tecnico/ProgramaContext';
 import { moduloSchema } from '../../utils/schemas';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { ITrilhasElementos } from '../../utils/TrilhaInterface/trilha';
 
 const itemHeigth = 48;
 const itemPaddingTop = 8;
@@ -33,7 +32,9 @@ export const CadastrarModulo = () => {
   const navigate = useNavigate();
 
   const [programaSelecionado, setProgramaSelecionado] = useState<number[]>([]);
+  const [trilhaSelecionado, setTrilhaSelecionado] = useState<number[]>([]);
   const [estadoErro, setEstadoErro] = useState<boolean>(false);
+  const [estadoErroTrilha, setEstadoErroTrilha] = useState<boolean>(false);
 
   const { pegarTrilha, trilhas } = useTrilha();
   const { pegarProgramaAtivo, programas } = usePrograma();
@@ -49,6 +50,11 @@ export const CadastrarModulo = () => {
     resolver: yupResolver(moduloSchema)
   });
 
+  const cadastrar = async (data: any) => {
+    const novoData = { ...data, trilha: trilhaSelecionado, listPrograma: programaSelecionado }
+    if (programaSelecionado.length > 0 && trilhaSelecionado.length > 0) await cadastrarModulo(novoData)
+  }
+
   const erroPrograma = () => {
     if (programaSelecionado.length > 0) {
       setEstadoErro(false)
@@ -57,18 +63,33 @@ export const CadastrarModulo = () => {
     }
   }
 
-  const cadastrar = (data: any) => {
-    const novoData = { ...data, idTrilha: parseInt(data.idTrilha), listPrograma: programaSelecionado }
-    if (programaSelecionado.length > 0) cadastrarModulo(novoData)
+  const erroTrilha = () => {
+    if (trilhaSelecionado.length > 0) {
+      setEstadoErroTrilha(false)
+    } else {
+      setEstadoErroTrilha(true)
+    }
   }
 
   const handleChange = (event: any) => {
-    setEstadoErro(false)
+    setEstadoErro(false);
     const {
       target: { value },
     } = event;
     if (!(typeof value === 'number')) {
       setProgramaSelecionado(
+        value
+      );
+    }
+  };
+
+  const pegarTrilhaSelect = (event: any) => {
+    setEstadoErroTrilha(false);
+    const {
+      target: { value },
+    } = event;
+    if (!(typeof value === 'number')) {
+      setTrilhaSelecionado(
         value
       );
     }
@@ -89,14 +110,20 @@ export const CadastrarModulo = () => {
           </FormControl>
 
           <FormControl variant="filled" sx={{ width: "100%" }}>
-            <InputLabel id="aluno">Trilha</InputLabel>
-            <Select MenuProps={MenuProps} {...register("idTrilha")} defaultValue="" labelId="demo-simple-select-filled-label" id="aluno" >
+            <InputLabel id="label-trilha">Trilha</InputLabel>
+            <Select id="select-trilha" MenuProps={MenuProps} multiple value={trilhaSelecionado} onChange={pegarTrilhaSelect} renderValue={(selected) => trilhas?.elementos.filter((trilha) => selected.includes(trilha.idTrilha)).map((trilha) => trilha.nome).join(', ')}>
               <MenuItem value="initial-trilha" disabled><em>Selecione a trilha do módulo</em></MenuItem>
-              {trilhas?.elementos.map((trilha: ITrilhasElementos) => (
-                <MenuItem key={trilha.idTrilha} id={`${trilha.idTrilha}`} value={trilha.idTrilha}>{trilha.nome}</MenuItem>
-              ))}
+              {trilhas?.elementos.map((trilha) => {
+                return (
+                  <MenuItem key={trilha.idTrilha} value={trilha.idTrilha}>
+                    <Checkbox checked={trilhaSelecionado.indexOf(trilha.idTrilha) > -1} />
+                    <ListItemText primary={trilha.nome} />
+                  </MenuItem>
+                )
+              }
+              )}
             </Select>
-            {errors.idTrilha && <Typography id="erro-trilhaAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.idTrilha.message}</Typography>}
+            {estadoErroTrilha && <Typography id="erro-programaAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">Por favor, escolha uma trilha</Typography>}
           </FormControl>
 
           <FormControl variant="filled" sx={{ width: "100%" }}>
@@ -120,7 +147,7 @@ export const CadastrarModulo = () => {
         <Box sx={{ display: "flex", width: "100%", justifyContent: "center", alignItems: "center", bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>
           <Button type="button" onClick={() => { navigate(-1) }} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d " }, textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cancelar</Button>
 
-          <Button type='submit' onClick={() => { erroPrograma() }} variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cadastrar</Button>
+          <Button type='submit' onClick={() => { erroPrograma(); erroTrilha() }} variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cadastrar</Button>
         </Box>
       </Box>
     </Box>

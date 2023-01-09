@@ -1,12 +1,12 @@
-import React, { useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
 
-import { TableCell, tableCellClasses, TableRow, Box, Paper, TableContainer, Table, TableBody, Button, TablePagination, styled, TableHead } from "@mui/material";
+import { TableCell, Tooltip, tableCellClasses, TableRow, Box, Paper, TableContainer, Table, TableBody, Button, TablePagination, styled, TableHead } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 
 import { GestorContext } from "../../context/GestorContext";
-import { Titulo } from "../../components/Titulo/Titulo";
+import * as Componentes from "../../components";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: { backgroundColor: theme.palette.common.black, color: theme.palette.common.white },
@@ -19,7 +19,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 interface Column {
-  id: "codigo" | "titulo" | "dataInicial" | "descricao" | "acoes";
+  id: "codigo" | "titulo" | "dataInicial" | "programa" | "descricao" | "acoes";
   label: string;
   minWidth?: number;
   align?: "right";
@@ -29,6 +29,7 @@ interface Column {
 const columns: Column[] = [
   { id: "codigo", label: "Código", minWidth: 5 },
   { id: "titulo", label: "Título", minWidth: 5 },
+  { id: "programa", label: "Programa", minWidth: 5 },
   { id: "dataInicial", label: "Data inicial", minWidth: 5 },
   { id: "descricao", label: "Descrição", minWidth: 5, align: "right", format: (value: number) => value.toLocaleString("en-US") },
   { id: "acoes", label: "Ações", minWidth: 5, align: "right", format: (value: number) => value.toLocaleString("en-US") }
@@ -40,18 +41,29 @@ export const ListarAcompanhamento = () => {
 
   const handleChangePage = async (event: unknown, newPage: number) => { await pegarAcompanhamento(newPage); };
 
-  useEffect(() => { 
+  const filtrarAcompanhamento = async (valor: any, pagina: number = 0, tamanho: number = 10) => {
+    console.log(valor);
+  }
+
+  const resetFiltroAcompanhamento = async () => {
+    console.log("resetar");
+  }
+
+  useEffect(() => {
     // pegarAcompanhamento()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
-      <Titulo texto="Acompanhamentos" />
+      <Componentes.Titulo texto="Acompanhamentos" />
 
       <Box sx={{ width: { xs: "95%", md: "80%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
 
-        <Button onClick={() => navigate("/cadastrar-acompanhamento")} variant="contained" sx={{ width: "auto", paddingLeft: "15px", paddingRight: "15px", display: "flex", marginBottom: "10px", marginRight: "14px", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Acompanhamento</Button>
+        <Box sx={{ display: "flex", gap: 3, flexDirection: { xs: "column", md: "row" }, justifyContent: "space-between", alignItems: "center", width: "100%", marginBottom: "10px", paddingInline: 2 }}>
+          <Componentes.CampoBusca label="Nome" buscar={filtrarAcompanhamento} resetar={resetFiltroAcompanhamento} />
+          <Button onClick={() => navigate("/cadastrar-acompanhamento")} variant="contained" sx={{ width: "auto", paddingLeft: "15px", paddingRight: "15px", display: "flex", marginBottom: "10px", marginRight: "14px", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Acompanhamento</Button>
+        </Box>
 
         <Paper sx={{ width: "100%", borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px" }}>
           <TableContainer sx={{ maxHeight: 430 }}>
@@ -66,17 +78,26 @@ export const ListarAcompanhamento = () => {
               </TableHead>
 
               <TableBody>
-                {acompanhamento.map((acompanhamentos) => (
+                {acompanhamento?.map((acompanhamentos) => (
                   <StyledTableRow key={acompanhamentos.idAcompanhamento}>
 
                     <StyledTableCell sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} component="td" scope="row"> {acompanhamentos.idAcompanhamento}</StyledTableCell>
 
-                    <StyledTableCell id={`titulo-${acompanhamentos.idAcompanhamento}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} >{acompanhamentos.titulo}</StyledTableCell>
+                    <Tooltip title={acompanhamentos.titulo} PopperProps={{ sx: { marginTop: "-25px !important" } }} arrow>
+                      <StyledTableCell id={`titulo-${acompanhamentos.idAcompanhamento}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} >{acompanhamentos.titulo}</StyledTableCell>
+                    </Tooltip>
 
+                    <Tooltip title={acompanhamentos.descricao} PopperProps={{ sx: { marginTop: "-25px !important" } }} arrow>
+                      <StyledTableCell id={`titulo-programa-${acompanhamentos.idAcompanhamento}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} >{acompanhamentos.descricao}</StyledTableCell>
+                    </Tooltip>
 
-                    <StyledTableCell id={`dataInicio-${acompanhamentos.idAcompanhamento}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{acompanhamentos.dataInicio.replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")}</StyledTableCell>
+                    <Tooltip title={acompanhamentos.dataInicio.replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")} PopperProps={{ sx: { marginTop: "-25px !important" } }} arrow>
+                      <StyledTableCell id={`dataInicio-${acompanhamentos.idAcompanhamento}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{acompanhamentos.dataInicio.replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")}</StyledTableCell>
+                    </Tooltip>
 
-                    <StyledTableCell id={`descricao-${acompanhamentos.idAcompanhamento}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} >{acompanhamentos.descricao}</StyledTableCell>
+                    <Tooltip title={acompanhamentos.descricao} PopperProps={{ sx: { marginTop: "-25px !important" } }} arrow>
+                      <StyledTableCell id={`descricao-${acompanhamentos.idAcompanhamento}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} >{acompanhamentos.descricao}</StyledTableCell>
+                    </Tooltip>
 
                     <StyledTableCell id={`cargo-${acompanhamentos.idAcompanhamento}`} sx={{ textAlign: "center" }}><Button id={`botao-avaliar-acompanhamento-${acompanhamentos.idAcompanhamento}`}
                       onClick={() => { navigate("/editar-acompanhamento", { state: acompanhamentos }) }}

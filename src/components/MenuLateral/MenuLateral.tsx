@@ -116,6 +116,13 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
                         </ListItemIcon>
                         <ListItemText primary="Acompanhamentos" />
                       </ListItemButton>
+
+                      <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/avaliacoes") }}>
+                        <ListItemIcon>
+                          <Event sx={{ color: "var(--azul-escuro-dbc)" }} />
+                        </ListItemIcon>
+                        <ListItemText primary="Avaliação" />
+                      </ListItemButton>
                     </List>
                   </Collapse>
                 </>)}

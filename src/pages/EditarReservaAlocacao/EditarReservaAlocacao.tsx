@@ -52,7 +52,7 @@ export const EditarReservaAlocacao = () => {
               <MenuItem id="cancelado" value="CANCELADO">Cancelado</MenuItem>
 
             </Select>
-
+            
           </FormControl>
 
           <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>

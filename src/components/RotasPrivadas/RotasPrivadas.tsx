@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import CircularProgress from '@mui/material/CircularProgress';
 import { Outlet, Navigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
@@ -17,7 +18,10 @@ export const ComportamentalRotas = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return cargos.some((cargo: string) => cargo === "ROLE_ADMIN" || cargo === "ROLE_GESTOR" || cargo === "ROLE_GESTAO_DE_PESSOAS" || cargo === "ROLE_INSTRUTOR") ? (<Outlet />) : <Navigate to="/home" />
+  if (cargos.length > 0) {
+    return cargos.some((cargo: string) => cargo === "ROLE_ADMIN" || cargo === "ROLE_GESTOR" || cargo === "ROLE_GESTAO_DE_PESSOAS" || cargo === "ROLE_INSTRUTOR")
+      ? (<Outlet />) : <Navigate to="/alunos" />
+  } else return <CircularProgress />
 }
 
 export const TecnicoRotas = () => {
@@ -28,7 +32,10 @@ export const TecnicoRotas = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return cargos.some((cargo: string) => cargo === "ROLE_ADMIN" || cargo === "ROLE_GESTOR" || cargo === "ROLE_GESTAO_DE_PESSOAS" || cargo === "ROLE_INSTRUTOR") ? (<Outlet />) : <Navigate to="/home" />
+  if (cargos.length > 0) {
+    return cargos.some((cargo: string) => cargo === "ROLE_ADMIN" || cargo === "ROLE_GESTOR" || cargo === "ROLE_GESTAO_DE_PESSOAS" || cargo === "ROLE_INSTRUTOR")
+      ? (<Outlet />) : <Navigate to="/alunos" />
+  } else return <CircularProgress />
 }
 
 export const AlocacaoRotas = () => {
@@ -39,6 +46,9 @@ export const AlocacaoRotas = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return cargos.some((cargo: string) => cargo === "ROLE_ADMIN" || cargo === "ROLE_GESTOR" || cargo === "ROLE_GESTAO_DE_PESSOAS") ? (<Outlet />) : <Navigate to="/home" />
+  if (cargos.length > 0) {
+    return cargos.some((cargo: string) => cargo === "ROLE_ADMIN" || cargo === "ROLE_GESTOR" || cargo === "ROLE_GESTAO_DE_PESSOAS")
+      ? (<Outlet />) : <Navigate to="/alunos" />
+  } else return <CircularProgress />
 }
 

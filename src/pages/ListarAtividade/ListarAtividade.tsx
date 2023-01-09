@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Box, Button, TablePagination } from '@mui/material';
 
 import * as Components from "../../components";
+
 import { useAtividade } from '../../context/Tecnico/AtividadeContext';
 
 export const ListarAtividade: React.FC = () => {

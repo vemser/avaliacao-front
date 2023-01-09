@@ -1,4 +1,5 @@
 import { number } from "yup";
+import { IProgramas } from "./programaInterface";
 
 export interface ILogin {
   password: string,
@@ -184,8 +185,11 @@ export interface ICriarAcompanhamento {
 }
 
 export interface IEditarAcompanhamento {
+  idPrograma: number
   titulo: string,
-  descricao: string
+  descricao: string,
+  dataInicio: string,
+  dataFinal: string,
 }
 
 export interface ICadastrarFeedback {
@@ -226,11 +230,12 @@ export interface IAvaliarAcompanhamento {
   dataCriacao: string
 }
 
-export interface ICadastrarAcompanhamento{
-  idAcompanhamento: number,
+export interface ICadastrarAcompanhamento {
+  idPrograma: number
   titulo: string,
   descricao: string,
-  dataInicio: string
+  dataInicio: string,
+  dataFinal: string,
 }
 
 export interface IColaborador{

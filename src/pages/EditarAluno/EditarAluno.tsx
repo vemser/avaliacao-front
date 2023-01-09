@@ -146,7 +146,7 @@ export const EditarAluno = () => {
             </Select>
           </FormControl>
 
-          <FormControl sx={{ width: "100%" }} >
+          <FormControl sx={{ width: "100%" }} variant="filled">
             <Autocomplete disablePortal id="programa" onChange={handleChange}
               defaultValue={{ label: `${state.programa.idPrograma} - ${state.programa.nome}`, id: state.programa.idPrograma }}
               isOptionEqualToValue={(option) => option.label === `${state.programa.idPrograma} - ${state.programa.nome}`}

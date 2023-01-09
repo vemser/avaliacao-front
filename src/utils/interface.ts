@@ -1,5 +1,3 @@
-import { number } from "yup";
-
 export interface ILogin {
   password: string,
   showPassword: boolean,

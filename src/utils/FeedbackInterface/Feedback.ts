@@ -27,8 +27,14 @@ export interface IFeedbackElementos {
     nomeInstrutor: string,
     data: string,
     alunoDTO: IAlunosElementos,
-    programaDTO: IProgramas,
-    trilhaDTO: ITrilhaDTO[],
+    moduloDTO: IModuloDTO[]
+}
+
+export interface IModuloDTO {
+    idModulo: number,
+    nome: string,
+    ativo: string,
+    trilhaDTO: ITrilhaDTO,
     listProgramaDTO: IListProgramaDTO
 }
 

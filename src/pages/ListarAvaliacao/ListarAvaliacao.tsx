@@ -8,6 +8,7 @@ import { Edit, DeleteForever } from "@mui/icons-material";
 import * as Componentes from "../../components";
 
 import { useModulo } from "../../context/Tecnico/ModuloContext";
+import Tooltip from "@mui/material/Tooltip";
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -123,7 +124,11 @@ export const ListarAvaliacao = () => {
 
                     <StyledTableCell id="programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{data.nome}</StyledTableCell>
 
-                    <StyledTableCell id="trilha" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{data.trilhaDTO.nome}</StyledTableCell>
+                    <Tooltip title={data.trilhaDTO.map((trilha) => `${trilha.nome}`).join(', ')} PopperProps={{ sx: { marginTop: "-25px !important" } }} arrow>
+                      <StyledTableCell id="trilha" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>
+                        {data.trilhaDTO.map((trilha) => `${trilha.nome}`).join(', ')}
+                      </StyledTableCell>
+                    </Tooltip>
 
                     <StyledTableCell id="programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>
                       {data.listProgramaDTO.map((programa) => `${programa.nome}`).join(', ')}

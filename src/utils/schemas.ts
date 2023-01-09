@@ -63,7 +63,9 @@ export const AlterarSenhaSchema = yup.object().shape({
 export const CadastrarAcompanhamentoSchema = yup.object().shape({
   titulo: yup.string().required("Por favor, digite algum titulo"),
   descricao: yup.string().required("Por favor, digite alguma coisa na descrição"),
-  dataInicio: yup.string().required("Por favor, escolha uma data inicial")
+  dataInicio: yup.string().required("Por favor, escolha uma data inicial"),
+  dataFinal: yup.string(),
+  idPrograma: yup.string().required("Por favor, insira um programa")
 })
 
 export const EditarAvaliacaoSchema = yup.object().shape({
@@ -82,8 +84,11 @@ export const CriarAvaliacaoSchema = yup.object().shape({
 })
 
 export const EditarAcompanhamentoSchema = yup.object().shape({
-  titulo: yup.string().required("Por favor, digite um titulo para o acompanhamento"),
-  descricao: yup.string().required("Por favor, preencha a descrição"),
+  titulo: yup.string().required("Por favor, digite algum titulo"),
+  descricao: yup.string().required("Por favor, digite alguma coisa na descrição"),
+  dataInicio: yup.string().required("Por favor, escolha uma data inicial"),
+  dataFinal: yup.string(),
+  idPrograma: yup.string().required("Por favor, insira um programa")
 })
 
 export const ProgramaSchema = yup.object().shape({

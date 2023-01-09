@@ -112,7 +112,7 @@ export const CadastrarAtividade = () => {
           <FormControl sx={{ width: "100%" }} variant="filled">
             <InputLabel id="programas-list">Programas</InputLabel>
             <Select MenuProps={MenuProps} {...register("idPrograma")} defaultValue="" label="Programas" labelId="demo-simple-select-filled-label" id="aluno" >
-              <MenuItem value="initial-trilha" disabled><em>Selecione um programa</em></MenuItem>
+              <MenuItem value="initial-programa" disabled><em>Selecione um programa</em></MenuItem>
               {programas?.elementos.map((programas: IProgramas) => 
                 <MenuItem key={programas.idPrograma} id={`${programas.idPrograma}`} value={programas.idPrograma}>{programas.nome}</MenuItem>
               )}

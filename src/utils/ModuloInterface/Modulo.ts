@@ -22,7 +22,7 @@ export interface IModuloElementos {
   dataInicio: string,
   dataFim: string,
   ativo: string,
-  trilhaDTO: ITrilhaDTO,
+  trilhaDTO: ITrilhaDTO[],
   listProgramaDTO: IListProgramaDTO[]
 }
 
@@ -44,6 +44,6 @@ export interface IListProgramaDTO {
 
 export interface ICadastroModulo {
   nome: string,
-  idTrilha: number | string,
+  idTrilha: number[],
   listPrograma: number[]
 }

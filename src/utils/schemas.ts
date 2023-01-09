@@ -95,7 +95,6 @@ export const ProgramaSchema = yup.object().shape({
 
 export const moduloSchema = yup.object().shape({
   nome: yup.string().required("Por favor, insira um nome para a trilha").matches(regexNome, 'Por favor, digite apenas letras.'),
-  idTrilha: yup.string().required("Por favor, selecione uma trilha")
 })
 
 export const ClienteSchema = yup.object().shape({

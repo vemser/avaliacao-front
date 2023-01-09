@@ -6,14 +6,14 @@ import { useForm } from "react-hook-form";
 
 import logo from "../../assets/dbc-logo.webp";
 
-import { Box, Stack, FormControl, Button, InputLabel, Select, MenuItem, TextField, OutlinedInput, Checkbox, ListItemText, Typography } from '@mui/material';
+import { Box, Stack, FormControl, Button, InputLabel, Select, MenuItem, TextField, Checkbox, ListItemText, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useTrilha } from '../../context/Tecnico/TrilhaContext';
 import { usePrograma } from '../../context/Tecnico/ProgramaContext';
 import { useModulo } from '../../context/Tecnico/ModuloContext';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { moduloSchema } from '../../utils/schemas';
-import { ICadastroModulo, IListProgramaDTO } from '../../utils/ModuloInterface/Modulo';
+import { ICadastroModulo, IListProgramaDTO, ITrilhaDTO } from '../../utils/ModuloInterface/Modulo';
 
 const itemHeigth = 48;
 const itemPaddingTop = 8;
@@ -31,20 +31,24 @@ export const EditarModulo = () => {
   const { state } = useLocation();
 
   const { trilhas, pegarTrilha } = useTrilha();
-  const { pegarPrograma, programas } = usePrograma();
+  const { programas, pegarProgramaAtivo } = usePrograma();
   const { editarModulo } = useModulo();
 
   const [programaSelecionado, setProgramaSelecionado] = useState<number[]>([]);
+  const [trilhaSelecionado, setTrilhaSelecionado] = useState<number[]>([]);
   const [estadoErro, setEstadoErro] = useState<boolean>(false);
+  const [estadoErroTrilha, setEstadoErroTrilha] = useState<boolean>(false);
 
   const initialState = () => {
-    let result = state.listProgramaDTO.map((programas: IListProgramaDTO) => programas.idPrograma)
-    setProgramaSelecionado(result)
+    let result = state.listProgramaDTO.map((programas: IListProgramaDTO) => programas.idPrograma);
+    setProgramaSelecionado(result);
+    let result2 = state.trilhaDTO.map((trilhas: ITrilhaDTO) => trilhas.idTrilha);
+    setTrilhaSelecionado(result2);
   }
 
   useEffect(() => {
     pegarTrilha(0, trilhas?.totalElementos);
-    pegarPrograma(0, programas?.totalElementos);
+    pegarProgramaAtivo(0, programas?.totalElementos);
     initialState()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -62,8 +66,16 @@ export const EditarModulo = () => {
   }
 
   const editar = (data: any) => {
-    const novoData = { ...data, dataInicio: state.dataInicio, dataFim: state.dataFim, idTrilha: parseInt(data.idTrilha), listPrograma: programaSelecionado }
-    if (programaSelecionado.length > 0) editarModulo(novoData, state.idModulo)
+    const novoData = { ...data, trilha: trilhaSelecionado, listPrograma: programaSelecionado };
+    if (programaSelecionado.length > 0 && trilhaSelecionado.length > 0) editarModulo(novoData, state.idModulo);
+  }
+
+  const erroTrilha = () => {
+    if (trilhaSelecionado.length > 0) {
+      setEstadoErroTrilha(false)
+    } else {
+      setEstadoErroTrilha(true)
+    }
   }
 
   const handleChange = (event: any) => {
@@ -74,6 +86,18 @@ export const EditarModulo = () => {
     setProgramaSelecionado(
       typeof value === 'string' ? value.split(',') : value,
     );
+  };
+
+  const pegarTrilhaSelect = (event: any) => {
+    setEstadoErroTrilha(false);
+    const {
+      target: { value },
+    } = event;
+    if (!(typeof value === 'number')) {
+      setTrilhaSelecionado(
+        value
+      );
+    }
   };
 
   return (
@@ -87,17 +111,24 @@ export const EditarModulo = () => {
         <Stack component="div" spacing={3} sx={{ width: "100%", display: "flex", alignItems: { xs: "start", md: "start" } }}>
           <FormControl sx={{ width: "100%" }}>
             <TextField id="nome-modulo" defaultValue={state.nome} label="Digite um nome" placeholder="Digite um nome" multiline variant="filled" {...register('nome')} />
+            {errors.nome && <Typography id="erro-nomeModulo" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.nome.message}</Typography>}
           </FormControl>
 
           <FormControl variant="filled" sx={{ width: "100%" }}>
-            <InputLabel id="trilha-modulo">Selecione uma trilha</InputLabel>
-            <Select MenuProps={MenuProps} {...register("idTrilha")} labelId="demo-simple-select-filled-label" id="trilha-modulo" defaultValue={state.trilhaDTO.idTrilha}>
-              <MenuItem value="initial-stack" disabled><em>Selecione uma trilha</em></MenuItem>
-              {trilhas?.elementos.map((trilha) => (
-                <MenuItem key={trilha.idTrilha} id={`id-trilha=${trilha.idTrilha}`} value={`${trilha.idTrilha}`}>{trilha.nome}</MenuItem>
-              ))}
+            <InputLabel id="label-trilha">Trilha</InputLabel>
+            <Select id="select-trilha" MenuProps={MenuProps} multiple value={trilhaSelecionado} onChange={pegarTrilhaSelect} renderValue={(selected) => trilhas?.elementos.filter((trilha) => selected.includes(trilha.idTrilha)).map((trilha) => trilha.nome).join(', ')}>
+              <MenuItem value="initial-trilha" disabled><em>Selecione a trilha do módulo</em></MenuItem>
+              {trilhas?.elementos.map((trilha) => {
+                return (
+                  <MenuItem key={trilha.idTrilha} value={trilha.idTrilha}>
+                    <Checkbox checked={trilhaSelecionado.indexOf(trilha.idTrilha) > -1} />
+                    <ListItemText primary={trilha.nome} />
+                  </MenuItem>
+                )
+              }
+              )}
             </Select>
-            {errors.idTrilha && <Typography id="erro-trilhaAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.idTrilha.message}</Typography>}
+            {estadoErroTrilha && <Typography id="erro-programaAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">Por favor, escolha uma trilha</Typography>}
           </FormControl>
 
           <FormControl variant="filled" sx={{ width: "100%" }}>
@@ -118,7 +149,7 @@ export const EditarModulo = () => {
         <Box sx={{ display: "flex", width: "100%", justifyContent: "center", alignItems: "center", bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>
           <Button type="button" onClick={() => { navigate(-1) }} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d " }, textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cancelar</Button>
 
-          <Button type="submit" onClick={() => { erroPrograma() }} variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Salvar</Button>
+          <Button type="submit" onClick={() => { erroPrograma(); erroTrilha() }} variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Salvar</Button>
         </Box>
       </Box>
     </Box>

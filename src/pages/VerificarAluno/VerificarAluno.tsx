@@ -2,13 +2,15 @@ import React, { useContext } from "react";
 
 import { useLocation, useNavigate } from "react-router-dom"
 
-import { TablePagination, Box, Typography, Stack, Button, Paper, styled, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableRow } from "@mui/material";
+import { TablePagination, Box, Typography, Stack, Button, Paper, styled, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableRow, TableHead } from "@mui/material";
+
 import EditIcon from "@mui/icons-material/Edit";
 
 import { GestorContext } from "../../context/GestorContext";
 import { InstrutorContext } from "../../context/InstrutorContext";
-import { Titulo } from "../../components/Titulo/Titulo";
-import TableHead from "@mui/material/TableHead";
+
+import * as Componentes from "../../components";
+
 import { formatarNomeCompleto } from "../../utils/functions";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -26,15 +28,14 @@ interface ColumnFeedback {
   label: string;
   minWidth?: number;
   align?: "right";
-  format?: (value: number) => string;
 }
 
 const columnsFeedback: ColumnFeedback[] = [
   { id: "codigo", label: "Código", minWidth: 5 },
   { id: "descricao", label: "Descrição", minWidth: 5 },
   { id: "status", label: "Status", minWidth: 5 },
-  { id: "responsavel", label: "Responsável", minWidth: 5, align: "right", format: (value: number) => value.toLocaleString("en-US") },
-  { id: "acoes", label: "Ações", minWidth: 5, align: "right", format: (value: number) => value.toLocaleString("en-US") }
+  { id: "responsavel", label: "Responsável", minWidth: 5 },
+  { id: "acoes", label: "Ações", minWidth: 5 }
 ];
 
 interface Column {
@@ -42,15 +43,14 @@ interface Column {
   label: string;
   minWidth?: number;
   align?: "right";
-  format?: (value: number) => string;
 }
 
 const columns: Column[] = [
   { id: "codigo", label: "Código", minWidth: 5 },
   { id: "dataCriacao", label: "Data Criação", minWidth: 5 },
   { id: "descricao", label: "Descrição", minWidth: 5 },
-  { id: "responsavel", label: "Responsável", minWidth: 5, align: "right", format: (value: number) => value.toLocaleString("en-US") },
-  { id: "acoes", label: "Ações", minWidth: 5, align: "right", format: (value: number) => value.toLocaleString("en-US") }
+  { id: "responsavel", label: "Responsável", minWidth: 5 },
+  { id: "acoes", label: "Ações", minWidth: 5 }
 ];
 
 export const VerificarAluno: React.FC = () => {
@@ -74,7 +74,7 @@ export const VerificarAluno: React.FC = () => {
 
   return (
     <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
-      <Titulo texto={`Detalhes de ${formatarNomeCompleto(state.nome)}`} />
+      <Componentes.Titulo texto={`Detalhes de ${formatarNomeCompleto(state.nome)}`} />
 
       <Box component="div" sx={{ width: { xs: "95%", md: "80%" }, display: "flex", alignItems: "end", flexDirection: "column", padding: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
 

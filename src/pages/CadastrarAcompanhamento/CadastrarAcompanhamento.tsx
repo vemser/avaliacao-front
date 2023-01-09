@@ -1,6 +1,6 @@
 import { Box, Typography, Stack, FormControl, TextField, Button, InputLabel, Select, MenuItem } from "@mui/material";
 
-import { Titulo } from "../../components/Titulo/Titulo";
+import * as Componentes from "../../components";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -42,7 +42,7 @@ export const CadastrarAcompanhamento = () => {
 
   return (
     <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
-      <Titulo texto="Cadastrar Acompanhamento" />
+      <Componentes.Titulo texto="Cadastrar Acompanhamento" />
 
       <Box component="form" onSubmit={handleSubmit(cadastrarAcompanhamento)} sx={{ display: "flex", flexDirection: { xs: "column", lg: "row" }, justifyContent: "space-between", backgroundColor: "var(--branco)", width: { xs: "95%", md: "90%", lg: "85%" }, borderRadius: "10px", padding: { xs: 3, sm: 5 }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: { xs: 3, xl: 8 } }}>
 
@@ -64,7 +64,7 @@ export const CadastrarAcompanhamento = () => {
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField id="descricao" error={!!errors.descricao} label="Digite uma descrição" placeholder="Digite uma descrição" multiline rows={4} variant="filled" {...register("descricao")} inputProps={{ maxLength: 5000 }} />
+            <TextField id="descricao" error={!!errors.descricao} label="Digite uma descrição" placeholder="Digite uma descrição" multiline rows={4} variant="filled" {...register("descricao")} inputProps={{ maxLength: 4000 }} />
             {errors.descricao && <Typography id="erro-descricao" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px" }} color="error">{errors.descricao.message}</Typography>}
           </FormControl>
         </Stack>

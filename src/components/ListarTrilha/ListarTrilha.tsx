@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Box, Typography, TableContainer, Table, TableRow, TableCell, TableBody, tableCellClasses, Button, TablePagination, Modal, styled, Tooltip, Paper } from '@mui/material';
+import { Box, Typography, TableContainer, Table, TableRow, TableCell, TableBody, tableCellClasses, Button, TablePagination, Modal, styled, Tooltip, Paper, TableHead } from '@mui/material';
 
 import * as Componentes from "../../components";
 
@@ -9,7 +9,7 @@ import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
-import TableHead from '@mui/material/TableHead';
+
 import { useTrilha } from '../../context/Tecnico/TrilhaContext';
 import { usePrograma } from '../../context/Tecnico/ProgramaContext';
 import { ITrilhasElementos } from '../../utils/TrilhaInterface/trilha';
@@ -29,14 +29,13 @@ interface Column {
   label: string;
   minWidth?: number;
   align?: "right";
-  format?: (value: number) => string;
 }
 
 const columns: Column[] = [
   { id: "codigo", label: "Código", minWidth: 5 },
   { id: "nome", label: "Nome da Trilha", minWidth: 5 },
   { id: "descricao", label: "Descrição", minWidth: 5 },
-  { id: "acoes", label: "Ações", minWidth: 5, align: "right", format: (value: number) => value.toLocaleString("en-US") }
+  { id: "acoes", label: "Ações", minWidth: 5 }
 ];
 
 const style = {

@@ -6,7 +6,8 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useNavigate } from "react-router-dom";
 
 import { AdminContext } from "../../context/AdminContext";
-import { Titulo } from "../../components/Titulo/Titulo";
+
+import * as Componentes from "../../components";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: { backgroundColor: theme.palette.common.black, color: theme.palette.common.white },
@@ -23,14 +24,13 @@ interface Column {
   label: string;
   minWidth?: number;
   align?: "right";
-  format?: (value: number) => string;
 }
 
 const columns: Column[] = [
   { id: "nome", label: "Colaborador(a)", minWidth: 5 },
   { id: "email", label: "E-mail", minWidth: 5 },
-  { id: "cargo", label: "Cargo", minWidth: 5, align: "right", format: (value: number) => value.toLocaleString("en-US") },
-  { id: "acoes", label: "Ações", minWidth: 5, align: "right", format: (value: number) => value.toLocaleString("en-US") }
+  { id: "cargo", label: "Cargo", minWidth: 5 },
+  { id: "acoes", label: "Ações", minWidth: 5 }
 ];
 
 const style = {
@@ -67,7 +67,7 @@ export const ListarColaborador: React.FC = () => {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
-      <Titulo texto="Colaboradores" />
+      <Componentes.Titulo texto="Colaboradores" />
 
       <Box sx={{ width: { xs: "95%", md: "80%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
 

@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
-import { TableCell, tableCellClasses, TableRow, Box, Paper, TableContainer, Table, Modal, TableBody, Button, TablePagination, styled, TableHead } from "@mui/material";
+import { TableCell, tableCellClasses, TableRow, Box, Paper, TableContainer, Table, Modal, TableBody, Button, TablePagination, styled, TableHead, Typography } from "@mui/material";
 
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { Titulo } from "../../components";
+
 import { useCliente } from "../../context/Alocacao/ClienteContext";
-import Typography from "@mui/material/Typography";
+
 import * as Componentes from "../../components";
 
 
@@ -27,7 +27,6 @@ interface Column {
   label: string;
   minWidth?: number;
   align?: "right";
-  format?: (value: number) => string;
 }
 
 const columns: Column[] = [
@@ -36,7 +35,7 @@ const columns: Column[] = [
   { id: "email", label: "E-mail", minWidth: 5 },
   { id: "telefone", label: "Telefone", minWidth: 5 },
   { id: "situacao", label: "Situação", minWidth: 5 },
-  { id: "acoes", label: "Ações", minWidth: 5, align: "right", format: (value: number) => value.toLocaleString("en-US") }
+  { id: "acoes", label: "Ações", minWidth: 5 }
 ];
 
 const style = {
@@ -84,7 +83,7 @@ export const ListarCliente: React.FC = () => {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
-      <Titulo texto="Clientes" />
+      <Componentes.Titulo texto="Clientes" />
 
       <Box sx={{ width: { xs: "95%", md: "80%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
 

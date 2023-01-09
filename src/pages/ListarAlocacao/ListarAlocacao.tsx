@@ -28,7 +28,6 @@ interface Column {
   label: string;
   minWidth?: number;
   align?: "right";
-  format?: (value: number) => string;
 }
 
 const columns: Column[] = [
@@ -37,7 +36,7 @@ const columns: Column[] = [
   { id: "vaga", label: "Vaga", minWidth: 5 },
   { id: "cliente", label: "Cliente", minWidth: 5 },
   { id: "situacao", label: "Situação", minWidth: 5 },
-  { id: "acoes", label: "Ações", minWidth: 5, align: "right", format: (value: number) => value.toLocaleString("en-US") }
+  { id: "acoes", label: "Ações", minWidth: 5 }
 ];
 
 

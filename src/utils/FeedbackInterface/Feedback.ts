@@ -31,3 +31,12 @@ export interface IFeedbackElementos {
     trilhaDTO: ITrilhaDTO[],
     listProgramaDTO: IListProgramaDTO
 }
+
+export interface IFeedbackCadastro {
+    idAluno: number,
+    idModulo: number,
+    nomeInstrutor: string,
+    descricao: string,
+    situacao: string,
+    data: string
+}

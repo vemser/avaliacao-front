@@ -29,15 +29,12 @@ import { useTrilha } from '../../context/Tecnico/TrilhaContext';
 
 export const CadastrarFeedback = () => {
   const navigate = useNavigate();
-  const { pegarPrograma, programas } = usePrograma()
+  const { pegarAluno, alunos } = useAluno();
   const { pegarModulo, modulo } = useContext(ModuloContext);
-  const { pegarAluno, alunos } = useAluno()
-  const { pegarTrilha, trilhas } = useTrilha()
+
   useEffect(() => {
-    pegarPrograma(0, programas?.totalElementos);
     pegarModulo(0, modulo?.totalElementos);
     pegarAluno(0, alunos?.totalElementos);
-    pegarTrilha(0, trilhas?.totalElementos);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -76,10 +73,6 @@ export const CadastrarFeedback = () => {
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
           <FormControl sx={{ width: "100%" }} >
-            <Autocomplete disablePortal id="programa" isOptionEqualToValue={(option, value) => option.label === value.label} options={programas ? programas.elementos.map((programa) => ({ label: `${programa.idPrograma} - ${programa.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Programa" variant="filled" />} />
-          </FormControl>
-
-          <FormControl sx={{ width: "100%" }} >
             <Autocomplete disablePortal id="modulo" isOptionEqualToValue={(option, value) => option.label === value.label} options={modulo ? modulo.elementos.map((modulos) => ({ label: `${modulos.idModulo} - ${modulos.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Módulo" variant="filled" />} />
           </FormControl>
 
@@ -87,8 +80,13 @@ export const CadastrarFeedback = () => {
             <Autocomplete disablePortal id="aluno" isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: `${aluno.idAluno} - ${aluno.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />
           </FormControl>
 
-          <FormControl sx={{ width: "100%" }} >
-            <Autocomplete disablePortal id="trilha" isOptionEqualToValue={(option, value) => option.label === value.label} options={trilhas ? trilhas.elementos.map((trilha) => ({ label: `${trilha.idTrilha} - ${trilha.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Trilha" variant="filled" />} />
+          <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>
+            <InputLabel id="selectAluno">Situação</InputLabel>
+            <Select labelId="demo-simple-select-filled-label" id="select-trilha" >
+              <MenuItem value="initial-stack" disabled><em>Selecione a situação do feedback</em></MenuItem>
+              <MenuItem id="positivo" value="POSITIVO">Positivo</MenuItem>
+              <MenuItem id="atencao" value="ATENCAO">Atenção</MenuItem>
+            </Select>
           </FormControl>
         </Stack>
 
@@ -108,15 +106,6 @@ export const CadastrarFeedback = () => {
               label="Descrição"
               variant='filled'
             />
-          </FormControl>
-
-          <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>
-            <InputLabel id="selectAluno">Situação</InputLabel>
-            <Select labelId="demo-simple-select-filled-label" id="select-trilha" >
-              <MenuItem value="initial-stack" disabled><em>Selecione a situação do feedback</em></MenuItem>
-              <MenuItem id="positivo" value="POSITIVO">Positivo</MenuItem>
-              <MenuItem id="atencao" value="ATENCAO">Atenção</MenuItem>
-            </Select>
           </FormControl>
 
           <Box sx={{ display: "flex", width: "100%", justifyContent: { xs: "center", lg: "end" }, alignItems: { xs: "center", lg: "end" }, bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>

@@ -8,7 +8,7 @@ import nProgress from 'nprogress';
 import { API } from "../../utils/api";
 import axios from "axios";
 
-import { IChildren, IFeedback, IFeedbackAPI } from "../../utils/FeedbackInterface/Feedback";
+import { IChildren, IFeedback, IFeedbackAPI, IFeedbackCadastro, IFeedbackElementos } from "../../utils/FeedbackInterface/Feedback";
 
 export const FeedbackContext = createContext({} as IFeedback);
 
@@ -34,6 +34,47 @@ export const FeedbackProvider = ({ children }: IChildren) => {
             nProgress.done()
         }
     }
+
+    const cadastrarFeedback = async (data: IFeedbackCadastro) => {
+        try {
+            nProgress.start();
+
+            await API.post("/feedback/cadastrar-feedback", data, { headers: { Authorization: localStorage.getItem("token") } });
+
+            navigate("/feedbacks");
+            toast.success("Feedback cadastrado com sucesso!", toastConfig);
+        } catch (error: any) {
+            let message = "Ops, algo deu errado!";
+            if (error.response.status === 403) {
+                message = "Você não tem permissão para acessar esse recurso"
+            } else if (axios.isAxiosError(error) && error?.response) {
+                message = error.response.data.message || error.response.data.errors[0];
+            }
+            toast.error(message, toastConfig);
+        } finally {
+            nProgress.done();
+        }
+    }
+    
+    // const cadastrarAluno = async (dadosAluno: ICadastroAlunoAPI) => {
+    //     try {
+    //         nProgress.start();
+    //         await API.post('/aluno/cadastrar-aluno', dadosAluno, { headers: { Authorization: localStorage.getItem("token") } }).then((response) => {
+    //             navigate('/alunos');
+    //             toast.success('Aluno cadastrado com sucesso!', toastConfig);
+    //         })
+    //     } catch (error: any) {
+    //         let message = "Ops, algo deu errado!";
+    //         if (error.response.status === 403) {
+    //             message = "Você não tem permissão para acessar esse recurso"
+    //         } else if (axios.isAxiosError(error) && error?.response) {
+    //             message = error.response.data.message || error.response.data.errors[0];
+    //         }
+    //         toast.error(message, toastConfig);
+    //     } finally {
+    //         nProgress.done();
+    //     }
+    // }
 
     const deletarFeedback = async (idFeedback: number | undefined) => {
         try {

@@ -86,18 +86,6 @@ export const EditarAcompanhamentoSchema = yup.object().shape({
   descricao: yup.string().required("Por favor, preencha a descrição"),
 })
 
-export const CadastrarFeedbackSchema = yup.object().shape({
-  idAluno:  yup.string().required("Por favor, selecione uns dos alunos"),
-  descricao: yup.string().required("Por favor, digite alguma coisa na descrição"),
-  tipo: yup.string().required("Por favor, selecione uns dos tipos")
-})
-
-export const EditarFeedbackSchema = yup.object().shape({
-  idAluno:  yup.string().required("Por favor, selecione uns dos alunos"),
-  descricao: yup.string().required("Por favor, digite alguma coisa na descrição"),
-  tipo: yup.string().required("Por favor, selecione uns dos tipos")
-})
-
 export const ProgramaSchema = yup.object().shape({
   nome: yup.string().required("Por favor, insira um nome para a trilha").min(3, "O nome deve 3 caracteres"),
   descricao: yup.string(),
@@ -139,3 +127,10 @@ export const reservaAlocacaoSchema = yup.object().shape({
   descricao: yup.string().required("Por favor, insira uma descrição"),
 })
 
+export const feedbackSchema = yup.object().shape({
+  idAluno: yup.number().required("Por favor, selecione o aluno recebendo o feedback"),
+  idModulo: yup.number().required("Por favor, selecione o módulo"),
+  nomeInstrutor: yup.string().required(),
+  descricao: yup.string().required("Por favor, insira uma descrição"),
+  data: yup.string().required()
+})

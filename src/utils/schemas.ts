@@ -138,3 +138,8 @@ export const feedbackSchema = yup.object().shape({
   descricao: yup.string().required("Por favor, insira uma descrição"),
   data: yup.string().required()
 })
+
+export const avalicaoSchema = yup.object().shape({
+  descricao: yup.string().required("Por favor, insira uma descrição"),
+  situacao: yup.string().required("Por favor, insira a situação da avaliação")
+})

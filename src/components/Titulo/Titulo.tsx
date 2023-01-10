@@ -7,6 +7,6 @@ interface ITexto {
 
 export const Titulo: React.FC<ITexto> = ({ texto }) => {
   return (
-    <Typography id="titulo-componente" sx={{ textAlign: "center", marginBottom: "30px", fontSize: { xs: "2.25rem", md: "2.6rem" }, fontWeight: "600", color: "white", userSelect: "none" }} variant="h1">{texto}</Typography>
+    <Typography id="titulo-componente" sx={{ textAlign: "center", marginBottom: "40px", fontSize: { xs: "2.25rem", md: "2.6rem" }, fontWeight: "600", color: "white", userSelect: "none" }} variant="h1">{texto}</Typography>
   )
 }

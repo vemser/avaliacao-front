@@ -17,8 +17,8 @@ import { filtroDebounce } from '../../utils/functions';
 
 export const CadastrarAvaliacao = () => {
   const navigate = useNavigate();
-
-  const { pegarProgramaAtivo, programas } = usePrograma();
+  
+  const { pegarProgramaAtivo, programas,pegarProgramaPorNomeAtivo } = usePrograma();
   const { pegarTrilha, trilhas, pegarTrilhaFiltroNome } = useTrilha();
   const { alunos,pegarAlunoDisponivel } = useAluno();
   const {pegarAcompanhamentos, acompanhamentos} = useAcompanhamento();
@@ -73,15 +73,15 @@ export const CadastrarAvaliacao = () => {
               <Autocomplete
                 disablePortal
                 onInputChange={(event, value) => {
-                  filtroDebounce(value, pegarProgramaAtivo, pegarProgramaAtivo)
+                  filtroDebounce(value, pegarProgramaPorNomeAtivo, pegarProgramaAtivo)
                 }}
                 noOptionsText={""}
                 onChange={(event, data) => onChange(data?.label)}
                 id="programa"
                 getOptionLabel={(option) => option.label}
                 isOptionEqualToValue={(option, value) => option.label === value.label}
-                options={programas ? programas.elementos.map(item => ({ label: `${item.idPrograma} - ${item.nome}` })) : []}
-                renderInput={(params) => <TextField {...params} label="Programa" variant="filled" />}
+                options={programas ? programas.elementos.map(item => ({ label: `${item.nome}` })) : []}
+                renderInput={(params) => <TextField {...params}  label="Programa" variant="filled" />}
               />
             )} />
             {errors.idPrograma && <Typography id="erro-nome-programa" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.idPrograma.message}</Typography>}

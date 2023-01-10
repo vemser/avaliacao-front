@@ -14,9 +14,9 @@ import { reservaAlocacaoSchema } from '../../utils/schemas';
 export const CadastrarReservaAlacocao = () => {
 
   const navigate = useNavigate()
-  const {pegarAlunoDisponivel, alunos} = useAluno()
-  const {pegarVagas, vagas} = useVaga()
-  const {pegarCliente, cliente} = useCliente()
+  const { pegarAlunoDisponivel, alunos } = useAluno()
+  const { pegarVagas, vagas } = useVaga()
+  const { pegarCliente, cliente } = useCliente()
 
   const [vagaErro, setVagaErro] = useState<boolean>(false);
   const [AlunoErro, setAlunoErro] = useState<boolean>(false);
@@ -29,9 +29,9 @@ export const CadastrarReservaAlacocao = () => {
 
 
   useEffect(() => {
-    pegarAlunoDisponivel(0,alunos?.totalElementos);
-    pegarVagas(0,vagas?.totalElementos);
-    pegarCliente(0,cliente?.totalElementos);
+    pegarAlunoDisponivel(0, alunos?.totalElementos);
+    pegarVagas(0, vagas?.totalElementos);
+    pegarCliente(0, cliente?.totalElementos);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -40,27 +40,27 @@ export const CadastrarReservaAlacocao = () => {
     resolver: yupResolver(reservaAlocacaoSchema)
   });
 
-  
+
   const erroVaga = () => {
-    if(dataVaga) {
+    if (dataVaga) {
       setVagaErro(false)
     } else {
-      setVagaErro(true) 
+      setVagaErro(true)
     }
   }
 
   const erroAluno = () => {
-    if(dataAluno) {
+    if (dataAluno) {
       setAlunoErro(false)
     } else {
-      setAlunoErro(true) 
+      setAlunoErro(true)
     }
   }
-  
+
   const handleChangeVaga = () => {
     setVagaErro(false)
     setDataVaga('')
-    
+
   };
 
   const handleChangeAluno = () => {
@@ -69,7 +69,7 @@ export const CadastrarReservaAlacocao = () => {
   }
 
 
-  
+
   const cadastroReservaAlocacao = (data: IResrevaAlocacao) => {
     setDataVaga(data.idVaga.toString())
     setDataAluno(data.idAluno.toString())
@@ -80,7 +80,7 @@ export const CadastrarReservaAlacocao = () => {
 
 
   return (
-    <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
+    <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "60px", paddingBottom: "50px" }}>
       <Titulo texto="Cadastrar Reserva e Alocação" />
 
       <Box component="form" onSubmit={handleSubmit(cadastroReservaAlocacao)} sx={{
@@ -91,12 +91,12 @@ export const CadastrarReservaAlacocao = () => {
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
           <FormControl sx={{ width: "100%" }} >
-            <Autocomplete disablePortal id="aluno" onChange={handleChangeAluno} noOptionsText="Nenhum aluno disponível"  isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ( { label: `${aluno.idAluno} - ${aluno.nome}`})) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" {...register("idAluno")} />}/>
+            <Autocomplete disablePortal id="aluno" onChange={handleChangeAluno} noOptionsText="Nenhum aluno disponível" isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: `${aluno.idAluno} - ${aluno.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" {...register("idAluno")} />} />
             {AlunoErro && <Typography id="erro-vaga" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">Por favor, escolha uma vaga</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
-            <Autocomplete disablePortal id="vaga" onChange={handleChangeVaga} isOptionEqualToValue={(option, value) => option.label === value.label} options={vagas ? vagas.elementos.map((vaga) => ( { label: `${vaga.idVaga} - ${vaga.nome}`})) : []} renderInput={(params) => <TextField {...params} label="Vaga" variant="filled" {...register("idVaga")}/>}/>
+            <Autocomplete disablePortal id="vaga" onChange={handleChangeVaga} isOptionEqualToValue={(option, value) => option.label === value.label} options={vagas ? vagas.elementos.map((vaga) => ({ label: `${vaga.idVaga} - ${vaga.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Vaga" variant="filled" {...register("idVaga")} />} />
             {vagaErro && <Typography id="erro-vaga" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">Por favor, escolha uma vaga</Typography>}
           </FormControl>
 

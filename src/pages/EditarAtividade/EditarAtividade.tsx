@@ -111,7 +111,7 @@ export const EditarAtividade = () => {
 
 
   return (
-    <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
+    <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "60px", paddingBottom: "50px" }}>
       <Titulo texto="Editar Atividade" />
 
       <Box component="form" onSubmit={handleSubmit(editar)} sx={{

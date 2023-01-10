@@ -1,16 +1,12 @@
-import { Box, Stack, FormControl, TextField,  InputLabel, Select, MenuItem, Button, Autocomplete } from '@mui/material';
-import React, { useEffect, useState} from 'react'
+import { Box, Stack, FormControl, TextField, InputLabel, Select, MenuItem, Button, Autocomplete } from '@mui/material';
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { usePrograma } from '../../context/Tecnico/ProgramaContext';
-
 
 import * as Componentes from '../../components/index';
 import { useTrilha } from '../../context/Tecnico/TrilhaContext';
 import { useAluno } from '../../context/Comportamental/AlunoContext';
 import moment from 'moment';
-
-
-
 
 const itemHeigth = 48;
 const itemPaddingTop = 8;
@@ -35,7 +31,7 @@ const top100Films = [
 
 export const EditarAvaliacao = () => {
   const navigate = useNavigate();
-  
+
   const { pegarProgramaAtivo, programas } = usePrograma();
   const { pegarTrilha, trilhas } = useTrilha();
   const { pegarAluno, alunos } = useAluno();
@@ -45,19 +41,17 @@ export const EditarAvaliacao = () => {
 
   useEffect(() => {
     pegarProgramaAtivo(0, programas?.totalElementos);
-    pegarTrilha(0,trilhas?.totalElementos);
+    pegarTrilha(0, trilhas?.totalElementos);
     pegarAluno(0, alunos?.totalElementos);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-
-
   return (
-    <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
-        <Componentes.Titulo texto="Editar avalicação" />
+    <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "60px", paddingBottom: "50px" }}>
+      <Componentes.Titulo texto="Editar Avaliação" />
 
 
-      <Box component="form"  sx={{
+      <Box component="form" sx={{
         display: "flex", flexDirection: { xs: "column", lg: "row" }, justifyContent: "space-between", backgroundColor: "var(--branco)", width: { xs: "95%", md: "90%", lg: "85%" }, borderRadius: "10px", padding: {
           xs: 3, sm: 5
         }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: { xs: 3, xl: 8 }
@@ -65,13 +59,13 @@ export const EditarAvaliacao = () => {
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
           <FormControl sx={{ width: { xs: "100%", md: "100%" } }} >
-          <Autocomplete
-            disablePortal
-            id="acompanhemnto"
-            options={top100Films}
-            renderInput={(params) => <TextField {...params} label="Acompanhamento" variant="filled"/>}
-            disabled
-          />
+            <Autocomplete
+              disablePortal
+              id="acompanhemnto"
+              options={top100Films}
+              renderInput={(params) => <TextField {...params} label="Acompanhamento" variant="filled" />}
+              disabled
+            />
           </FormControl>
 
           <FormControl sx={{ width: { xs: "100%", md: "100%" } }} >
@@ -80,7 +74,7 @@ export const EditarAvaliacao = () => {
               id="programa"
               isOptionEqualToValue={(option, value) => option.label === value.label}
               options={programas ? programas.elementos.map(item => ({ label: `${item.idPrograma} - ${item.nome}` })) : []}
-              renderInput={(params) => <TextField {...params}  label="Programa" variant="filled" />}
+              renderInput={(params) => <TextField {...params} label="Programa" variant="filled" />}
               disabled
             />
           </FormControl>
@@ -91,7 +85,7 @@ export const EditarAvaliacao = () => {
               id="trilha"
               isOptionEqualToValue={(option, value) => option.label === value.label}
               options={trilhas ? trilhas.elementos.map(item => ({ label: `${item.idTrilha} - ${item.nome}` })) : []}
-              renderInput={(params) => <TextField {...params}  label="Trilha" variant="filled" />}
+              renderInput={(params) => <TextField {...params} label="Trilha" variant="filled" />}
               disabled
             />
           </FormControl>
@@ -104,7 +98,7 @@ export const EditarAvaliacao = () => {
 
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: "end" }}>
 
-        <FormControl sx={{ width: "100%" }}>
+          <FormControl sx={{ width: "100%" }}>
             <TextField
               placeholder="Digite uma descrição para a avaliação"
               multiline

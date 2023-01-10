@@ -1,8 +1,7 @@
-import { Box, Stack, FormControl, TextField,  InputLabel, Select, MenuItem, Button, Autocomplete, Typography } from '@mui/material';
+import { Box, Stack, FormControl, TextField, InputLabel, Select, MenuItem, Button, Autocomplete, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { usePrograma } from '../../context/Tecnico/ProgramaContext';
-
 
 import * as Componentes from '../../components/index';
 import { useTrilha } from '../../context/Tecnico/TrilhaContext';
@@ -12,9 +11,6 @@ import { Controller, useForm } from 'react-hook-form';
 import { IAvaliacao } from '../../utils/AvaliacaoInterface/Avaliacao';
 import { avalicaoSchema } from '../../utils/schemas';
 import { yupResolver } from '@hookform/resolvers/yup';
-
-
-
 
 const itemHeigth = 48;
 const itemPaddingTop = 8;
@@ -39,7 +35,7 @@ const top100Films = [
 
 export const CadastrarAvaliacao = () => {
   const navigate = useNavigate();
-  
+
   const { pegarProgramaAtivo, programas } = usePrograma();
   const { pegarTrilha, trilhas } = useTrilha();
   const { pegarAluno, alunos } = useAluno();
@@ -48,26 +44,26 @@ export const CadastrarAvaliacao = () => {
 
   useEffect(() => {
     pegarProgramaAtivo(0, programas?.totalElementos);
-    pegarTrilha(0,trilhas?.totalElementos);
+    pegarTrilha(0, trilhas?.totalElementos);
     pegarAluno(0, alunos?.totalElementos);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const { register, handleSubmit, formState: { errors },control} = useForm<IAvaliacao>({
+  const { register, handleSubmit, formState: { errors }, control } = useForm<IAvaliacao>({
     resolver: yupResolver(avalicaoSchema)
   });
 
-  
+
   const cadastrarAvalicao = (data: IAvaliacao) => {
     console.log(data)
   }
 
   return (
-    <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
-        <Componentes.Titulo texto="Cadastrar avalicação" />
+    <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "60px", paddingBottom: "50px" }}>
+      <Componentes.Titulo texto="Cadastrar Avaliação" />
 
 
-      <Box component="form" onSubmit={handleSubmit(cadastrarAvalicao)}  sx={{
+      <Box component="form" onSubmit={handleSubmit(cadastrarAvalicao)} sx={{
         display: "flex", flexDirection: { xs: "column", lg: "row" }, justifyContent: "space-between", backgroundColor: "var(--branco)", width: { xs: "95%", md: "90%", lg: "85%" }, borderRadius: "10px", padding: {
           xs: 3, sm: 5
         }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: { xs: 3, xl: 8 }
@@ -75,17 +71,17 @@ export const CadastrarAvaliacao = () => {
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
           <FormControl sx={{ width: { xs: "100%", md: "100%" } }} >
-          <Controller control={control} name="idAcompanhamento" render={({ field: { onChange } }) => (
-            <Autocomplete
-              disablePortal
-              onChange={(event, data) => onChange(data?.label)}
-              id="acompanhemnto"
-              getOptionLabel={(option) => option.label}
-              options={top100Films}
-              renderInput={(params) => <TextField {...params} label="Acompanhamento" variant="filled" {...register("idAcompanhamento")}/>}
-            />
-          )}/>
-           {errors.idAcompanhamento && <Typography id="erro-nome-acompanhamento" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.idAcompanhamento.message}</Typography>}
+            <Controller control={control} name="idAcompanhamento" render={({ field: { onChange } }) => (
+              <Autocomplete
+                disablePortal
+                onChange={(event, data) => onChange(data?.label)}
+                id="acompanhemnto"
+                getOptionLabel={(option) => option.label}
+                options={top100Films}
+                renderInput={(params) => <TextField {...params} label="Acompanhamento" variant="filled" {...register("idAcompanhamento")} />}
+              />
+            )} />
+            {errors.idAcompanhamento && <Typography id="erro-nome-acompanhamento" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.idAcompanhamento.message}</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: { xs: "100%", md: "100%" } }} >
@@ -97,9 +93,9 @@ export const CadastrarAvaliacao = () => {
                 getOptionLabel={(option) => option.label}
                 isOptionEqualToValue={(option, value) => option.label === value.label}
                 options={programas ? programas.elementos.map(item => ({ label: `${item.idPrograma} - ${item.nome}` })) : []}
-                renderInput={(params) => <TextField {...params}  label="Programa" variant="filled" />}
+                renderInput={(params) => <TextField {...params} label="Programa" variant="filled" />}
               />
-            )}/>
+            )} />
             {errors.idPrograma && <Typography id="erro-nome-programa" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.idPrograma.message}</Typography>}
           </FormControl>
 
@@ -112,24 +108,24 @@ export const CadastrarAvaliacao = () => {
                 getOptionLabel={(option) => option.label}
                 isOptionEqualToValue={(option, value) => option.label === value.label}
                 options={trilhas ? trilhas.elementos.map(item => ({ label: `${item.idTrilha} - ${item.nome}` })) : []}
-                renderInput={(params) => <TextField {...params}  label="Trilha" variant="filled"/>}
+                renderInput={(params) => <TextField {...params} label="Trilha" variant="filled" />}
               />
-            )}/>
+            )} />
             {errors.idTrilha && <Typography id="erro-nome-trilha" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.idTrilha.message}</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
-          <Controller control={control} name="idAluno" render={({ field: { onChange } }) => (
-            <Autocomplete disablePortal  onChange={(event, data) => onChange(data?.label)} id="aluno" getOptionLabel={(option) => option.label}  isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: `${aluno.idAluno} - ${aluno.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled"/>}/>
-          )}/>        
-          {errors.idAluno && <Typography id="erro-nome-aluno" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.idAluno.message}</Typography>}    
+            <Controller control={control} name="idAluno" render={({ field: { onChange } }) => (
+              <Autocomplete disablePortal onChange={(event, data) => onChange(data?.label)} id="aluno" getOptionLabel={(option) => option.label} isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: `${aluno.idAluno} - ${aluno.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />
+            )} />
+            {errors.idAluno && <Typography id="erro-nome-aluno" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.idAluno.message}</Typography>}
           </FormControl>
 
         </Stack>
 
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: "end" }}>
 
-        <FormControl sx={{ width: "100%" }}>
+          <FormControl sx={{ width: "100%" }}>
             <TextField
               placeholder="Digite uma descrição para a avaliação"
               multiline
@@ -163,7 +159,7 @@ export const CadastrarAvaliacao = () => {
           <Box sx={{ display: "flex", width: "100%", justifyContent: { xs: "center", lg: "end" }, alignItems: { xs: "center", lg: "end" }, bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>
             <Button type="button" onClick={() => { navigate(-1) }} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d " }, textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cancelar</Button>
 
-            <Button type="submit"  variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cadastrar</Button>
+            <Button type="submit" variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cadastrar</Button>
           </Box>
         </Stack>
       </Box>

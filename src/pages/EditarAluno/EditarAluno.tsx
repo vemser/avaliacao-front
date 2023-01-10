@@ -43,7 +43,7 @@ export const EditarAluno = () => {
     setTecnologiaSelecionada(result)
   }
 
-  const { register, handleSubmit, formState: { errors },control } = useForm<ICadastroAlunoForm>({
+  const { register, handleSubmit, formState: { errors }, control } = useForm<ICadastroAlunoForm>({
     resolver: yupResolver(alunoSchema)
   });
 
@@ -61,7 +61,7 @@ export const EditarAluno = () => {
   }, []);
 
   return (
-    <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
+    <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "60px", paddingBottom: "50px" }}>
       <Titulo texto={`Editar ${formatarNomeCompleto(state.nome)}`} />
 
       <Box component="form" onSubmit={handleSubmit(editar)} sx={{
@@ -126,15 +126,15 @@ export const EditarAluno = () => {
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} variant="filled">
-          <Controller control={control} name="idPrograma" render={({ field: { onChange } }) => (
-            <Autocomplete disablePortal  onChange={(event, data) => onChange(data?.label)}   id="programa" getOptionLabel={(option) => option.label}
-              defaultValue={{ label: `${state.programa.idPrograma} - ${state.programa.nome}`, id: state.programa.idPrograma }}
-              isOptionEqualToValue={(option) => option.label === `${state.programa.idPrograma} - ${state.programa.nome}`}
-              options={programas ? programas.elementos.map((programa) => ({ label: `${programa.idPrograma} - ${programa.nome}`, id: programa.idPrograma })) : []}
-              renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
-              renderInput={(params) => <TextField {...params} label="Programa" variant="filled" />} />
-          )}/>
-          {errors.idPrograma && <Typography id="erro-idPrograma" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.idPrograma.message}</Typography>}
+            <Controller control={control} name="idPrograma" render={({ field: { onChange } }) => (
+              <Autocomplete disablePortal onChange={(event, data) => onChange(data?.label)} id="programa" getOptionLabel={(option) => option.label}
+                defaultValue={{ label: `${state.programa.idPrograma} - ${state.programa.nome}`, id: state.programa.idPrograma }}
+                isOptionEqualToValue={(option) => option.label === `${state.programa.idPrograma} - ${state.programa.nome}`}
+                options={programas ? programas.elementos.map((programa) => ({ label: `${programa.idPrograma} - ${programa.nome}`, id: programa.idPrograma })) : []}
+                renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
+                renderInput={(params) => <TextField {...params} label="Programa" variant="filled" />} />
+            )} />
+            {errors.idPrograma && <Typography id="erro-idPrograma" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.idPrograma.message}</Typography>}
           </FormControl>
 
           <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>

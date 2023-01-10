@@ -33,7 +33,7 @@ export const EditarAcompanhamento = () => {
     resolver: yupResolver(EditarAcompanhamentoSchema)
   })
 
-  const editarAcompanhamento = (data: IEditarAcompanhamento) => { 
+  const editarAcompanhamento = (data: IEditarAcompanhamento) => {
     console.log(data)
   }
 
@@ -43,7 +43,7 @@ export const EditarAcompanhamento = () => {
   }, [])
 
   return (
-    <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
+    <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "60px", paddingBottom: "50px" }}>
       <Titulo texto="Editar Acompanhamento" />
 
       <Box component="form" onSubmit={handleSubmit(editarAcompanhamento)} sx={{ display: "flex", flexDirection: { xs: "column", lg: "row" }, justifyContent: "space-between", backgroundColor: "var(--branco)", width: { xs: "95%", md: "90%", lg: "85%" }, borderRadius: "10px", padding: { xs: 3, sm: 5 }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: { xs: 3, xl: 8 } }}>
@@ -58,7 +58,7 @@ export const EditarAcompanhamento = () => {
             <InputLabel id="programas-list" error={!!errors.idPrograma}>Programas</InputLabel>
             <Select MenuProps={MenuProps} {...register("idPrograma")} error={!!errors.idPrograma} defaultValue={2} label="Programas" labelId="demo-simple-select-filled-label" id="programas">
               <MenuItem value="initial-programa" disabled><em>Selecione um programa</em></MenuItem>
-              {programas?.elementos.map((programas: IProgramas) => 
+              {programas?.elementos.map((programas: IProgramas) =>
                 <MenuItem key={programas.idPrograma} id={`${programas.idPrograma}`} value={programas.idPrograma}>{programas.nome}</MenuItem>
               )}
             </Select>
@@ -78,7 +78,7 @@ export const EditarAcompanhamento = () => {
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField id="data-final" label="Data final" type="date" sx={{ width: "100%" }}  InputLabelProps={{ shrink: true }} {...register("dataFinal")} variant="filled" defaultValue="2023-07-07" />
+            <TextField id="data-final" label="Data final" type="date" sx={{ width: "100%" }} InputLabelProps={{ shrink: true }} {...register("dataFinal")} variant="filled" defaultValue="2023-07-07" />
           </FormControl>
 
           <Box sx={{ display: "flex", width: "100%", justifyContent: "center", alignItems: "center", bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>

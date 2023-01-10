@@ -15,7 +15,7 @@ export const EditarAtividadeAluno = () => {
     <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "60px", paddingBottom: "50px" }}>
       <Componentes.Titulo texto="Entregar Atividade" />
 
-      <Box component="form" sx={{ display: "flex", flexDirection: { xs: "column", lg: "row" }, justifyContent: "space-between", backgroundColor: "var(--branco)", width: { xs: "95%", md: "90%", lg: "85%" }, borderRadius: "10px", padding: { xs: 3, sm: 5 }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: { xs: 3, xl: 8 } }}>
+      <Box component="form" sx={{ display: "flex", flexDirection: { xs: "column", lg: "row" }, justifyContent: "space-between", backgroundColor: "var(--branco)", width: { xs: "95%", md: "90%" }, borderRadius: "10px", padding: { xs: 3, sm: 5 }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: { xs: 3, xl: 8 } }}>
 
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "70%" }, display: "flex", alignItems: { xs: "start", md: "start" } }}>
           <Typography sx={{ color: "var(--azul-claro-dbc)", fontWeight: '700', display: 'flex', alignItems: 'center', gap: 1, fontSize: "1.2rem", userSelect: "none" }}><AutoStories sx={{ fontSize: "25px" }} /> Atividade 01 - React Context</Typography>

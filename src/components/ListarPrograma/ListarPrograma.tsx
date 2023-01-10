@@ -35,7 +35,7 @@ const columns: Column[] = [
   { id: "nome", label: "Nome do Programa", minWidth: 5 },
   { id: "descricao", label: "Descrição", minWidth: 5 },
   { id: "situacao", label: "Situação", minWidth: 5 },
-  { id: "dataInicio", label: "Data de Início", minWidth: 5 },
+  { id: "dataInicio", label: "Data Inicial", minWidth: 5 },
   { id: "dataFim", label: "Data de Fim", minWidth: 5 },
   { id: "acoes", label: "Ações", minWidth: 5 }
 ];

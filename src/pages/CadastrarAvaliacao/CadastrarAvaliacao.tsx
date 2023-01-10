@@ -1,4 +1,4 @@
-import { Box, Stack, FormControl, TextField,  InputLabel, Select, MenuItem, Button, Autocomplete, Typography } from '@mui/material';
+import { Box, Stack, FormControl, TextField, InputLabel, Select, MenuItem, Button, Autocomplete, Typography } from '@mui/material';
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { usePrograma } from '../../context/Tecnico/ProgramaContext';
@@ -17,19 +17,19 @@ import { filtroDebounce } from '../../utils/functions';
 
 export const CadastrarAvaliacao = () => {
   const navigate = useNavigate();
-  
-  const { pegarProgramaAtivo, programas,pegarProgramaPorNomeAtivo } = usePrograma();
+
+  const { pegarProgramaAtivo, programas, pegarProgramaPorNomeAtivo } = usePrograma();
   const { pegarTrilha, trilhas, pegarTrilhaFiltroNome } = useTrilha();
-  const { alunos,pegarAlunoDisponivel } = useAluno();
-  const {pegarAcompanhamentos, acompanhamentos} = useAcompanhamento();
+  const { alunos, pegarAlunoDisponivel } = useAluno();
+  const { pegarAcompanhamentos, acompanhamentos } = useAcompanhamento();
   let data = moment()
   let novaData = data.format("YYYY-MM-DD")
 
   useEffect(() => {
     pegarProgramaAtivo(0, 10);
-    pegarTrilha(0,10);
+    pegarTrilha(0, 10);
     pegarAlunoDisponivel(0, 10);
-    pegarAcompanhamentos(0,acompanhamentos?.totalElementos);
+    pegarAcompanhamentos(0, acompanhamentos?.totalElementos);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -48,24 +48,24 @@ export const CadastrarAvaliacao = () => {
 
 
       <Box component="form" onSubmit={handleSubmit(cadastrarAvalicao)} sx={{
-        display: "flex", flexDirection: { xs: "column", lg: "row" }, justifyContent: "space-between", backgroundColor: "var(--branco)", width: { xs: "95%", md: "90%", lg: "85%" }, borderRadius: "10px", padding: {
+        display: "flex", flexDirection: { xs: "column", lg: "row" }, justifyContent: "space-between", backgroundColor: "var(--branco)", width: { xs: "95%", md: "90%" }, borderRadius: "10px", padding: {
           xs: 3, sm: 5
         }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: { xs: 3, xl: 8 }
       }}>
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
           <FormControl sx={{ width: { xs: "100%", md: "100%" } }} >
-          <Controller control={control} name="idAcompanhamento" render={({ field: { onChange } }) => (
-            <Autocomplete
-              disablePortal
-              onChange={(event, data) => onChange(data?.label)}
-              id="acompanhemnto"
-              getOptionLabel={(option) => option.label}
-              options={acompanhamentos ? acompanhamentos.elementos.map(item => ({ label: `${item.idAcompanhamento} - ${item.titulo}` })) : []}
-              renderInput={(params) => <TextField {...params} label="Acompanhamento" variant="filled"/>}
-            />
-          )}/>
-           {errors.idAcompanhamento && <Typography id="erro-nome-acompanhamento" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.idAcompanhamento.message}</Typography>}
+            <Controller control={control} name="idAcompanhamento" render={({ field: { onChange } }) => (
+              <Autocomplete
+                disablePortal
+                onChange={(event, data) => onChange(data?.label)}
+                id="acompanhemnto"
+                getOptionLabel={(option) => option.label}
+                options={acompanhamentos ? acompanhamentos.elementos.map(item => ({ label: `${item.idAcompanhamento} - ${item.titulo}` })) : []}
+                renderInput={(params) => <TextField {...params} label="Acompanhamento" variant="filled" />}
+              />
+            )} />
+            {errors.idAcompanhamento && <Typography id="erro-nome-acompanhamento" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.idAcompanhamento.message}</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: { xs: "100%", md: "100%" } }} >
@@ -81,7 +81,7 @@ export const CadastrarAvaliacao = () => {
                 getOptionLabel={(option) => option.label}
                 isOptionEqualToValue={(option, value) => option.label === value.label}
                 options={programas ? programas.elementos.map(item => ({ label: `${item.nome}` })) : []}
-                renderInput={(params) => <TextField {...params}  label="Programa" variant="filled" />}
+                renderInput={(params) => <TextField {...params} label="Programa" variant="filled" />}
               />
             )} />
             {errors.idPrograma && <Typography id="erro-nome-programa" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.idPrograma.message}</Typography>}
@@ -107,13 +107,13 @@ export const CadastrarAvaliacao = () => {
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
-          <Controller control={control} name="idAluno" render={({ field: { onChange } }) => (
-            <Autocomplete disablePortal onInputChange={(event, value) => {
-              filtroDebounce(value, pegarAlunoDisponivel,pegarAlunoDisponivel, `&nome=${value}`)
-            }}
-            noOptionsText={""}  onChange={(event, data) => onChange(data?.label)} id="aluno" getOptionLabel={(option) => option.label}  isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: `${aluno.idAluno} - ${aluno.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled"/>}/>
-          )}/>        
-          {errors.idAluno && <Typography id="erro-nome-aluno" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.idAluno.message}</Typography>}    
+            <Controller control={control} name="idAluno" render={({ field: { onChange } }) => (
+              <Autocomplete disablePortal onInputChange={(event, value) => {
+                filtroDebounce(value, pegarAlunoDisponivel, pegarAlunoDisponivel, `&nome=${value}`)
+              }}
+                noOptionsText={""} onChange={(event, data) => onChange(data?.label)} id="aluno" getOptionLabel={(option) => option.label} isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: `${aluno.idAluno} - ${aluno.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />
+            )} />
+            {errors.idAluno && <Typography id="erro-nome-aluno" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.idAluno.message}</Typography>}
           </FormControl>
 
         </Stack>

@@ -7,3 +7,8 @@ export interface IAvaliacao {
   data: string,
   situacao: string
 }
+
+export interface IEditarAvaliacao {
+  descricao: string,
+  situacao: string
+}

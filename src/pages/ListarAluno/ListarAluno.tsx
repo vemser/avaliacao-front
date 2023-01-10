@@ -70,7 +70,7 @@ export const ListarAluno: React.FC = () => {
 
   const handleChangePage = async (event: unknown, newPage: number) => {
     if (inputFiltro) {
-      filtrosAluno(inputFiltro, newPage)
+      filtrosAluno(inputFiltro, newPage);
     } else {
       await pegarAluno(newPage);
     }

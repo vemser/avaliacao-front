@@ -19,7 +19,7 @@ export interface ICadastrarAcompanhamento {
 }
 
 export interface IAcompanhamentoObject {
- totalElementos: number,
+  totalElementos: number,
   quantidadePaginas: number,
   pagina: number,
   tamanho: number,

@@ -14,3 +14,11 @@ export interface ICadastrarAcompanhamento {
   dataFim: string,
   idPrograma: number,
 }
+
+export interface IEditarAcompanhamento {
+  titulo: string,
+  descricao: string,
+  dataInicio: string,
+  dataFim: string,
+  idPrograma: number,
+}

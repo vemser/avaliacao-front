@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 import { API } from "../../utils/api";
 
-import { IAcompanhamento, IChildren, ICadastrarAcompanhamento } from "../../utils/AcompanhamentoInterface/acompanhamento";
+import { IAcompanhamento, IChildren, ICadastrarAcompanhamento, IEditarAcompanhamento } from "../../utils/AcompanhamentoInterface/acompanhamento";
 
 export const AcompanhamentoContext = createContext({} as IAcompanhamento);
 
@@ -21,7 +21,7 @@ export const AcompanhamentoProvider = ({ children }: IChildren) => {
       nProgress.start();
       await API.post('/acompanhamento/criar', dadosAcompanhamento, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
         navigate('/acompanhamentos');
-        toast.success('Aluno cadastrado com sucesso!', toastConfig);
+        toast.success('Acompanhamento cadastrado com sucesso!', toastConfig);
       })
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
@@ -36,17 +36,17 @@ export const AcompanhamentoProvider = ({ children }: IChildren) => {
     }
   }
 
-  const editarAcompanhamento = async (dadosAluno: any, id: number) => {
+  const editarAcompanhamento = async (dadosAcompanhamento: IEditarAcompanhamento, id: number) => {
     try {
       nProgress.start();
-      await API.put(`/aluno/atualizar-aluno/${id}`, dadosAluno, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
-        navigate('/alunos');
-        toast.success('Aluno editado com sucesso!', toastConfig);
+      await API.put(`/acompanhamento/editar/${id}`, dadosAcompanhamento, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
+        navigate('/acompanhamentos');
+        toast.success('Acompanhamento editado com sucesso!', toastConfig);
       })
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
       if (error.response.status === 403) {
-        message = "Você não tem permissão para acessar esse recurso"
+        message = "Você não tem permissão para acessar esse recurso";
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
       }  

@@ -115,7 +115,10 @@ export const ListarFeedback: React.FC = () => {
 
         {estadoFiltro &&
           <Box sx={{ display: "flex", gap: 3, flexDirection: "row", alignItems: "center", width: "100%", marginBottom: "10px", paddingInline: 2, marginTop: "10px", flexWrap: "wrap" }}>
-            <Autocomplete
+
+            <Componentes.FiltroFeedback />
+
+            {/* <Autocomplete
               size="small"
               disablePortal
               id="combo-box-demo"
@@ -153,7 +156,7 @@ export const ListarFeedback: React.FC = () => {
 
             <Button variant="outlined" sx={{ width: "auto", display: "flex", textTransform: "capitalize", fontSize: "1rem" }}>Resetar Filtro</Button>
 
-            <Button variant="contained" sx={{ width: "auto", display: "flex", textTransform: "capitalize", fontSize: "1rem" }}>Pesquisar</Button>
+            <Button variant="contained" sx={{ width: "auto", display: "flex", textTransform: "capitalize", fontSize: "1rem" }}>Pesquisar</Button> */}
           </Box>}
 
         <Paper sx={{ width: "100%", borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px" }}>

@@ -14,6 +14,7 @@ import { IAcompanhamento, IAcompanhamentoObject, IChildren, ICadastrarAcompanham
 export const AcompanhamentoContext = createContext({} as IAcompanhamento);
 
 export const AcompanhamentoProvider = ({ children }: IChildren) => {
+  const [acompanhamentos, setAcompanhamentos] = useState<IAcompanhamentoObject | null>(null);
   const navigate = useNavigate();
 
   const cadastrarAcompanhamento = async (dadosAcompanhamento: ICadastrarAcompanhamento) => {
@@ -55,7 +56,6 @@ export const AcompanhamentoProvider = ({ children }: IChildren) => {
       nProgress.done();
     }
   }
-  const [acompanhamentos, setAcompanhamentos] = useState<IAcompanhamentoObject | null>(null);
 
   const pegarAcompanhamentos = async (pagina: number = 0, tamanho: number = 10) => {
     try {
@@ -113,7 +113,7 @@ export const AcompanhamentoProvider = ({ children }: IChildren) => {
   }
 
   return (
-    <AcompanhamentoContext.Provider value={{ cadastrarAcompanhamento acompanhamentos, pegarAcompanhamentos, pegarAcompanhamentoNomePrograma, desativarAcompanhamento }}>
+    <AcompanhamentoContext.Provider value={{ cadastrarAcompanhamento, acompanhamentos, pegarAcompanhamentos, pegarAcompanhamentoNomePrograma, desativarAcompanhamento }}>
       {children}
     </AcompanhamentoContext.Provider>
   );

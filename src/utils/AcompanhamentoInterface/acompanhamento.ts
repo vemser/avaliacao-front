@@ -1,6 +1,6 @@
 export interface IAcompanhamento {
+  acompanhamentos: IAcompanhamentoObject | null,
   cadastrarAcompanhamento: (dadosAcompanhamento: ICadastrarAcompanhamento) => Promise<void>,
-    acompanhamentos: IAcompanhamentoObject | null,
   pegarAcompanhamentos: (pagina?: number, tamanho?: number) => Promise<void>,
   pegarAcompanhamentoNomePrograma: (nome: string, pagina?: number, tamanho?: number) => Promise<void>,
   desativarAcompanhamento: (id: number) => Promise<void>

@@ -9,7 +9,7 @@ export const FiltroFeedback = () => {
   const { alunos, pegarAluno } = useAluno();
   const { trilhas, pegarTrilhaFiltroNome, pegarTrilha } = useTrilha();
 
- 
+
 
   useEffect(() => {
     pegarAluno(0, 3);
@@ -24,7 +24,7 @@ export const FiltroFeedback = () => {
         disablePortal
         id="combo-box-demo"
         onInputChange={(event, value) => {
-          filtroDebounce(value, pegarAluno,pegarAluno, `&nome=${value}`)
+          filtroDebounce(value, pegarAluno, pegarAluno, `&nome=${value}`)
         }}
         noOptionsText={""}
         options={alunos ? alunos.elementos.map((aluno) => { return { label: aluno.nome, id: aluno.idAluno } }) : []}

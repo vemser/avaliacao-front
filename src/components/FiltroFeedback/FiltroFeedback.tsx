@@ -3,10 +3,13 @@ import { debounce } from 'lodash';
 import { useEffect } from "react";
 import { useAluno } from "../../context/Comportamental/AlunoContext";
 import { useTrilha } from "../../context/Tecnico/TrilhaContext";
+import { useForm, Controller } from "react-hook-form";
+import { IFiltroFeedback } from "../../utils/interface";
 
 export const FiltroFeedback = () => {
   const { alunos, pegarAluno } = useAluno();
   const { trilhas, pegarTrilhaFiltroNome, pegarTrilha } = useTrilha();
+  const { register, handleSubmit, formState: { errors }, control } = useForm<IFiltroFeedback>();
 
   const filtroDebounce = debounce((valor, request, option?) => {
     if (valor) {
@@ -27,18 +30,19 @@ export const FiltroFeedback = () => {
 
   return (
     <>
-      <Autocomplete
-        size="small"
-        disablePortal
-        id="combo-box-demo"
-        onInputChange={(event, value) => {
-          filtroDebounce(value, pegarAluno, `&nome=${value}`)
-        }}
-        noOptionsText={""}
-        options={alunos ? alunos.elementos.map((aluno) => { return { label: aluno.nome, id: aluno.idAluno } }) : []}
-        sx={{ minWidth: 200, display: "flex" }}
-        renderInput={(params) => <TextField {...params} label="Alunos" />}
-      />
+      <Controller control={control} name="idAluno" render={({ field: { onChange } }) => (
+        <Autocomplete
+          size="small"
+          disablePortal
+          id="combo-box-demo"
+          onInputChange={(event, value) => {
+            filtroDebounce(value, pegarAluno, `&nome=${value}`)
+          }}
+          noOptionsText={""}
+          options={alunos ? alunos.elementos.map((aluno) => { return { label: aluno.nome, id: aluno.idAluno } }) : []}
+          sx={{ minWidth: 200, display: "flex" }}
+          renderInput={(params) => <TextField {...params} label="Alunos" />}
+        />)} />
 
       <Autocomplete
         size="small"

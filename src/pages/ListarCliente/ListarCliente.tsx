@@ -82,10 +82,10 @@ export const ListarCliente: React.FC = () => {
   }
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
+    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "60px", paddingBottom: "50px" }}>
       <Componentes.Titulo texto="Clientes" />
 
-      <Box sx={{ width: { xs: "95%", md: "80%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
+      <Box sx={{ width: { xs: "95%", md: "90%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
 
         <Box sx={{ display: "flex", gap: 3, flexDirection: { xs: "column", md: "row" }, justifyContent: "space-between", alignItems: "center", width: "100%", marginBottom: "10px", paddingInline: 2 }}>
           <Componentes.CampoBusca label="E-mail ou Nome" buscar={buscarPorNomeCliente} resetar={resetBuscaCliente} />
@@ -95,7 +95,7 @@ export const ListarCliente: React.FC = () => {
         </Box>
 
         <Paper sx={{ width: "100%", borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px" }}>
-          <TableContainer sx={{ maxHeight: 430 }}>
+          <TableContainer sx={{ maxHeight: 450 }}>
             <Table stickyHeader>
 
               <TableHead sx={{ backgroundColor: "#090F27" }} >
@@ -121,7 +121,7 @@ export const ListarCliente: React.FC = () => {
                     <StyledTableCell id={`situacao-${cliente.idCliente}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} >{cliente.ativo === "S" ? "Ativo" : cliente.ativo === "N" ? "Inativo" : ""}</StyledTableCell>
 
                     <StyledTableCell id={`situacao-${cliente.idCliente}`} sx={{ justifyContent: "center", minWidth: "150px", display: "flex", wrap: "nowrap" }}>
-                      <Button id={`botao-cliente-${cliente.idCliente}`} onClick={() => navigate("/editar-cliente", { state: cliente })} title="Editar cliente"><EditIcon /></Button>
+                      <Button id={`botao-cliente-${cliente.idCliente}`} onClick={() => navigate("/editar-cliente", { state: cliente })} title="Editar"><EditIcon /></Button>
                       <Button id={`botao-deletar-${cliente.idCliente}`} onClick={() => { handleOpen(); setIdDelete(cliente.idCliente) }} title="Deletar"><DeleteForeverIcon /></Button></StyledTableCell>
 
                   </StyledTableRow>

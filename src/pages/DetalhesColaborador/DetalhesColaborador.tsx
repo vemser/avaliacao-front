@@ -8,7 +8,7 @@ export const DetalhesColaborador = () => {
   const { state } = useLocation()
 
   return (
-    <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
+    <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "60px", paddingBottom: "50px" }}>
       <Titulo texto={`Detalhes de ${state.nome}`} />
 
       <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "space-between", backgroundColor: "var(--branco)", width: { xs: "95%", md: "70%", lg: "60%", xl: "50%" }, borderRadius: "10px", padding: { xs: 3, md: 5 }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: 3, flexWrap: "wrap" }}>

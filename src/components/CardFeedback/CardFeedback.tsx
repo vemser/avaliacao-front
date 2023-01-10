@@ -52,10 +52,10 @@ export const CardFeedback: React.FC<IFeedbackElementos> = (props) => {
                         Código: {props.idFeedBack}
                     </Typography>
                     <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                        <IconButton onClick={() => navigate("/editar-feedback", { state: props })} >
+                        <IconButton title="Editar" onClick={() => navigate("/editar-feedback", { state: props })} >
                             <EditIcon />
                         </IconButton>
-                        <IconButton onClick={() => { handleOpen(); setIdDelete(props.idFeedBack) }}>
+                        <IconButton title="Deletar" onClick={() => { handleOpen(); setIdDelete(props.idFeedBack) }}>
                             <DeleteForeverIcon />
                         </IconButton>
                     </Box>

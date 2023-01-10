@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { MenuLateralContext } from "../../context/MenuLateralContext";
 import { useAuth } from "../../context/AuthContext";
 
-import { ExitToApp, Menu, ThumbUpAlt, School, Event, Source, Terminal, WorkHistory, BusinessCenter, Feed, Settings, ExpandLess, ExpandMore, AssignmentInd, IntegrationInstructions, Group, AutoStories } from "@mui/icons-material";
+import { ExitToApp, Menu, ThumbUpAlt, School, Event, Source, Terminal, WorkHistory, BusinessCenter, Feed, Settings, ExpandLess, ExpandMore, AssignmentInd, IntegrationInstructions, PeopleAlt, AutoStories, EventNote } from "@mui/icons-material";
 
 import logo from '../../assets/dbc-logo.webp';
 
@@ -119,9 +119,9 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
 
                       <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/avaliacoes") }}>
                         <ListItemIcon>
-                          <Event sx={{ color: "var(--azul-escuro-dbc)" }} />
+                          <EventNote sx={{ color: "var(--azul-escuro-dbc)" }} />
                         </ListItemIcon>
-                        <ListItemText primary="Avaliação" />
+                        <ListItemText primary="Avaliações" />
                       </ListItemButton>
                     </List>
                   </Collapse>
@@ -180,7 +180,7 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
                       </ListItemButton>
                       <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/clientes") }}>
                         <ListItemIcon>
-                          <Group sx={{ color: "var(--azul-escuro-dbc)" }} />
+                          <PeopleAlt sx={{ color: "var(--azul-escuro-dbc)" }} />
                         </ListItemIcon>
                         <ListItemText primary="Clientes" />
                       </ListItemButton>

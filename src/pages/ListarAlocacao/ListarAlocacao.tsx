@@ -1,6 +1,6 @@
-import React, {  useEffect } from "react";
+import React, { useEffect } from "react";
 
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { TableCell, tableCellClasses, TableRow, Box, Paper, TableContainer, Table, TableBody, Button, TablePagination, styled, TableHead } from "@mui/material";
 
@@ -42,7 +42,7 @@ const columns: Column[] = [
 
 export const ListarAlocacao: React.FC = () => {
   const navigate = useNavigate();
-  const {pegarReservaAlocacao,reservaAlocacao,filtroReservaAlocacao} = useReservaAlocacao()
+  const { pegarReservaAlocacao, reservaAlocacao, filtroReservaAlocacao } = useReservaAlocacao()
 
 
   const filtroAlocacao = async (valor: string, pagina: number = 0, tamanho: number = 10) => {
@@ -53,28 +53,28 @@ export const ListarAlocacao: React.FC = () => {
     await pegarReservaAlocacao();
   }
 
-  useEffect(()=> {
+  useEffect(() => {
     pegarReservaAlocacao()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+  }, [])
   const handleChangePage = async (event: unknown, newPage: number) => { await pegarReservaAlocacao(newPage) };
-  
+
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
+    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "60px", paddingBottom: "50px" }}>
       <Titulo texto="Reserva e Alocação" />
 
-      <Box sx={{ width: { xs: "95%", md: "80%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
+      <Box sx={{ width: { xs: "95%", md: "90%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
 
-      <Box sx={{ display: "flex", gap: 3, flexDirection: { xs: "column", md: "row" }, justifyContent: "space-between", alignItems: "center", width: "100%", marginBottom: "10px",paddingInline: 2 }}>
-        
-        <Componentes.CampoBusca label="Nome, vaga ou cliente" buscar={filtroAlocacao} resetar={resetBuscaAlocacao}/>
+        <Box sx={{ display: "flex", gap: 3, flexDirection: { xs: "column", md: "row" }, justifyContent: "space-between", alignItems: "center", width: "100%", marginBottom: "10px", paddingInline: 2 }}>
 
-        <Button onClick={() => navigate("/cadastrar-reserva-alocacao")} variant="contained" sx={{ width: "auto", paddingLeft: "15px", paddingRight: "15px", display: "flex", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Alocação</Button>
-      </Box>
+          <Componentes.CampoBusca label="Nome, vaga ou cliente" buscar={filtroAlocacao} resetar={resetBuscaAlocacao} />
+
+          <Button onClick={() => navigate("/cadastrar-reserva-alocacao")} variant="contained" sx={{ width: "auto", paddingLeft: "15px", paddingRight: "15px", display: "flex", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Alocação</Button>
+        </Box>
 
 
         <Paper sx={{ width: "100%", borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px" }}>
-          <TableContainer sx={{ maxHeight: 430 }}>
+          <TableContainer sx={{ maxHeight: 450 }}>
             <Table stickyHeader aria-label="sticky table">
 
               <TableHead sx={{ backgroundColor: "#090F27" }} >
@@ -96,14 +96,14 @@ export const ListarAlocacao: React.FC = () => {
                     <StyledTableCell id={`vaga`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{alocacao?.vaga.nome}</StyledTableCell>
 
                     <StyledTableCell id={`cliente`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} >{alocacao?.vaga.cliente.nome}</StyledTableCell>
-                    
+
                     <StyledTableCell id={`situacao`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} >{formatarTexto(alocacao.situacao)}</StyledTableCell>
-                    
+
                     <StyledTableCell id={`editar-reserva`} sx={{ textAlign: "center" }}>
-                      <Button id={`botao-alocacao-reserva-${alocacao.idReservaAlocacao}`}onClick={() => navigate("/editar-alocacao-reserva", { state: alocacao })} title="Editar Alocacao"><EditIcon /></Button>
+                      <Button id={`botao-alocacao-reserva-${alocacao.idReservaAlocacao}`} onClick={() => navigate("/editar-alocacao-reserva", { state: alocacao })} title="Editar"><EditIcon /></Button>
                     </StyledTableCell>
-                    
-                  </StyledTableRow> 
+
+                  </StyledTableRow>
                 ))}
               </TableBody>
             </Table>

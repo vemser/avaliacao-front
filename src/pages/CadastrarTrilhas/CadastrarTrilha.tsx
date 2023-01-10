@@ -23,7 +23,7 @@ export const CadastrarTrilha = () => {
   const enviaDadosForm = (data: IDadosTrilha) => cadastrarTrilha(data);
 
   return (
-    <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
+    <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "60px", paddingBottom: "50px" }}>
       <Titulo texto="Cadastrar Trilha" />
 
       <Box component="form" onSubmit={handleSubmit(enviaDadosForm)} sx={{

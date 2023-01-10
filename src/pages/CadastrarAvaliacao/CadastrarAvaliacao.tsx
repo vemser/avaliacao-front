@@ -3,7 +3,6 @@ import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { usePrograma } from '../../context/Tecnico/ProgramaContext';
 
-
 import * as Componentes from '../../components/index';
 import { useTrilha } from '../../context/Tecnico/TrilhaContext';
 import { useAluno } from '../../context/Comportamental/AlunoContext';
@@ -18,7 +17,7 @@ import { filtroDebounce } from '../../utils/functions';
 
 export const CadastrarAvaliacao = () => {
   const navigate = useNavigate();
-  
+
   const { pegarProgramaAtivo, programas } = usePrograma();
   const { pegarTrilha, trilhas, pegarTrilhaFiltroNome } = useTrilha();
   const { alunos,pegarAlunoDisponivel } = useAluno();
@@ -34,21 +33,21 @@ export const CadastrarAvaliacao = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const { register, handleSubmit, formState: { errors },control} = useForm<IAvaliacao>({
+  const { register, handleSubmit, formState: { errors }, control } = useForm<IAvaliacao>({
     resolver: yupResolver(avalicaoSchema)
   });
 
-  
+
   const cadastrarAvalicao = (data: IAvaliacao) => {
     console.log(data)
   }
 
   return (
-    <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
-        <Componentes.Titulo texto="Cadastrar avaliação" />
+    <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "60px", paddingBottom: "50px" }}>
+      <Componentes.Titulo texto="Cadastrar Avaliação" />
 
 
-      <Box component="form" onSubmit={handleSubmit(cadastrarAvalicao)}  sx={{
+      <Box component="form" onSubmit={handleSubmit(cadastrarAvalicao)} sx={{
         display: "flex", flexDirection: { xs: "column", lg: "row" }, justifyContent: "space-between", backgroundColor: "var(--branco)", width: { xs: "95%", md: "90%", lg: "85%" }, borderRadius: "10px", padding: {
           xs: 3, sm: 5
         }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: { xs: 3, xl: 8 }
@@ -82,9 +81,9 @@ export const CadastrarAvaliacao = () => {
                 getOptionLabel={(option) => option.label}
                 isOptionEqualToValue={(option, value) => option.label === value.label}
                 options={programas ? programas.elementos.map(item => ({ label: `${item.idPrograma} - ${item.nome}` })) : []}
-                renderInput={(params) => <TextField {...params}  label="Programa" variant="filled" />}
+                renderInput={(params) => <TextField {...params} label="Programa" variant="filled" />}
               />
-            )}/>
+            )} />
             {errors.idPrograma && <Typography id="erro-nome-programa" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.idPrograma.message}</Typography>}
           </FormControl>
 
@@ -101,9 +100,9 @@ export const CadastrarAvaliacao = () => {
                 getOptionLabel={(option) => option.label}
                 isOptionEqualToValue={(option, value) => option.label === value.label}
                 options={trilhas ? trilhas.elementos.map(item => ({ label: `${item.idTrilha} - ${item.nome}` })) : []}
-                renderInput={(params) => <TextField {...params}  label="Trilha" variant="filled"/>}
+                renderInput={(params) => <TextField {...params} label="Trilha" variant="filled" />}
               />
-            )}/>
+            )} />
             {errors.idTrilha && <Typography id="erro-nome-trilha" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.idTrilha.message}</Typography>}
           </FormControl>
 
@@ -121,7 +120,7 @@ export const CadastrarAvaliacao = () => {
 
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: "end" }}>
 
-        <FormControl sx={{ width: "100%" }}>
+          <FormControl sx={{ width: "100%" }}>
             <TextField
               placeholder="Digite uma descrição para a avaliação"
               multiline
@@ -155,7 +154,7 @@ export const CadastrarAvaliacao = () => {
           <Box sx={{ display: "flex", width: "100%", justifyContent: { xs: "center", lg: "end" }, alignItems: { xs: "center", lg: "end" }, bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>
             <Button type="button" onClick={() => { navigate(-1) }} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d " }, textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cancelar</Button>
 
-            <Button type="submit"  variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cadastrar</Button>
+            <Button type="submit" variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cadastrar</Button>
           </Box>
         </Stack>
       </Box>

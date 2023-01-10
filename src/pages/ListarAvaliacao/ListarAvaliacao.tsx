@@ -79,10 +79,10 @@ export const ListarAvaliacao = () => {
   // const handleClose = () => setOpen(false);
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
-      <Componentes.Titulo texto="Avalições" />
+    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "60px", paddingBottom: "50px" }}>
+      <Componentes.Titulo texto="Avaliações" />
 
-      <Box sx={{ width: { xs: "95%", md: "80%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
+      <Box sx={{ width: { xs: "95%", md: "90%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
 
         <Box sx={{ display: "flex", gap: 3, flexDirection: { xs: "column", md: "row" }, justifyContent: "space-between", alignItems: "center", width: "100%", marginBottom: "10px", paddingInline: 2 }}>
           <Componentes.CampoBusca label="Código ou Nome" buscar={filtrarAcompanhamento} resetar={resetFiltroAcompanhamento} />
@@ -91,7 +91,7 @@ export const ListarAvaliacao = () => {
         </Box>
 
         <Paper sx={{ width: "100%", borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px" }}>
-          <TableContainer id="tabela-admin" sx={{ maxHeight: 430 }}>
+          <TableContainer id="tabela-admin" sx={{ maxHeight: 450 }}>
             <Table stickyHeader aria-label="sticky table">
 
               <TableHead sx={{ backgroundColor: "#090F27" }}>
@@ -128,7 +128,7 @@ export const ListarAvaliacao = () => {
 
                     <StyledTableCell id={`cargo-${acompanhamentos.idAcompanhamento}`} sx={{ textAlign: "center" }}><Button id={`botao-avaliar-acompanhamento-${acompanhamentos.idAcompanhamento}`}
                       onClick={() => { navigate("/editar-acompanhamento", { state: acompanhamentos }) }}
-                      title="Avaliar acompanhamento"><Edit/></Button></StyledTableCell>
+                      title="Avaliar acompanhamento"><Edit /></Button></StyledTableCell>
 
                   </StyledTableRow>
                 ))}

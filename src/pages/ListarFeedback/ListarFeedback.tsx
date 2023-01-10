@@ -102,7 +102,7 @@ export const ListarFeedback: React.FC = () => {
     { label: 'Pulp Fiction', year: 1994 }]
 
   return (
-    <Box sx={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
+    <Box sx={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "60px", paddingBottom: "50px" }}>
       <Componentes.Titulo texto="Feedbacks" />
 
       <Box sx={{ width: { xs: "95%", md: "90%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
@@ -160,7 +160,7 @@ export const ListarFeedback: React.FC = () => {
           </Box>}
 
         <Paper sx={{ width: "100%", borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px" }}>
-          <TableContainer sx={{ maxHeight: 430 }}>
+          <TableContainer sx={{ maxHeight: 450 }}>
             <Table component="table" stickyHeader aria-label="sticky table">
               <TableHead sx={{ backgroundColor: "#090F27" }}>
                 <TableRow>
@@ -193,7 +193,7 @@ export const ListarFeedback: React.FC = () => {
                     <StyledTableCell id="situacao" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", textTransform: "capitalize", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{feedback.data.replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")}</StyledTableCell>
 
                     <StyledTableCell id="acoes" sx={{ justifyContent: "center", minWidth: "150px", display: "flex", wrap: "nowrap" }}>
-                      <Button id={`botao-editar-${feedback.idFeedBack}`} title="Deletar" onClick={() => navigate("/editar-feedback", { state: feedback })}><Edit /></Button>
+                      <Button id={`botao-editar-${feedback.idFeedBack}`} title="Editar" onClick={() => navigate("/editar-feedback", { state: feedback })}><Edit /></Button>
                       <Button id={`botao-deletar-${feedback.idFeedBack}`} title="Deletar" onClick={() => { handleOpen(); setIdDelete(feedback.idFeedBack) }}><DeleteForever /></Button>
                     </StyledTableCell>
                   </StyledTableRow>

@@ -12,7 +12,7 @@ export const EditarAtividadeAluno = () => {
   const nome = usuarioLogado.login.split('.');
 
   return (
-    <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
+    <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "60px", paddingBottom: "50px" }}>
       <Componentes.Titulo texto="Entregar Atividade" />
 
       <Box component="form" sx={{ display: "flex", flexDirection: { xs: "column", lg: "row" }, justifyContent: "space-between", backgroundColor: "var(--branco)", width: { xs: "95%", md: "90%", lg: "85%" }, borderRadius: "10px", padding: { xs: 3, sm: 5 }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: { xs: 3, xl: 8 } }}>
@@ -24,7 +24,7 @@ export const EditarAtividadeAluno = () => {
 
           <Typography sx={{ display: 'flex', flexWrap: { xs: 'wrap' }, gap: { xs: 2 }, justifyContent: 'space-between', width: '100%' }}><span><strong>Nota:</strong> 0/10</span> <span><strong>Data de entrega:</strong> 06/01 de 2023 - 14:00</span></Typography>
 
-          <Divider sx={{ width: "100%" }} />  
+          <Divider sx={{ width: "100%" }} />
 
           <Typography><strong>Descrição da atividade:</strong></Typography>
           <Typography>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</Typography>

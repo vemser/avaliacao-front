@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 
 import { Titulo } from "../../components/Titulo/Titulo";
 
@@ -40,14 +40,13 @@ export const CadastrarAluno = () => {
 
 
 
-  const { register, handleSubmit, formState: { errors } } = useForm<ICadastroAlunoForm>({
+  const { register, handleSubmit, formState: { errors },control } = useForm<ICadastroAlunoForm>({
     resolver: yupResolver(alunoSchema)
   });
 
   
 
   const cadastroAluno = (data: ICadastroAlunoForm) => {
-
     const novoData = { ...data, idTrilha: parseInt(data.idTrilha), idPrograma: parseInt(data.idPrograma.split(' ')[0]), tecnologias: tecnologiaSelecionada }
     cadastrarAluno(novoData);
   };
@@ -114,10 +113,12 @@ export const CadastrarAluno = () => {
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
-            <Autocomplete disablePortal id="programa" 
+          <Controller control={control} name="idPrograma" render={({ field: { onChange } }) => (
+            <Autocomplete disablePortal onChange={(event, data) => onChange(data?.label)}  id="programa" getOptionLabel={(option) => option.label}
               isOptionEqualToValue={(option, value) => option.label === value.label}
-              options={programas ? programas.elementos.map((programa) => ({ label: `${programa.idPrograma} - ${programa.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Programa" variant="filled" {...register("idPrograma")} />} />
-            {/* {estadoErro && <Typography id="erro-programaAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">Por favor, escolha um programa</Typography>} */}
+              options={programas ? programas.elementos.map((programa) => ({ label: `${programa.idPrograma} - ${programa.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Programa" variant="filled"/>} />
+              )}/>
+              {errors.idPrograma && <Typography id="erro-programa" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.idPrograma.message}</Typography>}
           </FormControl>
 
           <FormControl variant="filled" sx={{ width: "100%" }}>

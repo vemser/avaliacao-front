@@ -185,11 +185,11 @@ export interface ICriarAcompanhamento {
 }
 
 export interface IEditarAcompanhamento {
-  idPrograma: number
+  idPrograma: string,
   titulo: string,
   descricao: string,
   dataInicio: string,
-  dataFinal: string,
+  dataFim: string,
 }
 
 export interface ICadastrarFeedback {

@@ -13,6 +13,7 @@ import { IEditarAcompanhamento } from "../../utils/interface";
 import { usePrograma } from "../../context/Tecnico/ProgramaContext";
 import { useEffect } from "react";
 import { IProgramas } from "../../utils/programaInterface";
+import { useAcompanhamento } from "../../context/Comportamental/AcompanhamentoContext";
 
 const itemHeigth = 48;
 const itemPaddingTop = 8;
@@ -27,14 +28,18 @@ const MenuProps = {
 
 export const EditarAcompanhamento = () => {
   const navigate = useNavigate();
+  const { state } = useLocation();
+
   const { programas, pegarProgramaAtivo } = usePrograma();
+  const { editarAcompanhamento } = useAcompanhamento();
 
   const { register, handleSubmit, formState: { errors } } = useForm<IEditarAcompanhamento>({
     resolver: yupResolver(EditarAcompanhamentoSchema)
   })
 
-  const editarAcompanhamento = (data: IEditarAcompanhamento) => { 
-    console.log(data)
+  const editar = (data: IEditarAcompanhamento) => { 
+    const novoData = { ...data, idPrograma: parseInt(data.idPrograma)}
+    editarAcompanhamento(novoData, state.idAcompanhamento)
   }
 
   useEffect(() => {
@@ -46,17 +51,17 @@ export const EditarAcompanhamento = () => {
     <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
       <Titulo texto="Editar Acompanhamento" />
 
-      <Box component="form" onSubmit={handleSubmit(editarAcompanhamento)} sx={{ display: "flex", flexDirection: { xs: "column", lg: "row" }, justifyContent: "space-between", backgroundColor: "var(--branco)", width: { xs: "95%", md: "90%", lg: "85%" }, borderRadius: "10px", padding: { xs: 3, sm: 5 }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: { xs: 3, xl: 8 } }}>
+      <Box component="form" onSubmit={handleSubmit(editar)} sx={{ display: "flex", flexDirection: { xs: "column", lg: "row" }, justifyContent: "space-between", backgroundColor: "var(--branco)", width: { xs: "95%", md: "90%", lg: "85%" }, borderRadius: "10px", padding: { xs: 3, sm: 5 }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: { xs: 3, xl: 8 } }}>
 
         <Stack component="div" spacing={3} sx={{ width: "100%", display: "flex", alignItems: { xs: "start", md: "start" } }}>
           <FormControl sx={{ width: "100%" }}>
-            <TextField id="titulo" error={!!errors.titulo} {...register("titulo")} label='Título do acompanhamento' placeholder="Digite um título" variant="filled" inputProps={{ maxLength: 250 }} defaultValue="Esperar API" />
+            <TextField id="titulo" error={!!errors.titulo} {...register("titulo")} label='Título do acompanhamento' placeholder="Digite um título" variant="filled" inputProps={{ maxLength: 250 }} defaultValue={state.titulo} />
             {errors.titulo && <Typography id="erro-titulo" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px" }} color="error">{errors.titulo.message}</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} variant="filled">
             <InputLabel id="programas-list" error={!!errors.idPrograma}>Programas</InputLabel>
-            <Select MenuProps={MenuProps} {...register("idPrograma")} error={!!errors.idPrograma} defaultValue={2} label="Programas" labelId="demo-simple-select-filled-label" id="programas">
+            <Select MenuProps={MenuProps} {...register("idPrograma")} error={!!errors.idPrograma} defaultValue={state.programa.idPrograma} label="Programas" labelId="demo-simple-select-filled-label" id="programas">
               <MenuItem value="initial-programa" disabled><em>Selecione um programa</em></MenuItem>
               {programas?.elementos.map((programas: IProgramas) => 
                 <MenuItem key={programas.idPrograma} id={`${programas.idPrograma}`} value={programas.idPrograma}>{programas.nome}</MenuItem>
@@ -66,19 +71,19 @@ export const EditarAcompanhamento = () => {
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField id="descricao" error={!!errors.descricao} label="Digite uma descrição" defaultValue="Esperar API" placeholder="Digite uma descrição" multiline rows={4} variant="filled" {...register("descricao")} inputProps={{ maxLength: 5000 }} />
+            <TextField id="descricao" error={!!errors.descricao} label="Digite uma descrição" defaultValue={state.descricao} placeholder="Digite uma descrição" multiline rows={4} variant="filled" {...register("descricao")} inputProps={{ maxLength: 5000 }} />
             {errors.descricao && <Typography id="erro-descricao" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px" }} color="error">{errors.descricao.message}</Typography>}
           </FormControl>
         </Stack>
 
         <Stack component="div" spacing={3} sx={{ width: "100%", display: "flex", alignItems: { xs: "start", md: "start" } }}>
           <FormControl sx={{ width: "100%" }}>
-            <TextField id="dataInicio" error={!!errors.dataInicio} label="Data inicial" type="date" sx={{ width: "100%" }} InputLabelProps={{ shrink: true }} {...register("dataInicio")} variant="filled" defaultValue="2023-07-07" />
+            <TextField id="dataInicio" error={!!errors.dataInicio} label="Data inicial" type="date" sx={{ width: "100%" }} InputLabelProps={{ shrink: true }} {...register("dataInicio")} variant="filled" defaultValue={state.dataInicio} />
             {errors.dataInicio && <Typography id="erro-dataInicio" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px" }} color="error">{errors.dataInicio.message}</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField id="data-final" label="Data final" type="date" sx={{ width: "100%" }}  InputLabelProps={{ shrink: true }} {...register("dataFinal")} variant="filled" defaultValue="2023-07-07" />
+            <TextField id="data-final" label="Data final" type="date" sx={{ width: "100%" }}  InputLabelProps={{ shrink: true }} {...register("dataFim")} variant="filled" defaultValue={state.dataFim ? state.dataFim : ''} />
           </FormControl>
 
           <Box sx={{ display: "flex", width: "100%", justifyContent: "center", alignItems: "center", bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>

@@ -80,7 +80,7 @@ export const ProgramaProvider = ({ children }: IChildren) => {
       nProgress.start();
       const { data } = await API.get(`/programa?page=${pagina}&size=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") } });
       let programasAtivos = data;
-      programasAtivos.elementos = programasAtivos.elementos.filter((programa: IProgramas) => programa.situacao === "ABERTO");
+      programasAtivos.elementos = programasAtivos.elementos.filter((programa: IProgramas) => programa.situacaoVagaPrograma === "ABERTO");
       setProgramas(programasAtivos);
     } catch (error: any) {
       let message = "Ops, algo deu errado!";

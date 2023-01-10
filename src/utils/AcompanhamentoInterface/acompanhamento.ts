@@ -1,5 +1,6 @@
 export interface IAcompanhamento {
-  acompanhamentos: IAcompanhamentoObject | null,
+  cadastrarAcompanhamento: (dadosAcompanhamento: ICadastrarAcompanhamento) => Promise<void>,
+    acompanhamentos: IAcompanhamentoObject | null,
   pegarAcompanhamentos: (pagina?: number, tamanho?: number) => Promise<void>,
   pegarAcompanhamentoNomePrograma: (nome: string, pagina?: number, tamanho?: number) => Promise<void>,
   desativarAcompanhamento: (id: number) => Promise<void>
@@ -7,6 +8,14 @@ export interface IAcompanhamento {
 
 export interface IChildren {
   children: React.ReactNode;
+}
+
+export interface ICadastrarAcompanhamento {
+  titulo: string,
+  descricao: string,
+  dataInicio: string,
+  dataFim: string,
+  idPrograma: number,
 }
 
 export interface IAcompanhamentoObject {

@@ -1,7 +1,7 @@
 export interface IProgramas {
   idPrograma: number;
   nome: string;
-  situacao: string;
+  situacaoVagaPrograma: string;
   descricao: string;
   dataInicio: string;
   dataFim: string;

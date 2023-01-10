@@ -47,7 +47,7 @@ export const CadastrarPrograma: React.FC = () => {
 
         <FormControl sx={{ width: "100%" }} variant="filled">
           <InputLabel>Situação</InputLabel>
-          <Select label="Situação" defaultValue="" id="situacao-programa" {...register("situacao")}>
+          <Select label="Situação" defaultValue="" id="situacao-programa" {...register("situacaoVagaPrograma")}>
             <MenuItem value="ABERTO" >Aberto</MenuItem>
             <MenuItem value="FECHADO">Fechado</MenuItem>
           </Select>

@@ -8,7 +8,7 @@ import * as Componentes from '../../components/index';
 import { useTrilha } from '../../context/Tecnico/TrilhaContext';
 import { useAluno } from '../../context/Comportamental/AlunoContext';
 import moment from 'moment';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { IAvaliacao } from '../../utils/AvaliacaoInterface/Avaliacao';
 import { avalicaoSchema } from '../../utils/schemas';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -46,16 +46,6 @@ export const CadastrarAvaliacao = () => {
   let data = moment()
   let novaData = data.format("YYYY-MM-DD")
 
-
-  const [acompanhamentoErro, setAcompanhamentoErro] = useState<boolean>(false);
-  const [dataAcompanhamento, setDataAcompanhamento] = useState<string>()
-  const [programaErro, setProgramaErro] = useState<boolean>(false);
-  const [dataPrograma, setDataPrograma] = useState<string>()
-  const [trilhaErro, setTrilhaErro] = useState<boolean>(false);
-  const [dataTrilha, setDataTrilha] = useState<string>()
-  const [alunoErro, setAlunoErro] = useState<boolean>(false);
-  const [dataAluno, setDataAluno] = useState<string>()
-
   useEffect(() => {
     pegarProgramaAtivo(0, programas?.totalElementos);
     pegarTrilha(0,trilhas?.totalElementos);
@@ -63,47 +53,12 @@ export const CadastrarAvaliacao = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const { register, handleSubmit, formState: { errors }} = useForm<IAvaliacao>({
+  const { register, handleSubmit, formState: { errors },control} = useForm<IAvaliacao>({
     resolver: yupResolver(avalicaoSchema)
   });
 
   
-  const handleChangeAcompanhamento = () => {
-    setAcompanhamentoErro(false)
-    setDataAcompanhamento('')
-  };
-  
-  const handleChangePrograma = () => {
-    setProgramaErro(false)
-    setDataPrograma('')
-  };
-
-  const handleChangeTrilha = () => {
-    setTrilhaErro(false)
-    setDataTrilha('')
-  };
-
-  const handleChangeAluno = () => {
-    setAlunoErro(false)
-    setDataAluno('')
-  };
- 
-
-  const erro = (estado: string | undefined, setErro: any): void => {
-    if(estado) {
-      setErro(false)
-    } else {
-      setErro(true) 
-    }
-  }
-  
-
-
   const cadastrarAvalicao = (data: IAvaliacao) => {
-    setDataAcompanhamento(data.idAcompanhamento.toString())
-    setDataPrograma(data.idPrograma.toString())
-    setDataTrilha(data.idTrilha.toString())
-    setDataAluno(data.idAluno.toString())
     console.log(data)
   }
 
@@ -120,43 +75,54 @@ export const CadastrarAvaliacao = () => {
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
           <FormControl sx={{ width: { xs: "100%", md: "100%" } }} >
-          <Autocomplete
-            disablePortal
-            onChange={handleChangeAcompanhamento}
-            id="acompanhemnto"
-            options={top100Films}
-            renderInput={(params) => <TextField {...params} label="Acompanhamento" variant="filled" {...register("idAcompanhamento")}/>}
-          />
-          {acompanhamentoErro && <Typography id="erro-acompanhamento" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">Por favor, escolha um acompanhamento</Typography>}
+          <Controller control={control} name="idAcompanhamento" render={({ field: { onChange } }) => (
+            <Autocomplete
+              disablePortal
+              onChange={(event, data) => onChange(data?.label)}
+              id="acompanhemnto"
+              getOptionLabel={(option) => option.label}
+              options={top100Films}
+              renderInput={(params) => <TextField {...params} label="Acompanhamento" variant="filled" {...register("idAcompanhamento")}/>}
+            />
+          )}/>
+           {errors.idAcompanhamento && <Typography id="erro-nome-acompanhamento" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.idAcompanhamento.message}</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: { xs: "100%", md: "100%" } }} >
-            <Autocomplete
-              disablePortal
-              onChange={handleChangePrograma}
-              id="programa"
-              isOptionEqualToValue={(option, value) => option.label === value.label}
-              options={programas ? programas.elementos.map(item => ({ label: `${item.idPrograma} - ${item.nome}` })) : []}
-              renderInput={(params) => <TextField {...params}  label="Programa" variant="filled" {...register("idPrograma")}/>}
-            />
-            {programaErro && <Typography id="erro-programa" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">Por favor, escolha um programa</Typography>}
+            <Controller control={control} name="idPrograma" render={({ field: { onChange } }) => (
+              <Autocomplete
+                disablePortal
+                onChange={(event, data) => onChange(data?.label)}
+                id="programa"
+                getOptionLabel={(option) => option.label}
+                isOptionEqualToValue={(option, value) => option.label === value.label}
+                options={programas ? programas.elementos.map(item => ({ label: `${item.idPrograma} - ${item.nome}` })) : []}
+                renderInput={(params) => <TextField {...params}  label="Programa" variant="filled" />}
+              />
+            )}/>
+            {errors.idPrograma && <Typography id="erro-nome-programa" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.idPrograma.message}</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: { xs: "100%", md: "100%" } }} >
-            <Autocomplete
-              disablePortal
-              onChange={handleChangeTrilha}
-              id="trilha"
-              isOptionEqualToValue={(option, value) => option.label === value.label}
-              options={trilhas ? trilhas.elementos.map(item => ({ label: `${item.idTrilha} - ${item.nome}` })) : []}
-              renderInput={(params) => <TextField {...params}  label="Trilha" variant="filled" {...register("idTrilha")} />}
-            />
-            {trilhaErro && <Typography id="erro-trilha" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">Por favor, escolha uma trilha</Typography>}
+            <Controller control={control} name="idTrilha" render={({ field: { onChange } }) => (
+              <Autocomplete
+                disablePortal
+                onChange={(event, data) => onChange(data?.label)}
+                id="trilha"
+                getOptionLabel={(option) => option.label}
+                isOptionEqualToValue={(option, value) => option.label === value.label}
+                options={trilhas ? trilhas.elementos.map(item => ({ label: `${item.idTrilha} - ${item.nome}` })) : []}
+                renderInput={(params) => <TextField {...params}  label="Trilha" variant="filled"/>}
+              />
+            )}/>
+            {errors.idTrilha && <Typography id="erro-nome-trilha" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.idTrilha.message}</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
-            <Autocomplete disablePortal id="aluno" onChange={handleChangeAluno} isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: `${aluno.idAluno} - ${aluno.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" {...register("idAluno")} />}/>
-            {alunoErro && <Typography id="erro-aluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">Por favor, escolha um aluno</Typography>}
+          <Controller control={control} name="idAluno" render={({ field: { onChange } }) => (
+            <Autocomplete disablePortal  onChange={(event, data) => onChange(data?.label)} id="aluno" getOptionLabel={(option) => option.label}  isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: `${aluno.idAluno} - ${aluno.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled"/>}/>
+          )}/>        
+          {errors.idAluno && <Typography id="erro-nome-aluno" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.idAluno.message}</Typography>}    
           </FormControl>
 
         </Stack>
@@ -197,7 +163,7 @@ export const CadastrarAvaliacao = () => {
           <Box sx={{ display: "flex", width: "100%", justifyContent: { xs: "center", lg: "end" }, alignItems: { xs: "center", lg: "end" }, bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>
             <Button type="button" onClick={() => { navigate(-1) }} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d " }, textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cancelar</Button>
 
-            <Button type="submit" onClick={() => { erro(dataAcompanhamento,setAcompanhamentoErro); erro(dataPrograma,setProgramaErro); erro(dataTrilha,setTrilhaErro); erro(dataAluno,setAlunoErro);}} variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cadastrar</Button>
+            <Button type="submit"  variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cadastrar</Button>
           </Box>
         </Stack>
       </Box>

@@ -7,7 +7,7 @@ import { Box, Stack, FormControl, TextField, Typography, InputLabel, Select, Men
 
 import InputMask from 'react-input-mask';
 
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 
 import { useTrilha } from '../../context/Tecnico/TrilhaContext';
 import { usePrograma } from '../../context/Tecnico/ProgramaContext';
@@ -38,37 +38,16 @@ export const EditarAluno = () => {
   const [inputTecnologia, setInputTecnologia] = useState<string>('')
   const [tecnologiaSelecionada, setTecnologiaSelecionada] = useState<number[]>([]);
 
-  const [estadoErro, setEstadoErro] = useState<boolean>(false);
-  const [dataAuxiliar, setDataAuxiliar] = useState<object | string | boolean>(state.programa);
-
   const initialState = () => {
     let result = state.tecnologias.map((tecnologia: ITecnologiasAluno) => tecnologia.idTecnologia)
     setTecnologiaSelecionada(result)
   }
 
-  const { register, handleSubmit, formState: { errors } } = useForm<ICadastroAlunoForm>({
+  const { register, handleSubmit, formState: { errors },control } = useForm<ICadastroAlunoForm>({
     resolver: yupResolver(alunoSchema)
   });
 
-  const erroPrograma = () => {
-    if (dataAuxiliar) {
-      setEstadoErro(false)
-    } else {
-      setEstadoErro(true)
-    }
-  }
-
-  const handleChange = () => {
-    setEstadoErro(false)
-    setDataAuxiliar(false)
-  };
-
   const editar = (data: ICadastroAlunoForm) => {
-    setDataAuxiliar(data.idPrograma);
-
-    if (!data.idPrograma && !dataAuxiliar) return setEstadoErro(true);
-    setEstadoErro(false);
-
     const novoData = { ...data, idTrilha: parseInt(data.idTrilha), idPrograma: data.idPrograma ? parseInt(data.idPrograma.split(' ')[0]) : state.programa.idPrograma, tecnologias: tecnologiaSelecionada }
     editarAluno(novoData, state.idAluno)
   };
@@ -147,14 +126,15 @@ export const EditarAluno = () => {
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} variant="filled">
-            <Autocomplete disablePortal id="programa" onChange={handleChange}
+          <Controller control={control} name="idPrograma" render={({ field: { onChange } }) => (
+            <Autocomplete disablePortal  onChange={(event, data) => onChange(data?.label)}   id="programa" getOptionLabel={(option) => option.label}
               defaultValue={{ label: `${state.programa.idPrograma} - ${state.programa.nome}`, id: state.programa.idPrograma }}
               isOptionEqualToValue={(option) => option.label === `${state.programa.idPrograma} - ${state.programa.nome}`}
               options={programas ? programas.elementos.map((programa) => ({ label: `${programa.idPrograma} - ${programa.nome}`, id: programa.idPrograma })) : []}
               renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
-              renderInput={(params) => <TextField {...params} label="Programa" variant="filled" {...register("idPrograma")} />} />
-
-            {estadoErro && <Typography id="erro-programaAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">Por favor, escolha um programa</Typography>}
+              renderInput={(params) => <TextField {...params} label="Programa" variant="filled" />} />
+          )}/>
+          {errors.idPrograma && <Typography id="erro-idPrograma" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.idPrograma.message}</Typography>}
           </FormControl>
 
           <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>
@@ -171,7 +151,7 @@ export const EditarAluno = () => {
           <Box sx={{ display: "flex", width: "100%", justifyContent: { xs: "center", lg: "end" }, alignItems: { xs: "center", lg: "end" }, bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>
             <Button type="button" onClick={() => { navigate(-1) }} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d" }, textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cancelar</Button>
 
-            <Button type="submit" onClick={() => { erroPrograma() }} variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Salvar</Button>
+            <Button type="submit" variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Salvar</Button>
           </Box>
         </Stack>
       </Box>

@@ -231,7 +231,7 @@ export interface IAvaliarAcompanhamento {
 }
 
 export interface ICadastrarAcompanhamentoForm {
-  idPrograma: number
+  idPrograma: string
   titulo: string,
   descricao: string,
   dataInicio: string,

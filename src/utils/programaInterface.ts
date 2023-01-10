@@ -18,6 +18,7 @@ export interface IProgramaContext {
   deletarProgama: (id: number) => Promise<void>;
   editarPrograma: (programa: IProgramas, id: number) => Promise<void>;
   pegarProgramaAtivo: (pagina?: number, tamanho?: number) => Promise<void>;
+  pegarProgramaPorNomeAtivo: (nome: string, pagina?: number, tamanho?: number) => Promise<void>;
 }
 
 export interface IObjectProgramas {

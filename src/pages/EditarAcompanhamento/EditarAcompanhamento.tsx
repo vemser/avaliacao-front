@@ -1,10 +1,10 @@
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { Box, Typography, Stack, FormControl, TextField, Button, InputLabel, Select, MenuItem } from "@mui/material";
+import { Box, Typography, Stack, FormControl, TextField, Button, Autocomplete } from "@mui/material";
 
 import { Titulo } from "../../components/Titulo/Titulo";
 
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { EditarAcompanhamentoSchema } from "../../utils/schemas";
 
@@ -12,28 +12,18 @@ import { IEditarAcompanhamento } from "../../utils/interface";
 
 import { usePrograma } from "../../context/Tecnico/ProgramaContext";
 import { useEffect } from "react";
-import { IProgramas } from "../../utils/programaInterface";
-import { useAcompanhamento } from "../../context/Comportamental/AcompanhamentoContext";
 
-const itemHeigth = 48;
-const itemPaddingTop = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: itemHeigth * 4.5 + itemPaddingTop,
-      width: 250,
-    },
-  },
-};
+import { useAcompanhamento } from "../../context/Comportamental/AcompanhamentoContext";
+import { filtroDebounce } from "../../utils/functions";
 
 export const EditarAcompanhamento = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
 
-  const { programas, pegarProgramaAtivo } = usePrograma();
+  const { programas, pegarProgramaAtivo, pegarProgramaPorNomeAtivo } = usePrograma();
   const { editarAcompanhamento } = useAcompanhamento();
 
-  const { register, handleSubmit, formState: { errors } } = useForm<IEditarAcompanhamento>({
+  const { register, handleSubmit, formState: { errors }, control } = useForm<IEditarAcompanhamento>({
     resolver: yupResolver(EditarAcompanhamentoSchema)
   })
 
@@ -43,7 +33,7 @@ export const EditarAcompanhamento = () => {
   }
 
   useEffect(() => {
-    pegarProgramaAtivo(0, programas?.totalElementos);
+    pegarProgramaAtivo(0, 10);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -59,15 +49,16 @@ export const EditarAcompanhamento = () => {
             {errors.titulo && <Typography id="erro-titulo" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px" }} color="error">{errors.titulo.message}</Typography>}
           </FormControl>
 
-          <FormControl sx={{ width: "100%" }} variant="filled">
-            <InputLabel id="programas-list" error={!!errors.idPrograma}>Programas</InputLabel>
-            <Select MenuProps={MenuProps} {...register("idPrograma")} error={!!errors.idPrograma} defaultValue={state.programa.idPrograma} label="Programas" labelId="demo-simple-select-filled-label" id="programas">
-              <MenuItem value="initial-programa" disabled><em>Selecione um programa</em></MenuItem>
-              {programas?.elementos.map((programas: IProgramas) => 
-                <MenuItem key={programas.idPrograma} id={`${programas.idPrograma}`} value={programas.idPrograma}>{programas.nome}</MenuItem>
-              )}
-            </Select>
-            {errors.idPrograma && <Typography id="erro-nome-programa" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.idPrograma.message}</Typography>}
+          <FormControl sx={{ width: "100%" }} >
+            <Controller control={control} name="idPrograma" render={({ field: { onChange } }) => (
+            <Autocomplete disablePortal id="programa" 
+              onChange={(event, data) => onChange(data?.id)} 
+              getOptionLabel={(option) => option.label}
+              onInputChange={(event, value) => filtroDebounce(value, pegarProgramaPorNomeAtivo)}
+              isOptionEqualToValue={(option, value) => option.label === value.label}
+              options={programas ? programas.elementos.map((programa) => ({ label: `${programa.idPrograma} - ${programa.nome}`, id: programa.idPrograma })) : []} renderInput={(params) => <TextField {...params} label="Programa" variant="filled"/>} /> )}
+            />
+            {errors.idPrograma && <Typography id="erro-programa" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.idPrograma.message}</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>

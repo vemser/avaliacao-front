@@ -7,6 +7,8 @@ import EditIcon from "@mui/icons-material/Edit";
 
 import { GestorContext } from "../../context/GestorContext";
 import * as Componentes from "../../components";
+import { useAcompanhamento } from "../../context/Comportamental/AcompanhamentoContext";
+import { IAcompanhamentoApi } from "../../utils/AcompanhamentoInterface/acompanhamento";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: { backgroundColor: theme.palette.common.black, color: theme.palette.common.white },
@@ -35,10 +37,10 @@ const columns: Column[] = [
 ];
 
 export const ListarAcompanhamento = () => {
-  const { acompanhamento, pegarAcompanhamento, paginacaoAcompanhamento } = useContext(GestorContext);
+  const { pegarAcompanhamentos, acompanhamentos } = useAcompanhamento()
   const navigate = useNavigate()
 
-  const handleChangePage = async (event: unknown, newPage: number) => { await pegarAcompanhamento(newPage); };
+  // const handleChangePage = async (event: unknown, newPage: number) => { await pegarAcompanhamento(newPage); };
 
   const filtrarAcompanhamento = async (valor: any, pagina: number = 0, tamanho: number = 10) => {
     console.log(valor);
@@ -49,9 +51,9 @@ export const ListarAcompanhamento = () => {
   }
 
   useEffect(() => {
-    // pegarAcompanhamento()
+    pegarAcompanhamentos()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []);
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
@@ -77,7 +79,7 @@ export const ListarAcompanhamento = () => {
               </TableHead>
 
               <TableBody>
-                {acompanhamento?.map((acompanhamentos) => (
+                {acompanhamentos?.elementos.map((acompanhamentos: IAcompanhamentoApi) => (
                   <StyledTableRow key={acompanhamentos.idAcompanhamento}>
 
                     <StyledTableCell sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} component="td" scope="row"> {acompanhamentos.idAcompanhamento}</StyledTableCell>
@@ -109,7 +111,7 @@ export const ListarAcompanhamento = () => {
           </TableContainer>
 
           {/* Paginação */}
-          <TablePagination rowsPerPageOptions={[]} component="div" count={paginacaoAcompanhamento.totalElementos} rowsPerPage={paginacaoAcompanhamento.tamanho} page={paginacaoAcompanhamento.pagina} onPageChange={handleChangePage} />
+          {/* <TablePagination rowsPerPageOptions={[]} component="div" count={paginacaoAcompanhamento.totalElementos} rowsPerPage={paginacaoAcompanhamento.tamanho} page={paginacaoAcompanhamento.pagina} onPageChange={handleChangePage} /> */}
         </Paper>
       </Box>
     </Box>

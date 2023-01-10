@@ -9,8 +9,6 @@ export const FiltroFeedback = () => {
   const { alunos, pegarAluno } = useAluno();
   const { trilhas, pegarTrilhaFiltroNome, pegarTrilha } = useTrilha();
 
-
-
   useEffect(() => {
     pegarAluno(0, 3);
     pegarTrilha(0, 3);

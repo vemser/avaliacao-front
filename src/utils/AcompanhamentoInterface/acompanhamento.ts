@@ -3,7 +3,8 @@ export interface IAcompanhamento {
   cadastrarAcompanhamento: (dadosAcompanhamento: ICadastrarAcompanhamento) => Promise<void>,
   pegarAcompanhamentos: (pagina?: number, tamanho?: number) => Promise<void>,
   pegarAcompanhamentoNomePrograma: (nome: string, pagina?: number, tamanho?: number) => Promise<void>,
-  desativarAcompanhamento: (id: number) => Promise<void>
+  desativarAcompanhamento: (id: number) => Promise<void>,
+  editarAcompanhamento: (dadosAcompanhamento: IEditarAcompanhamento, id: number) => Promise<void>
 }
 
 export interface IChildren {

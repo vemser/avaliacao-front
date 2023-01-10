@@ -148,3 +148,7 @@ export const avalicaoSchema = yup.object().shape({
   idAluno: yup.string().required("Por favor, escolha um aluno"),
   situacao: yup.string().required("Por favor, insira a situação da avaliação")
 })
+export const editarAvalicaoSchema = yup.object().shape({
+  descricao: yup.string().required("Por favor, insira uma descrição"),
+  situacao: yup.string().required("Por favor, insira a situação da avaliação")
+})

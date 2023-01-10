@@ -40,9 +40,8 @@ export interface IModuloDTO {
 
 export interface IFeedbackCadastro {
     idAluno: number,
-    idModulo: number,
-    nomeInstrutor: string,
+    idModulo: number[],
+    usuarioLogado: string,
     descricao: string,
-    situacao: string,
-    data: string
+    situacao: string
 }

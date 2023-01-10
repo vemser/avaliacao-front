@@ -40,7 +40,7 @@ export const AcompanhamentoProvider = ({ children }: IChildren) => {
   const editarAcompanhamento = async (dadosAcompanhamento: IEditarAcompanhamento, id: number) => {
     try {
       nProgress.start();
-      await API.put(`/acompanhamento/editar/${id}`, dadosAcompanhamento, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
+      await API.put(`/acompanhamento/editar/${id}`, dadosAcompanhamento, { headers: { Authorization: localStorage.getItem("token") } }).then((response) => {
         navigate('/acompanhamentos');
         toast.success('Acompanhamento editado com sucesso!', toastConfig);
       })
@@ -60,7 +60,7 @@ export const AcompanhamentoProvider = ({ children }: IChildren) => {
   const pegarAcompanhamentos = async (pagina: number = 0, tamanho: number = 10) => {
     try {
       nProgress.start();
-      const { data } = await API.get(`/acompanhamento/listar-acompanhamento?page=${pagina}&size=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") } });
+      const { data } = await API.get(`/acompanhamento/listar-acompanhamento?pagina=${pagina}&tamanho=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") } });
       setAcompanhamentos(data);
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
@@ -78,7 +78,7 @@ export const AcompanhamentoProvider = ({ children }: IChildren) => {
   const pegarAcompanhamentoNomePrograma = async (nome: string, pagina: number = 0, tamanho: number = 10) => {
     try {
       nProgress.start();
-      const { data } = await API.get(`/acompanhamento/listar-acompanhamento-por-nome-programa?page=${pagina}&size=${tamanho}&nome=${nome}`, { headers: { Authorization: localStorage.getItem("token") } });
+      const { data } = await API.get(`/acompanhamento/listar-acompanhamento?nomePrograma=${nome}&pagina=${pagina}&tamanho=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") } });
       setAcompanhamentos(data);
     } catch (error: any) {
       let message = "Ops, algo deu errado!";

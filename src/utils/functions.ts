@@ -14,13 +14,16 @@ export function formatarTexto(str: string) {
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }
 
-export const filtroDebounce = debounce((valor, request, option?) => {
+export const filtroDebounce = debounce((valor, request, reset, option?) => {
     if (valor) {
       if (option)
         request(0, 10, option);
       else
         request(valor, 0, 10);
     } else {
-      request(0, 3);
+      if(reset) reset()
+      else{
+        request(0, 3);
+      }
     }
   }, 500)

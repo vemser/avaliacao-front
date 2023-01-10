@@ -1,5 +1,5 @@
 import { Box, Stack, FormControl, TextField,  InputLabel, Select, MenuItem, Button, Autocomplete, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { usePrograma } from '../../context/Tecnico/ProgramaContext';
 
@@ -13,45 +13,23 @@ import { IAvaliacao } from '../../utils/AvaliacaoInterface/Avaliacao';
 import { avalicaoSchema } from '../../utils/schemas';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useAcompanhamento } from '../../context/Comportamental/AcompanhamentoContext';
+import { filtroDebounce } from '../../utils/functions';
 
-
-
-
-const itemHeigth = 48;
-const itemPaddingTop = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: itemHeigth * 4.5 + itemPaddingTop,
-      width: 250,
-    },
-  },
-};
-
-const top100Films = [
-  { label: 'The Shawshank Redemption', year: 1994 },
-  { label: 'The Godfather', year: 1972 },
-  { label: 'The Godfather: Part II', year: 1974 },
-  { label: 'The Dark Knight', year: 2008 },
-  { label: '12 Angry Men', year: 1957 },
-  { label: "Schindler's List", year: 1993 },
-  { label: 'Pulp Fiction', year: 1994 }
-];
 
 export const CadastrarAvaliacao = () => {
   const navigate = useNavigate();
   
   const { pegarProgramaAtivo, programas } = usePrograma();
-  const { pegarTrilha, trilhas } = useTrilha();
-  const { pegarAluno, alunos } = useAluno();
+  const { pegarTrilha, trilhas, pegarTrilhaFiltroNome } = useTrilha();
+  const { alunos,pegarAlunoDisponivel } = useAluno();
   const {pegarAcompanhamentos, acompanhamentos} = useAcompanhamento();
   let data = moment()
   let novaData = data.format("YYYY-MM-DD")
 
   useEffect(() => {
-    pegarProgramaAtivo(0, programas?.totalElementos);
-    pegarTrilha(0,trilhas?.totalElementos);
-    pegarAluno(0, alunos?.totalElementos);
+    pegarProgramaAtivo(0, 10);
+    pegarTrilha(0,10);
+    pegarAlunoDisponivel(0, 10);
     pegarAcompanhamentos(0,acompanhamentos?.totalElementos);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -95,6 +73,10 @@ export const CadastrarAvaliacao = () => {
             <Controller control={control} name="idPrograma" render={({ field: { onChange } }) => (
               <Autocomplete
                 disablePortal
+                onInputChange={(event, value) => {
+                  filtroDebounce(value, pegarProgramaAtivo, pegarProgramaAtivo)
+                }}
+                noOptionsText={""}
                 onChange={(event, data) => onChange(data?.label)}
                 id="programa"
                 getOptionLabel={(option) => option.label}
@@ -110,6 +92,10 @@ export const CadastrarAvaliacao = () => {
             <Controller control={control} name="idTrilha" render={({ field: { onChange } }) => (
               <Autocomplete
                 disablePortal
+                onInputChange={(event, value) => {
+                  filtroDebounce(value, pegarTrilhaFiltroNome, pegarTrilha)
+                }}
+                noOptionsText={""}
                 onChange={(event, data) => onChange(data?.label)}
                 id="trilha"
                 getOptionLabel={(option) => option.label}
@@ -123,7 +109,10 @@ export const CadastrarAvaliacao = () => {
 
           <FormControl sx={{ width: "100%" }} >
           <Controller control={control} name="idAluno" render={({ field: { onChange } }) => (
-            <Autocomplete disablePortal  onChange={(event, data) => onChange(data?.label)} id="aluno" getOptionLabel={(option) => option.label}  isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: `${aluno.idAluno} - ${aluno.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled"/>}/>
+            <Autocomplete disablePortal onInputChange={(event, value) => {
+              filtroDebounce(value, pegarAlunoDisponivel,pegarAlunoDisponivel, `&nome=${value}`)
+            }}
+            noOptionsText={""}  onChange={(event, data) => onChange(data?.label)} id="aluno" getOptionLabel={(option) => option.label}  isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: `${aluno.idAluno} - ${aluno.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled"/>}/>
           )}/>        
           {errors.idAluno && <Typography id="erro-nome-aluno" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.idAluno.message}</Typography>}    
           </FormControl>

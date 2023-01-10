@@ -3,21 +3,11 @@ import { debounce } from 'lodash';
 import { useEffect } from "react";
 import { useAluno } from "../../context/Comportamental/AlunoContext";
 import { useTrilha } from "../../context/Tecnico/TrilhaContext";
+import { filtroDebounce } from "../../utils/functions";
 
 export const FiltroFeedback = () => {
   const { alunos, pegarAluno } = useAluno();
   const { trilhas, pegarTrilhaFiltroNome, pegarTrilha } = useTrilha();
-
-  const filtroDebounce = debounce((valor, request, option?) => {
-    if (valor) {
-      if (option)
-        request(0, 10, option);
-      else
-        request(valor, 0, 10);
-    } else {
-      request(0, 3);
-    }
-  }, 500)
 
   useEffect(() => {
     pegarAluno(0, 3);
@@ -32,7 +22,7 @@ export const FiltroFeedback = () => {
         disablePortal
         id="combo-box-demo"
         onInputChange={(event, value) => {
-          filtroDebounce(value, pegarAluno, `&nome=${value}`)
+          filtroDebounce(value, pegarAluno, pegarAluno, `&nome=${value}`)
         }}
         noOptionsText={""}
         options={alunos ? alunos.elementos.map((aluno) => { return { label: aluno.nome, id: aluno.idAluno } }) : []}
@@ -45,7 +35,7 @@ export const FiltroFeedback = () => {
         disablePortal
         id="combo-box-demo"
         onInputChange={(event, value) => {
-          filtroDebounce(value, pegarTrilhaFiltroNome)
+          filtroDebounce(value, pegarTrilhaFiltroNome, pegarTrilha)
         }}
         noOptionsText={""}
         options={trilhas ? trilhas.elementos.map((trilha) => { return { label: trilha.nome, id: trilha.idTrilha } }) : []}

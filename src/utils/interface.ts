@@ -275,3 +275,10 @@ export interface ICargosLista {
   nome: string,
   descricao: string
 }
+
+export interface IFiltroFeedback {
+  idAluno: number,
+  idTrilha: number,
+  situacao: string,
+  nomeInstrutor: string,
+}

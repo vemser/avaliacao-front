@@ -19,7 +19,7 @@ export const EditarPrograma: React.FC = () => {
     resolver: yupResolver(ProgramaSchema), defaultValues: {
       nome: state.nome,
       descricao: state.descricao,
-      situacao: state.situacao,
+      situacaoVagaPrograma: state.situacaoVagaPrograma,
       dataFim: state.dataFim,
       dataInicio: state.dataInicio
     }
@@ -52,7 +52,7 @@ export const EditarPrograma: React.FC = () => {
 
         <FormControl sx={{ width: "100%" }} variant="filled">
           <InputLabel>Situação</InputLabel>
-          <Select labelId="demo-simple-select-filled-label" defaultValue={state.situacao} id="situacao-programa" {...register("situacao")}  >
+          <Select labelId="demo-simple-select-filled-label" defaultValue={state.situacao} id="situacao-programa" {...register("situacaoVagaPrograma")}  >
             <MenuItem value="ABERTO" >Aberto</MenuItem>
             <MenuItem value="FECHADO">Fechado</MenuItem>
           </Select>

@@ -230,12 +230,12 @@ export interface IAvaliarAcompanhamento {
   dataCriacao: string
 }
 
-export interface ICadastrarAcompanhamento {
+export interface ICadastrarAcompanhamentoForm {
   idPrograma: number
   titulo: string,
   descricao: string,
   dataInicio: string,
-  dataFinal: string,
+  dataFim: string,
 }
 
 export interface IColaborador{

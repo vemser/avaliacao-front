@@ -6,11 +6,12 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { CadastrarAcompanhamentoSchema } from "../../utils/schemas";
 
-import { ICadastrarAcompanhamento } from "../../utils/interface";
+import { ICadastrarAcompanhamentoForm } from "../../utils/interface";
 import { useNavigate } from "react-router-dom";
 import { usePrograma } from "../../context/Tecnico/ProgramaContext";
 import { useEffect } from "react";
 import { IProgramas } from "../../utils/programaInterface";
+import { useAcompanhamento } from "../../context/Comportamental/AcompanhamentoContext";
 
 const itemHeigth = 48;
 const itemPaddingTop = 8;
@@ -26,12 +27,13 @@ const MenuProps = {
 export const CadastrarAcompanhamento = () => {
   const navigate = useNavigate();
   const { programas, pegarProgramaAtivo } = usePrograma();
+  const { cadastrarAcompanhamento } = useAcompanhamento();
 
-  const { register, handleSubmit, formState: { errors } } = useForm<ICadastrarAcompanhamento>({
+  const { register, handleSubmit, formState: { errors } } = useForm<ICadastrarAcompanhamentoForm>({
     resolver: yupResolver(CadastrarAcompanhamentoSchema)
   })
 
-  const cadastrarAcompanhamento = (data: ICadastrarAcompanhamento) => { 
+  const cadastrar = (data: ICadastrarAcompanhamentoForm) => { 
     console.log(data)
   }
 
@@ -44,7 +46,7 @@ export const CadastrarAcompanhamento = () => {
     <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
       <Componentes.Titulo texto="Cadastrar Acompanhamento" />
 
-      <Box component="form" onSubmit={handleSubmit(cadastrarAcompanhamento)} sx={{ display: "flex", flexDirection: { xs: "column", lg: "row" }, justifyContent: "space-between", backgroundColor: "var(--branco)", width: { xs: "95%", md: "90%", lg: "85%" }, borderRadius: "10px", padding: { xs: 3, sm: 5 }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: { xs: 3, xl: 8 } }}>
+      <Box component="form" onSubmit={handleSubmit(cadastrar)} sx={{ display: "flex", flexDirection: { xs: "column", lg: "row" }, justifyContent: "space-between", backgroundColor: "var(--branco)", width: { xs: "95%", md: "90%", lg: "85%" }, borderRadius: "10px", padding: { xs: 3, sm: 5 }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: { xs: 3, xl: 8 } }}>
 
         <Stack component="div" spacing={3} sx={{ width: "100%", display: "flex", alignItems: { xs: "start", md: "start" } }}>
           <FormControl sx={{ width: "100%" }}>
@@ -76,7 +78,7 @@ export const CadastrarAcompanhamento = () => {
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField id="data-final" label="Data final" type="date" sx={{ width: "100%" }} InputLabelProps={{ shrink: true }} {...register("dataFinal")} variant="filled" />
+            <TextField id="data-final" label="Data final" type="date" sx={{ width: "100%" }} InputLabelProps={{ shrink: true }} {...register("dataFim")} variant="filled" />
           </FormControl>
 
           <Box sx={{ display: "flex", width: "100%", justifyContent: "center", alignItems: "center", bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>

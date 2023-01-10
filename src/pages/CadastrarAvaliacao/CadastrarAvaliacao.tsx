@@ -12,6 +12,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { IAvaliacao } from '../../utils/AvaliacaoInterface/Avaliacao';
 import { avalicaoSchema } from '../../utils/schemas';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useAcompanhamento } from '../../context/Comportamental/AcompanhamentoContext';
 
 
 
@@ -43,6 +44,7 @@ export const CadastrarAvaliacao = () => {
   const { pegarProgramaAtivo, programas } = usePrograma();
   const { pegarTrilha, trilhas } = useTrilha();
   const { pegarAluno, alunos } = useAluno();
+  const {pegarAcompanhamentos, acompanhamentos} = useAcompanhamento();
   let data = moment()
   let novaData = data.format("YYYY-MM-DD")
 
@@ -50,6 +52,7 @@ export const CadastrarAvaliacao = () => {
     pegarProgramaAtivo(0, programas?.totalElementos);
     pegarTrilha(0,trilhas?.totalElementos);
     pegarAluno(0, alunos?.totalElementos);
+    pegarAcompanhamentos(0,acompanhamentos?.totalElementos);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -64,7 +67,7 @@ export const CadastrarAvaliacao = () => {
 
   return (
     <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "80px", paddingBottom: "50px" }}>
-        <Componentes.Titulo texto="Cadastrar avalicação" />
+        <Componentes.Titulo texto="Cadastrar avaliação" />
 
 
       <Box component="form" onSubmit={handleSubmit(cadastrarAvalicao)}  sx={{
@@ -81,8 +84,8 @@ export const CadastrarAvaliacao = () => {
               onChange={(event, data) => onChange(data?.label)}
               id="acompanhemnto"
               getOptionLabel={(option) => option.label}
-              options={top100Films}
-              renderInput={(params) => <TextField {...params} label="Acompanhamento" variant="filled" {...register("idAcompanhamento")}/>}
+              options={acompanhamentos ? acompanhamentos.elementos.map(item => ({ label: `${item.idAcompanhamento} - ${item.titulo}` })) : []}
+              renderInput={(params) => <TextField {...params} label="Acompanhamento" variant="filled"/>}
             />
           )}/>
            {errors.idAcompanhamento && <Typography id="erro-nome-acompanhamento" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.idAcompanhamento.message}</Typography>}

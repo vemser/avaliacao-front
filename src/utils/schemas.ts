@@ -64,7 +64,7 @@ export const CadastrarAcompanhamentoSchema = yup.object().shape({
   titulo: yup.string().required("Por favor, digite algum titulo"),
   descricao: yup.string().required("Por favor, digite alguma coisa na descrição"),
   dataInicio: yup.string().required("Por favor, escolha uma data inicial"),
-  dataFinal: yup.string(),
+  dataFim: yup.string(),
   idPrograma: yup.string().required("Por favor, insira um programa")
 })
 

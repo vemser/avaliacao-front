@@ -13,3 +13,4 @@ export { AtividadeProvider } from "./Tecnico/AtividadeContext";
 export { TecnologiaProvider } from './Tecnico/TecnologiasContext';
 export {ReservaAlocacaoProvider} from "./Alocacao/ReservaAlocacaoContext"
 export { FeedbackProvider } from "./Comportamental/FeedbackContext";
+export { AcompanhamentoProvider } from './Comportamental/AcompanhamentoContext';

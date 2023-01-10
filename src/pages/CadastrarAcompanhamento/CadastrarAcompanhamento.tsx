@@ -34,7 +34,7 @@ export const CadastrarAcompanhamento = () => {
   })
 
   const cadastrar = (data: ICadastrarAcompanhamentoForm) => { 
-    console.log(data)
+    cadastrarAcompanhamento(data)
   }
 
   useEffect(() => {

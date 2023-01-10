@@ -17,6 +17,7 @@ export const alunoSchema = yup.object().shape({
   cidade: yup.string().required("Por favor, digite a cidade").matches(regexNome, 'Por favor, digite apenas letras.'),
   estado: yup.string().required("Por favor, digite o estado").matches(regexNome, 'Por favor, digite apenas letras.'),
   email: yup.string().required("Por favor, digite o e-mail DBC").email("Por favor, digite um e-mail válido").matches(regexEmail, "Necessário ser e-mail @dbccompany.com.br"),
+  idPrograma: yup.string().required("Por favor, escolha um programa"),
   situacao: yup.string().required("Por favor, escolha uma situação"),
   descricao: yup.string().required("Por favor, digite uma descrição"),
   idTrilha: yup.string().required("Por favor, escolha uma trilha")
@@ -87,7 +88,7 @@ export const EditarAcompanhamentoSchema = yup.object().shape({
   titulo: yup.string().required("Por favor, digite algum titulo"),
   descricao: yup.string().required("Por favor, digite alguma coisa na descrição"),
   dataInicio: yup.string().required("Por favor, escolha uma data inicial"),
-  dataFinal: yup.string(),
+  dataFim: yup.string(),
   idPrograma: yup.string().required("Por favor, insira um programa")
 })
 
@@ -141,5 +142,9 @@ export const feedbackSchema = yup.object().shape({
 
 export const avalicaoSchema = yup.object().shape({
   descricao: yup.string().required("Por favor, insira uma descrição"),
+  idAcompanhamento: yup.string().required("Por favor, escolha um acompanhamento"),
+  idPrograma: yup.string().required("Por favor, escolha um programa"),
+  idTrilha: yup.string().required("Por favor, escolha uma trilha"),
+  idAluno: yup.string().required("Por favor, escolha um aluno"),
   situacao: yup.string().required("Por favor, insira a situação da avaliação")
 })

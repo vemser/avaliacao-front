@@ -190,7 +190,7 @@ export const ListarFeedback: React.FC = () => {
                     <StyledTableCell id="situacao" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", textTransform: "capitalize", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{feedback.data.replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")}</StyledTableCell>
 
                     <StyledTableCell id="acoes" sx={{ justifyContent: "center", minWidth: "150px", display: "flex", wrap: "nowrap" }}>
-                      <Button id={`botao-editar-${feedback.idFeedBack}`} title="Deletar" onClick={() => navigate("/editar-feedback", { state: feedback })}><Edit /></Button>
+                      <Button id={`botao-editar-${feedback.idFeedBack}`} title="Editar" onClick={() => navigate("/editar-feedback", { state: feedback })}><Edit /></Button>
                       <Button id={`botao-deletar-${feedback.idFeedBack}`} title="Deletar" onClick={() => { handleOpen(); setIdDelete(feedback.idFeedBack) }}><DeleteForever /></Button>
                     </StyledTableCell>
                   </StyledTableRow>

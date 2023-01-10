@@ -100,7 +100,7 @@ export const ListarAlocacao: React.FC = () => {
                     <StyledTableCell id={`situacao`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} >{formatarTexto(alocacao.situacao)}</StyledTableCell>
 
                     <StyledTableCell id={`editar-reserva`} sx={{ textAlign: "center" }}>
-                      <Button id={`botao-alocacao-reserva-${alocacao.idReservaAlocacao}`} onClick={() => navigate("/editar-alocacao-reserva", { state: alocacao })} title="Editar Alocacao"><EditIcon /></Button>
+                      <Button id={`botao-alocacao-reserva-${alocacao.idReservaAlocacao}`} onClick={() => navigate("/editar-alocacao-reserva", { state: alocacao })} title="Editar"><EditIcon /></Button>
                     </StyledTableCell>
 
                   </StyledTableRow>

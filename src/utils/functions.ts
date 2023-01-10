@@ -22,8 +22,5 @@ export const filtroDebounce = debounce((valor, request, reset, option?) => {
         request(valor, 0, 10);
     } else {
       if(reset) reset()
-      else{
-        request(0, 3);
-      }
     }
   }, 500)

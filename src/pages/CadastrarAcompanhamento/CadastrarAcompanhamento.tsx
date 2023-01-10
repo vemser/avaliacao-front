@@ -47,13 +47,13 @@ export const CadastrarAcompanhamento = () => {
 
           <FormControl sx={{ width: "100%" }} >
             <Controller control={control} name="idPrograma" render={({ field: { onChange } }) => (
-            <Autocomplete disablePortal id="programa" 
-              onChange={(event, data) => onChange(data?.id)} 
-              getOptionLabel={(option) => option.label}
-              onInputChange={(event, value) => filtroDebounce(value, pegarProgramaPorNomeAtivo)}
-              isOptionEqualToValue={(option, value) => option.label === value.label}
-              options={programas ? programas.elementos.map((programa) => ({ label: `${programa.idPrograma} - ${programa.nome}`, id: programa.idPrograma })) : []} renderInput={(params) => <TextField {...params} label="Programa" variant="filled"/>} /> )}
-            />
+              <Autocomplete disablePortal id="programa" 
+                onChange={(event, data) => onChange(data?.id)} 
+                getOptionLabel={(option) => option.label}
+                onInputChange={(event, value) => filtroDebounce(value, pegarProgramaPorNomeAtivo, pegarProgramaAtivo )}
+                isOptionEqualToValue={(option, value) => option.label === value.label}
+                options={programas ? programas.elementos.map((programa) => ({ label: `${programa.nome}`, id: programa.idPrograma })) : []} renderInput={(params) => <TextField {...params} label="Programa" variant="filled"/>} /> 
+            )} />
             {errors.idPrograma && <Typography id="erro-programa" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.idPrograma.message}</Typography>}
           </FormControl>
 

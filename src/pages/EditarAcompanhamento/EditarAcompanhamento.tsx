@@ -24,7 +24,10 @@ export const EditarAcompanhamento = () => {
   const { editarAcompanhamento } = useAcompanhamento();
 
   const { register, handleSubmit, formState: { errors }, control } = useForm<IEditarAcompanhamento>({
-    resolver: yupResolver(EditarAcompanhamentoSchema)
+    resolver: yupResolver(EditarAcompanhamentoSchema),
+    defaultValues: {
+      idPrograma: state.programa.idPrograma
+    }
   })
 
   const editar = (data: IEditarAcompanhamento) => { 
@@ -51,13 +54,15 @@ export const EditarAcompanhamento = () => {
 
           <FormControl sx={{ width: "100%" }} >
             <Controller control={control} name="idPrograma" render={({ field: { onChange } }) => (
-            <Autocomplete disablePortal id="programa" 
-              onChange={(event, data) => onChange(data?.id)} 
-              getOptionLabel={(option) => option.label}
-              onInputChange={(event, value) => filtroDebounce(value, pegarProgramaPorNomeAtivo)}
-              isOptionEqualToValue={(option, value) => option.label === value.label}
-              options={programas ? programas.elementos.map((programa) => ({ label: `${programa.idPrograma} - ${programa.nome}`, id: programa.idPrograma })) : []} renderInput={(params) => <TextField {...params} label="Programa" variant="filled"/>} /> )}
-            />
+              <Autocomplete disablePortal id="programa" 
+                defaultValue={{ label: `${state.programa.nome}`, id: state.programa.idPrograma }}
+                onChange={(event, data) => onChange(data?.id)} 
+                getOptionLabel={(option) => option.label}
+                onInputChange={(event, value) => filtroDebounce(value, pegarProgramaPorNomeAtivo, pegarProgramaAtivo)}
+                isOptionEqualToValue={(option, value) => option.label === value.label}
+                options={programas ? programas.elementos.map((programa) => ({ label: `${programa.nome}`, id: programa.idPrograma })) : []} 
+                renderInput={(params) => <TextField {...params} label="Programa" variant="filled"/>} /> 
+            )} />
             {errors.idPrograma && <Typography id="erro-programa" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.idPrograma.message}</Typography>}
           </FormControl>
 

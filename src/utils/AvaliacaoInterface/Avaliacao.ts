@@ -1,5 +1,5 @@
 export interface IAvaliacaoContext {
-
+  cadastrarAvalicao: (avalicao: ICadastrarAvalicao) => Promise<void>
 }
 
 export interface IChildren {
@@ -8,15 +8,23 @@ export interface IChildren {
 
 export interface IAvaliacao {
   idAcompanhamento: number,
-  idPrograma: number,
-  idTrilha: number,
+  // idPrograma: number,
+  // idTrilha: number,
   idAluno: number,
   descricao: string,
-  data: string,
-  situacao: string
+  tipoAvaliacao: string,
+  dataCriacao: string,
 }
 
 export interface IEditarAvaliacao {
   descricao: string,
   situacao: string
+}
+
+export interface ICadastrarAvalicao {
+  idAcompanhamento: number,
+  idAluno: number,
+  descricao: string,
+  tipoAvaliacao: string,
+  dataCriacao: string
 }

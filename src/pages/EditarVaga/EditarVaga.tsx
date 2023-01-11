@@ -58,12 +58,13 @@ export const EditarVaga = () => {
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField id="nomeVaga" label="Nome da vaga" placeholder="Digite o nome da vaga" variant="filled" {...register("nome")} />
+            <TextField id="nomeVaga" label="Nome" placeholder="Digite um nome para a vaga" variant="filled" {...register("nome")} />
             {errors.nome && <Typography id="erro-nome-vaga" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.nome.message}</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: { xs: "100%", md: "100%" } }} >
             <Autocomplete
+              noOptionsText="Nenhum cliente encontrado"
               disablePortal
               id="cliente"
               isOptionEqualToValue={(option, value) => option.label === value.label}
@@ -76,6 +77,7 @@ export const EditarVaga = () => {
 
           <FormControl sx={{ width: { xs: "100%", md: "100%" } }} >
             <Autocomplete
+              noOptionsText="Nenhum programa encontrado"
               disablePortal
               id="programa"
               isOptionEqualToValue={(option, value) => option.label === value.label}

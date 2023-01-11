@@ -57,6 +57,7 @@ export const CadastrarAvaliacao = () => {
           <FormControl sx={{ width: { xs: "100%", md: "100%" } }} >
             <Controller control={control} name="idAcompanhamento" render={({ field: { onChange } }) => (
               <Autocomplete
+                noOptionsText="Nenhum acompanhamento encontrado"
                 disablePortal
                 onChange={(event, data) => onChange(data?.label)}
                 id="acompanhemnto"
@@ -75,7 +76,7 @@ export const CadastrarAvaliacao = () => {
                 onInputChange={(event, value) => {
                   filtroDebounce(value, pegarProgramaPorNomeAtivo, pegarProgramaAtivo)
                 }}
-                noOptionsText={""}
+                noOptionsText={"Nenhum programa encontrado"}
                 onChange={(event, data) => onChange(data?.label)}
                 id="programa"
                 getOptionLabel={(option) => option.label}
@@ -94,7 +95,7 @@ export const CadastrarAvaliacao = () => {
                 onInputChange={(event, value) => {
                   filtroDebounce(value, pegarTrilhaFiltroNome, pegarTrilha)
                 }}
-                noOptionsText={""}
+                noOptionsText={"Nenhuma trilha encontrada"}
                 onChange={(event, data) => onChange(data?.label)}
                 id="trilha"
                 getOptionLabel={(option) => option.label}
@@ -111,7 +112,7 @@ export const CadastrarAvaliacao = () => {
               <Autocomplete disablePortal onInputChange={(event, value) => {
                 filtroDebounce(value, pegarAlunoDisponivel, pegarAlunoDisponivel, `&nome=${value}`)
               }}
-                noOptionsText={""} onChange={(event, data) => onChange(data?.label)} id="aluno" getOptionLabel={(option) => option.label} isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: `${aluno.idAluno} - ${aluno.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />
+                noOptionsText={"Nenhum aluno encontrado"} onChange={(event, data) => onChange(data?.label)} id="aluno" getOptionLabel={(option) => option.label} isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: `${aluno.idAluno} - ${aluno.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />
             )} />
             {errors.idAluno && <Typography id="erro-nome-aluno" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.idAluno.message}</Typography>}
           </FormControl>
@@ -122,7 +123,7 @@ export const CadastrarAvaliacao = () => {
 
           <FormControl sx={{ width: "100%" }}>
             <TextField
-              placeholder="Digite uma descrição para a avaliação"
+              placeholder="Digite uma descrição"
               multiline
               rows={3}
               sx={{ width: "100%" }}

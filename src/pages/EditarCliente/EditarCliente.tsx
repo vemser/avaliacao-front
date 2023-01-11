@@ -47,7 +47,7 @@ export const EditarCliente = () => {
         <Stack component="div" spacing={3} sx={{ width: "100%", display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
           <FormControl sx={{ width: { xs: "100%", md: "100%" } }}>
-            <TextField id="nomeCliente" label="Nome" {...register("nome")} placeholder="Digite o nome do cliente" variant="filled" />
+            <TextField id="nomeCliente" label="Nome" {...register("nome")} placeholder="Digite um nome para o cliente" variant="filled" />
             {errors.nome && <Typography id="erro-nomeCliente" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.nome.message}</Typography>}
           </FormControl>
 

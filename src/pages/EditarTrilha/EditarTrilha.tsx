@@ -38,11 +38,11 @@ export const EditarTrilha = () => {
         <img src={logo} alt="Logo DBC Azul" width={150} />
 
         <FormControl sx={{ width: "100%" }}>
-          <TextField id="editar-nome-trilha" {...register('nome')} label="Nome da Trilha" defaultValue={state.nome} variant="filled" />
+          <TextField id="editar-nome-trilha" {...register('nome')} label="Nome" placeholder='Digite um nome para a trilha' defaultValue={state.nome} variant="filled" />
           {errors.nome && <Typography id="erro-nome-trilha" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.nome.message}</Typography>}
         </FormControl>
         <FormControl sx={{ width: "100%" }}>
-          <TextField id="editar-descricao-trilha" {...register('descricao')} label="Descrição da Trilha" multiline rows={4} defaultValue={state.descricao} variant="filled" />
+          <TextField id="editar-descricao-trilha" {...register('descricao')} label="Descrição" placeholder='Digite uma descrição para a trilha' multiline rows={4} defaultValue={state.descricao} variant="filled" />
         </FormControl>
 
         <Box sx={{ display: "flex", width: "100%", justifyContent: "center", alignItems: "center", bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>

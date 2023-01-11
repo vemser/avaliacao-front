@@ -91,12 +91,12 @@ export const CadastrarReservaAlacocao = () => {
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
           <FormControl sx={{ width: "100%" }} >
-            <Autocomplete disablePortal id="aluno" onChange={handleChangeAluno} noOptionsText="Nenhum aluno disponível" isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: `${aluno.idAluno} - ${aluno.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" {...register("idAluno")} />} />
+            <Autocomplete disablePortal id="aluno" onChange={handleChangeAluno} noOptionsText="Nenhum aluno encontrado" isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: `${aluno.idAluno} - ${aluno.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" {...register("idAluno")} />} />
             {AlunoErro && <Typography id="erro-vaga" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">Por favor, escolha uma vaga</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
-            <Autocomplete disablePortal id="vaga" onChange={handleChangeVaga} isOptionEqualToValue={(option, value) => option.label === value.label} options={vagas ? vagas.elementos.map((vaga) => ({ label: `${vaga.idVaga} - ${vaga.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Vaga" variant="filled" {...register("idVaga")} />} />
+            <Autocomplete noOptionsText="Nenhuma vaga encontrada" disablePortal id="vaga" onChange={handleChangeVaga} isOptionEqualToValue={(option, value) => option.label === value.label} options={vagas ? vagas.elementos.map((vaga) => ({ label: `${vaga.idVaga} - ${vaga.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Vaga" variant="filled" {...register("idVaga")} />} />
             {vagaErro && <Typography id="erro-vaga" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">Por favor, escolha uma vaga</Typography>}
           </FormControl>
 

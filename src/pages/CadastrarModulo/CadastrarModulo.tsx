@@ -105,14 +105,14 @@ export const CadastrarModulo = () => {
 
         <Stack component="div" spacing={3} sx={{ width: "100%", display: "flex", alignItems: { xs: "start", md: "start" } }}>
           <FormControl sx={{ width: "100%" }}>
-            <TextField id="descricao" label="Nome" placeholder="Digite o nome do módulo" multiline variant="filled" {...register("nome")} />
+            <TextField id="nome-modulo" label="Nome" placeholder="Digite um nome para o módulo" multiline variant="filled" {...register("nome")} />
             {errors.nome && <Typography id="erro-nomeModulo" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.nome.message}</Typography>}
           </FormControl>
 
           <FormControl variant="filled" sx={{ width: "100%" }}>
             <InputLabel id="label-trilha">Trilha</InputLabel>
             <Select id="select-trilha" MenuProps={MenuProps} multiple value={trilhaSelecionado} onChange={pegarTrilhaSelect} renderValue={(selected) => trilhas?.elementos.filter((trilha) => selected.includes(trilha.idTrilha)).map((trilha) => trilha.nome).join(', ')}>
-              <MenuItem value="initial-trilha" disabled><em>Selecione a trilha do módulo</em></MenuItem>
+              <MenuItem value="initial-trilha" disabled><em>Selecione uma ou mais trilhas</em></MenuItem>
               {trilhas?.elementos.map((trilha) => {
                 return (
                   <MenuItem key={trilha.idTrilha} value={trilha.idTrilha}>

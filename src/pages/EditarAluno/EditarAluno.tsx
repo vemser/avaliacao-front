@@ -75,12 +75,12 @@ export const EditarAluno = () => {
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField id="nomeCompletoAluno" label="Nome Completo" defaultValue={state.nome} placeholder="Fulano da Silva" variant="filled" error={!!errors.nome} {...register("nome")} />
+            <TextField id="nomeCompletoAluno" label="Nome Completo" defaultValue={state.nome} placeholder="Digite o nome do aluno" variant="filled" error={!!errors.nome} {...register("nome")} />
             {errors.nome && <Typography id="erro-nomeCompletoAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.nome.message}</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField id="emailAluno" label="E-mail DBC" defaultValue={state.email} placeholder="fulano.silva@dbccompany.com.br" variant="filled" {...register("email")} error={!!errors.email} />
+            <TextField id="emailAluno" label="E-mail DBC" defaultValue={state.email} placeholder="Digite o e-mail DBC do aluno" variant="filled" {...register("email")} error={!!errors.email} />
             {errors.email && <Typography id="erro-emailAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.email.message}</Typography>}
           </FormControl>
 
@@ -90,17 +90,17 @@ export const EditarAluno = () => {
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField type="text" label="Cidade" defaultValue={state.cidade} {...register("cidade")} placeholder='Digite a cidade' id='cidade' variant="filled" error={!!errors.cidade} />
+            <TextField type="text" label="Cidade" defaultValue={state.cidade} {...register("cidade")} placeholder='Digite a cidade do aluno' id='cidade' variant="filled" error={!!errors.cidade} />
             {errors.cidade && <Typography id="erro-cidadeAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.cidade.message}</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField type="text" label="Estado" defaultValue={state.estado} {...register("estado")} placeholder='Digite o estado' id='estado' variant="filled" error={!!errors.estado} />
+            <TextField type="text" label="Estado" defaultValue={state.estado} {...register("estado")} placeholder='Digite o estado do aluno' id='estado' variant="filled" error={!!errors.estado} />
             {errors.estado && <Typography id="erro-estadoAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.estado.message}</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField defaultValue={state.descricao} placeholder="Digite uma descrição" multiline rows={4} sx={{ width: "100%" }} id="descricao" label="Descrição" {...register("descricao")} variant='filled' error={!!errors.descricao} />
+            <TextField defaultValue={state.descricao} placeholder="Digite uma descrição para o aluno" multiline rows={4} sx={{ width: "100%" }} id="descricao" label="Descrição" {...register("descricao")} variant='filled' error={!!errors.descricao} />
             {errors.descricao && <Typography id="erro-descricaoAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.descricao.message}</Typography>}
           </FormControl>
         </Stack>

@@ -110,7 +110,7 @@ export const CadastrarAtividade = () => {
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} variant="filled">
-            <InputLabel id="programas-list">Programas</InputLabel>
+            <InputLabel id="programas-list">Programa</InputLabel>
             <Select MenuProps={MenuProps} {...register("idPrograma")} defaultValue="" label="Programas" labelId="demo-simple-select-filled-label" id="aluno" >
               <MenuItem value="initial-programa" disabled><em>Selecione um programa</em></MenuItem>
               {programas?.elementos.map((programas: IProgramas) =>
@@ -121,7 +121,7 @@ export const CadastrarAtividade = () => {
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
-            <InputLabel id="select-modulo">Módulos</InputLabel>
+            <InputLabel id="select-modulo">Módulo</InputLabel>
             <Select
               MenuProps={MenuProps}
               id="select-modulo"
@@ -144,7 +144,7 @@ export const CadastrarAtividade = () => {
 
           <FormControl sx={{ width: "100%" }}>
             <TextField
-              placeholder="Digite uma descrição"
+              placeholder="Digite uma descrição para a atividade"
               multiline
               rows={4}
               sx={{ width: "100%" }}
@@ -160,7 +160,7 @@ export const CadastrarAtividade = () => {
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: "end" }}>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField type="number" label="Peso atividade " placeholder='Digite o peso da atividade' id='peso' variant="filled" {...register("pesoAtividade")} />
+            <TextField type="number" label="Peso" placeholder='Digite o peso da atividade' id='peso' variant="filled" {...register("pesoAtividade")} />
             {errors.pesoAtividade && <Typography id="erro-nome-programa" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.pesoAtividade.message}</Typography>}
           </FormControl>
 
@@ -186,8 +186,8 @@ export const CadastrarAtividade = () => {
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField type="datetime-local" label="Data/horário de entrega "
-              placeholder='Digite uam data de entrega' id='data-entrega' variant="filled" InputLabelProps={{ shrink: true }} {...register("dataEntrega")} />
+            <TextField type="datetime-local" label="Prazo de entrega"
+              placeholder='Digite uma data de entrega' id='data-entrega' variant="filled" InputLabelProps={{ shrink: true }} {...register("dataEntrega")} />
             {errors.dataEntrega && <Typography id="erro-nome-programa" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.dataEntrega.message}</Typography>}
           </FormControl>
 

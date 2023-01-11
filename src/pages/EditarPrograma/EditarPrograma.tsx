@@ -42,12 +42,12 @@ export const EditarPrograma: React.FC = () => {
         <img src={logo} alt="Logo DBC Azul" width={150} />
 
         <FormControl sx={{ width: "100%" }}>
-          <TextField id="editar-nome-programa" label="Nome do Programa" defaultValue={state.nome} variant="filled"  {...register("nome")} />
+          <TextField id="editar-nome-programa" label="Nome" placeholder="Digite um nome para o programa" defaultValue={state.nome} variant="filled"  {...register("nome")} />
           {errors.nome && <Typography id="erro-nome-programa" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.nome.message}</Typography>}
         </FormControl>
 
         <FormControl sx={{ width: "100%" }}>
-          <TextField id="editar-descricao-programa" label="Descrição do Programa" multiline rows={4} placeholder="Ex: Este programa é destinado..." variant="filled" {...register("descricao")} />
+          <TextField id="editar-descricao-programa" label="Descrição" multiline rows={4} placeholder="Digite uma descrição para o programa" variant="filled" {...register("descricao")} />
         </FormControl>
 
         <FormControl sx={{ width: "100%" }} variant="filled">

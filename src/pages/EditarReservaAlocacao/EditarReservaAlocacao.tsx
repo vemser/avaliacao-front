@@ -48,7 +48,7 @@ export const EditarReservaAlocacao = () => {
                 <MenuItem value="initial-stack" disabled><em>Selecione uma situação</em></MenuItem>
                 <MenuItem id="reservado" value="RESERVADO">Reservado</MenuItem>
                 <MenuItem id="alocado" value="ALOCADO">Alocado</MenuItem>
-                <MenuItem id="disponivel" value="DISPONIVEL">Disponivel</MenuItem>
+                <MenuItem id="disponivel" value="DISPONIVEL">Disponível</MenuItem>
                 <MenuItem id="cancelado" value="CANCELADO">Cancelado</MenuItem>
 
               </Select>

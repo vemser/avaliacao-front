@@ -71,6 +71,7 @@ export const EditarAvaliacao = () => {
 
           <FormControl sx={{ width: { xs: "100%", md: "100%" } }} >
             <Autocomplete
+              noOptionsText="Nenhum acompanhamento encontrado"
               disabled
               disablePortal
               id="acompanhemnto"
@@ -81,6 +82,7 @@ export const EditarAvaliacao = () => {
 
           <FormControl sx={{ width: { xs: "100%", md: "100%" } }} >
             <Autocomplete
+              noOptionsText="Nenhum programa encontrado"
               disabled
               disablePortal
               id="programa"
@@ -92,6 +94,7 @@ export const EditarAvaliacao = () => {
 
           <FormControl sx={{ width: { xs: "100%", md: "100%" } }} >
             <Autocomplete
+              noOptionsText="Nenhuma trilha encontrada"
               disabled
               disablePortal
               id="trilha"
@@ -102,7 +105,7 @@ export const EditarAvaliacao = () => {
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
-            <Autocomplete disabled disablePortal id="aluno" isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: `${aluno.idAluno} - ${aluno.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />
+            <Autocomplete noOptionsText="Nenhum aluno encontrado" disabled disablePortal id="aluno" isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: `${aluno.idAluno} - ${aluno.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />
           </FormControl>
 
         </Stack>
@@ -111,7 +114,7 @@ export const EditarAvaliacao = () => {
 
           <FormControl sx={{ width: "100%" }}>
             <TextField
-              placeholder="Digite uma descrição para a avaliação"
+              placeholder="Digite uma descrição"
               multiline
               rows={3}
               sx={{ width: "100%" }}

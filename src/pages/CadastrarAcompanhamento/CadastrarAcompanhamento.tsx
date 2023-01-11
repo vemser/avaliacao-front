@@ -48,6 +48,7 @@ export const CadastrarAcompanhamento = () => {
           <FormControl sx={{ width: "100%" }} >
             <Controller control={control} name="idPrograma" render={({ field: { onChange } }) => (
               <Autocomplete disablePortal id="programa"
+                noOptionsText="Nenhum programa encontrado"
                 onChange={(event, data) => onChange(data?.id)}
                 getOptionLabel={(option) => option.label}
                 onInputChange={(event, value) => filtroDebounce(value, pegarProgramaPorNomeAtivo, pegarProgramaAtivo)}

@@ -34,11 +34,11 @@ export const CadastrarTrilha = () => {
         <img src={logo} alt="Logo DBC Azul" width={150} />
 
         <FormControl sx={{ width: "100%" }}>
-          <TextField id="nome-trilha" label="Nome da Trilha" placeholder="Ex: FrontEnd" variant="filled" {...register('nome')} />
+          <TextField id="nome-trilha" label="Nome" placeholder="Digite um nome para a trilha" variant="filled" {...register('nome')} />
           {errors.nome && <Typography id="erro-nome-trilha" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.nome.message}</Typography>}
         </FormControl>
         <FormControl sx={{ width: "100%" }}>
-          <TextField id="descricao-trilha" label="Descrição da Trilha" multiline rows={4} placeholder="Ex: Esta é a trilha de QA..." variant="filled" {...register('descricao')} />
+          <TextField id="descricao-trilha" label="Descrição" multiline rows={4} placeholder="Digite uma descrição para a trilha" variant="filled" {...register('descricao')} />
         </FormControl>
 
         <Box sx={{ display: "flex", width: "100%", justifyContent: "center", alignItems: "center", bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>

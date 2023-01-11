@@ -92,7 +92,7 @@ export const CadastrarAluno = () => {
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: "end" }}>
           <FormControl sx={{ width: { xs: "100%", md: "100%" }, display: "flex", flexDirection: "row", gap: "10px" }}>
             <Autocomplete sx={{ width: "90%" }}
-              multiple disablePortal id="tecnologias" noOptionsText="Nenhuma opção encontrada. Cadastre a tecnologia"
+              multiple disablePortal id="tecnologias" noOptionsText="Tecnologia não encontrada, clique no + ao lado para cadastrar"
               onChange={(e, values) => { if (values.length === 0) setTecnologiaSelecionada([]); setTecnologiaSelecionada(values.map((value) => value.id)) }}
               isOptionEqualToValue={(option, value) => option.label === value.label}
               options={tecnologias ? tecnologias.elementos.map((tecnologia) => ({ label: `${tecnologia.nome}`, id: tecnologia.idTecnologia })) : []} renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
@@ -114,7 +114,7 @@ export const CadastrarAluno = () => {
 
           <FormControl sx={{ width: "100%" }} >
             <Controller control={control} name="idPrograma" render={({ field: { onChange } }) => (
-              <Autocomplete disablePortal onChange={(event, data) => onChange(data?.label)} id="programa" getOptionLabel={(option) => option.label}
+              <Autocomplete noOptionsText="Nenhum programa encontrado" disablePortal onChange={(event, data) => onChange(data?.label)} id="programa" getOptionLabel={(option) => option.label}
                 isOptionEqualToValue={(option, value) => option.label === value.label}
                 options={programas ? programas.elementos.map((programa) => ({ label: `${programa.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Programa" variant="filled" />} />
             )} />

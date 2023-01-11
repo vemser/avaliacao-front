@@ -48,13 +48,14 @@ export const EditarAcompanhamento = () => {
 
         <Stack component="div" spacing={3} sx={{ width: "100%", display: "flex", alignItems: { xs: "start", md: "start" } }}>
           <FormControl sx={{ width: "100%" }}>
-            <TextField id="titulo" error={!!errors.titulo} {...register("titulo")} label='Título do acompanhamento' placeholder="Digite um título" variant="filled" inputProps={{ maxLength: 250 }} defaultValue={state.titulo} />
+            <TextField id="titulo" error={!!errors.titulo} {...register("titulo")} label='Título' placeholder="Digite um título" variant="filled" inputProps={{ maxLength: 250 }} defaultValue={state.titulo} />
             {errors.titulo && <Typography id="erro-titulo" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px" }} color="error">{errors.titulo.message}</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
             <Controller control={control} name="idPrograma" render={({ field: { onChange } }) => (
               <Autocomplete disablePortal id="programa"
+                noOptionsText="Nenhum programa encontrado"
                 defaultValue={{ label: `${state.programa.nome}`, id: state.programa.idPrograma }}
                 onChange={(event, data) => onChange(data?.id)}
                 getOptionLabel={(option) => option.label}
@@ -67,7 +68,7 @@ export const EditarAcompanhamento = () => {
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField id="descricao" error={!!errors.descricao} label="Digite uma descrição" defaultValue={state.descricao} placeholder="Digite uma descrição" multiline rows={4} variant="filled" {...register("descricao")} inputProps={{ maxLength: 5000 }} />
+            <TextField id="descricao" error={!!errors.descricao} label="Descrição" defaultValue={state.descricao} placeholder="Digite uma descrição" multiline rows={4} variant="filled" {...register("descricao")} inputProps={{ maxLength: 5000 }} />
             {errors.descricao && <Typography id="erro-descricao" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px" }} color="error">{errors.descricao.message}</Typography>}
           </FormControl>
         </Stack>

@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { toastConfig } from "../../utils/toast";
@@ -55,7 +55,7 @@ export const FeedbackProvider = ({ children }: IChildren) => {
             nProgress.done();
         }
     }
-    
+
     // const cadastrarAluno = async (dadosAluno: ICadastroAlunoAPI) => {
     //     try {
     //         nProgress.start();
@@ -98,4 +98,8 @@ export const FeedbackProvider = ({ children }: IChildren) => {
             {children}
         </FeedbackContext.Provider>
     );
+}
+
+export const useFeedback = () => {
+    return useContext(FeedbackContext);
 }

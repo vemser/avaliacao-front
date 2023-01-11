@@ -14,4 +14,4 @@ export { TecnologiaProvider } from './Tecnico/TecnologiasContext';
 export {ReservaAlocacaoProvider} from "./Alocacao/ReservaAlocacaoContext"
 export { FeedbackProvider } from "./Comportamental/FeedbackContext";
 export { AcompanhamentoProvider } from './Comportamental/AcompanhamentoContext';
-export { AvaliacaoProvider } from './Comportamental/AvaliacaoContext';
+export {AvaliacaoProvider} from "./Comportamental/AvaliacaoContext"

@@ -2,6 +2,7 @@ import { IAcompanhamentoApi } from "../AcompanhamentoInterface/acompanhamento";
 import { IAlunosElementos } from "../AlunoInterface/aluno";
 
 export interface IAvaliacaoContext {
+  cadastrarAvalicao: (avalicao: ICadastrarAvalicao) => Promise<void>,
   pegarAvaliacao: (pagina?: number, tamanho?: number, filtros?: string) => Promise<void>,
   deletarAvaliacao: (idAluno: number | undefined) => Promise<void>,
   avaliacoes: IAvaliacaoAPI | null
@@ -13,17 +14,25 @@ export interface IChildren {
 
 export interface IAvaliacao {
   idAcompanhamento: number,
-  idPrograma: number,
-  idTrilha: number,
+  // idPrograma: number,
+  // idTrilha: number,
   idAluno: number,
   descricao: string,
-  data: string,
-  situacao: string
+  tipoAvaliacao: string,
+  dataCriacao: string,
 }
 
 export interface IEditarAvaliacao {
   descricao: string,
   situacao: string
+}
+
+export interface ICadastrarAvalicao {
+  idAcompanhamento: number,
+  idAluno: number,
+  descricao: string,
+  tipoAvaliacao: string,
+  dataCriacao: string
 }
 
 export interface IAvaliacaoAPI {

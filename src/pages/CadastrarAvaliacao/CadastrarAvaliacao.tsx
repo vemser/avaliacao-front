@@ -8,11 +8,12 @@ import { useTrilha } from '../../context/Tecnico/TrilhaContext';
 import { useAluno } from '../../context/Comportamental/AlunoContext';
 import moment from 'moment';
 import { Controller, useForm } from 'react-hook-form';
-import { IAvaliacao } from '../../utils/AvaliacaoInterface/Avaliacao';
+import { IAvaliacao, ICadastrarAvalicao } from '../../utils/AvaliacaoInterface/Avaliacao';
 import { avalicaoSchema } from '../../utils/schemas';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useAcompanhamento } from '../../context/Comportamental/AcompanhamentoContext';
 import { filtroDebounce } from '../../utils/functions';
+import { useAvaliacao } from '../../context/Comportamental/AvaliacaoContext';
 
 
 export const CadastrarAvaliacao = () => {
@@ -20,8 +21,9 @@ export const CadastrarAvaliacao = () => {
 
   const { pegarProgramaAtivo, programas, pegarProgramaPorNomeAtivo } = usePrograma();
   const { pegarTrilha, trilhas, pegarTrilhaFiltroNome } = useTrilha();
-  const { alunos, pegarAlunoDisponivel } = useAluno();
-  const { pegarAcompanhamentos, acompanhamentos } = useAcompanhamento();
+  const { alunos, pegarAlunoDisponivel,pegarAlunoDisponivelPorNome } = useAluno();
+  const { pegarAcompanhamentos, acompanhamentos,pegarAcompanhamentoTitulo } = useAcompanhamento();
+  const { cadastrarAvalicao } = useAvaliacao()
   let data = moment()
   let novaData = data.format("YYYY-MM-DD")
 
@@ -29,17 +31,20 @@ export const CadastrarAvaliacao = () => {
     pegarProgramaAtivo(0, 10);
     pegarTrilha(0, 10);
     pegarAlunoDisponivel(0, 10);
-    pegarAcompanhamentos(0, acompanhamentos?.totalElementos);
+    pegarAcompanhamentos(0, 10);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const { register, handleSubmit, formState: { errors }, control } = useForm<IAvaliacao>({
+  const { register, handleSubmit, formState: { errors }, control } = useForm<ICadastrarAvalicao>({
     resolver: yupResolver(avalicaoSchema)
   });
 
 
-  const cadastrarAvalicao = (data: IAvaliacao) => {
-    console.log(data)
+  const cadastrar = (data: ICadastrarAvalicao) => {
+    data.idAluno = parseInt(data.idAluno.toString().split(' ')[0])
+    data.idAcompanhamento = parseInt(data.idAcompanhamento.toString().split(' ')[0])
+
+    cadastrarAvalicao(data)
   }
 
   return (
@@ -47,7 +52,7 @@ export const CadastrarAvaliacao = () => {
       <Componentes.Titulo texto="Cadastrar Avaliação" />
 
 
-      <Box component="form" onSubmit={handleSubmit(cadastrarAvalicao)} sx={{
+      <Box component="form" onSubmit={handleSubmit(cadastrar)} sx={{
         display: "flex", flexDirection: { xs: "column", lg: "row" }, justifyContent: "space-between", backgroundColor: "var(--branco)", width: { xs: "95%", md: "90%" }, borderRadius: "10px", padding: {
           xs: 3, sm: 5
         }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: { xs: 3, xl: 8 }
@@ -59,10 +64,13 @@ export const CadastrarAvaliacao = () => {
               <Autocomplete
                 noOptionsText="Nenhum acompanhamento encontrado"
                 disablePortal
+                onInputChange={(event, value) => {
+                  filtroDebounce(value, pegarAcompanhamentoTitulo, pegarAcompanhamentos)
+                }}
                 onChange={(event, data) => onChange(data?.label)}
                 id="acompanhemnto"
                 getOptionLabel={(option) => option.label}
-                options={acompanhamentos ? acompanhamentos.elementos.map(item => ({ label: `${item.idAcompanhamento} - ${item.titulo}` })) : []}
+                options={acompanhamentos ? acompanhamentos.elementos.map(item => ({ label: `${item.titulo}` })) : []}
                 renderInput={(params) => <TextField {...params} label="Acompanhamento" variant="filled" />}
               />
             )} />
@@ -70,49 +78,43 @@ export const CadastrarAvaliacao = () => {
           </FormControl>
 
           <FormControl sx={{ width: { xs: "100%", md: "100%" } }} >
-            <Controller control={control} name="idPrograma" render={({ field: { onChange } }) => (
               <Autocomplete
                 disablePortal
                 onInputChange={(event, value) => {
                   filtroDebounce(value, pegarProgramaPorNomeAtivo, pegarProgramaAtivo)
                 }}
                 noOptionsText={"Nenhum programa encontrado"}
-                onChange={(event, data) => onChange(data?.label)}
                 id="programa"
                 getOptionLabel={(option) => option.label}
                 isOptionEqualToValue={(option, value) => option.label === value.label}
                 options={programas ? programas.elementos.map(item => ({ label: `${item.nome}` })) : []}
                 renderInput={(params) => <TextField {...params} label="Programa" variant="filled" />}
               />
-            )} />
-            {errors.idPrograma && <Typography id="erro-nome-programa" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.idPrograma.message}</Typography>}
+            {/* {errors.idPrograma && <Typography id="erro-nome-programa" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.idPrograma.message}</Typography>} */}
           </FormControl>
 
           <FormControl sx={{ width: { xs: "100%", md: "100%" } }} >
-            <Controller control={control} name="idTrilha" render={({ field: { onChange } }) => (
               <Autocomplete
                 disablePortal
                 onInputChange={(event, value) => {
                   filtroDebounce(value, pegarTrilhaFiltroNome, pegarTrilha)
                 }}
                 noOptionsText={"Nenhuma trilha encontrada"}
-                onChange={(event, data) => onChange(data?.label)}
                 id="trilha"
                 getOptionLabel={(option) => option.label}
                 isOptionEqualToValue={(option, value) => option.label === value.label}
-                options={trilhas ? trilhas.elementos.map(item => ({ label: `${item.idTrilha} - ${item.nome}` })) : []}
+                options={trilhas ? trilhas.elementos.map(item => ({ label: `${item.nome}` })) : []}
                 renderInput={(params) => <TextField {...params} label="Trilha" variant="filled" />}
               />
-            )} />
-            {errors.idTrilha && <Typography id="erro-nome-trilha" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.idTrilha.message}</Typography>}
+            {/* {errors.idTrilha && <Typography id="erro-nome-trilha" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.idTrilha.message}</Typography>} */}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
             <Controller control={control} name="idAluno" render={({ field: { onChange } }) => (
               <Autocomplete disablePortal onInputChange={(event, value) => {
-                filtroDebounce(value, pegarAlunoDisponivel, pegarAlunoDisponivel, `&nome=${value}`)
+                filtroDebounce(value, pegarAlunoDisponivelPorNome, pegarAlunoDisponivel)
               }}
-                noOptionsText={"Nenhum aluno encontrado"} onChange={(event, data) => onChange(data?.label)} id="aluno" getOptionLabel={(option) => option.label} isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: `${aluno.idAluno} - ${aluno.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />
+                noOptionsText={"Nenhum aluno encontrado"} onChange={(event, data) => onChange(data?.label)} id="aluno" getOptionLabel={(option) => option.label} isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: `${aluno.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />
             )} />
             {errors.idAluno && <Typography id="erro-nome-aluno" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.idAluno.message}</Typography>}
           </FormControl>
@@ -138,18 +140,18 @@ export const CadastrarAvaliacao = () => {
 
           <FormControl sx={{ width: "100%" }}>
             <TextField
-              id="dataAvalicao" label="Data" type="date" defaultValue={novaData} sx={{ width: "100%" }} InputLabelProps={{ shrink: true }} variant="filled" {...register("data")} />
+              id="dataAvalicao" label="Data" type="date" defaultValue={novaData} sx={{ width: "100%" }} InputLabelProps={{ shrink: true }} variant="filled" {...register("dataCriacao")} />
 
           </FormControl>
 
           <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>
             <InputLabel id="selectAluno">Situação</InputLabel>
-            <Select labelId="demo-simple-select-filled-label" defaultValue="" id="situacao" {...register("situacao")}>
+            <Select labelId="demo-simple-select-filled-label" defaultValue="" id="situacao" {...register("tipoAvaliacao")}>
               <MenuItem value="initial-stack" disabled><em>Selecione uma situação</em></MenuItem>
               <MenuItem id="positivo" value="POSITIVO">Positivo</MenuItem>
               <MenuItem id="atencao" value="ATENCAO">Atenção</MenuItem>
             </Select>
-            {errors.situacao && <Typography id="erro-situacao" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.situacao.message}</Typography>}
+            {errors.tipoAvaliacao && <Typography id="erro-situacao" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.tipoAvaliacao.message}</Typography>}
           </FormControl>
 
           <Box sx={{ display: "flex", width: "100%", justifyContent: { xs: "center", lg: "end" }, alignItems: { xs: "center", lg: "end" }, bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>

@@ -143,11 +143,12 @@ export const feedbackSchema = yup.object().shape({
 export const avalicaoSchema = yup.object().shape({
   descricao: yup.string().required("Por favor, insira uma descrição"),
   idAcompanhamento: yup.string().required("Por favor, escolha um acompanhamento"),
-  idPrograma: yup.string().required("Por favor, escolha um programa"),
-  idTrilha: yup.string().required("Por favor, escolha uma trilha"),
+  // idPrograma: yup.string().required("Por favor, escolha um programa"),
+  // idTrilha: yup.string().required("Por favor, escolha uma trilha"),
   idAluno: yup.string().required("Por favor, escolha um aluno"),
-  situacao: yup.string().required("Por favor, insira a situação da avaliação")
+  tipoAvaliacao: yup.string().required("Por favor, insira a situação da avaliação")
 })
+
 export const editarAvalicaoSchema = yup.object().shape({
   descricao: yup.string().required("Por favor, insira uma descrição"),
   situacao: yup.string().required("Por favor, insira a situação da avaliação")

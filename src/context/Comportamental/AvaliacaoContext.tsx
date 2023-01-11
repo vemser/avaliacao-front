@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
-import { IChildren, IAvaliacaoContext, ICadastrarAvalicao, IAvaliacaoAPI } from "../../utils/AvaliacaoInterface/Avaliacao";
+import { IChildren, IAvaliacaoContext, ICadastrarAvalicao, IAvaliacaoAPI,IEditarAvaliacao } from "../../utils/AvaliacaoInterface/Avaliacao";
 
 export const AvaliacaoContext = createContext({} as IAvaliacaoContext);
 
@@ -21,7 +21,7 @@ export const AvaliacaoProvider = ({ children }: IChildren) => {
     try {
       nProgress.start();
       await API.post("/avaliacao/create", avalicao, { headers: { Authorization: localStorage.getItem("token") }})
-      toast.success("Cliente criado com sucesso!", toastConfig);
+      toast.success("Avaliação criada com sucesso!", toastConfig);
       navigate("/avaliacoes")
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
@@ -37,26 +37,6 @@ export const AvaliacaoProvider = ({ children }: IChildren) => {
   }
 
   const [avaliacoes, setAvaliacoes] = useState<IAvaliacaoAPI | null>(null)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   const pegarAvaliacao = async (pagina: number = 0, tamanho: number = 10, filtros: string = '') => {
     try {
@@ -93,8 +73,29 @@ export const AvaliacaoProvider = ({ children }: IChildren) => {
     }
   }
 
+  const editarAvaliacao = async (avalicao: IEditarAvaliacao,id: number) => {
+    try {
+      nProgress.start();
+      await API.put(`/avaliacao/${id}`, avalicao, { headers: { Authorization: localStorage.getItem("token") }})
+      toast.success("Avaliação editada com sucesso!", toastConfig);
+      navigate("/avaliacoes")
+    } catch (error: any) {
+      let message = "Ops, algo deu errado!";
+      if (error.response.status === 403) {
+        message = "Você não tem permissão para acessar esse recurso"
+      } else if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message || error.response.data.errors[0];
+      }  
+      toast.error(message, toastConfig);
+    } finally {
+      nProgress.done();
+    }
+  }
+
+  
+
   return (
-    <AvaliacaoContext.Provider value={{ cadastrarAvalicao, pegarAvaliacao, deletarAvaliacao, avaliacoes }}>
+    <AvaliacaoContext.Provider value={{ cadastrarAvalicao, pegarAvaliacao, deletarAvaliacao, avaliacoes, editarAvaliacao }}>
       {children}
     </AvaliacaoContext.Provider>
   );

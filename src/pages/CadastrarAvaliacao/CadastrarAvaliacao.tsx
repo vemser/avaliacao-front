@@ -41,10 +41,10 @@ export const CadastrarAvaliacao = () => {
 
 
   const cadastrar = (data: ICadastrarAvalicao) => {
-    data.idAluno = parseInt(data.idAluno.toString().split(' ')[0])
-    data.idAcompanhamento = parseInt(data.idAcompanhamento.toString().split(' ')[0])
-
+    data.idAluno = parseInt(data.idAluno.toString())
+    data.idAcompanhamento = parseInt(data.idAcompanhamento.toString())
     cadastrarAvalicao(data)
+
   }
 
   return (
@@ -67,10 +67,10 @@ export const CadastrarAvaliacao = () => {
                 onInputChange={(event, value) => {
                   filtroDebounce(value, pegarAcompanhamentoTitulo, pegarAcompanhamentos)
                 }}
-                onChange={(event, data) => onChange(data?.label)}
+                onChange={(event, data) => onChange(data?.id)}
                 id="acompanhemnto"
                 getOptionLabel={(option) => option.label}
-                options={acompanhamentos ? acompanhamentos.elementos.map(item => ({ label: `${item.titulo}` })) : []}
+                options={acompanhamentos ? acompanhamentos.elementos.map(item => ({ label: `${item.titulo}`,id: item.idAcompanhamento })) : []}
                 renderInput={(params) => <TextField {...params} label="Acompanhamento" variant="filled" />}
               />
             )} />
@@ -114,7 +114,7 @@ export const CadastrarAvaliacao = () => {
               <Autocomplete disablePortal onInputChange={(event, value) => {
                 filtroDebounce(value, pegarAlunoDisponivelPorNome, pegarAlunoDisponivel)
               }}
-                noOptionsText={"Nenhum aluno encontrado"} onChange={(event, data) => onChange(data?.label)} id="aluno" getOptionLabel={(option) => option.label} isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: `${aluno.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />
+                noOptionsText={"Nenhum aluno encontrado"} onChange={(event, data) => onChange(data?.id)} id="aluno" getOptionLabel={(option) => option.label} isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: `${aluno.nome}`, id: aluno.idAluno })) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />
             )} />
             {errors.idAluno && <Typography id="erro-nome-aluno" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.idAluno.message}</Typography>}
           </FormControl>

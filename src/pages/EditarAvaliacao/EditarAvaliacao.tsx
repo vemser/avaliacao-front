@@ -1,6 +1,6 @@
 import { Box, Stack, FormControl, TextField, InputLabel, Select, MenuItem, Button, Autocomplete, Typography } from '@mui/material';
 import React, { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { usePrograma } from '../../context/Tecnico/ProgramaContext';
 
 import * as Componentes from '../../components/index';
@@ -12,48 +12,45 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { editarAvalicaoSchema } from '../../utils/schemas';
 import { useAcompanhamento } from '../../context/Comportamental/AcompanhamentoContext';
 import { IEditarAvaliacao } from '../../utils/AvaliacaoInterface/Avaliacao';
+import { useAvaliacao } from '../../context/Comportamental/AvaliacaoContext';
 
 
 
 
-const itemHeigth = 48;
-const itemPaddingTop = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: itemHeigth * 4.5 + itemPaddingTop,
-      width: 250,
-    },
-  },
-};
+
 
 
 export const EditarAvaliacao = () => {
   const navigate = useNavigate();
-
+  const {state} = useLocation()
   const { pegarProgramaAtivo, programas } = usePrograma();
   const { pegarTrilha, trilhas } = useTrilha();
   const { pegarAluno, alunos } = useAluno();
   const { pegarAcompanhamentos, acompanhamentos } = useAcompanhamento();
+  const {editarAvaliacao} = useAvaliacao()
   let data = moment()
   let novaData = data.format("YYYY-MM-DD")
-
+  console.log(state)
 
   useEffect(() => {
-    pegarProgramaAtivo(0, programas?.totalElementos);
-    pegarTrilha(0, trilhas?.totalElementos);
-    pegarAluno(0, alunos?.totalElementos);
-    pegarAcompanhamentos(0, acompanhamentos?.totalElementos);
+    pegarProgramaAtivo(0, 10);
+    pegarTrilha(0, 10);
+    pegarAluno(0, 10);
+    pegarAcompanhamentos(0, 10);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const { register, handleSubmit, formState: { errors } } = useForm<IEditarAvaliacao>({
-    resolver: yupResolver(editarAvalicaoSchema)
+    resolver: yupResolver(editarAvalicaoSchema),
+    defaultValues: {
+      descricao: state.descricao,
+      dataCriacao: state.dataCriacao
+    }
   });
 
 
   const editar = (data: IEditarAvaliacao) => {
-    console.log(data)
+    editarAvaliacao(data, state.idAvaliacao)
   }
 
 
@@ -74,6 +71,8 @@ export const EditarAvaliacao = () => {
               noOptionsText="Nenhum acompanhamento encontrado"
               disabled
               disablePortal
+              defaultValue={{label: state.acompanhamento.titulo}}
+
               id="acompanhemnto"
               options={acompanhamentos ? acompanhamentos.elementos.map(item => ({ label: `${item.idAcompanhamento} - ${item.titulo}` })) : []}
               renderInput={(params) => <TextField {...params} label="Acompanhamento" variant="filled" />}
@@ -85,6 +84,7 @@ export const EditarAvaliacao = () => {
               noOptionsText="Nenhum programa encontrado"
               disabled
               disablePortal
+              defaultValue={{label: state.acompanhamento.programa.nome}}
               id="programa"
               isOptionEqualToValue={(option, value) => option.label === value.label}
               options={programas ? programas.elementos.map(item => ({ label: `${item.idPrograma} - ${item.nome}` })) : []}
@@ -97,6 +97,7 @@ export const EditarAvaliacao = () => {
               noOptionsText="Nenhuma trilha encontrada"
               disabled
               disablePortal
+              defaultValue={{label: state.aluno.trilha.nome}}
               id="trilha"
               isOptionEqualToValue={(option, value) => option.label === value.label}
               options={trilhas ? trilhas.elementos.map(item => ({ label: `${item.idTrilha} - ${item.nome}` })) : []}
@@ -105,7 +106,7 @@ export const EditarAvaliacao = () => {
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
-            <Autocomplete noOptionsText="Nenhum aluno encontrado" disabled disablePortal id="aluno" isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: `${aluno.idAluno} - ${aluno.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />
+            <Autocomplete noOptionsText="Nenhum aluno encontrado" disabled disablePortal defaultValue={{label: state.aluno.nome}}  id="aluno" isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: `${aluno.idAluno} - ${aluno.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />
           </FormControl>
 
         </Stack>
@@ -129,17 +130,18 @@ export const EditarAvaliacao = () => {
 
           <FormControl sx={{ width: "100%" }}>
             <TextField
-              id="dataAvalicao" label="Data" type="date" defaultValue={novaData} sx={{ width: "100%" }} InputLabelProps={{ shrink: true }} variant="filled" disabled />
+              id="dataAvalicao" label="Data" type="date" defaultValue={novaData} sx={{ width: "100%" }} InputLabelProps={{ shrink: true }} variant="filled" {...register("dataCriacao")}/>
+              {errors.dataCriacao && <Typography id="erro-situacao" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.dataCriacao.message}</Typography>}
           </FormControl>
 
           <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>
             <InputLabel id="selectAluno">Situação</InputLabel>
-            <Select labelId="demo-simple-select-filled-label" defaultValue="" id="select-trilha" {...register("situacao")}>
+            <Select labelId="demo-simple-select-filled-label" defaultValue={state.tipoAvaliacao} id="select-trilha" {...register("tipoAvaliacao")}>
               <MenuItem value="initial-stack" disabled><em>Selecione uma situação</em></MenuItem>
               <MenuItem id="positivo" value="POSITIVO">Positivo</MenuItem>
               <MenuItem id="atencao" value="ATENCAO">Atenção</MenuItem>
             </Select>
-            {errors.situacao && <Typography id="erro-situacao" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.situacao.message}</Typography>}
+            {errors.tipoAvaliacao && <Typography id="erro-situacao" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.tipoAvaliacao.message}</Typography>}
           </FormControl>
 
           <Box sx={{ display: "flex", width: "100%", justifyContent: { xs: "center", lg: "end" }, alignItems: { xs: "center", lg: "end" }, bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>

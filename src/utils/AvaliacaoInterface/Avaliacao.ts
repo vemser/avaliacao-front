@@ -5,7 +5,8 @@ export interface IAvaliacaoContext {
   cadastrarAvalicao: (avalicao: ICadastrarAvalicao) => Promise<void>,
   pegarAvaliacao: (pagina?: number, tamanho?: number, filtros?: string) => Promise<void>,
   deletarAvaliacao: (idAluno: number | undefined) => Promise<void>,
-  avaliacoes: IAvaliacaoAPI | null
+  avaliacoes: IAvaliacaoAPI | null,
+  editarAvaliacao: (avalicao: IEditarAvaliacao, id: number) => Promise<void>
 }
 
 export interface IChildren {
@@ -24,7 +25,8 @@ export interface IAvaliacao {
 
 export interface IEditarAvaliacao {
   descricao: string,
-  situacao: string
+  dataCriacao: string,
+  tipoAvaliacao: string
 }
 
 export interface ICadastrarAvalicao {

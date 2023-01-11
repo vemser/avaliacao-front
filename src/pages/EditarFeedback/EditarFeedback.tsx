@@ -1,75 +1,53 @@
-// import React, { useContext, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-
-import { Box, Stack, FormControl, InputLabel, Select, MenuItem, TextField, Button, Autocomplete } from '@mui/material'
-
-// import { yupResolver } from '@hookform/resolvers/yup'
-// import { useForm } from 'react-hook-form'
-// import { EditarFeedbackSchema } from '../../utils/schemas'
-
-import { Titulo } from '../../components/Titulo/Titulo'
 import { useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { Box, Stack, FormControl, TextField, InputLabel, MenuItem, Select, Button, Autocomplete } from '@mui/material';
+
+import { Controller, useForm } from "react-hook-form"
+import { Titulo } from '../../components/Titulo/Titulo';
+
+import { useModulo } from '../../context/Tecnico/ModuloContext';
 import { useAluno } from '../../context/Comportamental/AlunoContext';
-import { ModuloContext } from '../../context/Tecnico/ModuloContext';
+import { filtroDebounce } from '../../utils/functions';
 import { usePrograma } from '../../context/Tecnico/ProgramaContext';
 import { useTrilha } from '../../context/Tecnico/TrilhaContext';
 
-// import logo from "../../assets/dbc-logo.webp";
-
-// import { useAluno } from '../../context/Comportamental/AlunoContext'
-// import { InstrutorContext } from '../../context/InstrutorContext'
-
-// import { toast } from 'react-toastify'
-// import { toastConfig } from '../../utils/toast'
-
-// import { IEditarFeedbackForm } from '../../utils/interface'
-
-// const itemHeigth = 48;
-// const itemPaddingTop = 8;
-// // const MenuProps = { PaperProps: { style: { maxHeight: itemHeigth * 4.5 + itemPaddingTop, width: 250 } } };
+const itemHeigth = 48;
+const itemPaddingTop = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: itemHeigth * 4.5 + itemPaddingTop,
+      width: 250,
+    },
+  },
+};
 
 export const EditarFeedback = () => {
   const navigate = useNavigate();
+  const { pegarAluno, alunos } = useAluno();
+  const { pegarPrograma, pegarProgramaPorNome, programas } = usePrograma();
+  const { pegarTrilha, pegarTrilhaFiltroNome, trilhas } = useTrilha();
+  const { pegarModulo, pegarModuloPorFiltro, modulo } = useModulo();
+  const { control, register, handleSubmit, formState: { errors } } = useForm<any>();
 
-  const { pegarPrograma, programas } = usePrograma()
-  const { pegarModulo, modulo } = useContext(ModuloContext);
-  const { pegarAluno, alunos } = useAluno()
-  const { pegarTrilha, trilhas } = useTrilha()
   useEffect(() => {
-    pegarPrograma(0, programas?.totalElementos);
-    pegarModulo(0, modulo?.totalElementos);
-    pegarAluno(0, alunos?.totalElementos);
-    pegarTrilha(0, trilhas?.totalElementos);
+    pegarPrograma(0, 10);
+    pegarModulo(0, 10);
+    pegarAluno(0, 10);
+    pegarTrilha(0, 10);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-  // const { editarFeedback } = useContext(InstrutorContext);
-  // const { pegarAluno, alunos } = useAluno();
-  // const { state } = useLocation();
+  }, []);
 
-  // useEffect(() => { pegarAluno(); }, [])
-
-  // const [mudaRadio, setMudaRadio] = useState('')
-  // const manipulaState = (event: string) => { setMudaRadio(event) }
-  // const resetFiltros = () => { setMudaRadio('') }
-
-  // const { register, handleSubmit, formState: { errors } } = useForm<IEditarFeedbackForm>({
-  //   resolver: yupResolver(EditarFeedbackSchema)
-  // })
-
-  // const editarFeedbacks = (data: IEditarFeedbackForm) => {
-  //   if (data.idAluno === "initial-aluno") {
-  //     toast.error("Preencha todos os campos!", toastConfig)
-  //   } else {
-  //     const editarfeedback = { idAluno: parseInt(data.idAluno), descricao: data.descricao, tipo: data.tipo }
-  //     editarFeedback(state.idFeedBack, editarfeedback)
-  //   }
-  // }
+  const editarFeedback = async (data: any) => {
+    console.log(data);
+  }
 
   return (
     <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "60px", paddingBottom: "50px" }}>
       <Titulo texto="Editar Feedback" />
 
-      <Box component="form" sx={{
+      <Box component="form" onSubmit={handleSubmit(editarFeedback)} sx={{
         display: "flex", flexDirection: { xs: "column", lg: "row" }, justifyContent: "space-between", backgroundColor: "var(--branco)", width: { xs: "95%", md: "90%" }, borderRadius: "10px", padding: {
           xs: 3, sm: 5
         }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: { xs: 3, xl: 8 }
@@ -77,47 +55,89 @@ export const EditarFeedback = () => {
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
           <FormControl sx={{ width: "100%" }} >
-            <Autocomplete disablePortal id="programa" isOptionEqualToValue={(option, value) => option.label === value.label} options={programas ? programas.elementos.map((programa) => ({ label: `${programa.idPrograma} - ${programa.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Programa" variant="filled" />} />
+            <Autocomplete
+              disablePortal
+              id="programa"
+              onInputChange={(event, value) => {
+                filtroDebounce(value, pegarProgramaPorNome, pegarPrograma)
+              }}
+              isOptionEqualToValue={(option, value) => option.label === value.label}
+              options={programas ? programas.elementos.map((programa) => ({ label: `${programa.idPrograma} - ${programa.nome}`, id: programa.idPrograma })) : []}
+              renderInput={(params) => <TextField {...params} label="Programa" variant="filled" />}
+            />
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
-            <Autocomplete disablePortal id="modulo" isOptionEqualToValue={(option, value) => option.label === value.label} options={modulo ? modulo.elementos.map((modulos) => ({ label: `${modulos.idModulo} - ${modulos.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Módulo" variant="filled" />} />
+            <Autocomplete
+              disablePortal
+              id="trilha"
+              onInputChange={(event, value) => {
+                filtroDebounce(value, pegarTrilhaFiltroNome, pegarTrilha)
+              }}
+              isOptionEqualToValue={(option, value) => option.label === value.label}
+              options={trilhas ? trilhas.elementos.map((trilha) => ({ label: `${trilha.idTrilha} - ${trilha.nome}`, id: trilha.idTrilha })) : []}
+              renderInput={(params) => <TextField {...params} label="Trilha" variant="filled" />}
+            />
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
-            <Autocomplete disablePortal id="aluno" isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: `${aluno.idAluno} - ${aluno.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />
+            <Controller control={control} name="idAluno" render={({ field: { onChange } }) => (
+              <Autocomplete
+                disablePortal
+                id="aluno"
+                onInputChange={(event, value) => {
+                  filtroDebounce(value, pegarAluno, pegarAluno, `&nome=${value}`)
+                }}
+                onChange={(event, data) => onChange(data?.id)}
+                isOptionEqualToValue={(option, value) => option.label === value.label}
+                options={alunos ? alunos.elementos.map((aluno) => ({ label: `${aluno.idAluno} - ${aluno.nome}`, id: aluno.idAluno })) : []}
+                renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />
+            )} />
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
-            <Autocomplete disablePortal id="trilha" isOptionEqualToValue={(option, value) => option.label === value.label} options={trilhas ? trilhas.elementos.map((trilha) => ({ label: `${trilha.idTrilha} - ${trilha.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Trilha" variant="filled" />} />
+            <Controller control={control} name="modulo" render={({ field: { onChange } }) => (
+              <Autocomplete
+                disablePortal
+                id="modulo"
+                onChange={(event, data) => onChange(data.map(item => item.id))}
+                multiple
+                onInputChange={(event, value) => {
+                  filtroDebounce(value, pegarModuloPorFiltro, pegarModulo, `&nomeModulo=${value}`)
+                }}
+                isOptionEqualToValue={(option, value) => option.label === value.label}
+                options={modulo ? modulo.elementos.map((modulos) => ({ label: `${modulos.idModulo} - ${modulos.nome}`, id: modulos.idModulo })) : []}
+                renderInput={(params) => <TextField {...params}
+                  label="Módulo"
+                  variant="filled" />} />
+            )} />
           </FormControl>
+
+
         </Stack>
 
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: "end" }}>
 
-          <FormControl sx={{ width: "100%" }}>
-            <TextField id="data" label="Data" type="date" sx={{ width: "100%" }} InputLabelProps={{ shrink: true }} />
+          <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>
+            <InputLabel id="selectAluno">Situação</InputLabel>
+            <Select labelId="demo-simple-select-filled-label" defaultValue="" id="select-trilha" {...register("situacao")} >
+              <MenuItem value="situacao" disabled><em>Selecione a situação do feedback</em></MenuItem>
+              <MenuItem id="positivo" value="POSITIVO">Positivo</MenuItem>
+              <MenuItem id="atencao" value="ATENCAO">Atenção</MenuItem>
+            </Select>
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
             <TextField
-              placeholder="Digite uma descrição"
+              placeholder="Digite uma descrição para o feedback"
               multiline
               rows={3}
               sx={{ width: "100%" }}
               id="descricao"
               label="Descrição"
               variant='filled'
+              {...register("descricao")}
             />
-          </FormControl>
-
-          <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>
-            <InputLabel id="selectAluno">Situação</InputLabel>
-            <Select labelId="demo-simple-select-filled-label" defaultValue="initial-stack" id="select-trilha" >
-              <MenuItem value="initial-stack" disabled><em>Selecione uma situação</em></MenuItem>
-              <MenuItem id="positivo" value="POSITIVO">Positivo</MenuItem>
-              <MenuItem id="atencao" value="ATENCAO">Atenção</MenuItem>
-            </Select>
           </FormControl>
 
           <Box sx={{ display: "flex", width: "100%", justifyContent: { xs: "center", lg: "end" }, alignItems: { xs: "center", lg: "end" }, bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>

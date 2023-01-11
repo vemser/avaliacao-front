@@ -12,3 +12,4 @@ export { CardAtividade } from "./CardAtividade/CardAtividade";
 export { CardFeedback } from './CardFeedback/CardFeedback';
 export {CardAtividadeAluno} from "./CardAtividadeAluno/CardAtividadeAluno";
 export * from "./FiltroFeedback/FiltroFeedback";
+export * from "./FiltroAvaliacao/FiltroAvaliacao";

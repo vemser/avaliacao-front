@@ -4,7 +4,8 @@ export interface IAcompanhamento {
   pegarAcompanhamentos: (pagina?: number, tamanho?: number) => Promise<void>,
   pegarAcompanhamentoNomePrograma: (nome: string, pagina?: number, tamanho?: number) => Promise<void>,
   desativarAcompanhamento: (id: number) => Promise<void>,
-  editarAcompanhamento: (dadosAcompanhamento: IEditarAcompanhamento, id: number) => Promise<void>
+  editarAcompanhamento: (dadosAcompanhamento: IEditarAcompanhamento, id: number) => Promise<void>,
+  pegarAcompanhamentoTitulo: (nome: string, pagina?: number, tamanho?: number) => Promise<void>
 }
 
 export interface IChildren {

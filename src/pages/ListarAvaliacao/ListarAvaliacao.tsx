@@ -1,9 +1,9 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Box, Paper, TableContainer, TablePagination, Table, TableRow, TableCell, TableBody, Button, Modal, styled, tableCellClasses, TableHead } from "@mui/material";
 
-import { Edit, DeleteForever } from "@mui/icons-material";
+import { Edit, DeleteForever, ExpandLess, ExpandMore } from "@mui/icons-material";
 
 import * as Componentes from "../../components";
 
@@ -53,6 +53,8 @@ const columns: Column[] = [
 
 export const ListarAvaliacao = () => {
   const { acompanhamento, pegarAcompanhamento, paginacaoAcompanhamento } = useContext(GestorContext);
+  const [estadoFiltro, setEstadoFiltro] = useState<boolean>(false);
+
   const navigate = useNavigate()
 
   const handleChangePage = async (event: unknown, newPage: number) => { await pegarAcompanhamento(newPage); };
@@ -85,10 +87,17 @@ export const ListarAvaliacao = () => {
       <Box sx={{ width: { xs: "95%", md: "90%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
 
         <Box sx={{ display: "flex", gap: 3, flexDirection: { xs: "column", md: "row" }, justifyContent: "space-between", alignItems: "center", width: "100%", marginBottom: "10px", paddingInline: 2 }}>
-          <Componentes.CampoBusca label="Código ou Nome" buscar={filtrarAcompanhamento} resetar={resetFiltroAcompanhamento} />
+        <Button onClick={() => { setEstadoFiltro(!estadoFiltro) }} id="botao-swap" variant='outlined' sx={{ width: "120px", display: "flex", textTransform: "capitalize", justifyContent: "space-between", fontSize: "1rem" }}>Filtros{estadoFiltro ? <ExpandLess /> : <ExpandMore />}</Button>
 
           <Button onClick={() => navigate("/cadastrar-avaliacao")} variant="contained" sx={{ width: "auto", paddingLeft: "15px", paddingRight: "15px", display: "flex", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar avaliação</Button>
         </Box>
+
+        {estadoFiltro &&
+          <Box sx={{ display: "flex", gap: 3, flexDirection: "row", alignItems: "center", width: "100%", marginBottom: "10px", paddingInline: 2, marginTop: "10px", flexWrap: "wrap" }}>
+
+            <Componentes.FiltroAvaliacao />
+
+          </Box>}
 
         <Paper sx={{ width: "100%", borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px" }}>
           <TableContainer id="tabela-admin" sx={{ maxHeight: 450 }}>

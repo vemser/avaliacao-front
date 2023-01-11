@@ -1,3 +1,11 @@
+export interface IAvaliacaoContext {
+
+}
+
+export interface IChildren {
+  children: React.ReactNode;
+}
+
 export interface IAvaliacao {
   idAcompanhamento: number,
   idPrograma: number,

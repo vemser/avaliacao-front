@@ -37,9 +37,6 @@ export const EditarReservaAlocacao = () => {
             xs: 3, sm: 5
           }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: 3
         }}>
-
-          <img src={logo} alt="Logo DBC" width={150} />
-
           <Stack component="div" spacing={3} sx={{ width: "100%", display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
             <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>

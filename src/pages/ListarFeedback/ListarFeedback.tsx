@@ -17,7 +17,6 @@ export const ListarFeedback: React.FC = () => {
   const [inputFiltro, setInputFiltro] = useState<string>('');
   const [estadoFiltro, setEstadoFiltro] = useState<boolean>(false);
 
-  console.log(feedback)
   const handleChangePage = async (event: unknown, newPage: number) => {
     if (inputFiltro) {
       filtrarFeedback(inputFiltro, newPage)

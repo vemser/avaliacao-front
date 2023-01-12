@@ -19,6 +19,7 @@ export interface IProgramaContext {
   editarPrograma: (programa: IProgramas, id: number) => Promise<void>;
   pegarProgramaAtivo: (pagina?: number, tamanho?: number) => Promise<void>;
   pegarProgramaPorNomeAtivo: (nome: string, pagina?: number, tamanho?: number) => Promise<void>;
+  clonarPrograma: (id: number) => Promise<void>;
 }
 
 export interface IObjectProgramas {

@@ -38,6 +38,27 @@ export const ProgramaProvider = ({ children }: IChildren) => {
     }
   }
 
+  const clonarPrograma = async (id: number) => {
+    try {
+      nProgress.start();
+      API.defaults.headers.common["Authorization"] = localStorage.getItem("token");
+      await API.post(`/programa/clone/${id}`).then((response) => {
+        toast.success("Programa clonado com sucesso!", toastConfig);
+        pegarPrograma();
+      })
+    } catch (error: any) {
+      let message = "Ops, algo deu errado!";
+      if (error.response.status === 403) {
+        message = "Você não tem permissão para acessar esse recurso"
+      } else if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message || error.response.data.errors[0];
+      }  
+      toast.error(message, toastConfig);
+    } finally {
+      nProgress.done();
+    }
+  }
+
   const pegarPrograma = async (pagina: number = 0, tamanho: number = 10) => {
     try {
       nProgress.start();
@@ -171,7 +192,7 @@ export const ProgramaProvider = ({ children }: IChildren) => {
   }
 
   return (
-    <ProgramaContext.Provider value={{ programas, cadastrarPrograma, pegarPrograma, deletarProgama, editarPrograma, pegarProgramaPorNome, pegarProgramaFiltroID, mudaDashboard, setMudaDashboard, pegarProgramaAtivo, pegarProgramaPorNomeAtivo }}>
+    <ProgramaContext.Provider value={{ programas, cadastrarPrograma, pegarPrograma, deletarProgama, editarPrograma, pegarProgramaPorNome, pegarProgramaFiltroID, mudaDashboard, setMudaDashboard, pegarProgramaAtivo, pegarProgramaPorNomeAtivo, clonarPrograma }}>
       {children}
     </ProgramaContext.Provider>
   );

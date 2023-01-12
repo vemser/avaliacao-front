@@ -129,9 +129,11 @@ export const ListarAluno: React.FC = () => {
                       <StyledTableCell id="email" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }}>{aluno.email}</StyledTableCell>
                     </Tooltip>
 
-                    <StyledTableCell id="stack" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", textTransform: "capitalize", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{formatarTexto(aluno.trilha.nome)}</StyledTableCell>
+                    <Tooltip title={aluno.trilha.nome} PopperProps={{ sx: { marginTop: "-25px !important" } }} arrow>
+                      <StyledTableCell id="stack" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", textTransform: "capitalize", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }}>{formatarTexto(aluno.trilha.nome)}</StyledTableCell>
+                    </Tooltip>
 
-                    <StyledTableCell id="situacao" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", textTransform: "capitalize", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{formatarTexto(aluno.situacao)}</StyledTableCell>
+                    <StyledTableCell id="situacao" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", textTransform: "capitalize", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }}>{formatarTexto(aluno.situacao)}</StyledTableCell>
 
                     <StyledTableCell id="acoes" sx={{ justifyContent: "center", display: "flex", wrap: "nowrap" }}>
                       <Button id={`botao-editar-${aluno.idAluno}`} title="Editar" onClick={() => navigate("/editar-aluno", { state: aluno })}><Edit /></Button>

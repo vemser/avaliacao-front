@@ -38,4 +38,5 @@ export {ListarAtividadeAluno} from "./ListarAtividadeAluno/ListarAtividadeAluno"
 export { EditarAtividadeAluno } from './EditarAtividadeAluno/EditarAtividadeAluno'
 export {ListarAvaliacao} from "./ListarAvaliacao/ListarAvaliacao"
 export {CadastrarAvaliacao} from "./CadastrarAvaliacao/CadastrarAvaliacao"
-export {EditarAvaliacao} from "./EditarAvaliacao/EditarAvaliacao";
+export { EditarAvaliacao } from "./EditarAvaliacao/EditarAvaliacao";
+export { ConfiguracaoPrograma } from './ConfiguracaoPrograma/ConfiguracaoPrograma';

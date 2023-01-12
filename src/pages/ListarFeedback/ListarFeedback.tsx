@@ -173,12 +173,12 @@ export const ListarFeedback: React.FC = () => {
                     </Tooltip>
 
                     <Tooltip title={feedback.moduloDTO.map((modulo) => modulo.nome).join(", ")} PopperProps={{ sx: { marginTop: "-25px !important" } }} arrow>
-                      <StyledTableCell id="modulo" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{feedback.moduloDTO.map((modulo) => modulo.nome).join(", ")}</StyledTableCell>
+                      <StyledTableCell id="modulo" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }}>{feedback.moduloDTO.map((modulo) => modulo.nome).join(", ")}</StyledTableCell>
                     </Tooltip>
 
-                    <StyledTableCell id="stack" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", textTransform: "capitalize", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{formatarTexto(feedback.situacao)}</StyledTableCell>
+                    <StyledTableCell id="stack" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", textTransform: "capitalize", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }}>{formatarTexto(feedback.situacao)}</StyledTableCell>
 
-                    <StyledTableCell id="situacao" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", textTransform: "capitalize", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{feedback.data.replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")}</StyledTableCell>
+                    <StyledTableCell id="situacao" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", textTransform: "capitalize", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }}>{feedback.data.replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")}</StyledTableCell>
 
                     <StyledTableCell id="acoes" sx={{ justifyContent: "center", display: "flex", wrap: "nowrap" }}>
                       <Button id={`botao-editar-${feedback.idFeedBack}`} title="Editar" onClick={() => navigate("/editar-feedback", { state: feedback })}><Edit /></Button>

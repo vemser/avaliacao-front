@@ -13,7 +13,7 @@ export { ListarFeedback } from "./ListarFeedback/ListarFeedback";
 export { EditarAluno } from "./EditarAluno/EditarAluno";
 export { EditarAcompanhamento } from "./EditarAcompanhamento/EditarAcompanhamento";
 export { DetalhesColaborador } from "./DetalhesColaborador/DetalhesColaborador";
-export { TrilhaPrograma } from './TrilhaEPrograma/TrilhaPrograma';
+export { ListarProgramas } from './ListarPrograma/ListarPrograma';
 export { CadastrarTrilha } from './CadastrarTrilhas/CadastrarTrilha';
 export { CadastrarPrograma } from './CadastrarProgramas/CadastrarPrograma';
 export { EditarTrilha } from './EditarTrilha/EditarTrilha';

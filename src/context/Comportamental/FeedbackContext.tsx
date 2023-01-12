@@ -35,6 +35,25 @@ export const FeedbackProvider = ({ children }: IChildren) => {
         }
     }
 
+    const pegarFeedbackFiltros = async (pagina: number = 0, tamanho: number = 10, filtros: string = '') => {
+        try {
+            nProgress.start()
+            const { data } = await API.get(`/feedback/listar-feedbacks-com-filtro?page=${pagina}&size=${tamanho}${filtros}`, { headers: { Authorization: localStorage.getItem("token") } })
+            setFeedback(data)
+        } catch (error: any) {
+            let message = "Ops, algo deu errado!";
+            if (error.response.status === 403) {
+                message = "Você não tem permissão para acessar esse recurso"
+            } else if (axios.isAxiosError(error) && error?.response) {
+                message = error.response.data.message || error.response.data.errors[0];
+            }
+            toast.error(message, toastConfig);
+        } finally {
+            nProgress.done()
+        }
+    }
+
+
     const cadastrarFeedback = async (data: IFeedbackCadastro) => {
         try {
             nProgress.start();
@@ -113,7 +132,7 @@ export const FeedbackProvider = ({ children }: IChildren) => {
     }
 
     return (
-        <FeedbackContext.Provider value={{ pegarFeedback, deletarFeedback, feedback, cadastrarFeedback, editarFeedback }}>
+        <FeedbackContext.Provider value={{ pegarFeedback, deletarFeedback, feedback, cadastrarFeedback, editarFeedback, pegarFeedbackFiltros }}>
             {children}
         </FeedbackContext.Provider>
     );

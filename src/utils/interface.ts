@@ -28,9 +28,25 @@ export interface IAuth {
   editarPerfil: (imagem: FormData) => Promise<void>,
   pegarUsuarioLogado: () => Promise<void>,
   decodificarJWT: () => Promise<any>,
+  pegarUsuariosLoginCargo: (pagina?: number , tamanho?: number , login?: string) => Promise<void>
   usuarioLogado: any | undefined,
   cargos: string[],
+  usuariosFiltro: IUsuariosFiltro | null,
 }
+
+export interface IUsuariosFiltro {
+  totalElementos: number,
+  quantidadePaginas: number,
+  pagina: number,
+  tamanho: number,
+  elementos: IUsuariosFiltroAPI[]
+}
+
+export interface IUsuariosFiltroAPI {
+  login: string,
+  cargos: {nome: string, descricao: string}[]
+}
+
 
 export interface IAdmin {
   pegarColaborador: (pagina?: number) => Promise<void>,

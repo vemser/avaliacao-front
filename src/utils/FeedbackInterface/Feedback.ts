@@ -7,7 +7,8 @@ export interface IFeedback {
     deletarFeedback: (idFeedback: number | undefined) => Promise<void>,
     feedback: IFeedbackAPI | null,
     cadastrarFeedback: (data: IFeedbackCadastro) => Promise<void>,
-    editarFeedback: (feedback: IEditarFeedback, id: number) => Promise<void>
+    editarFeedback: (feedback: IEditarFeedback, id: number) => Promise<void>,
+    pegarFeedbackFiltros: (pagina?: number, tamanho?: number, filtros?: string) => Promise<void>
 }
 
 export interface IChildren {

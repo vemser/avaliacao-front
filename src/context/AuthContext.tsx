@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 
-import { IAuth, IChildren, IUsuario, IUsuarioLogado } from "../utils/interface";
+import { IAuth, IChildren, IUsuario, IUsuarioLogado, IUsuariosFiltro } from "../utils/interface";
 
 import nProgress from 'nprogress';
 import { toast } from "react-toastify";
@@ -8,11 +8,13 @@ import { toastConfig } from "../utils/toast";
 
 import { AuthAPI } from "../utils/api";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export const AuthContext = createContext({} as IAuth);
 
 export const AuthProvider = ({ children }: IChildren) => {
   const navigate = useNavigate();
+  const [usuariosFiltro, setUsuariosFiltro] = useState<IUsuariosFiltro | null>(null);
   const [cargos, setCargos] = useState<string[]>([]);
   const [usuarioLogado, setUsuarioLogado] = useState<IUsuarioLogado>({
     cargo: [""], idUsuario: 0, imagem: "", login: ""
@@ -82,8 +84,26 @@ export const AuthProvider = ({ children }: IChildren) => {
     navigate("/");
   };
 
+  const pegarUsuariosLoginCargo = async (pagina: number = 0, tamanho: number = 10, login: string = "") => {
+    try {
+      nProgress.start();
+      const { data } = await AuthAPI.get(`/usuario/filtro-usuario-login-cargo?pagina=${pagina}&tamanho=${tamanho}&nomes=ROLE_INSTRUTOR&login=${login}`, { headers: { Authorization: localStorage.getItem("token") } });
+      setUsuariosFiltro(data);
+    } catch (error: any) {
+      let message = "Ops, algo deu errado!";
+      if (error.response.status === 403) {
+        message = "Você não tem permissão para acessar esse recurso"
+      } else if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message || error.response.data.errors[0];
+      }
+      toast.error(message, toastConfig);
+    } finally {
+      nProgress.done();
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{ usuarioLogin, cargos, usuarioLogado, usuarioLogout, editarPerfil, pegarUsuarioLogado, decodificarJWT }}>
+    <AuthContext.Provider value={{ usuarioLogin, usuariosFiltro, cargos, usuarioLogado, usuarioLogout, editarPerfil, pegarUsuarioLogado, decodificarJWT, pegarUsuariosLoginCargo }}>
       {children}
     </AuthContext.Provider>
   );

@@ -16,7 +16,7 @@ export const FiltroAvaliacao = () => {
   const { alunos, pegarAluno } = useAluno();
   const { acompanhamentos, pegarAcompanhamentoTitulo, pegarAcompanhamentos } = useAcompanhamento();
   const { pegarAvaliacao } = useAvaliacao();
-  const { handleSubmit, register, control, formState: { errors }, reset, watch } = useForm<IFiltro>();
+  const { handleSubmit, register, control, reset, watch } = useForm<IFiltro>();
 
   const watchTodos = watch();
 
@@ -35,14 +35,14 @@ export const FiltroAvaliacao = () => {
   }
 
   const resetar = async () => {
-    await pegarAluno(0, 10);
-    await pegarAcompanhamentos(0, 10);
-    await pegarAvaliacao(0, 10);
     reset({
       tituloAcompanhamento: "",
       nomeAluno: "",
-      tipoAvaliacao: ""
+      tipoAvaliacao: "",
     })
+    await pegarAluno(0, 10);
+    await pegarAcompanhamentos(0, 10);
+    await pegarAvaliacao(0, 10);
   }
 
   return (

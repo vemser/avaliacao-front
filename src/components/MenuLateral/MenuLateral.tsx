@@ -143,13 +143,7 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
                         <ListItemIcon>
                           <Source sx={{ color: "var(--azul-escuro-dbc)" }} />
                         </ListItemIcon>
-                        <ListItemText primary="Trilhas e Programas" />
-                      </ListItemButton>
-                      <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/modulos") }}>
-                        <ListItemIcon>
-                          <Terminal sx={{ color: "var(--azul-escuro-dbc)" }} />
-                        </ListItemIcon>
-                        <ListItemText primary="Módulos" />
+                        <ListItemText primary="Programas" />
                       </ListItemButton>
                       <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/atividades") }}>
                         <ListItemIcon>

@@ -58,7 +58,7 @@ function AppRoutes() {
                                             </Route>
 
                                             <Route element={<Components.TecnicoRotas />}>
-                                              <Route path="/trilhas-e-programas" element={<Pages.TrilhaPrograma />} />
+                                              <Route path="/trilhas-e-programas" element={<Pages.ListarProgramas />} />
                                               <Route path="/cadastrar-trilha" element={<Pages.CadastrarTrilha />} />
                                               <Route path="/cadastrar-programa" element={<Pages.CadastrarPrograma />} />
                                               <Route path="/editar-trilha" element={<Pages.EditarTrilha />} />

@@ -101,8 +101,6 @@ export const CadastrarModulo = () => {
 
       <Box component="form" onSubmit={handleSubmit(cadastrar)} sx={{ display: "flex", flexDirection: "column", alignItems: "center", backgroundColor: "var(--branco)", width: { xs: "95%", md: "70%", lg: "60%", xl: "50%" }, borderRadius: "10px", padding: { xs: 3, sm: 5 }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: 3 }}>
 
-        <img src={logo} alt="Logo DBC" width={150} />
-
         <Stack component="div" spacing={3} sx={{ width: "100%", display: "flex", alignItems: { xs: "start", md: "start" } }}>
           <FormControl sx={{ width: "100%" }}>
             <TextField id="nome-modulo" label="Nome" placeholder="Digite um nome para o módulo" multiline variant="filled" {...register("nome")} />

@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { toastConfig } from "../../utils/toast";
@@ -8,7 +8,7 @@ import nProgress from 'nprogress';
 import { API } from "../../utils/api";
 import axios from "axios";
 
-import { IChildren, IFeedback, IFeedbackAPI, IFeedbackCadastro, IFeedbackElementos } from "../../utils/FeedbackInterface/Feedback";
+import { IChildren, IEditarFeedback, IFeedback, IFeedbackAPI, IFeedbackCadastro, IFeedbackElementos } from "../../utils/FeedbackInterface/Feedback";
 
 export const FeedbackContext = createContext({} as IFeedback);
 
@@ -55,7 +55,7 @@ export const FeedbackProvider = ({ children }: IChildren) => {
             nProgress.done();
         }
     }
-    
+
     // const cadastrarAluno = async (dadosAluno: ICadastroAlunoAPI) => {
     //     try {
     //         nProgress.start();
@@ -93,9 +93,32 @@ export const FeedbackProvider = ({ children }: IChildren) => {
         }
     }
 
+    const editarFeedback = async (feedback: IEditarFeedback, id: number) => {
+        try {
+            nProgress.start();
+            await API.put(`/feedback/editar-feedback/${id}`, feedback, { headers: { Authorization: localStorage.getItem("token") } })
+            toast.success("Feedback editado com sucesso!", toastConfig);
+            navigate("/feedbacks")
+        } catch (error: any) {
+            let message = "Ops, algo deu errado!";
+            if (error.response.status === 403) {
+                message = "Você não tem permissão para acessar esse recurso"
+            } else if (axios.isAxiosError(error) && error?.response) {
+                message = error.response.data.message || error.response.data.errors[0];
+            }
+            toast.error(message, toastConfig);
+        } finally {
+            nProgress.done();
+        }
+    }
+
     return (
-        <FeedbackContext.Provider value={{ pegarFeedback, deletarFeedback, feedback }}>
+        <FeedbackContext.Provider value={{ pegarFeedback, deletarFeedback, feedback, cadastrarFeedback, editarFeedback }}>
             {children}
         </FeedbackContext.Provider>
     );
+}
+
+export const useFeedback = () => {
+    return useContext(FeedbackContext)
 }

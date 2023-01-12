@@ -13,18 +13,36 @@ import { useNavigate } from "react-router-dom";
 export const ProgramaContext = createContext({} as IProgramaContext);
 
 export const ProgramaProvider = ({ children }: IChildren) => {
-  const navigate = useNavigate();
-  
+  const navigate = useNavigate();  
   const [programas, setProgramas] = useState<IObjectProgramas | null>(null);
-  const [mudaDashboard, setMudaDashboard] = useState<boolean>(false);
   
   const cadastrarPrograma = async (programa: IProgramas) => {
     try {
       nProgress.start();
       await API.post(`/programa`, programa, { headers: { Authorization: localStorage.getItem("token") }});
       toast.success("Programa criado com sucesso!", toastConfig);
-      navigate('/trilhas-e-programas')
-      setMudaDashboard(true)
+      navigate('/programas')
+    } catch (error: any) {
+      let message = "Ops, algo deu errado!";
+      if (error.response.status === 403) {
+        message = "Você não tem permissão para acessar esse recurso"
+      } else if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message || error.response.data.errors[0];
+      }  
+      toast.error(message, toastConfig);
+    } finally {
+      nProgress.done();
+    }
+  }
+
+  const clonarPrograma = async (id: number) => {
+    try {
+      nProgress.start();
+      API.defaults.headers.common["Authorization"] = localStorage.getItem("token");
+      await API.post(`/programa/clone/${id}`).then((response) => {
+        toast.success("Programa clonado com sucesso!", toastConfig);
+        pegarPrograma();
+      })
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
       if (error.response.status === 403) {
@@ -192,7 +210,7 @@ export const ProgramaProvider = ({ children }: IChildren) => {
   }
 
   return (
-    <ProgramaContext.Provider value={{ programas, cadastrarPrograma, pegarPrograma, deletarProgama, editarPrograma, pegarProgramaPorNome, pegarProgramaFiltroID, mudaDashboard, setMudaDashboard, pegarProgramaAtivo, pegarProgramaPorNomeAtivo, clonarPrograma }}>
+    <ProgramaContext.Provider value={{ programas, cadastrarPrograma, pegarPrograma, deletarProgama, editarPrograma, pegarProgramaPorNome, pegarProgramaFiltroID, pegarProgramaAtivo, pegarProgramaPorNomeAtivo, clonarPrograma }}>
       {children}
     </ProgramaContext.Provider>
   );

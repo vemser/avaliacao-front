@@ -19,8 +19,8 @@ export const CadastrarReservaAlacocao = () => {
   const { pegarCliente, cliente } = useCliente()
 
   const [vagaErro, setVagaErro] = useState<boolean>(false);
-  const [AlunoErro, setAlunoErro] = useState<boolean>(false);
   const [dataVaga, setDataVaga] = useState<string>();
+  const [AlunoErro, setAlunoErro] = useState<boolean>(false);
   const [dataAluno, setDataAluno] = useState<string>();
 
 

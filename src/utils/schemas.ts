@@ -134,10 +134,9 @@ export const reservaAlocacaoSchema = yup.object().shape({
 
 export const feedbackSchema = yup.object().shape({
   idAluno: yup.number().required("Por favor, selecione o aluno recebendo o feedback"),
-  idModulo: yup.number().required("Por favor, selecione o módulo"),
-  nomeInstrutor: yup.string().required(),
   descricao: yup.string().required("Por favor, insira uma descrição"),
-  data: yup.string().required()
+  situacao: yup.string().required("Por favor, insira a situação do feedback")
+  
 })
 
 export const avalicaoSchema = yup.object().shape({

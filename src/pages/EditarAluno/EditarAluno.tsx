@@ -20,19 +20,15 @@ import { useAluno } from '../../context/Comportamental/AlunoContext';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { alunoSchema } from '../../utils/schemas';
 import { ITecnologiasAluno } from '../../utils/AlunoInterface/aluno';
-import { formatarNomeCompleto } from '../../utils/functions';
-
-const itemHeigth = 48;
-const itemPaddingTop = 8;
-const MenuProps = { PaperProps: { style: { maxHeight: itemHeigth * 4.5 + itemPaddingTop, width: 250 } } };
+import { filtroDebounce, formatarNomeCompleto } from '../../utils/functions';
 
 export const EditarAluno = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
 
   const { editarAluno } = useAluno();
-  const { programas, pegarPrograma } = usePrograma();
-  const { trilhas, pegarTrilha } = useTrilha();
+  const { programas, pegarProgramaAtivo, pegarProgramaPorNomeAtivo } = usePrograma();
+  const { trilhas, pegarTrilha, pegarTrilhaFiltroNome } = useTrilha();
   const { pegarTecnologia, cadastrarTecnologia, tecnologias } = useTecnologia();
 
   const [inputTecnologia, setInputTecnologia] = useState<string>('')
@@ -46,18 +42,19 @@ export const EditarAluno = () => {
   const { register, handleSubmit, formState: { errors }, control } = useForm<ICadastroAlunoForm>({
     resolver: yupResolver(alunoSchema),
     defaultValues: {
-      idPrograma: state.programa.idPrograma
+      idPrograma: state.programa.idPrograma,
+      idTrilha: state.trilha.idTrilha
     }
   });
 
   const editar = (data: ICadastroAlunoForm) => {
-    const novoData = { ...data, idTrilha: parseInt(data.idTrilha), idPrograma: data.idPrograma ? parseInt(data.idPrograma.split(' ')[0]) : state.programa.idPrograma, tecnologias: tecnologiaSelecionada }
+    const novoData = { ...data, idTrilha: parseInt(data.idTrilha), idPrograma: data.idPrograma ? parseInt(data.idPrograma) : state.programa.idPrograma, tecnologias: tecnologiaSelecionada }
     editarAluno(novoData, state.idAluno)
   };
 
   useEffect(() => {
-    pegarPrograma(0, programas?.totalElementos);
-    pegarTrilha(0, trilhas?.totalElementos);
+    pegarProgramaAtivo(0, 10);
+    pegarTrilha(0, 10);
     pegarTecnologia(0, tecnologias?.totalElementos);
     initialState();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -107,8 +104,9 @@ export const EditarAluno = () => {
 
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: "end" }}>
           <FormControl sx={{ width: { xs: "100%", md: "100%" }, display: "flex", flexDirection: "row", gap: "10px" }}>
-            <Autocomplete sx={{ width: "90%" }} defaultValue={state.tecnologias.map((tecnologia: ITecnologiasAluno) => ({ label: tecnologia.nome, id: tecnologia.idTecnologia }))}
-              multiple disablePortal id="tecnologias" noOptionsText="Nenhuma opção encontrada. Cadastre a tecnologia"
+            <Autocomplete sx={{ width: "90%" }} multiple disablePortal id="tecnologias"
+              defaultValue={state.tecnologias.map((tecnologia: ITecnologiasAluno) => ({ label: tecnologia.nome, id: tecnologia.idTecnologia }))}
+              noOptionsText="Nenhuma opção encontrada. Cadastre a tecnologia"
               onChange={(e, values) => { if (values.length === 0) setTecnologiaSelecionada([]); setTecnologiaSelecionada(values.map((value) => value.id)) }}
               isOptionEqualToValue={(option, value) => option.label === value.label}
               options={tecnologias ? tecnologias.elementos.map((tecnologia) => ({ label: `${tecnologia.nome}`, id: tecnologia.idTecnologia })) : []}
@@ -120,18 +118,29 @@ export const EditarAluno = () => {
           </FormControl>
 
           <FormControl variant="filled" sx={{ width: "100%" }}>
-            <InputLabel id="selectAluno">Trilha do Aluno</InputLabel>
-            <Select MenuProps={MenuProps} labelId="demo-simple-select-filled-label" defaultValue={state.trilha.idTrilha} id="select-trilha" {...register("idTrilha")} error={!!errors.idTrilha}>
-              {trilhas?.elementos.map((trilha) => (
-                <MenuItem key={trilha.idTrilha} id={`id-trilha=${trilha.idTrilha}`} value={`${trilha.idTrilha}`}>{trilha.nome}</MenuItem>
-              ))}
-            </Select>
+            <Controller control={control} name="idTrilha" render={({ field: { onChange } }) => (
+              <Autocomplete noOptionsText="Nenhuma trilha encontrada" disablePortal id="trilha"
+                defaultValue={{ label: state.trilha.nome, id: state.trilha.idTrilha }}
+                onChange={(event, data) => onChange(data?.id)}
+                onInputChange={(event, value) => {
+                  filtroDebounce(value, pegarTrilhaFiltroNome, pegarTrilha)
+                }}
+                getOptionLabel={(option) => option.label}
+                isOptionEqualToValue={(option, value) => option.label === value.label}
+                options={trilhas ? trilhas.elementos.map((trilha) => ({ label: trilha.nome, id: trilha.idTrilha })) : []} 
+                renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
+                renderInput={(params) => <TextField key={params.id} {...params} label="Trilhas" variant="filled" />} />
+            )} />
+            {errors.idTrilha && <Typography id="erro-trilhaAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.idTrilha.message}</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} variant="filled">
             <Controller control={control} name="idPrograma" render={({ field: { onChange } }) => (
-              <Autocomplete disablePortal onChange={(event, data) => onChange(data?.label)} id="programa" getOptionLabel={(option) => option.label}
-                defaultValue={{ label: `${state.programa.nome}`, id: state.programa.idPrograma }}
+              <Autocomplete disablePortal onChange={(event, data) => onChange(data?.id)} id="programa" getOptionLabel={(option) => option.label}
+                defaultValue={{ label: state.programa.nome, id: state.programa.idPrograma }}
+                onInputChange={(event, value) => {
+                  filtroDebounce(value, pegarProgramaPorNomeAtivo, pegarProgramaAtivo)
+                }}
                 isOptionEqualToValue={(option) => option.label === `${state.programa.idPrograma} - ${state.programa.nome}`}
                 options={programas ? programas.elementos.map((programa) => ({ label: `${programa.nome}`, id: programa.idPrograma })) : []}
                 renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}

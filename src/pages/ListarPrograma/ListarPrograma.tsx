@@ -58,7 +58,7 @@ export const ListarProgramas = () => {
   const navigate = useNavigate();
 
   const [inputFiltro, setInputFiltro] = useState<string>('');
-  const { pegarProgramaPorNome, pegarProgramaFiltroID, pegarPrograma, deletarProgama, programas, mudaDashboard, setMudaDashboard } = usePrograma();
+  const { pegarProgramaPorNome, pegarProgramaFiltroID, pegarPrograma, deletarProgama, programas, clonarPrograma } = usePrograma();
 
   // Funções Modal
   const [idDelete, setIdDelete] = useState<number | null>(null);
@@ -141,7 +141,7 @@ export const ListarProgramas = () => {
                     <StyledTableCell id="acoes-programa" sx={{ justifyContent: "center", alignItems: "center", display: "flex", wrap: "nowrap" }}>
                       <Button id={`botao-editar-${programa.idPrograma}`} title="Editar" onClick={() => navigate("/editar-programa", { state: programa })}><EditIcon /></Button>
 
-                      <Button id={`botao-clonar-${programa.idPrograma}`} title="Clonar" onClick={() => navigate("", { state: programa })}><FileCopyIcon /></Button>
+                      <Button id={`botao-clonar-${programa.idPrograma}`} title="Clonar" onClick={() => clonarPrograma(programa.idPrograma)}><FileCopyIcon /></Button>
 
                       <Button id={`botao-configuracao-${programa.idPrograma}`} title="Configurações" onClick={() => navigate("", { state: programa })}><SettingsIcon /></Button>
 

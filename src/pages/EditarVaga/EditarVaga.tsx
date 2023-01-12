@@ -28,7 +28,7 @@ export const EditarVaga = () => {
         idVaga: state.idVaga,
         nome: state.nome,
         quantidade: state.quantidade,
-        situacao: state.situacao
+        situacaoVagaPrograma: state.situacaoVagaPrograma
       }
     });
 
@@ -111,12 +111,12 @@ export const EditarVaga = () => {
 
           <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>
             <InputLabel id="selectAluno">Situação</InputLabel>
-            <Select labelId="demo-simple-select-filled-label" defaultValue={state.situacao} id="select-trilha" {...register("situacao")}>
+            <Select labelId="demo-simple-select-filled-label" defaultValue={state.situacao} id="select-trilha" {...register("situacaoVagaPrograma")}>
               <MenuItem value="initial-stack" disabled><em>Selecione uma situação</em></MenuItem>
               <MenuItem id="aberto" value="ABERTO">Aberto</MenuItem>
               <MenuItem id="fechado" value="FECHADO">Fechado</MenuItem>
             </Select>
-            {errors.situacao && <Typography id="erro-situacao-vaga" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.situacao.message}</Typography>}
+            {errors.situacaoVagaPrograma && <Typography id="erro-situacao-vaga" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.situacaoVagaPrograma.message}</Typography>}
           </FormControl>
 
           <Box sx={{ display: "flex", width: "100%", justifyContent: { xs: "center", lg: "end" }, alignItems: { xs: "center", lg: "end" }, bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>

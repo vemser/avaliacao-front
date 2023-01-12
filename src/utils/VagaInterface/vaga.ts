@@ -3,7 +3,7 @@ export interface IVaga {
   quantidade: number,
   idCliente: number,
   idPrograma: number,
-  situacao: "ABERTO" | "FECHADO",
+  situacaoVagaPrograma: "ABERTO" | "FECHADO",
   dataAbertura: string,
   dataFechamento: string,
   dataCriacao: string,

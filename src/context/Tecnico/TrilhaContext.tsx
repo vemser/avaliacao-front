@@ -15,9 +15,7 @@ export const TrilhaContext = createContext({} as ITrilha);
 
 export const TrilhaProvider = ({ children }: IChildren) => {
   const navigate = useNavigate();
-
   const [trilhas, setTrilhas] = useState<ITrilhasAPI | null>(null);
-  const { setMudaDashboard } = usePrograma();
 
   const pegarTrilha = async (pagina: number = 0, tamanho: number = 10) => {
     try {
@@ -80,7 +78,6 @@ export const TrilhaProvider = ({ children }: IChildren) => {
     try {
       nProgress.start();
       await API.post('/trilha', dadosTrilha, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
-        setMudaDashboard(false)
         navigate('/trilhas-e-programas');
         toast.success('Trilha cadastrada com sucesso!', toastConfig);
       })

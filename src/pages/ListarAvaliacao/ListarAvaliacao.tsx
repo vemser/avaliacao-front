@@ -89,7 +89,7 @@ export const ListarAvaliacao = () => {
       <Box sx={{ width: { xs: "95%", md: "90%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
 
         <Box sx={{ display: "flex", gap: 3, flexDirection: { xs: "column", md: "row" }, justifyContent: "space-between", alignItems: "center", width: "100%", marginBottom: "10px", paddingInline: 2 }}>
-        <Button onClick={() => { setEstadoFiltro(!estadoFiltro) }} id="botao-swap" variant='outlined' sx={{ width: "120px", display: "flex", textTransform: "capitalize", justifyContent: "space-between", fontSize: "1rem" }}>Filtros{estadoFiltro ? <ExpandLess /> : <ExpandMore />}</Button>
+          <Button onClick={() => { setEstadoFiltro(!estadoFiltro) }} id="botao-swap" variant='outlined' sx={{ width: "120px", display: "flex", textTransform: "capitalize", justifyContent: "space-between", fontSize: "1rem" }}>Filtros{estadoFiltro ? <ExpandLess /> : <ExpandMore />}</Button>
 
           <Button onClick={() => navigate("/cadastrar-avaliacao")} variant="contained" sx={{ width: "auto", paddingLeft: "15px", paddingRight: "15px", display: "flex", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar avaliação</Button>
         </Box>
@@ -119,21 +119,21 @@ export const ListarAvaliacao = () => {
                 {avaliacoes?.elementos.map((avaliacao) => (
                   <StyledTableRow key={avaliacao.idAvaliacao}>
 
-                    <StyledTableCell sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} component="td" scope="row"> {avaliacao.idAvaliacao}</StyledTableCell>
+                    <StyledTableCell sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }} component="td" scope="row"> {avaliacao.idAvaliacao}</StyledTableCell>
 
                     <Tooltip title={avaliacao.acompanhamento.titulo} PopperProps={{ sx: { marginTop: "-25px !important" } }} arrow>
-                      <StyledTableCell id={`titulo-${avaliacao.idAvaliacao}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} >{avaliacao.acompanhamento.titulo}</StyledTableCell>
+                      <StyledTableCell id={`titulo-${avaliacao.idAvaliacao}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }} >{avaliacao.acompanhamento.titulo}</StyledTableCell>
                     </Tooltip>
 
                     <Tooltip title={avaliacao.aluno.nome} PopperProps={{ sx: { marginTop: "-25px !important" } }} arrow>
-                      <StyledTableCell id={`id-aluno-${avaliacao.aluno.idAluno}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} >{avaliacao.aluno.nome}</StyledTableCell>
+                      <StyledTableCell id={`id-aluno-${avaliacao.aluno.idAluno}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }} >{avaliacao.aluno.nome}</StyledTableCell>
                     </Tooltip>
 
                     <Tooltip title={avaliacao.tipoAvaliacao} PopperProps={{ sx: { marginTop: "-25px !important" } }} arrow>
-                      <StyledTableCell id={`tipo-${avaliacao.idAvaliacao}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{avaliacao.tipoAvaliacao}</StyledTableCell>
+                      <StyledTableCell id={`tipo-${avaliacao.idAvaliacao}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }}>{avaliacao.tipoAvaliacao}</StyledTableCell>
                     </Tooltip>
 
-                    <StyledTableCell id="acoes" sx={{ justifyContent: "center", minWidth: "150px", display: "flex", wrap: "nowrap" }}>
+                    <StyledTableCell id="acoes" sx={{ justifyContent: "center", display: "flex", wrap: "nowrap" }}>
                       <Button id={`botao-editar-${avaliacao.idAvaliacao}`} title="Editar" onClick={() => navigate("/editar-avaliacao", { state: avaliacao })}><Edit /></Button>
                       <Button id={`botao-deletar-${avaliacao.idAvaliacao}`} title="Deletar" onClick={() => { handleOpen(); setIdDelete(avaliacao.idAvaliacao) }}><DeleteForever /></Button>
                     </StyledTableCell>

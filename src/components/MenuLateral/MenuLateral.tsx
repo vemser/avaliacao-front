@@ -139,7 +139,7 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
                   </ListItemButton>
                   <Collapse in={openTab2} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                      <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/trilhas-e-programas") }}>
+                      <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate("/programas") }}>
                         <ListItemIcon>
                           <Source sx={{ color: "var(--azul-escuro-dbc)" }} />
                         </ListItemIcon>

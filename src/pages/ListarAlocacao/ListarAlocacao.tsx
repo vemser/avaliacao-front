@@ -89,15 +89,15 @@ export const ListarAlocacao: React.FC = () => {
                 {reservaAlocacao?.elementos.map((alocacao) => (
                   <StyledTableRow key={alocacao?.idReservaAlocacao}>
 
-                    <StyledTableCell sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} component="td" scope="row"> {alocacao?.idReservaAlocacao}</StyledTableCell>
+                    <StyledTableCell sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }} component="td" scope="row"> {alocacao?.idReservaAlocacao}</StyledTableCell>
 
-                    <StyledTableCell id={`aluno}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} >{alocacao?.aluno.nome}</StyledTableCell>
+                    <StyledTableCell id={`aluno}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }} >{alocacao?.aluno.nome}</StyledTableCell>
 
-                    <StyledTableCell id={`vaga`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{alocacao?.vaga.nome}</StyledTableCell>
+                    <StyledTableCell id={`vaga`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }}>{alocacao?.vaga.nome}</StyledTableCell>
 
-                    <StyledTableCell id={`cliente`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} >{alocacao?.vaga.cliente.nome}</StyledTableCell>
+                    <StyledTableCell id={`cliente`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }} >{alocacao?.vaga.cliente.nome}</StyledTableCell>
 
-                    <StyledTableCell id={`situacao`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} >{formatarTexto(alocacao.situacao)}</StyledTableCell>
+                    <StyledTableCell id={`situacao`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }} >{formatarTexto(alocacao.situacao)}</StyledTableCell>
 
                     <StyledTableCell id={`editar-reserva`} sx={{ textAlign: "center" }}>
                       <Button id={`botao-alocacao-reserva-${alocacao.idReservaAlocacao}`} onClick={() => navigate("/editar-alocacao-reserva", { state: alocacao })} title="Editar"><EditIcon /></Button>

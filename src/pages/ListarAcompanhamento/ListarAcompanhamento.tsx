@@ -87,16 +87,16 @@ export const ListarAcompanhamento = () => {
       <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "60px", paddingBottom: "50px" }}>
         <Componentes.Titulo texto="Acompanhamentos" />
 
-      <Box sx={{ width: { xs: "95%", md: "90%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
+        <Box sx={{ width: { xs: "95%", md: "90%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
 
           <Box sx={{ display: "flex", gap: 3, flexDirection: { xs: "column", md: "row" }, justifyContent: "space-between", alignItems: "center", width: "100%", marginBottom: "10px", paddingInline: 2 }}>
             <Componentes.CampoBusca label="Nome do Programa" buscar={filtrarAcompanhamento} resetar={resetFiltroAcompanhamento} />
             <Button onClick={() => navigate("/cadastrar-acompanhamento")} variant="contained" sx={{ width: "auto", paddingLeft: "15px", paddingRight: "15px", display: "flex", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Acompanhamento</Button>
           </Box>
 
-        <Paper sx={{ width: "100%", borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px" }}>
-          <TableContainer sx={{ maxHeight: 450 }}>
-            <Table stickyHeader aria-label="sticky table">
+          <Paper sx={{ width: "100%", borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px" }}>
+            <TableContainer sx={{ maxHeight: 450 }}>
+              <Table stickyHeader aria-label="sticky table">
 
                 <TableHead sx={{ backgroundColor: "#090F27" }} >
                   <TableRow>
@@ -110,25 +110,25 @@ export const ListarAcompanhamento = () => {
                   {acompanhamentos?.elementos.map((acompanhamentos: IAcompanhamentoApi) => (
                     <StyledTableRow key={acompanhamentos.idAcompanhamento}>
 
-                      <StyledTableCell sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} component="td" scope="row"> {acompanhamentos.idAcompanhamento}</StyledTableCell>
+                      <StyledTableCell sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }} component="td" scope="row"> {acompanhamentos.idAcompanhamento}</StyledTableCell>
 
                       <Tooltip title={acompanhamentos.titulo} PopperProps={{ sx: { marginTop: "-25px !important" } }} arrow>
-                        <StyledTableCell id={`titulo-${acompanhamentos.idAcompanhamento}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} >{acompanhamentos.titulo}</StyledTableCell>
+                        <StyledTableCell id={`titulo-${acompanhamentos.idAcompanhamento}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }} >{acompanhamentos.titulo}</StyledTableCell>
                       </Tooltip>
 
                       <Tooltip title={acompanhamentos.programa.nome} PopperProps={{ sx: { marginTop: "-25px !important" } }} arrow>
-                        <StyledTableCell id={`titulo-programa-${acompanhamentos.idAcompanhamento}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} >{acompanhamentos.programa.nome}</StyledTableCell>
+                        <StyledTableCell id={`titulo-programa-${acompanhamentos.idAcompanhamento}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }} >{acompanhamentos.programa.nome}</StyledTableCell>
                       </Tooltip>
 
                       <Tooltip title={acompanhamentos.dataInicio.replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")} PopperProps={{ sx: { marginTop: "-25px !important" } }} arrow>
-                        <StyledTableCell id={`dataInicio-${acompanhamentos.idAcompanhamento}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{acompanhamentos.dataInicio.replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")}</StyledTableCell>
+                        <StyledTableCell id={`dataInicio-${acompanhamentos.idAcompanhamento}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }}>{acompanhamentos.dataInicio.replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")}</StyledTableCell>
                       </Tooltip>
 
                       <Tooltip title={acompanhamentos.descricao} PopperProps={{ sx: { marginTop: "-25px !important" } }} arrow>
-                        <StyledTableCell id={`descricao-${acompanhamentos.idAcompanhamento}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} >{acompanhamentos.descricao}</StyledTableCell>
+                        <StyledTableCell id={`descricao-${acompanhamentos.idAcompanhamento}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }} >{acompanhamentos.descricao}</StyledTableCell>
                       </Tooltip>
 
-                      <StyledTableCell id="acoes" sx={{ justifyContent: "center", minWidth: "150px", display: "flex", wrap: "nowrap" }}>
+                      <StyledTableCell id="acoes" sx={{ justifyContent: "center", display: "flex", wrap: "nowrap" }}>
                         <Button id={`botao-editar-${acompanhamentos.idAcompanhamento}`} title="Deletar" onClick={() => navigate("/editar-acompanhamento", { state: acompanhamentos })}><Edit /></Button>
                         <Button id={`botao-deletar-${acompanhamentos.idAcompanhamento}`} title="Deletar" onClick={() => { handleOpen(); setIdDelete(acompanhamentos.idAcompanhamento) }}><DeleteForever /></Button>
                       </StyledTableCell>

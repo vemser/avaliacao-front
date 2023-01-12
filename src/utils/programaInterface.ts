@@ -9,8 +9,6 @@ export interface IProgramas {
 
 export interface IProgramaContext {
   programas: IObjectProgramas | null;
-  mudaDashboard: boolean;
-  setMudaDashboard: React.Dispatch<React.SetStateAction<boolean>>;
   cadastrarPrograma: (programa: IProgramas) => Promise<void>;
   pegarPrograma: (pagina?: number, tamanho?: number) => Promise<void>;
   pegarProgramaPorNome: (nome: string, pagina?: number, tamanho?: number) => Promise<void>;

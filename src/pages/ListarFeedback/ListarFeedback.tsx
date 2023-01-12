@@ -163,14 +163,14 @@ export const ListarFeedback: React.FC = () => {
                 {feedback?.elementos.map((feedback: IFeedbackElementos) => (
                   <StyledTableRow key={feedback.idFeedBack}>
 
-                    <StyledTableCell id="modulo" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{feedback.idFeedBack}</StyledTableCell>
+                    <StyledTableCell id="modulo" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }}>{feedback.idFeedBack}</StyledTableCell>
 
                     <Tooltip title={feedback.alunoDTO.nome} PopperProps={{ sx: { marginTop: "-25px !important" } }} arrow>
-                      <StyledTableCell id="aluno" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} component="td" scope="row">{feedback.alunoDTO.nome}</StyledTableCell>
+                      <StyledTableCell id="aluno" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }} component="td" scope="row">{feedback.alunoDTO.nome}</StyledTableCell>
                     </Tooltip>
 
                     <Tooltip title={feedback.alunoDTO.trilha.nome} PopperProps={{ sx: { marginTop: "-25px !important" } }} arrow>
-                      <StyledTableCell id="trilha" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{feedback.alunoDTO.trilha.nome}</StyledTableCell>
+                      <StyledTableCell id="trilha" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }}>{feedback.alunoDTO.trilha.nome}</StyledTableCell>
                     </Tooltip>
 
                     <Tooltip title={feedback.moduloDTO.map((modulo) => modulo.nome).join(", ")} PopperProps={{ sx: { marginTop: "-25px !important" } }} arrow>
@@ -181,7 +181,7 @@ export const ListarFeedback: React.FC = () => {
 
                     <StyledTableCell id="situacao" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", textTransform: "capitalize", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{feedback.data.replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")}</StyledTableCell>
 
-                    <StyledTableCell id="acoes" sx={{ justifyContent: "center", minWidth: "150px", display: "flex", wrap: "nowrap" }}>
+                    <StyledTableCell id="acoes" sx={{ justifyContent: "center", display: "flex", wrap: "nowrap" }}>
                       <Button id={`botao-editar-${feedback.idFeedBack}`} title="Editar" onClick={() => navigate("/editar-feedback", { state: feedback })}><Edit /></Button>
                       <Button id={`botao-deletar-${feedback.idFeedBack}`} title="Deletar" onClick={() => { handleOpen(); setIdDelete(feedback.idFeedBack) }}><DeleteForever /></Button>
                     </StyledTableCell>

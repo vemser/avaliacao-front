@@ -13,18 +13,15 @@ import { useNavigate } from "react-router-dom";
 export const ProgramaContext = createContext({} as IProgramaContext);
 
 export const ProgramaProvider = ({ children }: IChildren) => {
-  const navigate = useNavigate();
-  
+  const navigate = useNavigate();  
   const [programas, setProgramas] = useState<IObjectProgramas | null>(null);
-  const [mudaDashboard, setMudaDashboard] = useState<boolean>(false);
   
   const cadastrarPrograma = async (programa: IProgramas) => {
     try {
       nProgress.start();
       await API.post(`/programa`, programa, { headers: { Authorization: localStorage.getItem("token") }});
       toast.success("Programa criado com sucesso!", toastConfig);
-      navigate('/trilhas-e-programas')
-      setMudaDashboard(true)
+      navigate('/programas')
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
       if (error.response.status === 403) {
@@ -171,7 +168,7 @@ export const ProgramaProvider = ({ children }: IChildren) => {
   }
 
   return (
-    <ProgramaContext.Provider value={{ programas, cadastrarPrograma, pegarPrograma, deletarProgama, editarPrograma, pegarProgramaPorNome, pegarProgramaFiltroID, mudaDashboard, setMudaDashboard, pegarProgramaAtivo, pegarProgramaPorNomeAtivo }}>
+    <ProgramaContext.Provider value={{ programas, cadastrarPrograma, pegarPrograma, deletarProgama, editarPrograma, pegarProgramaPorNome, pegarProgramaFiltroID, pegarProgramaAtivo, pegarProgramaPorNomeAtivo }}>
       {children}
     </ProgramaContext.Provider>
   );

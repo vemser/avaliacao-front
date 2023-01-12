@@ -17,6 +17,7 @@ export const ListarFeedback: React.FC = () => {
   const [inputFiltro, setInputFiltro] = useState<string>('');
   const [estadoFiltro, setEstadoFiltro] = useState<boolean>(false);
 
+  console.log(feedback)
   const handleChangePage = async (event: unknown, newPage: number) => {
     if (inputFiltro) {
       filtrarFeedback(inputFiltro, newPage)
@@ -184,8 +185,8 @@ export const ListarFeedback: React.FC = () => {
                       <StyledTableCell id="trilha" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{feedback.alunoDTO.trilha.nome}</StyledTableCell>
                     </Tooltip>
 
-                    <Tooltip title={feedback.alunoDTO.nome} PopperProps={{ sx: { marginTop: "-25px !important" } }} arrow>
-                      <StyledTableCell id="modulo" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{feedback.alunoDTO.nome}</StyledTableCell>
+                    <Tooltip title={feedback.moduloDTO.map((modulo)=>modulo.nome).join(", ")} PopperProps={{ sx: { marginTop: "-25px !important" } }} arrow>
+                      <StyledTableCell id="modulo" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{feedback.moduloDTO.map((modulo)=>modulo.nome).join(", ")}</StyledTableCell>
                     </Tooltip>
 
                     <StyledTableCell id="stack" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", textTransform: "capitalize", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{formatarTexto(feedback.situacao)}</StyledTableCell>

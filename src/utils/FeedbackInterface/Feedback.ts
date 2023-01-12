@@ -5,7 +5,9 @@ import { ITrilhaDTO, IListProgramaDTO } from "../ModuloInterface/Modulo";
 export interface IFeedback {
     pegarFeedback: (pagina?: number, tamanho?: number, filtros?: string) => Promise<void>,
     deletarFeedback: (idFeedback: number | undefined) => Promise<void>,
-    feedback: IFeedbackAPI | null
+    feedback: IFeedbackAPI | null,
+    cadastrarFeedback: (data: IFeedbackCadastro) => Promise<void>,
+    editarFeedback: (feedback: IEditarFeedback, id: number) => Promise<void>
 }
 
 export interface IChildren {
@@ -40,8 +42,13 @@ export interface IModuloDTO {
 
 export interface IFeedbackCadastro {
     idAluno: number,
-    idModulo: number[],
+    modulo: number[],
     usuarioLogado: string,
+    descricao: string,
+    situacao: string
+}
+
+export interface IEditarFeedback {
     descricao: string,
     situacao: string
 }

@@ -58,7 +58,7 @@ export const ListarProgramas = () => {
   const navigate = useNavigate();
 
   const [inputFiltro, setInputFiltro] = useState<string>('');
-  const { pegarProgramaPorNome, pegarProgramaFiltroID, pegarPrograma, deletarProgama, programas, mudaDashboard, setMudaDashboard } = usePrograma();
+  const { pegarProgramaPorNome, pegarProgramaFiltroID, pegarPrograma, deletarProgama, programas } = usePrograma();
 
   // Funções Modal
   const [idDelete, setIdDelete] = useState<number | null>(null);

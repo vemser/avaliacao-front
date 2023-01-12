@@ -54,12 +54,7 @@ const style = {
 
 export const ListarTrilha = () => {
   const navigate = useNavigate();
-
   const { trilhas, pegarTrilha, deletarTrilha, pegarTrilhaFiltroID, pegarTrilhaFiltroNome } = useTrilha();
-  const { mudaDashboard, setMudaDashboard } = usePrograma();
-
-  const trocarTabela = () => !mudaDashboard ? setMudaDashboard(true) : setMudaDashboard(false);
-
   const [inputFiltro, setInputFiltro] = useState<string>('');
 
   const handleChangePage = async (event: unknown, newPage: number) => {
@@ -100,8 +95,6 @@ export const ListarTrilha = () => {
       <Box sx={{ width: { xs: "95%", md: "90%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
 
         <Box sx={{ display: "flex", gap: 3, flexDirection: { xs: "column", md: "row" }, justifyContent: "space-between", alignItems: "center", width: "100%", marginBottom: "10px" }}>
-          <Button onClick={trocarTabela} id="botao-swap" variant='outlined' sx={{ width: { xs: "260px", md: "auto" }, display: "flex", marginLeft: { xs: "0", md: "14px" }, textTransform: "capitalize", fontSize: "1rem" }}>Programas<SwapHorizIcon /></Button>
-
           <Componentes.CampoBusca label="Código ou Nome" buscar={filtrosTrilha} resetar={resetBuscaTrilha} />
 
           <Button onClick={() => navigate("/cadastrar-trilha")} variant="contained" sx={{ minWidth: { xs: "260px", md: "160px" }, display: "flex", marginRight: { xs: "0", md: "14px" }, textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Trilha</Button>

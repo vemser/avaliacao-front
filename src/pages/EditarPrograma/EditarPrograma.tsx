@@ -39,7 +39,6 @@ export const EditarPrograma: React.FC = () => {
           xs: 3, sm: 5
         }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: 3
       }}>
-        <img src={logo} alt="Logo DBC Azul" width={150} />
 
         <FormControl sx={{ width: "100%" }}>
           <TextField id="editar-nome-programa" label="Nome" placeholder="Digite um nome para o programa" defaultValue={state.nome} variant="filled"  {...register("nome")} />

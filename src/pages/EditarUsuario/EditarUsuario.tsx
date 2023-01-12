@@ -34,7 +34,6 @@ export const EditarUsuario = () => {
           xs: 3, sm: 5
         }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: 3
       }}>
-        <img src={logo} alt="Logo DBC Azul" width={150} />
 
         <Avatar alt="Foto Enviada" id="foto-enviada" src={selectedImage ? URL.createObjectURL(selectedImage) : usuarioLogado.imagem ? `data:image/jpeg;base64,${usuarioLogado.imagem}` : ""} sx={{ width: 150, height: 150 }} />
         <Button component="label" variant="contained">

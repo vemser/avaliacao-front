@@ -6,7 +6,7 @@ import { IFeedbackElementos } from "../../utils/FeedbackInterface/Feedback";
 
 import * as Componentes from "../../components";
 
-import { Box, TablePagination, Button, Paper, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, tableCellClasses, Modal, styled, Tooltip, Typography, Autocomplete, TextField } from "@mui/material";
+import { Box, TablePagination, Button, Paper, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, tableCellClasses, Modal, styled, Tooltip, Typography } from "@mui/material";
 import { Edit, DeleteForever, ExpandMore, ExpandLess } from "@mui/icons-material";
 import { formatarTexto } from "../../utils/functions";
 
@@ -36,9 +36,6 @@ export const ListarFeedback: React.FC = () => {
     }
   }
 
-  const resetarFiltroFeedback = async () => {
-    await pegarFeedback();
-  }
 
   useEffect(() => {
     pegarFeedback()
@@ -92,15 +89,6 @@ export const ListarFeedback: React.FC = () => {
     boxShadow: 20,
     p: 4,
   };
-
-  const top100Films = [
-    { label: 'The Shawshank Redemption', year: 1994 },
-    { label: 'The Godfather', year: 1972 },
-    { label: 'The Godfather: Part II', year: 1974 },
-    { label: 'The Dark Knight', year: 2008 },
-    { label: '12 Angry Men', year: 1957 },
-    { label: "Schindler's List", year: 1993 },
-    { label: 'Pulp Fiction', year: 1994 }]
 
   return (
     <Box sx={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "60px", paddingBottom: "50px" }}>
@@ -185,8 +173,8 @@ export const ListarFeedback: React.FC = () => {
                       <StyledTableCell id="trilha" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{feedback.alunoDTO.trilha.nome}</StyledTableCell>
                     </Tooltip>
 
-                    <Tooltip title={feedback.moduloDTO.map((modulo)=>modulo.nome).join(", ")} PopperProps={{ sx: { marginTop: "-25px !important" } }} arrow>
-                      <StyledTableCell id="modulo" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{feedback.moduloDTO.map((modulo)=>modulo.nome).join(", ")}</StyledTableCell>
+                    <Tooltip title={feedback.moduloDTO.map((modulo) => modulo.nome).join(", ")} PopperProps={{ sx: { marginTop: "-25px !important" } }} arrow>
+                      <StyledTableCell id="modulo" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{feedback.moduloDTO.map((modulo) => modulo.nome).join(", ")}</StyledTableCell>
                     </Tooltip>
 
                     <StyledTableCell id="stack" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", textTransform: "capitalize", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{formatarTexto(feedback.situacao)}</StyledTableCell>

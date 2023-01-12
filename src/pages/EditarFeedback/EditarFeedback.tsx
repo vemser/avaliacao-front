@@ -1,23 +1,15 @@
-// import React, { useContext, useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom';
 
-import { Box, Stack, FormControl, InputLabel, Select, MenuItem, TextField, Button, Autocomplete } from '@mui/material'
 
-import { yupResolver } from '@hookform/resolvers/yup'
-import { useForm } from 'react-hook-form'
-
-import { Titulo } from '../../components/Titulo/Titulo'
-import { useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 import { Box, Stack, FormControl, TextField, InputLabel, MenuItem, Select, Button, Autocomplete } from '@mui/material';
 
-import { Controller, useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { Titulo } from '../../components/Titulo/Titulo';
 
 import { useModulo } from '../../context/Tecnico/ModuloContext';
 import { useAluno } from '../../context/Comportamental/AlunoContext';
-import { filtroDebounce } from '../../utils/functions';
 import { usePrograma } from '../../context/Tecnico/ProgramaContext';
 import { useTrilha } from '../../context/Tecnico/TrilhaContext';
 import { IEditarFeedback } from '../../utils/FeedbackInterface/Feedback'
@@ -28,7 +20,7 @@ export const EditarFeedback = () => {
   const { state } = useLocation()
 
   const { pegarPrograma, programas } = usePrograma()
-  const { pegarModulo, modulo } = useContext(ModuloContext);
+  const { pegarModulo, modulo } = useModulo()
   const { pegarAluno, alunos } = useAluno()
   const { pegarTrilha, trilhas } = useTrilha()
   const { editarFeedback } = useFeedback()

@@ -22,7 +22,7 @@ export const FiltroAvaliacao = () => {
 
   useEffect(() => {
     pegarAluno(0, 10);
-    pegarAcompanhamentos(0, 10)
+    pegarAcompanhamentos(0, 10);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -35,6 +35,8 @@ export const FiltroAvaliacao = () => {
   }
 
   const resetar = async () => {
+    await pegarAluno(0, 10);
+    await pegarAcompanhamentos(0, 10);
     await pegarAvaliacao(0, 10);
     reset({
       tituloAcompanhamento: "",

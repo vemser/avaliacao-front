@@ -90,7 +90,7 @@ export const CadastrarFeedback = () => {
 
           <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>
             <InputLabel id="selectAluno">Situação</InputLabel>
-            <Select labelId="demo-simple-select-filled-label" id="select-trilha" {...register("situacao")} >
+            <Select labelId="demo-simple-select-filled-label" id="select-trilha" defaultValue='' {...register("situacao")} >
               <MenuItem value="initial-stack" disabled><em>Selecione a situação do feedback</em></MenuItem>
               <MenuItem id="positivo" value="POSITIVO">Positivo</MenuItem>
               <MenuItem id="atencao" value="ATENCAO">Atenção</MenuItem>

@@ -1,6 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 
-
 import { useEffect } from 'react';
 
 import { Box, Stack, FormControl, TextField, InputLabel, MenuItem, Select, Button, Autocomplete } from '@mui/material';
@@ -33,7 +32,7 @@ export const EditarFeedback = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const { register, handleSubmit, formState: { errors } } = useForm<IEditarFeedback>();
+  const { register, handleSubmit } = useForm<IEditarFeedback>();
 
   const editar = (data: IEditarFeedback) => {
     editarFeedback(data, state.idFeedBack)
@@ -51,19 +50,19 @@ export const EditarFeedback = () => {
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
           <FormControl sx={{ width: "100%" }} >
-            <Autocomplete disablePortal disabled defaultValue={{ label: state.alunoDTO.programa.nome }} id="programa" isOptionEqualToValue={(option, value) => option.label === value.label} options={programas ? programas.elementos.map((programa) => ({ label: `${programa.idPrograma} - ${programa.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Programa" variant="filled" />} />
+            <Autocomplete disablePortal disabled defaultValue={{ label: state.alunoDTO.programa.nome }} id="programa" isOptionEqualToValue={(option, value) => option.label === value.label} options={programas ? programas.elementos.map((programa) => ({ label: programa.nome })) : []} renderInput={(params) => <TextField {...params} label="Programa" variant="filled" />} />
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
-            <Autocomplete disablePortal disabled defaultValue={{ label: state.moduloDTO.map((modulo: any) => modulo.nome).join(", ") }} id="modulo" isOptionEqualToValue={(option, value) => option.label === value.label} options={modulo ? modulo.elementos.map((modulos) => ({ label: `${modulos.idModulo} - ${modulos.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Módulo" variant="filled" />} />
+            <Autocomplete disablePortal disabled defaultValue={{ label: state.moduloDTO.map((modulo: any) => modulo.nome).join(", ") }} id="modulo" isOptionEqualToValue={(option, value) => option.label === value.label} options={modulo ? modulo.elementos.map((modulos) => ({ label: modulos.nome })) : []} renderInput={(params) => <TextField {...params} label="Módulo" variant="filled" />} /> 
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
-            <Autocomplete disablePortal disabled defaultValue={{ label: state.alunoDTO.nome }} id="aluno" isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: `${aluno.idAluno} - ${aluno.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />
+            <Autocomplete disablePortal disabled defaultValue={{ label: state.alunoDTO.nome }} id="aluno" isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: aluno.nome })) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
-            <Autocomplete disablePortal disabled defaultValue={{ label: state.alunoDTO.trilha.nome }} id="trilha" isOptionEqualToValue={(option, value) => option.label === value.label} options={trilhas ? trilhas.elementos.map((trilha) => ({ label: `${trilha.idTrilha} - ${trilha.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Trilha" variant="filled" />} />
+            <Autocomplete disablePortal disabled defaultValue={{ label: state.alunoDTO.trilha.nome }} id="trilha" isOptionEqualToValue={(option, value) => option.label === value.label} options={trilhas ? trilhas.elementos.map((trilha) => ({ label: trilha.nome })) : []} renderInput={(params) => <TextField {...params} label="Trilha" variant="filled" />} />
           </FormControl>
 
 

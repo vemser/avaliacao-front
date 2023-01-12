@@ -116,7 +116,7 @@ export const ListarTrilha = () => {
                 {trilhas?.elementos.map((trilha: ITrilhasElementos) => (
                   <StyledTableRow key={trilha.idTrilha}>
 
-                    <StyledTableCell id="id-trilha" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} component="td" scope="row">{trilha.idTrilha}</StyledTableCell>
+                    <StyledTableCell id="id-trilha" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }} component="td" scope="row">{trilha.idTrilha}</StyledTableCell>
 
                     <Tooltip title={trilha.nome} PopperProps={{ sx: { marginTop: "-25px !important" } }} arrow>
                       <StyledTableCell id="nome-trilha" sx={{
@@ -126,7 +126,7 @@ export const ListarTrilha = () => {
                     </Tooltip>
 
                     <Tooltip title={trilha.descricao} PopperProps={{ sx: { marginTop: "-25px !important" } }} arrow>
-                      <StyledTableCell id="descricao-trilha" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{trilha.descricao ? trilha.descricao : "Sem descrição"}</StyledTableCell>
+                      <StyledTableCell id="descricao-trilha" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }}>{trilha.descricao ? trilha.descricao : "Sem descrição"}</StyledTableCell>
                     </Tooltip>
 
                     <StyledTableCell id="acoes-trilha" sx={{ justifyContent: "center", minWidth: "150px", display: "flex", wrap: "nowrap" }}>

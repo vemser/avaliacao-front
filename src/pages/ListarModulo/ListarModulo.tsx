@@ -118,20 +118,20 @@ export const ListarModulo = () => {
               <TableBody>
                 {modulo?.elementos.map((data) => (
                   <StyledTableRow key={data.idModulo}>
-                    <StyledTableCell id="codigo" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }} scope="row">{data.idModulo}</StyledTableCell>
+                    <StyledTableCell id="codigo" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }} scope="row">{data.idModulo}</StyledTableCell>
 
                     <Tooltip title={data.nome} PopperProps={{ sx: { marginTop: "-25px !important" } }} arrow>
-                      <StyledTableCell id="nome" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>{data.nome}</StyledTableCell>
+                      <StyledTableCell id="nome" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }}>{data.nome}</StyledTableCell>
                     </Tooltip>
 
                     <Tooltip title={data.trilhaDTO.map((trilha) => `${trilha.nome}`).join(', ')} PopperProps={{ sx: { marginTop: "-25px !important" } }} arrow>
-                      <StyledTableCell id="trilha" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>
+                      <StyledTableCell id="trilha" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }}>
                         {data.trilhaDTO.map((trilha) => `${trilha.nome}`).join(', ')}
                       </StyledTableCell>
                     </Tooltip>
 
                     <Tooltip title={data.listProgramaDTO.map((programa) => `${programa.nome}`).join(', ')} PopperProps={{ sx: { marginTop: "-25px !important" } }} arrow>
-                      <StyledTableCell id="programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px" }}>
+                      <StyledTableCell id="programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }}>
                         {data.listProgramaDTO.map((programa) => `${programa.nome}`).join(', ')}
                       </StyledTableCell>
                     </Tooltip>

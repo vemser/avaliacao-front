@@ -128,7 +128,7 @@ export const ListarAcompanhamento = () => {
                         <StyledTableCell id={`descricao-${acompanhamentos.idAcompanhamento}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }} >{acompanhamentos.descricao}</StyledTableCell>
                       </Tooltip>
 
-                      <StyledTableCell id="acoes" sx={{ justifyContent: "center", minWidth: "150px", display: "flex", wrap: "nowrap" }}>
+                      <StyledTableCell id="acoes" sx={{ justifyContent: "center", display: "flex", wrap: "nowrap" }}>
                         <Button id={`botao-editar-${acompanhamentos.idAcompanhamento}`} title="Deletar" onClick={() => navigate("/editar-acompanhamento", { state: acompanhamentos })}><Edit /></Button>
                         <Button id={`botao-deletar-${acompanhamentos.idAcompanhamento}`} title="Deletar" onClick={() => { handleOpen(); setIdDelete(acompanhamentos.idAcompanhamento) }}><DeleteForever /></Button>
                       </StyledTableCell>

@@ -133,7 +133,7 @@ export const ListarAvaliacao = () => {
                       <StyledTableCell id={`tipo-${avaliacao.idAvaliacao}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }}>{avaliacao.tipoAvaliacao}</StyledTableCell>
                     </Tooltip>
 
-                    <StyledTableCell id="acoes" sx={{ justifyContent: "center", minWidth: "150px", display: "flex", wrap: "nowrap" }}>
+                    <StyledTableCell id="acoes" sx={{ justifyContent: "center", display: "flex", wrap: "nowrap" }}>
                       <Button id={`botao-editar-${avaliacao.idAvaliacao}`} title="Editar" onClick={() => navigate("/editar-avaliacao", { state: avaliacao })}><Edit /></Button>
                       <Button id={`botao-deletar-${avaliacao.idAvaliacao}`} title="Deletar" onClick={() => { handleOpen(); setIdDelete(avaliacao.idAvaliacao) }}><DeleteForever /></Button>
                     </StyledTableCell>

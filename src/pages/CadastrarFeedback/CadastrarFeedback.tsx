@@ -70,7 +70,7 @@ export const CadastrarFeedback = () => {
             <Controller control={control} name="idAluno" render={({ field: { onChange } }) => (
               <Autocomplete disablePortal onInputChange={(event, value) => {
                 filtroDebounce(value, pegarAluno, pegarAluno, `&nome=${value}`)
-              }} onChange={(event, data) => onChange(data?.id)} id="aluno" isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: ` ${aluno.nome}`, id: aluno.idAluno })) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />
+              }} onChange={(event, data) => onChange(data?.id)} id="aluno" isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: ` ${aluno.nome}`, id: aluno.idAluno })) : []} renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />
             )} />
             {errors.idAluno && <Typography id="erro-idAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.idAluno.message}</Typography>}
           </FormControl>

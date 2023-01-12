@@ -53,7 +53,9 @@ export const CadastrarAcompanhamento = () => {
                 getOptionLabel={(option) => option.label}
                 onInputChange={(event, value) => filtroDebounce(value, pegarProgramaPorNomeAtivo, pegarProgramaAtivo)}
                 isOptionEqualToValue={(option, value) => option.label === value.label}
-                options={programas ? programas.elementos.map((programa) => ({ label: `${programa.nome}`, id: programa.idPrograma })) : []} renderInput={(params) => <TextField {...params} label="Programa" variant="filled" />} />
+                options={programas ? programas.elementos.map((programa) => ({ label: `${programa.nome}`, id: programa.idPrograma })) : []}
+                renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)} 
+                renderInput={(params) => <TextField {...params} label="Programa" variant="filled" />} />
             )} />
             {errors.idPrograma && <Typography id="erro-programa" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.idPrograma.message}</Typography>}
           </FormControl>

@@ -1,3 +1,12 @@
+// import React, { useContext, useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+
+import { Box, Stack, FormControl, InputLabel, Select, MenuItem, TextField, Button, Autocomplete } from '@mui/material'
+
+import { yupResolver } from '@hookform/resolvers/yup'
+import { useForm } from 'react-hook-form'
+
+import { Titulo } from '../../components/Titulo/Titulo'
 import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,25 +20,18 @@ import { useAluno } from '../../context/Comportamental/AlunoContext';
 import { filtroDebounce } from '../../utils/functions';
 import { usePrograma } from '../../context/Tecnico/ProgramaContext';
 import { useTrilha } from '../../context/Tecnico/TrilhaContext';
-
-const itemHeigth = 48;
-const itemPaddingTop = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: itemHeigth * 4.5 + itemPaddingTop,
-      width: 250,
-    },
-  },
-};
+import { IEditarFeedback } from '../../utils/FeedbackInterface/Feedback'
+import { useFeedback } from '../../context/Comportamental/FeedbackContext'
 
 export const EditarFeedback = () => {
   const navigate = useNavigate();
-  const { pegarAluno, alunos } = useAluno();
-  const { pegarPrograma, pegarProgramaPorNome, programas } = usePrograma();
-  const { pegarTrilha, pegarTrilhaFiltroNome, trilhas } = useTrilha();
-  const { pegarModulo, pegarModuloPorFiltro, modulo } = useModulo();
-  const { control, register, handleSubmit, formState: { errors } } = useForm<any>();
+  const { state } = useLocation()
+
+  const { pegarPrograma, programas } = usePrograma()
+  const { pegarModulo, modulo } = useContext(ModuloContext);
+  const { pegarAluno, alunos } = useAluno()
+  const { pegarTrilha, trilhas } = useTrilha()
+  const { editarFeedback } = useFeedback()
 
   useEffect(() => {
     pegarPrograma(0, 10);
@@ -37,17 +39,19 @@ export const EditarFeedback = () => {
     pegarAluno(0, 10);
     pegarTrilha(0, 10);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [])
 
-  const editarFeedback = async (data: any) => {
-    console.log(data);
+  const { register, handleSubmit, formState: { errors } } = useForm<IEditarFeedback>();
+
+  const editar = (data: IEditarFeedback) => {
+    editarFeedback(data, state.idFeedBack)
   }
 
   return (
     <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "60px", paddingBottom: "50px" }}>
       <Titulo texto="Editar Feedback" />
 
-      <Box component="form" onSubmit={handleSubmit(editarFeedback)} sx={{
+      <Box component="form" onSubmit={handleSubmit(editar)} sx={{
         display: "flex", flexDirection: { xs: "column", lg: "row" }, justifyContent: "space-between", backgroundColor: "var(--branco)", width: { xs: "95%", md: "90%" }, borderRadius: "10px", padding: {
           xs: 3, sm: 5
         }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: { xs: 3, xl: 8 }
@@ -55,62 +59,19 @@ export const EditarFeedback = () => {
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
           <FormControl sx={{ width: "100%" }} >
-            <Autocomplete
-              disablePortal
-              id="programa"
-              onInputChange={(event, value) => {
-                filtroDebounce(value, pegarProgramaPorNome, pegarPrograma)
-              }}
-              isOptionEqualToValue={(option, value) => option.label === value.label}
-              options={programas ? programas.elementos.map((programa) => ({ label: `${programa.idPrograma} - ${programa.nome}`, id: programa.idPrograma })) : []}
-              renderInput={(params) => <TextField {...params} label="Programa" variant="filled" />}
-            />
+            <Autocomplete disablePortal disabled defaultValue={{ label: state.alunoDTO.programa.nome }} id="programa" isOptionEqualToValue={(option, value) => option.label === value.label} options={programas ? programas.elementos.map((programa) => ({ label: `${programa.idPrograma} - ${programa.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Programa" variant="filled" />} />
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
-            <Autocomplete
-              disablePortal
-              id="trilha"
-              onInputChange={(event, value) => {
-                filtroDebounce(value, pegarTrilhaFiltroNome, pegarTrilha)
-              }}
-              isOptionEqualToValue={(option, value) => option.label === value.label}
-              options={trilhas ? trilhas.elementos.map((trilha) => ({ label: `${trilha.idTrilha} - ${trilha.nome}`, id: trilha.idTrilha })) : []}
-              renderInput={(params) => <TextField {...params} label="Trilha" variant="filled" />}
-            />
+            <Autocomplete disablePortal disabled defaultValue={{ label: state.moduloDTO.map((modulo: any) => modulo.nome).join(", ") }} id="modulo" isOptionEqualToValue={(option, value) => option.label === value.label} options={modulo ? modulo.elementos.map((modulos) => ({ label: `${modulos.idModulo} - ${modulos.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Módulo" variant="filled" />} />
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
-            <Controller control={control} name="idAluno" render={({ field: { onChange } }) => (
-              <Autocomplete
-                disablePortal
-                id="aluno"
-                onInputChange={(event, value) => {
-                  filtroDebounce(value, pegarAluno, pegarAluno, `&nome=${value}`)
-                }}
-                onChange={(event, data) => onChange(data?.id)}
-                isOptionEqualToValue={(option, value) => option.label === value.label}
-                options={alunos ? alunos.elementos.map((aluno) => ({ label: `${aluno.idAluno} - ${aluno.nome}`, id: aluno.idAluno })) : []}
-                renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />
-            )} />
+            <Autocomplete disablePortal disabled defaultValue={{ label: state.alunoDTO.nome }} id="aluno" isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: `${aluno.idAluno} - ${aluno.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
-            <Controller control={control} name="modulo" render={({ field: { onChange } }) => (
-              <Autocomplete
-                disablePortal
-                id="modulo"
-                onChange={(event, data) => onChange(data.map(item => item.id))}
-                multiple
-                onInputChange={(event, value) => {
-                  filtroDebounce(value, pegarModuloPorFiltro, pegarModulo, `&nomeModulo=${value}`)
-                }}
-                isOptionEqualToValue={(option, value) => option.label === value.label}
-                options={modulo ? modulo.elementos.map((modulos) => ({ label: `${modulos.idModulo} - ${modulos.nome}`, id: modulos.idModulo })) : []}
-                renderInput={(params) => <TextField {...params}
-                  label="Módulo"
-                  variant="filled" />} />
-            )} />
+            <Autocomplete disablePortal disabled defaultValue={{ label: state.alunoDTO.trilha.nome }} id="trilha" isOptionEqualToValue={(option, value) => option.label === value.label} options={trilhas ? trilhas.elementos.map((trilha) => ({ label: `${trilha.idTrilha} - ${trilha.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Trilha" variant="filled" />} />
           </FormControl>
 
 
@@ -118,18 +79,14 @@ export const EditarFeedback = () => {
 
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: "end" }}>
 
-          <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>
-            <InputLabel id="selectAluno">Situação</InputLabel>
-            <Select labelId="demo-simple-select-filled-label" defaultValue="" id="select-trilha" {...register("situacao")} >
-              <MenuItem value="situacao" disabled><em>Selecione a situação do feedback</em></MenuItem>
-              <MenuItem id="positivo" value="POSITIVO">Positivo</MenuItem>
-              <MenuItem id="atencao" value="ATENCAO">Atenção</MenuItem>
-            </Select>
+          <FormControl sx={{ width: "100%" }}>
+            <TextField id="data" label="Data" disabled defaultValue={state.data} type="date" sx={{ width: "100%" }} InputLabelProps={{ shrink: true }} />
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>
             <TextField
-              placeholder="Digite uma descrição para o feedback"
+              placeholder="Digite uma descrição"
+              defaultValue={state.descricao}
               multiline
               rows={3}
               sx={{ width: "100%" }}
@@ -140,10 +97,19 @@ export const EditarFeedback = () => {
             />
           </FormControl>
 
+          <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>
+            <InputLabel id="selectAluno">Situação</InputLabel>
+            <Select labelId="demo-simple-select-filled-label" defaultValue={state.situacao} id="select-trilha" {...register("situacao")} >
+              <MenuItem value="initial-stack" disabled><em>Selecione uma situação</em></MenuItem>
+              <MenuItem id="positivo" value="POSITIVO">Positivo</MenuItem>
+              <MenuItem id="atencao" value="ATENCAO">Atenção</MenuItem>
+            </Select>
+          </FormControl>
+
           <Box sx={{ display: "flex", width: "100%", justifyContent: { xs: "center", lg: "end" }, alignItems: { xs: "center", lg: "end" }, bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>
             <Button type="button" onClick={() => { navigate(-1) }} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d " }, textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cancelar</Button>
 
-            <Button type="submit" variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cadastrar</Button>
+            <Button type="submit" variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Salvar</Button>
           </Box>
         </Stack>
       </Box>

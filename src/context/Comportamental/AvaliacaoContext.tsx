@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
-import { IChildren, IAvaliacaoContext, ICadastrarAvalicao, IAvaliacaoAPI,IEditarAvaliacao } from "../../utils/AvaliacaoInterface/Avaliacao";
+import { IChildren, IAvaliacaoContext, ICadastrarAvalicao, IAvaliacaoAPI, IEditarAvaliacao } from "../../utils/AvaliacaoInterface/Avaliacao";
 
 export const AvaliacaoContext = createContext({} as IAvaliacaoContext);
 
@@ -20,7 +20,7 @@ export const AvaliacaoProvider = ({ children }: IChildren) => {
   const cadastrarAvalicao = async (avalicao: ICadastrarAvalicao) => {
     try {
       nProgress.start();
-      await API.post("/avaliacao/create", avalicao, { headers: { Authorization: localStorage.getItem("token") }})
+      await API.post("/avaliacao/create", avalicao, { headers: { Authorization: localStorage.getItem("token") } })
       toast.success("Avaliação criada com sucesso!", toastConfig);
       navigate("/avaliacoes")
     } catch (error: any) {
@@ -29,7 +29,7 @@ export const AvaliacaoProvider = ({ children }: IChildren) => {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      }  
+      }
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -41,7 +41,8 @@ export const AvaliacaoProvider = ({ children }: IChildren) => {
   const pegarAvaliacao = async (pagina: number = 0, tamanho: number = 10, filtros: string = '') => {
     try {
       nProgress.start();
-      await API.get(`/avaliacao/listar-avaliacao-por-acompanhamento-aluno?pagina=${pagina}&tamanho=${tamanho}${filtros}`, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
+      console.log(filtros)
+      await API.get(`/avaliacao/listar-avaliacao-por-acompanhamento-aluno?pagina=${pagina}&tamanho=${tamanho}${filtros}`, { headers: { Authorization: localStorage.getItem("token") } }).then((response) => {
         setAvaliacoes(response.data);
       })
     } catch (error: any) {
@@ -50,7 +51,7 @@ export const AvaliacaoProvider = ({ children }: IChildren) => {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      }  
+      }
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -59,7 +60,7 @@ export const AvaliacaoProvider = ({ children }: IChildren) => {
 
   const deletarAvaliacao = async (idAluno: number | undefined) => {
     try {
-      await API.delete(`/avaliacao/desativar/${idAluno}`, { headers: { Authorization: localStorage.getItem("token") }});
+      await API.delete(`/avaliacao/desativar/${idAluno}`, { headers: { Authorization: localStorage.getItem("token") } });
       toast.success('Avaliação desativada com sucesso!', toastConfig);
       pegarAvaliacao()
     } catch (error: any) {
@@ -68,15 +69,15 @@ export const AvaliacaoProvider = ({ children }: IChildren) => {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      }  
+      }
       toast.error(message, toastConfig);
     }
   }
 
-  const editarAvaliacao = async (avalicao: IEditarAvaliacao,id: number) => {
+  const editarAvaliacao = async (avalicao: IEditarAvaliacao, id: number) => {
     try {
       nProgress.start();
-      await API.put(`/avaliacao/${id}`, avalicao, { headers: { Authorization: localStorage.getItem("token") }})
+      await API.put(`/avaliacao/${id}`, avalicao, { headers: { Authorization: localStorage.getItem("token") } })
       toast.success("Avaliação editada com sucesso!", toastConfig);
       navigate("/avaliacoes")
     } catch (error: any) {
@@ -85,14 +86,14 @@ export const AvaliacaoProvider = ({ children }: IChildren) => {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      }  
+      }
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
     }
   }
 
-  
+
 
   return (
     <AvaliacaoContext.Provider value={{ cadastrarAvalicao, pegarAvaliacao, deletarAvaliacao, avaliacoes, editarAvaliacao }}>

@@ -1,3 +1,5 @@
+import { IModulosPorTrilha } from "./ModuloInterface/Modulo";
+
 export interface IProgramas {
   idPrograma: number;
   nome: string;
@@ -9,6 +11,7 @@ export interface IProgramas {
 
 export interface IProgramaContext {
   programas: IObjectProgramas | null;
+  programaTrilhaModulo: IProgramaTrilhaModulo | null;
   cadastrarPrograma: (programa: IProgramas) => Promise<void>;
   pegarPrograma: (pagina?: number, tamanho?: number) => Promise<void>;
   pegarProgramaPorNome: (nome: string, pagina?: number, tamanho?: number) => Promise<void>;
@@ -20,6 +23,7 @@ export interface IProgramaContext {
   clonarPrograma: (id: number) => Promise<void>;
   pegarProgramaCompleto: (id: number) => Promise<void>;
   programaCompleto: IProgramaCompleto | null;
+  pegarProgramaPorTrilhaModulo: (id: number) => Promise<void>;
 }
 
 export interface IObjectProgramas {
@@ -50,4 +54,21 @@ export interface ITrilhas {
 export interface IModuloDTOS {
   idModulo: number,
   nome: string
+}
+export interface IProgramaTrilhaModulo {
+  idPrograma: number;
+  nome: string;
+  situacaoVagaPrograma: string;
+  descricao: string;
+  dataInicio: string;
+  dataFim: string;
+  trilha: {
+    nome: string,
+    descricao: string,
+    idTrilha: number
+    moduloDTOS: {
+      idModulo: number,
+      nome: string
+    }[]
+  }[]
 }

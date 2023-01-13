@@ -1,11 +1,13 @@
 export interface IModulo {
   pegarModulo: (pagina?: number, tamanho?: number) => Promise<void>,
   modulo: IModuloAPI | null,
+  moduloPorTrilha: IModulosPorTrilha[],
   deletarModulo: (id: number | undefined) => Promise<void>,
   cadastrarModulo: (dadosModulo: ICadastroModulo) => Promise<void>,
   editarModulo: (dadosModulo: ICadastroModulo, id: number) => Promise<void>,
   clonarModulo: (id: number) => Promise<void>,
-  pegarModuloPorFiltro: (pagina?: number, tamanho?: number, filtros?: string) => Promise<void>
+  pegarModuloPorFiltro: (pagina?: number, tamanho?: number, filtros?: string) => Promise<void>,
+  pegarModuloPorTrilha: (id: number) => Promise<void>,
 }
 
 export interface IModuloAPI {
@@ -46,4 +48,9 @@ export interface ICadastroModulo {
   nome: string,
   idTrilha: number[],
   listPrograma: number[]
+}
+
+export interface IModulosPorTrilha {
+  idModulo: number,
+  nome: string
 }

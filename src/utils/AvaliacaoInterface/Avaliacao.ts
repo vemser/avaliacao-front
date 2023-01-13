@@ -31,6 +31,8 @@ export interface IEditarAvaliacao {
 
 export interface ICadastrarAvalicao {
   idAcompanhamento: number,
+  idPrograma: number,
+  idTrilha:number,
   idAluno: number,
   descricao: string,
   tipoAvaliacao: string,

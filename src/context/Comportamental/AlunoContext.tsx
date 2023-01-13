@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { toastConfig } from "../../utils/toast";
 
 import { API } from "../../utils/api";
-import { IAlunosAPI, IChildren, IAluno } from "../../utils/AlunoInterface/aluno";
+import { IAlunosAPI, IChildren, IAluno, IAlunosElementos } from "../../utils/AlunoInterface/aluno";
 import { useNavigate } from "react-router-dom";
 
 import { ICadastroAlunoAPI } from "../../utils/interface";
@@ -16,6 +16,7 @@ export const AlunoContext = createContext({} as IAluno);
 export const AlunoProvider = ({ children }: IChildren) => {
   const navigate = useNavigate();
   const [alunos, setAlunos] = useState<IAlunosAPI | null>(null);
+
 
   const cadastrarAluno = async (dadosAluno: ICadastroAlunoAPI) => {
     try {
@@ -116,6 +117,24 @@ export const AlunoProvider = ({ children }: IChildren) => {
     }
   }
 
+  const pegarAlunoPorTrilha = async (idPrograma: number,idTrilha:number,pagina: number = 0, tamanho: number = 10) => {
+    try {
+      nProgress.start();
+      const { data } = await API.get(`/aluno/alunos-ativos-por-programa/${idPrograma}?page=${pagina}&size=${tamanho}&idTrilhas=${idTrilha}`, { headers: { Authorization: localStorage.getItem("token") } });
+      setAlunos(data)
+    } catch (error: any) {
+      let message = "Ops, algo deu errado!";
+      if (error.response.status === 403) {
+        message = "Você não tem permissão para acessar esse recurso"
+      } else if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message || error.response.data.errors[0];
+      }
+      toast.error(message, toastConfig);
+    } finally {
+      nProgress.done();
+    }
+  }
+
 
 
   const deletarAluno = async (idAluno: number | undefined) => {
@@ -135,7 +154,7 @@ export const AlunoProvider = ({ children }: IChildren) => {
   }
 
   return (
-    <AlunoContext.Provider value={{ alunos, pegarAluno, deletarAluno, cadastrarAluno, editarAluno,pegarAlunoDisponivel,pegarAlunoDisponivelPorNome }}>
+    <AlunoContext.Provider value={{ alunos, pegarAluno, deletarAluno, cadastrarAluno, editarAluno,pegarAlunoDisponivel,pegarAlunoDisponivelPorNome,pegarAlunoPorTrilha }}>
       {children}
     </AlunoContext.Provider>
   );

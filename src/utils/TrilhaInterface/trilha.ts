@@ -5,7 +5,9 @@ export interface ITrilha {
   editarTrilha: (dadosTrilha: IDadosTrilha, idTrilha: number) => Promise<void>,
   pegarTrilhaFiltroNome: (nome: string, pagina?: number, tamanho?: number) => Promise<void>,
   pegarTrilhaFiltroID: (id: string) => Promise<void>,
-  trilhas: ITrilhasAPI | null
+  pegarTrilhaPorPrograma: (id: number) => Promise<void>,
+  trilhas: ITrilhasAPI | null,
+  trilhasPorPrograma: ITrilhasPorPrograma[]
 }
 
 export interface IChildren {
@@ -28,5 +30,11 @@ export interface ITrilhasElementos {
 
 export interface IDadosTrilha {
   nome: string, 
+  descricao: string
+}
+
+export interface ITrilhasPorPrograma {
+  idTrilha: number,
+  nome: string,
   descricao: string
 }

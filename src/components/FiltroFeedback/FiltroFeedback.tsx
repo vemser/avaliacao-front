@@ -19,7 +19,7 @@ interface IFiltro {
 }
 
 export const FiltroFeedback = () => {
-  const { alunos, pegarAluno, } = useAluno();
+  const { alunos, pegarAluno, pegarAlunoPorTrilha } = useAluno();
   const { trilhas, pegarTrilhaFiltroNome, pegarTrilha, pegarTrilhaPorPrograma, trilhasPorPrograma } = useTrilha();
   const { usuariosFiltro, pegarUsuariosLoginCargo } = useAuth();
   const { handleSubmit, register, control, reset, watch } = useForm<IFiltro>();
@@ -42,7 +42,7 @@ export const FiltroFeedback = () => {
     if (data.trilha) string += `&trilha=${data.trilha.label.trim()}`;
     if (data.nomeInstrutor) string += `&nomeInstrutor=${data.nomeInstrutor.trim()}`;
     if (data.situacao) string += `&situacao=${data.situacao.trim()}`;
-    console.log(string);
+    if (data.programa) string += `&idPrograma=${data.programa.id}`;
     await pegarFeedbackFiltros(0, 10, string);
   }
 
@@ -61,8 +61,13 @@ export const FiltroFeedback = () => {
 
   useEffect(() => {
     if (watchTodos.programa) pegarTrilhaPorPrograma(watchTodos.programa.id);
+
+    if (watchTodos.programa && !watchTodos.trilha) pegarAlunoPorTrilha(watchTodos.programa.id);
+
+    if (watchTodos.trilha && watchTodos.programa) pegarAlunoPorTrilha(watchTodos.programa.id, watchTodos.trilha.id);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [watchTodos.programa]);
+  }, [watchTodos.programa, watchTodos.trilha]);
 
   return (
     <>
@@ -113,10 +118,10 @@ export const FiltroFeedback = () => {
           size="small"
           disablePortal
           id="combo-box-demo"
-          onInputChange={(event, value) => {
-            filtroDebounce(value, pegarAluno, pegarAluno, `&nome=${value}`)
-          }}
-          disabled={!watchTodos.trilha ? true : false}
+          // onInputChange={(event, value) => {
+          //   filtroDebounce(value, pegarAluno, pegarAluno, `&nome=${value}`)
+          // }}
+          disabled={!watchTodos.programa ? true : false}
           value={watchTodos.nomeAluno ? { label: watchTodos.nomeAluno.label, id: watchTodos.nomeAluno.id } : null}
           getOptionLabel={(option) => option.label}
           isOptionEqualToValue={(option, value) => option.label === value.label}

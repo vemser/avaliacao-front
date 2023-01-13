@@ -60,7 +60,7 @@ export const FiltroAvaliacao = () => {
           getOptionLabel={(option) => option.label}
           isOptionEqualToValue={(option, value) => option.label === value.label}
           noOptionsText={""}
-          options={acompanhamentos ? acompanhamentos.elementos.map((acompanhamento) => { return { label: acompanhamento.titulo } }) : []}
+          options={acompanhamentos ? acompanhamentos.elementos.map((acompanhamento) => { return { label: acompanhamento.titulo} }) : []}
           sx={{ minWidth: 200, display: "flex" }}
           renderInput={(params) => <TextField {...params} label="Acompanhamento" />}
         />
@@ -75,11 +75,11 @@ export const FiltroAvaliacao = () => {
           onInputChange={(event, value) => {
             filtroDebounce(value, pegarAluno, pegarAluno, `&nome=${value}`)
           }}
-          value={watchTodos.nomeAluno ? { label: `${watchTodos.nomeAluno}` } : null}
+          value={watchTodos.nomeAluno ? { label: `${watchTodos.nomeAluno}`} : null}
           getOptionLabel={(option) => option.label}
           isOptionEqualToValue={(option, value) => option.label === value.label}
           noOptionsText={""}
-          options={alunos ? alunos.elementos.map((aluno) => { return { label: aluno.nome } }) : []}
+          options={alunos ? alunos.elementos.map((aluno) => { return { label: aluno.nome} }) : []}
           sx={{ minWidth: 200, display: "flex" }}
           renderInput={(params) => <TextField {...params} label="Alunos" />}
         />

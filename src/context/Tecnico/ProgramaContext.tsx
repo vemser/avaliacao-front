@@ -7,7 +7,7 @@ import { toastConfig } from "../../utils/toast";
 
 import { API } from "../../utils/api";
 import { IChildren } from "../../utils/interface";
-import { IProgramas, IObjectProgramas, IProgramaContext } from "../../utils/programaInterface"
+import { IProgramas, IObjectProgramas, IProgramaContext, IProgramaTrilhaModulo } from "../../utils/programaInterface"
 import { useNavigate } from "react-router-dom";
 
 export const ProgramaContext = createContext({} as IProgramaContext);
@@ -15,6 +15,8 @@ export const ProgramaContext = createContext({} as IProgramaContext);
 export const ProgramaProvider = ({ children }: IChildren) => {
   const navigate = useNavigate();  
   const [programas, setProgramas] = useState<IObjectProgramas | null>(null);
+
+  const [programaTrilhaModulo, setProgramaTrilhaModulo] = useState<IProgramaTrilhaModulo | null>(null);
   
   const cadastrarPrograma = async (programa: IProgramas) => {
     try {
@@ -131,6 +133,25 @@ export const ProgramaProvider = ({ children }: IChildren) => {
     }
   }
 
+  const pegarProgramaPorTrilhaModulo = async (id: number) => {
+    try {
+      nProgress.start();
+      await API.get(`/programa/buscar-programa-trilha-modulo?idPrograma=${id}`, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
+        setProgramaTrilhaModulo(response.data);
+      })
+    } catch (error: any) {
+      let message = "Ops, algo deu errado!";
+      if (error.response.status === 403) {
+        message = "Você não tem permissão para acessar esse recurso"
+      } else if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message || error.response.data.errors[0];
+      }  
+      toast.error(message, toastConfig);
+    } finally {
+      nProgress.done();
+    }
+  }
+
   const pegarProgramaPorNomeAtivo = async (nome: string, pagina: number = 0, tamanho: number = 10) => {
     try {
       nProgress.start();
@@ -189,7 +210,7 @@ export const ProgramaProvider = ({ children }: IChildren) => {
   }
 
   return (
-    <ProgramaContext.Provider value={{ programas, cadastrarPrograma, pegarPrograma, deletarProgama, editarPrograma, pegarProgramaPorNome, pegarProgramaFiltroID, pegarProgramaAtivo, pegarProgramaPorNomeAtivo, clonarPrograma }}>
+    <ProgramaContext.Provider value={{ programas, cadastrarPrograma, pegarPrograma, deletarProgama, editarPrograma, pegarProgramaPorNome, pegarProgramaFiltroID, pegarProgramaAtivo, pegarProgramaPorNomeAtivo, clonarPrograma, programaTrilhaModulo, pegarProgramaPorTrilhaModulo }}>
       {children}
     </ProgramaContext.Provider>
   );

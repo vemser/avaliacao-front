@@ -46,7 +46,9 @@ export interface IFeedbackCadastro {
     modulo: number[],
     usuarioLogado: string,
     descricao: string,
-    situacao: string
+    situacao: string,
+    idPrograma: string
+    idTrilha: string
 }
 
 export interface IEditarFeedback {

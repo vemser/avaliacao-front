@@ -100,7 +100,7 @@ export const ListarProgramas = () => {
       <Box sx={{ width: { xs: "95%", md: "90%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
 
         <Box sx={{ display: "flex", gap: 3, flexDirection: { xs: "column", md: "row" }, justifyContent: "space-between", alignItems: "center", width: "100%", marginBottom: "10px", paddingInline: 2 }}>
-          <Componentes.CampoBusca label="Código ou Nome" buscar={filtrosTrilha} resetar={resetBuscaTrilha} />
+          <Componentes.CampoBusca label="Nome" buscar={filtrosTrilha} resetar={resetBuscaTrilha} />
 
           <Button onClick={() => navigate("/cadastrar-programa")} variant="contained" sx={{ minWidth: { xs: "260px", md: "190px" }, display: "flex", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Programa</Button>
         </Box>
@@ -120,7 +120,7 @@ export const ListarProgramas = () => {
               <TableBody>
                 {programas?.elementos.map((programa: IProgramas) => (
                   <StyledTableRow key={programa.idPrograma}>
-                    <StyledTableCell id="id-programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row">{programa.idPrograma}</StyledTableCell>
+                    <StyledTableCell id="id-programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", cursor: "default" }} component="td" scope="row">{programa.idPrograma}</StyledTableCell>
 
                     <Tooltip title={programa.nome} PopperProps={{ sx: { marginTop: "-25px !important" } }} arrow>
                       <StyledTableCell id="nome-programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }} component="td" scope="row">{programa.nome}</StyledTableCell>

@@ -21,10 +21,10 @@ export const CadastrarFeedback = () => {
   const navigate = useNavigate();
 
   const { cadastrarFeedback } = useFeedback();
-  const { pegarAluno, alunos } = useAluno();
+  const { pegarAluno, pegarAlunoPorTrilha, alunos } = useAluno();
   const { pegarModulo, pegarModuloPorFiltro, moduloPorTrilha, pegarModuloPorTrilha } = useModulo();
   const { pegarProgramaAtivo, pegarProgramaPorNomeAtivo, programas, pegarProgramaPorTrilhaModulo, programaTrilhaModulo } = usePrograma();
-  const { trilhasPorPrograma, pegarTrilhaFiltroNome, pegarTrilha } = useTrilha();
+  const { pegarTrilhaFiltroNome, pegarTrilha } = useTrilha();
 
   const [moduloSelecionado, setModuloSelecionado] = useState<number[]>([])
   const [moduloErro, setModuloErro] = useState<boolean>(false);
@@ -65,6 +65,11 @@ export const CadastrarFeedback = () => {
   useEffect(() => {
     if(filtros.idPrograma) pegarProgramaPorTrilhaModulo(parseInt(filtros.idPrograma))
     if(filtros.idTrilha) pegarModuloPorTrilha(parseInt(filtros.idTrilha))
+    if(filtros.idPrograma) {
+      pegarAlunoPorTrilha(parseInt(filtros.idPrograma))
+    } else if(filtros.idPrograma && filtros.idTrilha) {
+      pegarAlunoPorTrilha(parseInt(filtros.idPrograma), parseInt(filtros.idTrilha))
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filtros.idPrograma, filtros.idTrilha])
 

@@ -8,10 +8,12 @@ import { useForm, Controller } from "react-hook-form";
 import { filtroDebounce } from "../../utils/functions";
 import { useAuth } from "../../context/AuthContext";
 import { useFeedback } from "../../context/Comportamental/FeedbackContext";
+import { usePrograma } from "../../context/Tecnico/ProgramaContext";
 
 interface IFiltro {
-  idAluno: string | null,
-  idTrilha: string | null,
+  programa: { label: string, id: number } | null,
+  nomeAluno: { label: string, id: number } | null,
+  idTrilha: { label: string, id: number } | null,
   situacao: string | null,
   nomeInstrutor: string | null,
 }
@@ -22,29 +24,31 @@ export const FiltroFeedback = () => {
   const { usuariosFiltro, pegarUsuariosLoginCargo } = useAuth();
   const { handleSubmit, register, control, reset, watch } = useForm<IFiltro>();
   const { pegarFeedbackFiltros, pegarFeedback } = useFeedback();
+  const { programas, pegarProgramaAtivo, pegarProgramaPorNomeAtivo } = usePrograma();
 
   const watchTodos = watch();
 
   useEffect(() => {
-    pegarAluno(0, 10);
-    pegarTrilha(0, 10);
-    pegarUsuariosLoginCargo(0, 10);
+    pegarAluno();
+    pegarTrilha();
+    pegarUsuariosLoginCargo();
+    pegarProgramaAtivo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const filtrar = async (data: IFiltro) => {
     var string = "";
-    if (data.idAluno) string += `&nomeAluno=${data.idAluno}`;
-    if (data.idTrilha) string += `&trilha=${data.idTrilha}`;
-    if (data.nomeInstrutor) string += `&nomeInstrutor=${data.nomeInstrutor}`;
-    if (data.situacao) string += `&situacao=${data.situacao}`;
+    if (data.nomeAluno) string += `&nomeAluno=${data.nomeAluno.label.trim()}`;
+    if (data.idTrilha) string += `&trilha=${data.idTrilha.label.trim()}`;
+    if (data.nomeInstrutor) string += `&nomeInstrutor=${data.nomeInstrutor.trim()}`;
+    if (data.situacao) string += `&situacao=${data.situacao.trim()}`;
     console.log(string);
     await pegarFeedbackFiltros(0, 10, string);
   }
 
   const resetar = async () => {
     reset({
-      idAluno: null,
+      nomeAluno: null,
       idTrilha: null,
       nomeInstrutor: null,
       situacao: null
@@ -57,41 +61,64 @@ export const FiltroFeedback = () => {
 
   return (
     <>
-      <Controller control={control} name="idAluno" render={({ field: { onChange } }) => (
+
+      <Controller control={control} name="programa" render={({ field: { onChange } }) => (
         <Autocomplete
-          onChange={(event, data) => onChange(data?.label)}
+          onChange={(event, data) => onChange(data)}
           size="small"
           disablePortal
           id="combo-box-demo"
           onInputChange={(event, value) => {
-            filtroDebounce(value, pegarAluno, pegarAluno, `&nome=${value}`)
+            filtroDebounce(value, pegarProgramaPorNomeAtivo, pegarProgramaAtivo)
           }}
-          value={watchTodos.idAluno ? { label: `${watchTodos.idAluno}` } : null}
+          value={watchTodos.programa ? { label: watchTodos.programa.label, id: watchTodos.programa.id } : null}
           getOptionLabel={(option) => option.label}
           isOptionEqualToValue={(option, value) => option.label === value.label}
           noOptionsText={""}
-          options={alunos ? alunos.elementos.map((aluno) => { return { label: aluno.nome } }) : []}
+          options={programas ? programas.elementos.map((programa) => { return { label: programa.nome, id: programa.idPrograma } }) : []}
+          renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
           sx={{ minWidth: 200, display: "flex" }}
-          renderInput={(params) => <TextField {...params} label="Alunos" />}
+          renderInput={(params) => <TextField {...params} label="Programa" />}
         />
       )} />
 
       <Controller control={control} name="idTrilha" render={({ field: { onChange } }) => (
         <Autocomplete
-          onChange={(event, data) => onChange(data?.label)}
+          onChange={(event, data) => onChange(data)}
           size="small"
           disablePortal
           id="combo-box-demo"
           onInputChange={(event, value) => {
             filtroDebounce(value, pegarTrilhaFiltroNome, pegarTrilha)
           }}
-          value={watchTodos.idTrilha ? { label: `${watchTodos.idTrilha}` } : null}
+          value={watchTodos.idTrilha ? { label: watchTodos.idTrilha.label, id: watchTodos.idTrilha.id } : null}
+          getOptionLabel={(option) => option.label || ""}
+          isOptionEqualToValue={(option, value) => option.label === value.label}
+          noOptionsText={""}
+          options={trilhas ? trilhas.elementos.map((trilha) => { return { label: trilha.nome, id: trilha.idTrilha } }) : []}
+          renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
+          sx={{ minWidth: 200, display: "flex" }}
+          renderInput={(params) => <TextField {...params} label="Trilhas" />}
+        />
+      )} />
+
+      <Controller control={control} name="nomeAluno" render={({ field: { onChange } }) => (
+        <Autocomplete
+          onChange={(event, data) => onChange(data)}
+          size="small"
+          disablePortal
+          id="combo-box-demo"
+          onInputChange={(event, value) => {
+            filtroDebounce(value, pegarAluno, pegarAluno, `&nome=${value}`)
+          }}
+          value={watchTodos.nomeAluno ? { label: watchTodos.nomeAluno.label, id: watchTodos.nomeAluno.id } : null}
           getOptionLabel={(option) => option.label}
           isOptionEqualToValue={(option, value) => option.label === value.label}
           noOptionsText={""}
-          options={trilhas ? trilhas.elementos.map((trilha) => { return { label: trilha.nome } }) : []}
+          options={alunos ? alunos.elementos.map((aluno) => { return { label: aluno.nome, id: aluno.idAluno } }) : []}
+          renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
           sx={{ minWidth: 200, display: "flex" }}
-          renderInput={(params) => <TextField {...params} label="Trilhas" />}
+          renderInput={(params) => <TextField {...params} label="Alunos" />}
         />
       )} />
 

@@ -13,14 +13,14 @@ import { usePrograma } from "../../context/Tecnico/ProgramaContext";
 interface IFiltro {
   programa: { label: string, id: number } | null,
   nomeAluno: { label: string, id: number } | null,
-  idTrilha: { label: string, id: number } | null,
+  trilha: { label: string, id: number } | null,
   situacao: string | null,
   nomeInstrutor: string | null,
 }
 
 export const FiltroFeedback = () => {
-  const { alunos, pegarAluno } = useAluno();
-  const { trilhas, pegarTrilhaFiltroNome, pegarTrilha } = useTrilha();
+  const { alunos, pegarAluno, } = useAluno();
+  const { trilhas, pegarTrilhaFiltroNome, pegarTrilha, pegarTrilhaPorPrograma, trilhasPorPrograma } = useTrilha();
   const { usuariosFiltro, pegarUsuariosLoginCargo } = useAuth();
   const { handleSubmit, register, control, reset, watch } = useForm<IFiltro>();
   const { pegarFeedbackFiltros, pegarFeedback } = useFeedback();
@@ -29,8 +29,8 @@ export const FiltroFeedback = () => {
   const watchTodos = watch();
 
   useEffect(() => {
-    pegarAluno();
-    pegarTrilha();
+    // pegarAluno();
+    // pegarTrilha();
     pegarUsuariosLoginCargo();
     pegarProgramaAtivo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -39,7 +39,7 @@ export const FiltroFeedback = () => {
   const filtrar = async (data: IFiltro) => {
     var string = "";
     if (data.nomeAluno) string += `&nomeAluno=${data.nomeAluno.label.trim()}`;
-    if (data.idTrilha) string += `&trilha=${data.idTrilha.label.trim()}`;
+    if (data.trilha) string += `&trilha=${data.trilha.label.trim()}`;
     if (data.nomeInstrutor) string += `&nomeInstrutor=${data.nomeInstrutor.trim()}`;
     if (data.situacao) string += `&situacao=${data.situacao.trim()}`;
     console.log(string);
@@ -49,7 +49,7 @@ export const FiltroFeedback = () => {
   const resetar = async () => {
     reset({
       nomeAluno: null,
-      idTrilha: null,
+      trilha: null,
       nomeInstrutor: null,
       situacao: null
     })
@@ -59,9 +59,13 @@ export const FiltroFeedback = () => {
     await pegarUsuariosLoginCargo();
   }
 
+  useEffect(() => {
+    if (watchTodos.programa) pegarTrilhaPorPrograma(watchTodos.programa.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watchTodos.programa]);
+
   return (
     <>
-
       <Controller control={control} name="programa" render={({ field: { onChange } }) => (
         <Autocomplete
           onChange={(event, data) => onChange(data)}
@@ -82,20 +86,21 @@ export const FiltroFeedback = () => {
         />
       )} />
 
-      <Controller control={control} name="idTrilha" render={({ field: { onChange } }) => (
+      <Controller control={control} name="trilha" render={({ field: { onChange } }) => (
         <Autocomplete
           onChange={(event, data) => onChange(data)}
           size="small"
           disablePortal
           id="combo-box-demo"
-          onInputChange={(event, value) => {
-            filtroDebounce(value, pegarTrilhaFiltroNome, pegarTrilha)
-          }}
-          value={watchTodos.idTrilha ? { label: watchTodos.idTrilha.label, id: watchTodos.idTrilha.id } : null}
+          // onInputChange={(event, value) => {
+          //   filtroDebounce(value, pegarTrilhaFiltroNome, pegarTrilha)
+          // }}
+          disabled={!watchTodos.programa ? true : false}
+          value={watchTodos.trilha ? { label: watchTodos.trilha.label, id: watchTodos.trilha.id } : null}
           getOptionLabel={(option) => option.label || ""}
           isOptionEqualToValue={(option, value) => option.label === value.label}
           noOptionsText={""}
-          options={trilhas ? trilhas.elementos.map((trilha) => { return { label: trilha.nome, id: trilha.idTrilha } }) : []}
+          options={trilhasPorPrograma ? trilhasPorPrograma.map((trilha) => { return { label: trilha.nome, id: trilha.idTrilha } }) : []}
           renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
           sx={{ minWidth: 200, display: "flex" }}
           renderInput={(params) => <TextField {...params} label="Trilhas" />}
@@ -111,6 +116,7 @@ export const FiltroFeedback = () => {
           onInputChange={(event, value) => {
             filtroDebounce(value, pegarAluno, pegarAluno, `&nome=${value}`)
           }}
+          disabled={!watchTodos.trilha ? true : false}
           value={watchTodos.nomeAluno ? { label: watchTodos.nomeAluno.label, id: watchTodos.nomeAluno.id } : null}
           getOptionLabel={(option) => option.label}
           isOptionEqualToValue={(option, value) => option.label === value.label}

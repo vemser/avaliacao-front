@@ -35,7 +35,6 @@ export const ListarFeedback: React.FC = () => {
     }
   }
 
-
   useEffect(() => {
     pegarFeedback()
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -1,17 +1,29 @@
-import React, { useContext } from "react";
-
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom"
 
-import { TablePagination, Box, Typography, Stack, Button, Paper, styled, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableRow, TableHead } from "@mui/material";
-
+import { Box, Typography, Stack, Button, Paper, styled, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableRow, TableHead, Modal } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-
-import { GestorContext } from "../../context/GestorContext";
-import { InstrutorContext } from "../../context/InstrutorContext";
+import DeleteForever from "@mui/icons-material/Delete";
 
 import * as Componentes from "../../components";
 
-import { formatarNomeCompleto } from "../../utils/functions";
+import { usePrograma } from "../../context/Tecnico/ProgramaContext";
+import { useModulo } from "../../context/Tecnico/ModuloContext";
+import { ITrilhas } from "../../utils/programaInterface";
+
+const style = {
+  position: "absolute" as const,
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 320,
+  bgcolor: "background.paper",
+  border: "none",
+  borderRadius: "5px",
+  textAlign: "center",
+  boxShadow: 20,
+  p: 4,
+};
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: { backgroundColor: theme.palette.common.black, color: theme.palette.common.white },
@@ -23,149 +35,108 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:last-child td, &:last-child th": { border: 10 },
 }));
 
-interface ColumnFeedback {
-  id: "codigo" | "descricao" | "status" | "responsavel" | "acoes";
-  label: string;
-  minWidth?: number;
-  align?: "right";
-}
-
-const columnsFeedback: ColumnFeedback[] = [
-  { id: "codigo", label: "Código", minWidth: 5 },
-  { id: "descricao", label: "Descrição", minWidth: 5 },
-  { id: "status", label: "Status", minWidth: 5 },
-  { id: "responsavel", label: "Responsável", minWidth: 5 },
-  { id: "acoes", label: "Ações", minWidth: 5 }
-];
-
 interface Column {
-  id: "codigo" | "dataCriacao" | "descricao" | "responsavel" | "acoes";
+  id: "nome" | "acoes";
   label: string;
   minWidth?: number;
   align?: "right";
 }
 
 const columns: Column[] = [
-  { id: "codigo", label: "Código", minWidth: 5 },
-  { id: "dataCriacao", label: "Data Criação", minWidth: 5 },
-  { id: "descricao", label: "Descrição", minWidth: 5 },
-  { id: "responsavel", label: "Responsável", minWidth: 5 },
+  { id: "nome", label: "Módulo", minWidth: 5 },
   { id: "acoes", label: "Ações", minWidth: 5 }
 ];
 
 export const ConfiguracaoPrograma: React.FC = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { state } = useLocation();
+  const { deletarModulo } = useModulo();
+  const { pegarProgramaCompleto, programaCompleto } = usePrograma();
 
-  const { pegarAvaliacaoPorID, avaliacoesPorID, paginacaoAvaliacao } = useContext(GestorContext);
-  const { pegarFeedbackPorID, feedbackPorID, paginacaoFeedback } = useContext(InstrutorContext)
+  useEffect(() => {
+    pegarProgramaCompleto(state.idPrograma)
+    console.log(programaCompleto)
+  }, [])
 
-  // Paginação Avaliacao
-  const handleChangePageAvaliacao = async (event: unknown, newPage: number) => { await pegarAvaliacaoPorID(state.idAluno, newPage); }
+  // Funções Modal
+  const deletar = async (id: number) => { await deletarModulo(id) }
 
-  // Paginação Feedback
-  const handleChangePageFeedBack = async (event: unknown, newPage: number) => { await pegarFeedbackPorID(state.idAluno, newPage); }
-
-  // useEffect(() => { 
-  //   pegarAvaliacaoPorID(state.idAluno, 0);
-  //   pegarFeedbackPorID(state.idAluno, 0);
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [])
+  const [idDelete, setIdDelete] = useState<number | undefined>();
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
     <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "60px", paddingBottom: "50px" }}>
-      <Componentes.Titulo texto={`Configurações de ${state.nome}`} />
+      <Componentes.Titulo texto={state.nome} />
 
       <Box component="div" sx={{ width: { xs: "95%", md: "90%" }, display: "flex", alignItems: "end", flexDirection: "column", padding: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
 
         <Stack component="div" spacing={3} sx={{ width: "100%", display: "flex", alignItems: { xs: "start", md: "start" } }}>
 
-          <Box sx={{ display: "flex", flexDirection: { xs: "column", md: "row" }, alignItems: "center", justifyContent: "space-between", width: "100%", gap: { xs: 3, md: 0 } }}>
-            <Box sx={{ width: { xs: "100%", md: "auto" }, textAlign: "center" }}>
-              <Typography sx={{ whiteSpace: "wrap", overflow: "hidden", textOverflow: "ellipsis" }}>Programa: <span style={{ fontWeight: 600 }}>{state.nome}</span></Typography>
-            </Box>
-            <Box sx={{ width: { xs: "100%", md: "auto" }, textAlign: "center" }}>
-              <Typography sx={{ whiteSpace: "wrap", overflow: "hidden", textOverflow: "ellipsis" }}>Trilha: <span style={{ fontWeight: 600 }}>{state.trilha.nome}</span></Typography>
-            </Box>
-            <Box sx={{ width: { xs: "100%", md: "auto" }, textAlign: "center" }}>
-              <Typography sx={{ whiteSpace: "wrap", overflow: "hidden", textOverflow: "ellipsis" }}>E-mail: <span style={{ fontWeight: 600 }}>{state.email}</span></Typography>
+          <Box sx={{ display: "flex", gap: 3, flexDirection: { xs: "column", md: "row" }, justifyContent: "space-between", alignItems: "center", width: "100%", marginBottom: "10px" }}>
+            <Button onClick={() => { navigate(-1) }} variant="outlined" sx={{ width: { xs: "170px", md: "160px" }, textTransform: "capitalize", fontSize: "1rem" }}>Voltar</Button>
+
+            <Box sx={{ display: "flex", gap: 3, flexDirection: { xs: "column", md: "row" } }}>
+              <Button onClick={() => navigate("/cadastrar-modulo")} variant="contained" sx={{ width: "170px", display: "flex", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Trilha</Button>
+
+              <Button onClick={() => navigate("/cadastrar-modulo")} variant="contained" sx={{ width: "170px", display: "flex", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Módulo</Button>
             </Box>
           </Box>
 
-          <Typography sx={{ fontWeight: 700, color: "var(--azul-claro-dbc)", fontSize: "22px", marginBottom: "-15px !important", userSelect: "none" }}>Feedbacks:</Typography>
+          {programaCompleto?.trilha ? programaCompleto.trilha.map((trilha: ITrilhas) => {
+            return (
+              <>
+                <Typography sx={{ fontWeight: 700, color: "var(--azul-claro-dbc)", fontSize: "1.5rem", marginBottom: "-15px !important",userSelect: "none" }}>Trilha {trilha.nome}</Typography>
 
-          <Paper sx={{ width: "100%" }}>
-            <TableContainer sx={{ maxHeight: { xs: 600, md: 200 }, boxShadow: "5px 5px 5px solid light-gray" }}>
-              <Table stickyHeader aria-label="sticky table">
+                <Paper sx={{ width: "100%", marginBottom: "20px !important" }}>
+                  <TableContainer sx={{ boxShadow: "5px 5px 5px solid light-gray"}}>
+                    <Table aria-label="sticky table" sx={{ width: "100%" }}>
 
-                <TableHead sx={{ backgroundColor: "#090F27" }}>
-                  <TableRow>
-                    {columnsFeedback.map((column) => (
-                      <TableCell key={column.id} align={column.align} style={{ minWidth: "20%", fontWeight: "700", fontSize: "1rem", textAlign: "center", backgroundColor: "#090F27", color: "white" }}>{column.label}</TableCell>
-                    ))}
-                  </TableRow>
-                </TableHead>
+                      <TableHead sx={{ backgroundColor: "#090F27", width: "100%" }}>
+                        <TableRow sx={{ minWidth: "100%" }}>
+                          {columns.map((column) => (
+                            <TableCell key={column.id} align={column.align} style={{ width: "50%", fontWeight: "700", fontSize: "1rem", textAlign: "center", userSelect: "none", backgroundColor: "#090F27", color: "white" }}>{column.label}</TableCell>
+                          ))}
+                        </TableRow>
+                      </TableHead>
 
-                <TableBody>
-                  {feedbackPorID.map((feedback) => (
-                    <StyledTableRow key={feedback.idFeedBack}>
-                      <StyledTableCell sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row">{feedback.idFeedBack}</StyledTableCell>
-                      <StyledTableCell sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row">{feedback.descricao}</StyledTableCell>
-                      <StyledTableCell id="nome" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }}>{feedback.tipo}</StyledTableCell>
-                      <StyledTableCell id="email" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100px" }}>{feedback.usuarioDTO.nome}</StyledTableCell>
-                      <StyledTableCell id="cargo" sx={{ textAlign: "center" }}>
-                        <Button id="botao-avaliar-acompanhamento" onClick={() => { navigate("/editar-feedback", { state: feedback }) }} title="Avaliar acompanhamento"><EditIcon />
-                        </Button>
-                      </StyledTableCell>
-                    </StyledTableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
+                      <TableBody>
+                        {trilha.moduloDTOS.length > 0 ? trilha.moduloDTOS.map((data) => (
+                          <StyledTableRow key={data.idModulo}>
+                            <StyledTableCell sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", userSelect: "none" }} component="td" scope="row">{data.nome}</StyledTableCell>
 
-            {/* Paginação */}
-            <TablePagination rowsPerPageOptions={[]} component="div" count={paginacaoFeedback.totalElementos} rowsPerPage={paginacaoFeedback.tamanho} page={paginacaoFeedback.pagina} onPageChange={handleChangePageFeedBack} />
-          </Paper>
-
-          {/* Tabela Avaliações */}
-
-          <Typography sx={{ fontWeight: 700, color: "var(--azul-claro-dbc)", fontSize: "22px", marginBottom: "-15px !important", userSelect: "none" }}>Avaliações:</Typography>
-
-          <Paper sx={{ width: "100%", marginBottom: "15px" }}>
-            <TableContainer sx={{ maxHeight: { xs: 600, md: 200 }, boxShadow: "5px 5px 5px solid light-gray" }}>
-              <Table stickyHeader aria-label="sticky table">
-
-                <TableHead sx={{ backgroundColor: "#090F27" }}>
-                  <TableRow>
-                    {columns.map((column) => (
-                      <TableCell key={column.id} align={column.align} style={{ minWidth: "20%", fontWeight: "700", fontSize: "1rem", textAlign: "center", backgroundColor: "#090F27", color: "white" }}>{column.label}</TableCell>
-                    ))}
-                  </TableRow>
-                </TableHead>
-
-                <TableBody>
-                  {avaliacoesPorID.map((avaliacao) => (
-                    <StyledTableRow key={avaliacao.idAvaliacao}>
-                      <StyledTableCell id={`idAvaliacao-${avaliacao.idAvaliacao}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row">{avaliacao.idAvaliacao}</StyledTableCell>
-                      <StyledTableCell id={`dataInicio-${avaliacao.idAvaliacao}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100px" }}>{avaliacao.dataCriacao.replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")}</StyledTableCell>
-                      <StyledTableCell id={`descricao-${avaliacao.idAvaliacao}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }}>{avaliacao.descricao}</StyledTableCell>
-                      <StyledTableCell id={`responsavel-${avaliacao.idAvaliacao}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100px" }}>{avaliacao.responsavel.nome}</StyledTableCell>
-                      <StyledTableCell id={`acoes-${avaliacao.idAvaliacao}`} sx={{ textAlign: "center" }}><Button id={`botao-avaliar-acompanhamento-${avaliacao.idAvaliacao}`}
-                        onClick={() => { navigate("/editar-avaliacao", { state: avaliacao }) }}
-                        title="Editar Avaliação"><EditIcon /></Button></StyledTableCell>
-                    </StyledTableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-
-            {/* Paginação */}
-            <TablePagination rowsPerPageOptions={[]} component="div" count={paginacaoAvaliacao.totalElementos} rowsPerPage={paginacaoAvaliacao.tamanho} page={paginacaoAvaliacao.pagina} onPageChange={handleChangePageAvaliacao} />
-          </Paper>
+                            <StyledTableCell id="acoes" sx={{ display: "flex", justifyContent: "center", alignItems: "center", flexWrap: "nowrap" }}>
+                              <Button id="botao-editar-modulo" onClick={() => { navigate("/editar-modulo") }} title="Editar"><EditIcon /></Button>
+                              <Button id="botao-deletar-modulo" title="Deletar" onClick={() => { handleOpen(); setIdDelete(data.idModulo) }}><DeleteForever /></Button>
+                            </StyledTableCell>
+                          </StyledTableRow>
+                        )) :
+                          <StyledTableRow key={"id-modulo"}>
+                            <StyledTableCell sx={{ textAlign: "center", fontWeight: "500", fontSize: "1rem", userSelect: "none", color: "gray" }}>
+                            Nenhum módulo encontrado.
+                            </StyledTableCell>
+                            <StyledTableCell></StyledTableCell>
+                          </StyledTableRow>
+                        }
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </Paper>
+              </>
+            )
+          }) : "Nenhuma trilha encontrada neste programa."}
         </Stack>
 
-        <Button onClick={() => { navigate(-1) }} variant="contained" sx={{ width: "160px", marginTop: "20px", textTransform: "capitalize", fontSize: "1rem" }}>Voltar</Button>
-
+        <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-titulo" aria-describedby="modal-modal-description" sx={{ backdropFilter: "blur(6px)" }}>
+          <Box sx={style}>
+            <Typography id="modal-modal-titulo" variant="h6" sx={{ fontWeight: 600, userSelect: "none", marginBottom: "10px", color: "var(--azul-forte-dbc)", fontSize: "1.4rem" }}>Você tem certeza?</Typography>
+            <Box sx={{ display: "flex", width: "100%", justifyContent: "center", alignItems: "center", bottom: 0, paddingTop: "20px", gap: 2, flexDirection: "column" }}>
+              <Button type="button" onClick={() => { if (idDelete) deletar(idDelete); handleClose(); }} variant="contained" color="error" sx={{ textTransform: "capitalize", fontSize: "1.05rem", width: "180px" }}>Deletar</Button>
+              <Button type="button" onClick={handleClose} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d" }, textTransform: "capitalize", fontSize: "1.05rem", width: "180px" }}>Cancelar</Button>
+            </Box>
+          </Box>
+        </Modal>
       </Box>
     </Box>
   )

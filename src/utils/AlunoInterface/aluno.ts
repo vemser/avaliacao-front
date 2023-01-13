@@ -7,7 +7,8 @@ export interface IAluno {
   editarAluno: (dadosAluno: ICadastroAlunoAPI, id: number) => Promise<void>,
   alunos: IAlunosAPI | null,
   pegarAlunoDisponivel: (pagina?: number, tamanho?: number) => Promise<void>,
-  pegarAlunoDisponivelPorNome: (nome: string, pagina?: number, tamanho?: number) => Promise<void>
+  pegarAlunoDisponivelPorNome: (nome: string, pagina?: number, tamanho?: number) => Promise<void>,
+  pegarAlunoPorTrilha: (idPrograma: number, idTrilha: number, pagina?: number, tamanho?: number) => Promise<void>
 }
 
 export interface IChildren {

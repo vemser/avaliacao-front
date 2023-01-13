@@ -20,12 +20,28 @@ export const CadastrarAvaliacao = () => {
   const navigate = useNavigate();
 
   const { pegarProgramaAtivo, programas, pegarProgramaPorNomeAtivo } = usePrograma();
-  const { pegarTrilha, trilhas, pegarTrilhaFiltroNome } = useTrilha();
-  const { alunos, pegarAlunoDisponivel,pegarAlunoDisponivelPorNome } = useAluno();
+  const { pegarTrilha, trilhas, pegarTrilhaFiltroNome,pegarTrilhaPorPrograma, trilhasPorPrograma } = useTrilha();
+  const { alunos, pegarAlunoDisponivel,pegarAlunoDisponivelPorNome,pegarAlunoPorTrilha } = useAluno();
   const { pegarAcompanhamentos, acompanhamentos,pegarAcompanhamentoTitulo } = useAcompanhamento();
   const { cadastrarAvalicao } = useAvaliacao()
   let data = moment()
   let novaData = data.format("YYYY-MM-DD")
+
+  
+  const { register, handleSubmit, formState: { errors }, control, watch } = useForm<ICadastrarAvalicao>({
+    resolver: yupResolver(avalicaoSchema)
+  });
+  
+  const watchFilter = watch()
+  console.log(watchFilter)
+
+  const cadastrar = (data: ICadastrarAvalicao) => {
+    data.idAluno = parseInt(data.idAluno.toString())
+    data.idAcompanhamento = parseInt(data.idAcompanhamento.toString())
+    console.log(data)
+    // cadastrarAvalicao(data)
+    
+  }
 
   useEffect(() => {
     pegarProgramaAtivo(0, 10);
@@ -35,17 +51,11 @@ export const CadastrarAvaliacao = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const { register, handleSubmit, formState: { errors }, control } = useForm<ICadastrarAvalicao>({
-    resolver: yupResolver(avalicaoSchema)
-  });
-
-
-  const cadastrar = (data: ICadastrarAvalicao) => {
-    data.idAluno = parseInt(data.idAluno.toString())
-    data.idAcompanhamento = parseInt(data.idAcompanhamento.toString())
-    cadastrarAvalicao(data)
-
-  }
+  useEffect(() => {
+    if(watchFilter.idPrograma) pegarTrilhaPorPrograma(watchFilter.idPrograma)
+    if(watchFilter.idTrilha) pegarAlunoPorTrilha(watchFilter.idPrograma,watchFilter.idTrilha)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watchFilter.idPrograma,watchFilter.idTrilha])
 
   return (
     <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "60px", paddingBottom: "50px" }}>
@@ -79,25 +89,31 @@ export const CadastrarAvaliacao = () => {
           </FormControl>
 
           <FormControl sx={{ width: { xs: "100%", md: "100%" } }} >
-              <Autocomplete
-                disablePortal
-                onInputChange={(event, value) => {
-                  filtroDebounce(value, pegarProgramaPorNomeAtivo, pegarProgramaAtivo)
-                }}
-                noOptionsText={"Nenhum programa encontrado"}
-                id="programa"
-                getOptionLabel={(option) => option.label}
-                isOptionEqualToValue={(option, value) => option.label === value.label}
-                options={programas ? programas.elementos.map(item => ({ label: `${item.nome}`, id: item.idPrograma })) : []}
-                renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
-                renderInput={(params) => <TextField {...params} label="Programa" variant="filled" />}
-              />
-            {/* {errors.idPrograma && <Typography id="erro-nome-programa" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.idPrograma.message}</Typography>} */}
-          </FormControl>
+          <Controller control={control} name="idPrograma" render={({ field: { onChange } }) => (
+            <Autocomplete
+              disablePortal
+              id="idPrograma"
+              onChange={(event, data) => onChange(data?.id)}
+              onInputChange={(event, value) => {
+                filtroDebounce(value, pegarProgramaPorNomeAtivo, pegarProgramaAtivo)
+              }}
+              noOptionsText={"Nenhum programa encontrado"}
+              getOptionLabel={(option) => option.label}
+              isOptionEqualToValue={(option, value) => option.label === value.label}
+              options={programas ? programas.elementos.map(item => ({ label: `${item.nome}`, id: item.idPrograma })) : []}
+              renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
+              renderInput={(params) => <TextField {...params} label="Programa" variant="filled" />}
+            />
+            )}/>
+           </FormControl>
 
           <FormControl sx={{ width: { xs: "100%", md: "100%" } }} >
+          <Controller control={control} name="idTrilha" render={({ field: { onChange } }) => (
+
               <Autocomplete
                 disablePortal
+                disabled={!watchFilter.idPrograma ? true : false}
+                onChange={(event, data) => onChange(data?.id)}
                 onInputChange={(event, value) => {
                   filtroDebounce(value, pegarTrilhaFiltroNome, pegarTrilha)
                 }}
@@ -105,16 +121,19 @@ export const CadastrarAvaliacao = () => {
                 id="trilha"
                 getOptionLabel={(option) => option.label}
                 isOptionEqualToValue={(option, value) => option.label === value.label}
-                options={trilhas ? trilhas.elementos.map(item => ({ label: `${item.nome}`, id: item.idTrilha })) : []}
+                options={trilhasPorPrograma ? trilhasPorPrograma.map(item => ({ label: `${item.nome}`, id: item.idTrilha })) : []}
                 renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
                 renderInput={(params) => <TextField {...params} label="Trilha" variant="filled" />}
               />
-            {/* {errors.idTrilha && <Typography id="erro-nome-trilha" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.idTrilha.message}</Typography>} */}
+              )}/>
+              {/* {errors.idTrilha && <Typography id="erro-nome-trilha" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.idTrilha.message}</Typography>} */}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
             <Controller control={control} name="idAluno" render={({ field: { onChange } }) => (
-              <Autocomplete disablePortal onInputChange={(event, value) => {
+              <Autocomplete disablePortal
+              disabled={!watchFilter.idPrograma ? true : false}
+              onInputChange={(event, value) => {
                 filtroDebounce(value, pegarAlunoDisponivelPorNome, pegarAlunoDisponivel)
               }}
                 noOptionsText={"Nenhum aluno encontrado"} onChange={(event, data) => onChange(data?.id)} id="aluno" renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)} getOptionLabel={(option) => option.label} isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: `${aluno.nome}`, id: aluno.idAluno })) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />

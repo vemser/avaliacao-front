@@ -7,8 +7,8 @@ import { toast } from "react-toastify";
 
 import { toastConfig } from "../../utils/toast";
 import { API } from "../../utils/api";
-import { IChildren, IDadosTrilha, ITrilha, ITrilhasAPI } from "../../utils/TrilhaInterface/trilha";
-import { usePrograma } from "./ProgramaContext";
+import { IChildren, IDadosTrilha, ITrilha, ITrilhasAPI, ITrilhasPorPrograma } from "../../utils/TrilhaInterface/trilha";
+
 import axios from "axios";
 
 export const TrilhaContext = createContext({} as ITrilha);
@@ -16,6 +16,8 @@ export const TrilhaContext = createContext({} as ITrilha);
 export const TrilhaProvider = ({ children }: IChildren) => {
   const navigate = useNavigate();
   const [trilhas, setTrilhas] = useState<ITrilhasAPI | null>(null);
+
+  const [trilhasPorPrograma, setTrilhasPorPrograma] = useState<ITrilhasPorPrograma[]>([]);
 
   const pegarTrilha = async (pagina: number = 0, tamanho: number = 10) => {
     try {
@@ -94,6 +96,25 @@ export const TrilhaProvider = ({ children }: IChildren) => {
     }
   };
 
+  const pegarTrilhaPorPrograma = async (id: number) => {
+    try {
+      nProgress.start();
+      await API.get(`/trilha/trilhas-por-programa?idPrograma=${id}`, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
+        setTrilhasPorPrograma(response.data)
+      })
+    } catch (error: any) {
+      let message = "Ops, algo deu errado!";
+      if (error.response.status === 403) {
+        message = "Você não tem permissão para acessar esse recurso"
+      } else if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message || error.response.data.errors[0];
+      }  
+      toast.error(message, toastConfig);
+    } finally {
+      nProgress.done();
+    }
+  }
+
   const editarTrilha = async (dadosTrilha: IDadosTrilha, idTrilha: number) => {
     try {
       nProgress.start();
@@ -134,7 +155,7 @@ export const TrilhaProvider = ({ children }: IChildren) => {
   };
 
   return (
-    <TrilhaContext.Provider value={{ cadastrarTrilha, pegarTrilha, editarTrilha, deletarTrilha, pegarTrilhaFiltroNome, pegarTrilhaFiltroID, trilhas }}>
+    <TrilhaContext.Provider value={{ cadastrarTrilha, pegarTrilha, editarTrilha, deletarTrilha, pegarTrilhaFiltroNome, pegarTrilhaFiltroID, pegarTrilhaPorPrograma, trilhasPorPrograma, trilhas }}>
       {children}
     </TrilhaContext.Provider>
   );

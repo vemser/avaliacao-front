@@ -1,17 +1,12 @@
-import React, { useContext } from "react";
+import React, { useEffect } from "react";
 
 import { useLocation, useNavigate } from "react-router-dom"
 
-import { TablePagination, Box, Typography, Stack, Button, Paper, styled, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableRow, TableHead } from "@mui/material";
+import { Box, Typography, Stack, Button, Paper, styled, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableRow, TableHead } from "@mui/material";
 
 import EditIcon from "@mui/icons-material/Edit";
 
-import { GestorContext } from "../../context/GestorContext";
-import { InstrutorContext } from "../../context/InstrutorContext";
-
 import * as Componentes from "../../components";
-
-import { formatarNomeCompleto } from "../../utils/functions";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: { backgroundColor: theme.palette.common.black, color: theme.palette.common.white },
@@ -38,39 +33,13 @@ const columnsFeedback: ColumnFeedback[] = [
   { id: "acoes", label: "Ações", minWidth: 5 }
 ];
 
-interface Column {
-  id: "codigo" | "dataCriacao" | "descricao" | "responsavel" | "acoes";
-  label: string;
-  minWidth?: number;
-  align?: "right";
-}
-
-const columns: Column[] = [
-  { id: "codigo", label: "Código", minWidth: 5 },
-  { id: "dataCriacao", label: "Data Criação", minWidth: 5 },
-  { id: "descricao", label: "Descrição", minWidth: 5 },
-  { id: "responsavel", label: "Responsável", minWidth: 5 },
-  { id: "acoes", label: "Ações", minWidth: 5 }
-];
-
 export const ConfiguracaoPrograma: React.FC = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { state } = useLocation();
 
-  const { pegarAvaliacaoPorID, avaliacoesPorID, paginacaoAvaliacao } = useContext(GestorContext);
-  const { pegarFeedbackPorID, feedbackPorID, paginacaoFeedback } = useContext(InstrutorContext)
-
-  // Paginação Avaliacao
-  const handleChangePageAvaliacao = async (event: unknown, newPage: number) => { await pegarAvaliacaoPorID(state.idAluno, newPage); }
-
-  // Paginação Feedback
-  const handleChangePageFeedBack = async (event: unknown, newPage: number) => { await pegarFeedbackPorID(state.idAluno, newPage); }
-
-  // useEffect(() => { 
-  //   pegarAvaliacaoPorID(state.idAluno, 0);
-  //   pegarFeedbackPorID(state.idAluno, 0);
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [])
+  useEffect(() => {
+    console.log(state)
+  }, [])
 
   return (
     <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "60px", paddingBottom: "50px" }}>
@@ -107,61 +76,28 @@ export const ConfiguracaoPrograma: React.FC = () => {
                 </TableHead>
 
                 <TableBody>
-                  {feedbackPorID.map((feedback) => (
-                    <StyledTableRow key={feedback.idFeedBack}>
-                      <StyledTableCell sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row">{feedback.idFeedBack}</StyledTableCell>
-                      <StyledTableCell sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row">{feedback.descricao}</StyledTableCell>
-                      <StyledTableCell id="nome" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }}>{feedback.tipo}</StyledTableCell>
-                      <StyledTableCell id="email" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100px" }}>{feedback.usuarioDTO.nome}</StyledTableCell>
-                      <StyledTableCell id="cargo" sx={{ textAlign: "center" }}>
-                        <Button id="botao-avaliar-acompanhamento" onClick={() => { navigate("/editar-feedback", { state: feedback }) }} title="Avaliar acompanhamento"><EditIcon />
-                        </Button>
-                      </StyledTableCell>
-                    </StyledTableRow>
-                  ))}
+                  <StyledTableRow key={1}>
+                    <StyledTableCell sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row">{'id'}</StyledTableCell>
+
+                    <StyledTableCell sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row">{'descricao'}</StyledTableCell>
+
+                    <StyledTableCell id="nome" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }}>{'tipo'}</StyledTableCell>
+
+                    <StyledTableCell id="email" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100px" }}>{'nome'}</StyledTableCell>
+
+                    <StyledTableCell id="cargo" sx={{ textAlign: "center" }}>
+                      <Button id="botao-avaliar-acompanhamento" onClick={() => { navigate("/editar-feedback") }} title="Avaliar acompanhamento"><EditIcon />
+                      </Button>
+                    </StyledTableCell>
+                  </StyledTableRow>
                 </TableBody>
               </Table>
             </TableContainer>
 
             {/* Paginação */}
-            <TablePagination rowsPerPageOptions={[]} component="div" count={paginacaoFeedback.totalElementos} rowsPerPage={paginacaoFeedback.tamanho} page={paginacaoFeedback.pagina} onPageChange={handleChangePageFeedBack} />
+            {/* <TablePagination rowsPerPageOptions={[]} component="div" count={paginacaoFeedback.totalElementos} rowsPerPage={paginacaoFeedback.tamanho} page={paginacaoFeedback.pagina} onPageChange={handleChangePageFeedBack} /> */}
           </Paper>
 
-          {/* Tabela Avaliações */}
-
-          <Typography sx={{ fontWeight: 700, color: "var(--azul-claro-dbc)", fontSize: "22px", marginBottom: "-15px !important", userSelect: "none" }}>Avaliações:</Typography>
-
-          <Paper sx={{ width: "100%", marginBottom: "15px" }}>
-            <TableContainer sx={{ maxHeight: { xs: 600, md: 200 }, boxShadow: "5px 5px 5px solid light-gray" }}>
-              <Table stickyHeader aria-label="sticky table">
-
-                <TableHead sx={{ backgroundColor: "#090F27" }}>
-                  <TableRow>
-                    {columns.map((column) => (
-                      <TableCell key={column.id} align={column.align} style={{ minWidth: "20%", fontWeight: "700", fontSize: "1rem", textAlign: "center", backgroundColor: "#090F27", color: "white" }}>{column.label}</TableCell>
-                    ))}
-                  </TableRow>
-                </TableHead>
-
-                <TableBody>
-                  {avaliacoesPorID.map((avaliacao) => (
-                    <StyledTableRow key={avaliacao.idAvaliacao}>
-                      <StyledTableCell id={`idAvaliacao-${avaliacao.idAvaliacao}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }} component="td" scope="row">{avaliacao.idAvaliacao}</StyledTableCell>
-                      <StyledTableCell id={`dataInicio-${avaliacao.idAvaliacao}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100px" }}>{avaliacao.dataCriacao.replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")}</StyledTableCell>
-                      <StyledTableCell id={`descricao-${avaliacao.idAvaliacao}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem" }}>{avaliacao.descricao}</StyledTableCell>
-                      <StyledTableCell id={`responsavel-${avaliacao.idAvaliacao}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100px" }}>{avaliacao.responsavel.nome}</StyledTableCell>
-                      <StyledTableCell id={`acoes-${avaliacao.idAvaliacao}`} sx={{ textAlign: "center" }}><Button id={`botao-avaliar-acompanhamento-${avaliacao.idAvaliacao}`}
-                        onClick={() => { navigate("/editar-avaliacao", { state: avaliacao }) }}
-                        title="Editar Avaliação"><EditIcon /></Button></StyledTableCell>
-                    </StyledTableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-
-            {/* Paginação */}
-            <TablePagination rowsPerPageOptions={[]} component="div" count={paginacaoAvaliacao.totalElementos} rowsPerPage={paginacaoAvaliacao.tamanho} page={paginacaoAvaliacao.pagina} onPageChange={handleChangePageAvaliacao} />
-          </Paper>
         </Stack>
 
         <Button onClick={() => { navigate(-1) }} variant="contained" sx={{ width: "160px", marginTop: "20px", textTransform: "capitalize", fontSize: "1rem" }}>Voltar</Button>

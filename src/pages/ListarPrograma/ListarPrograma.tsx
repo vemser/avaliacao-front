@@ -24,7 +24,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 interface Column {
-  id: "codigo" | "nome" | "descricao" | "situacao" | "dataInicio" | "dataFim" | "acoes";
+  id: "codigo" | "nome" | "dataInicio" | "dataFim" | "acoes";
   label: string;
   minWidth?: number;
   align?: "right";
@@ -33,8 +33,6 @@ interface Column {
 const columns: Column[] = [
   { id: "codigo", label: "Código", minWidth: 5 },
   { id: "nome", label: "Nome", minWidth: 5 },
-  { id: "descricao", label: "Descrição", minWidth: 5 },
-  { id: "situacao", label: "Situação", minWidth: 5 },
   { id: "dataInicio", label: "Data Inicial", minWidth: 5 },
   { id: "dataFim", label: "Data Final", minWidth: 5 },
   { id: "acoes", label: "Ações", minWidth: 5 }
@@ -128,12 +126,6 @@ export const ListarProgramas = () => {
                       <StyledTableCell id="nome-programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }} component="td" scope="row">{programa.nome}</StyledTableCell>
                     </Tooltip>
 
-                    <Tooltip title={programa.descricao} PopperProps={{ sx: { marginTop: "-25px !important" } }} arrow>
-                      <StyledTableCell id="descricao-programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }}>{programa.descricao ? programa.descricao : "Sem descrição"}</StyledTableCell>
-                    </Tooltip>
-
-                    <StyledTableCell id="situacao-programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }}>{formatarTexto(programa.situacaoVagaPrograma)}</StyledTableCell>
-
                     <StyledTableCell id="dataInicio-programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }}>{programa.dataInicio.replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")}</StyledTableCell>
 
                     <StyledTableCell id="dataFim-programa" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }}>{programa.dataFim.replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")}</StyledTableCell>
@@ -143,7 +135,7 @@ export const ListarProgramas = () => {
 
                       <Button id={`botao-clonar-${programa.idPrograma}`} title="Clonar" onClick={() => clonarPrograma(programa.idPrograma)}><FileCopyIcon /></Button>
 
-                      <Button id={`botao-configuracao-${programa.idPrograma}`} title="Configurações" onClick={() => navigate("", { state: programa })}><SettingsIcon /></Button>
+                      <Button id={`botao-configuracao-${programa.idPrograma}`} title="Configurações" onClick={() => navigate("/configuracao-programa", { state: programa })}><SettingsIcon /></Button>
 
                       <Button id={`botao-deletar-${programa.idPrograma}`} title="Deletar" onClick={() => { handleOpen(); setIdDelete(programa.idPrograma) }}><DeleteForeverIcon /></Button>
                     </StyledTableCell>

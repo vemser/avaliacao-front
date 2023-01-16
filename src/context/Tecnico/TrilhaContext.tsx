@@ -21,8 +21,8 @@ export const TrilhaProvider = ({ children }: IChildren) => {
 
   const pegarTrilha = async (pagina: number = 0, tamanho: number = 10) => {
     try {
-      nProgress.start();     
-      await API.get(`/trilha/lista-trilha-page?page=${pagina}&size=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
+      nProgress.start();
+      await API.get(`/trilha/lista-trilha-page?page=${pagina}&size=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") } }).then((response) => {
         setTrilhas(response.data)
       })
     } catch (error: any) {
@@ -31,7 +31,7 @@ export const TrilhaProvider = ({ children }: IChildren) => {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      }  
+      }
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -41,7 +41,7 @@ export const TrilhaProvider = ({ children }: IChildren) => {
   const pegarTrilhaFiltroID = async (id: string) => {
     try {
       nProgress.start();
-      await API.get(`/trilha/find-id-trilha?idTrilha=${id}`, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
+      await API.get(`/trilha/find-id-trilha?idTrilha=${id}`, { headers: { Authorization: localStorage.getItem("token") } }).then((response) => {
         setTrilhas({ totalElementos: 1, quantidadePaginas: 1, pagina: 0, tamanho: 1, elementos: [response.data] })
       })
     } catch (error: any) {
@@ -50,7 +50,7 @@ export const TrilhaProvider = ({ children }: IChildren) => {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      }  
+      }
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -60,7 +60,7 @@ export const TrilhaProvider = ({ children }: IChildren) => {
   const pegarTrilhaFiltroNome = async (nome: string, pagina: number = 0, tamanho: number = 10) => {
     try {
       nProgress.start();
-      await API.get(`/trilha/lista-trilha-nome?nome=${nome}&page=${pagina}&size=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
+      await API.get(`/trilha/lista-trilha-nome?nome=${nome}&page=${pagina}&size=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") } }).then((response) => {
         setTrilhas(response.data)
       })
     } catch (error: any) {
@@ -69,7 +69,7 @@ export const TrilhaProvider = ({ children }: IChildren) => {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      }  
+      }
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -79,7 +79,7 @@ export const TrilhaProvider = ({ children }: IChildren) => {
   const cadastrarTrilha = async (dadosTrilha: IDadosTrilha) => {
     try {
       nProgress.start();
-      await API.post('/trilha', dadosTrilha, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
+      await API.post('/trilha', dadosTrilha, { headers: { Authorization: localStorage.getItem("token") } }).then((response) => {
         navigate('/trilhas-e-programas');
         toast.success('Trilha cadastrada com sucesso!', toastConfig);
       })
@@ -89,7 +89,7 @@ export const TrilhaProvider = ({ children }: IChildren) => {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      }  
+      }
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -118,7 +118,7 @@ export const TrilhaProvider = ({ children }: IChildren) => {
   const editarTrilha = async (dadosTrilha: IDadosTrilha, idTrilha: number) => {
     try {
       nProgress.start();
-      await API.put(`/trilha/update/${idTrilha}`, dadosTrilha, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
+      await API.put(`/trilha/update/${idTrilha}`, dadosTrilha, { headers: { Authorization: localStorage.getItem("token") } }).then((response) => {
         navigate('/trilhas-e-programas');
         toast.success('Trilha foi editada com sucesso.', toastConfig);
       });
@@ -128,7 +128,7 @@ export const TrilhaProvider = ({ children }: IChildren) => {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      }  
+      }
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -138,7 +138,7 @@ export const TrilhaProvider = ({ children }: IChildren) => {
   const deletarTrilha = async (idTrilha: number | undefined) => {
     try {
       nProgress.start();
-      await API.delete(`/trilha/${idTrilha}`, { headers: { Authorization: localStorage.getItem("token") }});
+      await API.delete(`/trilha/${idTrilha}`, { headers: { Authorization: localStorage.getItem("token") } });
       toast.success('Trilha desativada com sucesso!', toastConfig);
       pegarTrilha();
     } catch (error: any) {
@@ -147,13 +147,13 @@ export const TrilhaProvider = ({ children }: IChildren) => {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      }  
+      }
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
     }
   };
-  
+
   return (
     <TrilhaContext.Provider value={{ cadastrarTrilha, pegarTrilha, editarTrilha, deletarTrilha, pegarTrilhaFiltroNome, pegarTrilhaFiltroID, pegarTrilhaPorPrograma, trilhasPorPrograma, trilhas }}>
       {children}

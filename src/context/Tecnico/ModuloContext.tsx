@@ -7,7 +7,7 @@ import { toastConfig } from "../../utils/toast";
 import { toast } from "react-toastify";
 import nProgress from "nprogress";
 
-import { ICadastroModulo, IModulo, IModuloAPI } from "../../utils/ModuloInterface/Modulo";
+import { ICadastroModulo, IModulo, IModuloAPI, IModulosPorTrilha } from "../../utils/ModuloInterface/Modulo";
 import { IChildren } from "../../utils/interface";
 import axios from "axios";
 
@@ -16,6 +16,8 @@ export const ModuloContext = createContext({} as IModulo);
 export const ModuloProvider = ({ children }: IChildren) => {
   const navigate = useNavigate();
   const [modulo, setModulo] = useState<IModuloAPI | null>(null);
+
+  const [moduloPorTrilha, setModuloPorTrilha] = useState<IModulosPorTrilha[]>([]);
 
   const pegarModulo = async (pagina: number = 0, tamanho: number = 10) => {
     try {
@@ -40,6 +42,25 @@ export const ModuloProvider = ({ children }: IChildren) => {
       nProgress.start();
       await API.get(`/modulo/listar-id-nome?pagina=${pagina}&tamanho=${tamanho}${filtros}`, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
         setModulo(response.data);
+      })
+    } catch (error: any) {
+      let message = "Ops, algo deu errado!";
+      if (error.response.status === 403) {
+        message = "Você não tem permissão para acessar esse recurso"
+      } else if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message || error.response.data.errors[0];
+      }  
+      toast.error(message, toastConfig);
+    } finally {
+      nProgress.done();
+    }
+  }
+
+  const pegarModuloPorTrilha = async (id: number) => {
+    try {
+      nProgress.start();
+      await API.get(`/modulo/listar-modulos-por-trilha?idTrilha=${id}`, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
+        setModuloPorTrilha(response.data)
       })
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
@@ -132,7 +153,7 @@ export const ModuloProvider = ({ children }: IChildren) => {
   }
 
   return (
-    <ModuloContext.Provider value={{ pegarModulo, modulo, deletarModulo, cadastrarModulo, editarModulo, pegarModuloPorFiltro, clonarModulo }}>
+    <ModuloContext.Provider value={{ pegarModulo, modulo, deletarModulo, cadastrarModulo, editarModulo, pegarModuloPorFiltro, clonarModulo, pegarModuloPorTrilha, moduloPorTrilha }}>
       {children}
     </ModuloContext.Provider>
   )

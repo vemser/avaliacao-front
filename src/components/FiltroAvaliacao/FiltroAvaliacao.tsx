@@ -1,21 +1,24 @@
-import { Autocomplete, Button, TextField, Select, MenuItem, InputLabel, FormControl, Box } from "@mui/material";
+import { Autocomplete, Button, TextField, Select, MenuItem, InputLabel, FormControl } from "@mui/material";
 import { useEffect } from "react";
 import { useAcompanhamento } from "../../context/Comportamental/AcompanhamentoContext";
 import { useAluno } from "../../context/Comportamental/AlunoContext";
 import { filtroDebounce } from "../../utils/functions";
 import { useForm, Controller } from "react-hook-form";
 import { useAvaliacao } from "../../context/Comportamental/AvaliacaoContext";
+import { usePrograma } from "../../context/Tecnico/ProgramaContext";
 
 interface IFiltro {
-  tituloAcompanhamento: string,
-  nomeAluno: string,
-  tipoAvaliacao: string,
+  tituloAcompanhamento: string | null,
+  programa: { label: string, id: number } | null,
+  nomeAluno: { label: string, id: number } | null,
+  tipoAvaliacao: string | null,
 }
 
 export const FiltroAvaliacao = () => {
   const { alunos, pegarAluno } = useAluno();
   const { acompanhamentos, pegarAcompanhamentoTitulo, pegarAcompanhamentos } = useAcompanhamento();
   const { pegarAvaliacao } = useAvaliacao();
+  const { programas, pegarProgramaAtivo, pegarProgramaPorNomeAtivo } = usePrograma();
   const { handleSubmit, register, control, reset, watch } = useForm<IFiltro>();
 
   const watchTodos = watch();
@@ -23,22 +26,25 @@ export const FiltroAvaliacao = () => {
   useEffect(() => {
     pegarAluno(0, 10);
     pegarAcompanhamentos(0, 10);
+    pegarProgramaAtivo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const filtrar = async (data: IFiltro) => {
     var string = "";
-    if (data.tituloAcompanhamento) string += `&tituloAcompanhamento=${data.tituloAcompanhamento}`;
-    if (data.nomeAluno) string += `&nomeAluno=${data.nomeAluno}`;
-    if (data.tipoAvaliacao) string += `&tipoAvaliacao=${data.tipoAvaliacao}`;
+    if (data.tituloAcompanhamento) string += `&tituloAcompanhamento=${data.tituloAcompanhamento.trim()}`;
+    if (data.nomeAluno) string += `&nomeAluno=${data.nomeAluno.label.trim()}`;
+    if (data.tipoAvaliacao) string += `&tipoAvaliacao=${data.tipoAvaliacao.trim()}`;
+    //if (data.programa) string += `&nomePrograma=${data.programa.id}`;
     await pegarAvaliacao(0, 10, string);
   }
 
   const resetar = async () => {
     reset({
-      tituloAcompanhamento: "",
-      nomeAluno: "",
-      tipoAvaliacao: "",
+      programa: null,
+      tituloAcompanhamento: null,
+      nomeAluno: null,
+      tipoAvaliacao: null,
     })
     await pegarAluno(0, 10);
     await pegarAcompanhamentos(0, 10);
@@ -60,26 +66,47 @@ export const FiltroAvaliacao = () => {
           getOptionLabel={(option) => option.label}
           isOptionEqualToValue={(option, value) => option.label === value.label}
           noOptionsText={""}
-          options={acompanhamentos ? acompanhamentos.elementos.map((acompanhamento) => { return { label: acompanhamento.titulo} }) : []}
+          options={acompanhamentos ? acompanhamentos.elementos.map((acompanhamento) => { return { label: acompanhamento.titulo } }) : []}
           sx={{ minWidth: 200, display: "flex" }}
           renderInput={(params) => <TextField {...params} label="Acompanhamento" />}
         />
       )} />
 
+      <Controller control={control} name="programa" render={({ field: { onChange } }) => (
+        <Autocomplete
+          onChange={(event, data) => onChange(data)}
+          size="small"
+          disablePortal
+          id="combo-box-demo"
+          onInputChange={(event, value) => {
+            filtroDebounce(value, pegarProgramaPorNomeAtivo, pegarProgramaAtivo)
+          }}
+          value={watchTodos.programa ? { label: watchTodos.programa.label, id: watchTodos.programa.id } : null}
+          getOptionLabel={(option) => option.label}
+          isOptionEqualToValue={(option, value) => option.label === value.label}
+          noOptionsText={""}
+          options={programas ? programas.elementos.map((programa) => { return { label: programa.nome, id: programa.idPrograma } }) : []}
+          renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
+          sx={{ minWidth: 200, display: "flex" }}
+          renderInput={(params) => <TextField {...params} label="Programa" />}
+        />
+      )} />
+
       <Controller control={control} name="nomeAluno" render={({ field: { onChange } }) => (
         <Autocomplete
-          onChange={(event, data) => onChange(data?.label)}
+          onChange={(event, data) => onChange(data)}
           size="small"
           disablePortal
           id="combo-box-demo"
           onInputChange={(event, value) => {
             filtroDebounce(value, pegarAluno, pegarAluno, `&nome=${value}`)
           }}
-          value={watchTodos.nomeAluno ? { label: `${watchTodos.nomeAluno}`} : null}
+          value={watchTodos.nomeAluno ? { label: watchTodos.nomeAluno.label, id: watchTodos.nomeAluno.id } : null}
           getOptionLabel={(option) => option.label}
           isOptionEqualToValue={(option, value) => option.label === value.label}
           noOptionsText={""}
-          options={alunos ? alunos.elementos.map((aluno) => { return { label: aluno.nome} }) : []}
+          renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
+          options={alunos ? alunos.elementos.map((aluno) => { return { label: aluno.nome, id: aluno.idAluno } }) : []}
           sx={{ minWidth: 200, display: "flex" }}
           renderInput={(params) => <TextField {...params} label="Alunos" />}
         />

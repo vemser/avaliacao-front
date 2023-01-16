@@ -58,13 +58,14 @@ export const ConfiguracaoPrograma: React.FC = () => {
   const [idTrilhaDelete, setIdTrilhaDelete] = useState<number | undefined>();
   const [idModuloDelete, setIdModuloDelete] = useState<number | undefined>();
   const [open, setOpen] = useState(false);
+  const [updateList, setUpdateList] = useState<boolean>(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   useEffect(() => {
     pegarProgramaCompleto(state.idPrograma);
-  }, [])
+  }, [updateList])
 
   return (
     <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "60px", paddingBottom: "50px" }}>
@@ -147,12 +148,12 @@ export const ConfiguracaoPrograma: React.FC = () => {
               <Button type="button" onClick={() => {
                 if (idTrilhaDelete) {
                   deletarTrilha(idTrilhaDelete);
-                  pegarProgramaCompleto(state.idPrograma);
+                  setUpdateList(!updateList);
                   setIdTrilhaDelete(undefined);
                   handleClose();
                 } if (idModuloDelete) {
                   deletarModulo(idModuloDelete);
-                  pegarProgramaCompleto(state.idPrograma);
+                  setUpdateList(!updateList);
                   setIdModuloDelete(undefined);
                   handleClose();
                 }

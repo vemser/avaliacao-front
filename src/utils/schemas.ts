@@ -12,7 +12,7 @@ export const userSchema = yup.object().shape({
 });
 
 export const alunoSchema = yup.object().shape({
-  nome: yup.string().required("Por favor, digite o nome completo").min(3,"O nome deve conter no mínimo 3 caracteres").matches(regexNome, 'Por favor, digite apenas letras.'),
+  nome: yup.string().required("Por favor, digite o nome completo").min(3, "O nome deve conter no mínimo 3 caracteres").matches(regexNome, 'Por favor, digite apenas letras.'),
   telefone: yup.string().required("Por favor, digite o telefone"),
   cidade: yup.string().required("Por favor, digite a cidade").matches(regexNome, 'Por favor, digite apenas letras.'),
   estado: yup.string().required("Por favor, digite o estado").matches(regexNome, 'Por favor, digite apenas letras.'),
@@ -24,41 +24,41 @@ export const alunoSchema = yup.object().shape({
 });
 
 export const trilhaSchema = yup.object().shape({
-  nome: yup.string().required("Por favor, digite o nome da Trilha").min(3,"O nome deve conter no mínimo 3 caracteres").matches(regexNome, 'Por favor, digite apenas letras.'),
+  nome: yup.string().required("Por favor, digite o nome da Trilha").min(3, "O nome deve conter no mínimo 3 caracteres").matches(regexNome, 'Por favor, digite apenas letras.'),
   descricao: yup.string()
 })
 
 export const editarAlunoSchema = yup.object().shape({
-  nome: yup.string().required("Por favor, digite o nome completo").min(3,"O nome deve conter no mínimo 3 caracteres").matches(regexNome, 'Por favor, digite apenas letras.'),
+  nome: yup.string().required("Por favor, digite o nome completo").min(3, "O nome deve conter no mínimo 3 caracteres").matches(regexNome, 'Por favor, digite apenas letras.'),
   email: yup.string().required("Por favor, digite o e-mail").email("Por favor, digite um e-mail válido").matches(regexEmail, "Necessário ser e-mail @dbccompany.com.br"),
   trilha: Object({ nome: yup.string().required("Edição é obrigatória!") })
 });
 
 // tirar
 export const editarNomePerfil = yup.object().shape({
-  nome: yup.string().required("Por favor, digite seu nome completo").min(3,"O nome deve conter no mínimo 3 caracteres")
+  nome: yup.string().required("Por favor, digite seu nome completo").min(3, "O nome deve conter no mínimo 3 caracteres")
 })
 
 export const colaboradorSchema = yup.object().shape({
-  nome: yup.string().required("Por favor, digite o nome completo").min(3,"O nome deve conter no mínimo 3 caracteres"),
+  nome: yup.string().required("Por favor, digite o nome completo").min(3, "O nome deve conter no mínimo 3 caracteres"),
   email: yup.string().required("Por favor, digite o e-mail").email("Por favor, digite um e-mail válido").matches(regexEmail, "Necessário ser e-mail @dbccompany.com.br"),
   cargo: yup.string().required("Por favor, escolha um dos tipos de perfil.").nullable()
 });
 
 export const editarColaboradorSchema = yup.object().shape({
-  nome: yup.string().required("Por favor, digite o nome completo").min(3,"O nome deve conter no mínimo 3 caracteres"),
+  nome: yup.string().required("Por favor, digite o nome completo").min(3, "O nome deve conter no mínimo 3 caracteres"),
   email: yup.string().required("Por favor, digite o e-mail").email("Por favor, digite um e-mail válido").matches(regexEmail, "Necessário ser e-mail @dbccompany.com.br")
 });
 
 export const redefinirSenhaSchema = yup.object().shape({
-  novaSenha: yup.string().required("Por favor, digite sua nova senha").min(8,"A nova senha deve conter no mínimo 8 caracteres"),
-  confirmarNovaSenha: yup.string().required("Por favor, confirme sua nova senha.").oneOf([yup.ref("novaSenha")],"As senhas devem corresponder!")
+  novaSenha: yup.string().required("Por favor, digite sua nova senha").min(8, "A nova senha deve conter no mínimo 8 caracteres"),
+  confirmarNovaSenha: yup.string().required("Por favor, confirme sua nova senha.").oneOf([yup.ref("novaSenha")], "As senhas devem corresponder!")
 });
 
 export const AlterarSenhaSchema = yup.object().shape({
-  senhaAntiga: yup.string().required("Por favor, digite sua antiga senha").min(8,"A nova senha deve conter no mínimo 8 caracteres"),
-  novaSenha: yup.string().required("Por favor, digite sua nova senha").min(8,"A nova senha deve conter no mínimo 8 caracteres"),
-  confirmarNovaSenha: yup.string().required("Por favor, confirme sua nova senha.").oneOf([yup.ref("novaSenha")],"As senhas devem corresponder!")
+  senhaAntiga: yup.string().required("Por favor, digite sua antiga senha").min(8, "A nova senha deve conter no mínimo 8 caracteres"),
+  novaSenha: yup.string().required("Por favor, digite sua nova senha").min(8, "A nova senha deve conter no mínimo 8 caracteres"),
+  confirmarNovaSenha: yup.string().required("Por favor, confirme sua nova senha.").oneOf([yup.ref("novaSenha")], "As senhas devem corresponder!")
 });
 
 export const CadastrarAcompanhamentoSchema = yup.object().shape({
@@ -71,14 +71,14 @@ export const CadastrarAcompanhamentoSchema = yup.object().shape({
 
 export const EditarAvaliacaoSchema = yup.object().shape({
   idAcompanhamento: yup.string().required("Por favor, selecione um acompanhamento"),
-  idAluno:  yup.string().required("Por favor, selecione uns dos alunos"),
+  idAluno: yup.string().required("Por favor, selecione uns dos alunos"),
   status: yup.string().required("Por favor, selecione uns dos tipos"),
   descricao: yup.string().required("Por favor, digite alguma coisa na descrição")
 })
 
 export const CriarAvaliacaoSchema = yup.object().shape({
   idAcompanhamento: yup.string().required("Por favor, selecione um acompanhamento"),
-  idAluno:  yup.string().required("Por favor, selecione uns dos alunos"),
+  idAluno: yup.string().required("Por favor, selecione uns dos alunos"),
   tipo: yup.string().required("Por favor, selecione uns dos tipos"),
   descricao: yup.string().required("Por favor, digite alguma coisa na descrição"),
   dataCriacao: yup.string().required("Por favor, escolha uma data inicial")
@@ -101,6 +101,7 @@ export const ProgramaSchema = yup.object().shape({
 
 export const moduloSchema = yup.object().shape({
   nome: yup.string().required("Por favor, insira um nome para a trilha").matches(regexNome, 'Por favor, digite apenas letras.'),
+  trilha: yup.array().of(yup.number()).required("Por favor, selecione ao menos uma trilha")
 })
 
 export const ClienteSchema = yup.object().shape({
@@ -138,13 +139,13 @@ export const feedbackSchema = yup.object().shape({
   situacao: yup.string().required("Por favor, insira a situação do feedback"),
   idPrograma: yup.string().required("Por favor, selecione um programa"),
   idTrilha: yup.string().required("Por favor, escolha uma trilha"),
-  modulo: yup.array().of(yup.number().required("Por favor, escolha um ou mais módulos"))
+  modulo: yup.array().of(yup.number()).required("Por favor, escolha um ou mais módulos")
 })
 
 export const avalicaoSchema = yup.object().shape({
   descricao: yup.string().required("Por favor, insira uma descrição"),
   idAcompanhamento: yup.string().required("Por favor, escolha um acompanhamento"),
-  idAluno: yup.object().shape({label: yup.string(), id: yup.number()}).required("Por favor, escolha um aluno"),
+  idAluno: yup.object().shape({ label: yup.string(), id: yup.number() }).required("Por favor, escolha um aluno"),
   tipoAvaliacao: yup.string().required("Por favor, insira a situação da avaliação")
 })
 

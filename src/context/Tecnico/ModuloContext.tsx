@@ -79,7 +79,7 @@ export const ModuloProvider = ({ children }: IChildren) => {
     try {
       nProgress.start();
       await API.post("/modulo/adicionar", dadosModulo, { headers: { Authorization: localStorage.getItem("token") }});
-      navigate("/configuracao-programa");
+      navigate("/programas");
       toast.success("Módulo cadastrado com sucesso!", toastConfig);
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
@@ -137,8 +137,7 @@ export const ModuloProvider = ({ children }: IChildren) => {
     try {
       nProgress.start()
       await API.delete(`/modulo/desativar?idModulo=${id}`, { headers: { Authorization: localStorage.getItem("token") }});
-      toast.success("Módulo desativado com sucesso!", toastConfig)
-      pegarModulo()
+      toast.success("Módulo desativado com sucesso!", toastConfig);
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
       if (error.response.status === 403) {

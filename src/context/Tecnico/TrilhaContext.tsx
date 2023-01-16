@@ -80,7 +80,7 @@ export const TrilhaProvider = ({ children }: IChildren) => {
     try {
       nProgress.start();
       await API.post('/trilha', dadosTrilha, { headers: { Authorization: localStorage.getItem("token") } }).then((response) => {
-        navigate('/configuracao-programa');
+        navigate('/programas');
         toast.success('Trilha cadastrada com sucesso!', toastConfig);
       })
     } catch (error: any) {
@@ -119,7 +119,7 @@ export const TrilhaProvider = ({ children }: IChildren) => {
     try {
       nProgress.start();
       await API.put(`/trilha/update/${idTrilha}`, dadosTrilha, { headers: { Authorization: localStorage.getItem("token") } }).then((response) => {
-        navigate('/trilhas-e-programas');
+        navigate('/programas');
         toast.success('Trilha foi editada com sucesso.', toastConfig);
       });
     } catch (error: any) {

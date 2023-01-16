@@ -52,7 +52,7 @@ export const CadastrarFeedback = () => {
   const cadastrar = (data: IFeedbackCadastro) => {
     const novaData = { ...data, modulo: moduloSelecionado }
     setDataModulo(novaData.modulo.toString())
-    cadastrarFeedback(novaData)
+    console.log(novaData)
   }
 
   useEffect(() => {
@@ -65,10 +65,14 @@ export const CadastrarFeedback = () => {
   useEffect(() => {
     if(filtros.idPrograma) pegarProgramaPorTrilhaModulo(parseInt(filtros.idPrograma))
     if(filtros.idTrilha) pegarModuloPorTrilha(parseInt(filtros.idTrilha))
+
     if(filtros.idPrograma) {
-      pegarAlunoPorTrilha(parseInt(filtros.idPrograma))
-    } else if(filtros.idPrograma && filtros.idTrilha) {
-      pegarAlunoPorTrilha(parseInt(filtros.idPrograma), parseInt(filtros.idTrilha))
+      if(!filtros.idTrilha) { // Filtra aluno pelo programa
+        pegarAlunoPorTrilha(parseInt(filtros.idPrograma))
+      }
+      if(filtros.idTrilha) { // Filtra aluno pelo programa e trilha
+        pegarAlunoPorTrilha(parseInt(filtros.idPrograma), parseInt(filtros.idTrilha)) 
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filtros.idPrograma, filtros.idTrilha])
@@ -138,7 +142,7 @@ export const CadastrarFeedback = () => {
 
           <FormControl sx={{ width: "100%" }} >
             <Controller control={control} name="idAluno" render={({ field: { onChange } }) => (
-              <Autocomplete disablePortal
+              <Autocomplete disablePortal noOptionsText="Nenhum(a) aluno(a) encontrado(a)"
               disabled={!filtros.idPrograma ? true : false}
               onInputChange={(event, value) => {
                 filtroDebounce(value, pegarAluno, pegarAluno, `&nome=${value}`)

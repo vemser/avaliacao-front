@@ -120,7 +120,7 @@ export const AlunoProvider = ({ children }: IChildren) => {
   const pegarAlunoPorTrilha = async (idPrograma: number,idTrilha?:number,pagina: number = 0, tamanho: number = 10) => {
     try {
       nProgress.start();
-      const { data } = await API.get(`/aluno/alunos-ativos-por-programa/${idPrograma}?page=${pagina}&size=${tamanho}&idTrilhas=${idTrilha}`, { headers: { Authorization: localStorage.getItem("token") } });
+      const { data } = await API.get(`/aluno/alunos-ativos-por-programa/${idPrograma}?page=${pagina}&size=${tamanho}${idTrilha ? `&idTrilhas=${idTrilha}` : ''}`, { headers: { Authorization: localStorage.getItem("token") } });
       setAlunos(data)
     } catch (error: any) {
       let message = "Ops, algo deu errado!";

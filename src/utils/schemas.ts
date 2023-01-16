@@ -100,8 +100,8 @@ export const ProgramaSchema = yup.object().shape({
 })
 
 export const moduloSchema = yup.object().shape({
-  nome: yup.string().required("Por favor, insira um nome para a trilha").matches(regexNome, 'Por favor, digite apenas letras.'),
-  trilha: yup.array().of(yup.number()).required("Por favor, selecione ao menos uma trilha")
+  nome: yup.string().required("Por favor, insira um nome para o módulo").matches(regexNome, 'Por favor, digite apenas letras'),
+  trilha: yup.array().of(yup.number()).required("Por favor, selecione uma ou mais trilhas")
 })
 
 export const ClienteSchema = yup.object().shape({
@@ -139,7 +139,7 @@ export const feedbackSchema = yup.object().shape({
   situacao: yup.string().required("Por favor, insira a situação do feedback"),
   idPrograma: yup.string().required("Por favor, selecione um programa"),
   idTrilha: yup.string().required("Por favor, escolha uma trilha"),
-  modulo: yup.array().of(yup.number()).required("Por favor, escolha um ou mais módulos")
+  modulo: yup.array().of(yup.number()).required("Por favor, selecione um ou mais módulos")
 })
 
 export const avalicaoSchema = yup.object().shape({

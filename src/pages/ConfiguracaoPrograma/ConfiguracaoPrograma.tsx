@@ -87,17 +87,19 @@ export const ConfiguracaoPrograma: React.FC = () => {
 
           {programaCompleto?.trilha && programaCompleto?.trilha.map((trilha: ITrilhas) => {
             return (
-              <>
-                <Box key={generateRandomId()} sx={{ width: "100%", marginBottom: "-15px !important", display: "flex", gap: "15px", alignItems: "center", justifyContent: {sx: "space-between", sm: "left"} }}>
+              <React.Fragment key={generateRandomId()}>
+                <Box sx={{ width: "100%", marginBottom: "-15px !important", display: "flex", gap: "15px", alignItems: "center", justifyContent: {sx: "space-between", sm: "left"} }}>
                   <Typography sx={{ display: "block", fontWeight: 700, color: "var(--azul-claro-dbc)", fontSize: "1.5rem", userSelect: "none" }}>Trilha {trilha.nome}</Typography>
 
-                  <Box id="acoes-trilha" sx={{ display: "flex", gap: "15px", justifyContent: "center", alignItems: "center", flexWrap: "nowrap", color: "#1976d2" }}>
-                    <EditIcon onClick={() => { navigate("/editar-modulo") }} sx={{ cursor: "pointer", ":hover": { color: "#1976d2" } }} />
-                    <DeleteForeverIcon onClick={() => { handleOpen(); setIdTrilhaDelete(trilha.idTrilha) }} sx={{ cursor: "pointer", ":hover": { color: "#1976d2" } }} />
+                  <Box id="acoes-trilha" sx={{ display: "flex", gap: "15px", justifyContent: "center", alignItems: "center", flexWrap: "nowrap", color: "#1976d2", transition: "0.5s" }}>
+
+                    <EditIcon onClick={() => { navigate("/editar-trilha", { state: {trilha: trilha, id: state.idPrograma} }) }} sx={{ cursor: "pointer", ":hover": { transform: "scale(1.1)", transition: "0.5s" } }} />
+
+                    <DeleteForeverIcon onClick={() => { handleOpen(); setIdTrilhaDelete(trilha.idTrilha) }} sx={{ cursor: "pointer", ":hover": { transform: "scale(1.1)", transition: "0.5s" } }} />
                   </Box>
                 </Box>
 
-                <Paper sx={{ width: "100%", marginBottom: "20px !important" }} key={generateRandomId()}>
+                <Paper sx={{ width: "100%", marginBottom: "20px !important" }}>
                   <TableContainer sx={{ boxShadow: "5px 5px 5px solid light-gray" }}>
                     <Table aria-label="sticky table" sx={{ width: "100%" }}>
 
@@ -131,7 +133,7 @@ export const ConfiguracaoPrograma: React.FC = () => {
                     </Table>
                   </TableContainer>
                 </Paper>
-              </>
+              </React.Fragment>
             )
           })} {
             programaCompleto?.trilha.length === 0 &&

@@ -5,15 +5,12 @@ import { Controller, useForm } from 'react-hook-form';
 
 import * as Componentes from '../../components/index';
 
-import logo from "../../assets/dbc-logo.webp";
-
-import { Box, Stack, FormControl, Button, InputLabel, Select, MenuItem, TextField, Checkbox, ListItemText, Typography, Autocomplete } from '@mui/material';
+import { Box, Stack, FormControl, Button, TextField, Typography, Autocomplete } from '@mui/material';
 
 import { ICadastroModulo } from '../../utils/ModuloInterface/Modulo';
 
 import { useTrilha } from '../../context/Tecnico/TrilhaContext';
 import { useModulo } from '../../context/Tecnico/ModuloContext';
-import { usePrograma } from '../../context/Tecnico/ProgramaContext';
 import { moduloSchema } from '../../utils/schemas';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { filtroDebounce } from '../../utils/functions';
@@ -70,9 +67,9 @@ export const CadastrarModulo = () => {
                 isOptionEqualToValue={(option, value) => option.label === value.label}
                 options={trilhas ? trilhas.elementos.map((trilha) => ({ label: trilha.nome, id: trilha.idTrilha })) : []}
                 renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
-                renderInput={(params) => <TextField {...params} label="Módulo" variant="filled" />} />
+                renderInput={(params) => <TextField {...params} label="Trilha" variant="filled" />} />
             )} />
-            {errors.trilha && <Typography id="erro-trilhaAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.trilha.message}</Typography>}
+            {errors.trilha && <Typography id="erro-trilha" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.trilha.message}</Typography>}
           </FormControl>
 
         </Stack>

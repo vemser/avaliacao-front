@@ -120,7 +120,7 @@ export const TrilhaProvider = ({ children }: IChildren) => {
       nProgress.start();
       await API.put(`/trilha/update/${idTrilha}`, dadosTrilha, { headers: { Authorization: localStorage.getItem("token") } }).then((response) => {
         navigate('/programas');
-        toast.success('Trilha foi editada com sucesso.', toastConfig);
+        toast.success('Trilha editada com sucesso!', toastConfig);
       });
     } catch (error: any) {
       let message = "Ops, algo deu errado!";

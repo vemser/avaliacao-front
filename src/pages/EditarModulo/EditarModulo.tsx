@@ -4,8 +4,6 @@ import { Titulo } from '../../components/Titulo/Titulo';
 
 import { useForm } from "react-hook-form";
 
-import logo from "../../assets/dbc-logo.webp";
-
 import { Box, Stack, FormControl, Button, InputLabel, Select, MenuItem, TextField, Checkbox, ListItemText, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useTrilha } from '../../context/Tecnico/TrilhaContext';

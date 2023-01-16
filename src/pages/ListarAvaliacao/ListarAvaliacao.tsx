@@ -54,12 +54,18 @@ const style = {
 
 export const ListarAvaliacao = () => {
   const [estadoFiltro, setEstadoFiltro] = useState<boolean>(false);
-
+  const [filtro, setFiltro] = useState<string | null>(null);
   const { pegarAvaliacao, deletarAvaliacao, avaliacoes } = useAvaliacao();
 
   const navigate = useNavigate();
 
-  const handleChangePage = async (event: unknown, newPage: number) => { await pegarAvaliacao(newPage); };
+  const handleChangePage = async (event: unknown, newPage: number) => {
+    if (filtro) {
+      await pegarAvaliacao(newPage, 10, filtro);
+    } else {
+      await pegarAvaliacao(newPage);
+    }
+  };
 
   // const filtrarAcompanhamento = async (valor: any, pagina: number = 0, tamanho: number = 10) => {
   //   console.log(valor);
@@ -97,7 +103,7 @@ export const ListarAvaliacao = () => {
         {estadoFiltro &&
           <Box sx={{ display: "flex", gap: 3, flexDirection: "row", alignItems: "center", width: "100%", marginBottom: "10px", paddingInline: 2, marginTop: "10px", flexWrap: "wrap" }}>
 
-            <Componentes.FiltroAvaliacao />
+            <Componentes.FiltroAvaliacao setFiltro={setFiltro} />
 
           </Box>}
 

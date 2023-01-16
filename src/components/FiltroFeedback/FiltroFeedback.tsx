@@ -19,8 +19,8 @@ interface IFiltro {
 }
 
 export const FiltroFeedback = ({ setFiltro }: any) => {
-  const { alunos, pegarAluno, pegarAlunoPorTrilha } = useAluno();
-  const { trilhas, pegarTrilhaFiltroNome, pegarTrilha, pegarTrilhaPorPrograma, trilhasPorPrograma } = useTrilha();
+  const { alunos, pegarAluno, pegarAlunoPorTrilha, } = useAluno();
+  const { pegarTrilha, pegarTrilhaPorPrograma, trilhasPorPrograma } = useTrilha();
   const { usuariosFiltro, pegarUsuariosLoginCargo } = useAuth();
   const { handleSubmit, register, control, reset, watch } = useForm<IFiltro>();
   const { pegarFeedbackFiltros, pegarFeedback } = useFeedback();
@@ -39,11 +39,12 @@ export const FiltroFeedback = ({ setFiltro }: any) => {
   const filtrar = async (data: IFiltro) => {
     var string = "";
     if (data.nomeAluno) string += `&nomeAluno=${data.nomeAluno.label.trim()}`;
-    if (data.trilha) string += `&trilha=${data.trilha.label.trim()}`;
+    if (data.trilha) string += `&idTrilha=${data.trilha.id}`;
     if (data.nomeInstrutor) string += `&nomeInstrutor=${data.nomeInstrutor.trim()}`;
     if (data.situacao) string += `&situacao=${data.situacao.trim()}`;
     if (data.programa) string += `&idPrograma=${data.programa.id}`;
     setFiltro(string);
+    console.log(string);
     await pegarFeedbackFiltros(0, 10, string);
   }
 
@@ -62,11 +63,12 @@ export const FiltroFeedback = ({ setFiltro }: any) => {
   }
 
   useEffect(() => {
-    if (watchTodos.programa) pegarTrilhaPorPrograma(watchTodos.programa.id);
+    if (watchTodos.programa) {
+      pegarAlunoPorTrilha(watchTodos.programa.id);
+      pegarTrilhaPorPrograma(watchTodos.programa.id)
+    };
 
-    if (watchTodos.programa && !watchTodos.trilha) pegarAlunoPorTrilha(watchTodos.programa.id);
-
-    if (watchTodos.trilha && watchTodos.programa) pegarAlunoPorTrilha(watchTodos.programa.id, watchTodos.trilha.id);
+    if (watchTodos.trilha) if (watchTodos.programa) pegarAlunoPorTrilha(watchTodos.programa.id, watchTodos.trilha.id);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watchTodos.programa, watchTodos.trilha]);

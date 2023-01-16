@@ -37,12 +37,10 @@ export const CadastrarModulo = () => {
   const [estadoErroTrilha, setEstadoErroTrilha] = useState<boolean>(false);
 
   const { pegarTrilha, trilhas } = useTrilha();
-  const { pegarProgramaAtivo, programas } = usePrograma();
   const { cadastrarModulo } = useModulo();
 
   useEffect(() => {
     pegarTrilha(0, trilhas?.totalElementos);
-    pegarProgramaAtivo(0, programas?.totalElementos);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -51,8 +49,8 @@ export const CadastrarModulo = () => {
   });
 
   const cadastrar = async (data: any) => {
-    const novoData = { ...data, trilha: trilhaSelecionado, listPrograma: programaSelecionado }
-    if (programaSelecionado.length > 0 && trilhaSelecionado.length > 0) await cadastrarModulo(novoData)
+    const novoData = { ...data, trilha: trilhaSelecionado }
+    if (trilhaSelecionado.length > 0) await cadastrarModulo(novoData)
   }
 
   const erroPrograma = () => {
@@ -123,24 +121,7 @@ export const CadastrarModulo = () => {
             </Select>
             {estadoErroTrilha && <Typography id="erro-programaAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">Por favor, escolha uma trilha</Typography>}
           </FormControl>
-
-          <FormControl variant="filled" sx={{ width: "100%" }}>
-            <InputLabel id="select-programa">Programa</InputLabel>
-            <Select id="select-programa" MenuProps={MenuProps} multiple value={programaSelecionado} onChange={handleChange} renderValue={(selected) => programas?.elementos.filter((programa) => selected.includes(programa.idPrograma)).map((programa) => programa.nome).join(', ')}>
-              <MenuItem value="initial-programa" disabled><em>Selecione um ou mais programas</em></MenuItem>
-              {programas?.elementos.map((programa) => {
-                return (
-                  <MenuItem key={programa.idPrograma} value={programa.idPrograma}>
-                    <Checkbox checked={programaSelecionado.indexOf(programa.idPrograma) > -1} />
-                    <ListItemText primary={programa.nome} />
-                  </MenuItem>
-                )
-              }
-              )}
-            </Select>
-
-            {estadoErro && <Typography id="erro-programaAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">Por favor, escolha um programa</Typography>}
-          </FormControl>
+          
         </Stack>
         <Box sx={{ display: "flex", width: "100%", justifyContent: "center", alignItems: "center", bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>
           <Button type="button" onClick={() => { navigate(-1) }} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d " }, textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cancelar</Button>

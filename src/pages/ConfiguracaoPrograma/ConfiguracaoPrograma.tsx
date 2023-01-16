@@ -3,13 +3,15 @@ import { useLocation, useNavigate } from "react-router-dom"
 
 import { Box, Typography, Stack, Button, Paper, styled, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableRow, TableHead, Modal } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import DeleteForever from "@mui/icons-material/Delete";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 import * as Componentes from "../../components";
 
+import { generateRandomId } from "../../utils/functions";
 import { usePrograma } from "../../context/Tecnico/ProgramaContext";
 import { useModulo } from "../../context/Tecnico/ModuloContext";
 import { ITrilhas } from "../../utils/programaInterface";
+import { useTrilha } from "../../context/Tecnico/TrilhaContext";
 
 const style = {
   position: "absolute" as const,
@@ -50,21 +52,19 @@ const columns: Column[] = [
 export const ConfiguracaoPrograma: React.FC = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { deletarModulo } = useModulo();
   const { pegarProgramaCompleto, programaCompleto } = usePrograma();
-
-  useEffect(() => {
-    pegarProgramaCompleto(state.idPrograma)
-    console.log(programaCompleto)
-  }, [])
-
-  // Funções Modal
-  const deletar = async (id: number) => { await deletarModulo(id) }
-
-  const [idDelete, setIdDelete] = useState<number | undefined>();
+  const { deletarTrilha } = useTrilha();
+  const { deletarModulo } = useModulo();
+  const [idTrilhaDelete, setIdTrilhaDelete] = useState<number | undefined>();
+  const [idModuloDelete, setIdModuloDelete] = useState<number | undefined>();
   const [open, setOpen] = useState(false);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  useEffect(() => {
+    pegarProgramaCompleto(state.idPrograma);
+  }, [])
 
   return (
     <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "60px", paddingBottom: "50px" }}>
@@ -78,19 +78,26 @@ export const ConfiguracaoPrograma: React.FC = () => {
             <Button onClick={() => { navigate(-1) }} variant="outlined" sx={{ width: { xs: "170px", md: "160px" }, textTransform: "capitalize", fontSize: "1rem" }}>Voltar</Button>
 
             <Box sx={{ display: "flex", gap: 3, flexDirection: { xs: "column", md: "row" } }}>
-              <Button onClick={() => navigate("/cadastrar-modulo")} variant="contained" sx={{ width: "170px", display: "flex", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Trilha</Button>
+              <Button onClick={() => navigate("/cadastrar-trilha", { state: state.idPrograma })} variant="contained" sx={{ width: "170px", display: "flex", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Trilha</Button>
 
               <Button onClick={() => navigate("/cadastrar-modulo")} variant="contained" sx={{ width: "170px", display: "flex", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Módulo</Button>
             </Box>
           </Box>
 
-          {programaCompleto?.trilha ? programaCompleto.trilha.map((trilha: ITrilhas) => {
+          {programaCompleto?.trilha && programaCompleto?.trilha.map((trilha: ITrilhas) => {
             return (
               <>
-                <Typography sx={{ fontWeight: 700, color: "var(--azul-claro-dbc)", fontSize: "1.5rem", marginBottom: "-15px !important",userSelect: "none" }}>Trilha {trilha.nome}</Typography>
+                <Box key={generateRandomId()} sx={{ width: "100%", marginBottom: "-15px !important", display: "flex", gap: "15px", alignItems: "center", justifyContent: {sx: "space-between", sm: "left"} }}>
+                  <Typography sx={{ display: "block", fontWeight: 700, color: "var(--azul-claro-dbc)", fontSize: "1.5rem", userSelect: "none" }}>Trilha {trilha.nome}</Typography>
 
-                <Paper sx={{ width: "100%", marginBottom: "20px !important" }}>
-                  <TableContainer sx={{ boxShadow: "5px 5px 5px solid light-gray"}}>
+                  <Box id="acoes-trilha" sx={{ display: "flex", gap: "15px", justifyContent: "center", alignItems: "center", flexWrap: "nowrap", color: "#1976d2" }}>
+                    <EditIcon onClick={() => { navigate("/editar-modulo") }} sx={{ cursor: "pointer", ":hover": { color: "#1976d2" } }} />
+                    <DeleteForeverIcon onClick={() => { handleOpen(); setIdTrilhaDelete(trilha.idTrilha) }} sx={{ cursor: "pointer", ":hover": { color: "#1976d2" } }} />
+                  </Box>
+                </Box>
+
+                <Paper sx={{ width: "100%", marginBottom: "20px !important" }} key={generateRandomId()}>
+                  <TableContainer sx={{ boxShadow: "5px 5px 5px solid light-gray" }}>
                     <Table aria-label="sticky table" sx={{ width: "100%" }}>
 
                       <TableHead sx={{ backgroundColor: "#090F27", width: "100%" }}>
@@ -103,18 +110,18 @@ export const ConfiguracaoPrograma: React.FC = () => {
 
                       <TableBody>
                         {trilha.moduloDTOS.length > 0 ? trilha.moduloDTOS.map((data) => (
-                          <StyledTableRow key={data.idModulo}>
+                          <StyledTableRow key={generateRandomId()}>
                             <StyledTableCell sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", userSelect: "none" }} component="td" scope="row">{data.nome}</StyledTableCell>
 
                             <StyledTableCell id="acoes" sx={{ display: "flex", justifyContent: "center", alignItems: "center", flexWrap: "nowrap" }}>
                               <Button id="botao-editar-modulo" onClick={() => { navigate("/editar-modulo") }} title="Editar"><EditIcon /></Button>
-                              <Button id="botao-deletar-modulo" title="Deletar" onClick={() => { handleOpen(); setIdDelete(data.idModulo) }}><DeleteForever /></Button>
+                              <Button id="botao-deletar-modulo" title="Deletar" onClick={() => { handleOpen(); setIdModuloDelete(data.idModulo) }}><DeleteForeverIcon /></Button>
                             </StyledTableCell>
                           </StyledTableRow>
                         )) :
-                          <StyledTableRow key={"id-modulo"}>
+                          <StyledTableRow key={generateRandomId()}>
                             <StyledTableCell sx={{ textAlign: "center", fontWeight: "500", fontSize: "1rem", userSelect: "none", color: "gray" }}>
-                            Nenhum módulo encontrado.
+                              Nenhum módulo encontrado.
                             </StyledTableCell>
                             <StyledTableCell></StyledTableCell>
                           </StyledTableRow>
@@ -125,14 +132,31 @@ export const ConfiguracaoPrograma: React.FC = () => {
                 </Paper>
               </>
             )
-          }) : "Nenhuma trilha encontrada neste programa."}
+          })} {
+            programaCompleto?.trilha.length === 0 &&
+            <Box key={generateRandomId()} sx={{ width: "100%", display: "flex", justifyContent: "center", paddingTop: "40px", paddingBottom: "50px", fontSize: "1.2rem", fontWeight: 500, userSelect: "none", color: "gray", textAlign: "center" }}>
+              <span>Nenhuma trilha encontrada neste programa.</span>
+            </Box>
+          }
         </Stack>
 
         <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-titulo" aria-describedby="modal-modal-description" sx={{ backdropFilter: "blur(6px)" }}>
           <Box sx={style}>
             <Typography id="modal-modal-titulo" variant="h6" sx={{ fontWeight: 600, userSelect: "none", marginBottom: "10px", color: "var(--azul-forte-dbc)", fontSize: "1.4rem" }}>Você tem certeza?</Typography>
             <Box sx={{ display: "flex", width: "100%", justifyContent: "center", alignItems: "center", bottom: 0, paddingTop: "20px", gap: 2, flexDirection: "column" }}>
-              <Button type="button" onClick={() => { if (idDelete) deletar(idDelete); handleClose(); }} variant="contained" color="error" sx={{ textTransform: "capitalize", fontSize: "1.05rem", width: "180px" }}>Deletar</Button>
+              <Button type="button" onClick={() => {
+                if (idTrilhaDelete) {
+                  deletarTrilha(idTrilhaDelete);
+                  pegarProgramaCompleto(state.idPrograma);
+                  setIdTrilhaDelete(undefined);
+                  handleClose();
+                } if (idModuloDelete) {
+                  deletarModulo(idModuloDelete);
+                  pegarProgramaCompleto(state.idPrograma);
+                  setIdModuloDelete(undefined);
+                  handleClose();
+                }
+              }} variant="contained" color="error" sx={{ textTransform: "capitalize", fontSize: "1.05rem", width: "180px" }}>Deletar</Button>
               <Button type="button" onClick={handleClose} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d" }, textTransform: "capitalize", fontSize: "1.05rem", width: "180px" }}>Cancelar</Button>
             </Box>
           </Box>

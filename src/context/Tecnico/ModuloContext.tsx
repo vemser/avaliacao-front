@@ -79,7 +79,7 @@ export const ModuloProvider = ({ children }: IChildren) => {
     try {
       nProgress.start();
       await API.post("/modulo/adicionar", dadosModulo, { headers: { Authorization: localStorage.getItem("token") }});
-      navigate("/programas");
+      navigate("/configuracao-programa");
       toast.success("Módulo cadastrado com sucesso!", toastConfig);
     } catch (error: any) {
       let message = "Ops, algo deu errado!";

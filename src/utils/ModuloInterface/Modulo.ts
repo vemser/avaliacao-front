@@ -46,8 +46,7 @@ export interface IListProgramaDTO {
 
 export interface ICadastroModulo {
   nome: string,
-  idTrilha: number[],
-  listPrograma: number[]
+  trilha: number[]
 }
 
 export interface IModulosPorTrilha {

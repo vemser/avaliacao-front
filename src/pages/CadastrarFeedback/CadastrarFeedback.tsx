@@ -52,7 +52,7 @@ export const CadastrarFeedback = () => {
   const cadastrar = (data: IFeedbackCadastro) => {
     const novaData = { ...data, modulo: moduloSelecionado }
     setDataModulo(novaData.modulo.toString())
-    cadastrar(novaData)
+    cadastrarFeedback(novaData)
   }
 
   useEffect(() => {

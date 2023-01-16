@@ -12,26 +12,15 @@ import { formatarTexto } from "../../utils/functions";
 
 export const ListarFeedback: React.FC = () => {
   const navigate = useNavigate();
-  const { pegarFeedback, feedback } = useContext(FeedbackContext);
-  const { deletarFeedback } = useContext(FeedbackContext);
-  const [inputFiltro, setInputFiltro] = useState<string>('');
+  const { pegarFeedback, feedback, pegarFeedbackFiltros, deletarFeedback } = useContext(FeedbackContext);
   const [estadoFiltro, setEstadoFiltro] = useState<boolean>(false);
+  const [filtro, setFiltro] = useState<string | null>(null);
 
   const handleChangePage = async (event: unknown, newPage: number) => {
-    if (inputFiltro) {
-      filtrarFeedback(inputFiltro, newPage)
+    if (filtro) {
+      await pegarFeedbackFiltros(newPage, 10, filtro);
     } else {
       await pegarFeedback(newPage)
-    }
-  }
-
-  const filtrarFeedback = async (valor: any, pagina: number = 0, tamanho: number = 10) => {
-    setInputFiltro(valor);
-
-    if (!isNaN(valor)) {
-      await pegarFeedback(pagina, tamanho, `&idFeedback=${valor}`)
-    } else {
-      await pegarFeedback(pagina, tamanho, `&nome=${valor}`)
     }
   }
 
@@ -103,7 +92,7 @@ export const ListarFeedback: React.FC = () => {
         {estadoFiltro &&
           <Box sx={{ display: "flex", gap: 3, flexDirection: "row", alignItems: "center", width: "100%", marginBottom: "10px", paddingInline: 2, marginTop: "10px", flexWrap: "wrap" }}>
 
-            <Componentes.FiltroFeedback />
+            <Componentes.FiltroFeedback setFiltro={setFiltro} />
 
             {/* <Autocomplete
               size="small"

@@ -99,7 +99,7 @@ export const TrilhaProvider = ({ children }: IChildren) => {
   const pegarTrilhaPorPrograma = async (id: number) => {
     try {
       nProgress.start();
-      await API.get(`/trilha/trilhas-por-programa?idPrograma=${id}`, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
+      await API.get(`/trilha/trilhas-por-programa?idPrograma=${id}`, { headers: { Authorization: localStorage.getItem("token") } }).then((response) => {
         setTrilhasPorPrograma(response.data)
       })
     } catch (error: any) {
@@ -108,7 +108,7 @@ export const TrilhaProvider = ({ children }: IChildren) => {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      }  
+      }
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();

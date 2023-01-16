@@ -18,7 +18,7 @@ interface IFiltro {
   nomeInstrutor: string | null,
 }
 
-export const FiltroFeedback = () => {
+export const FiltroFeedback = ({ setFiltro }: any) => {
   const { alunos, pegarAluno, pegarAlunoPorTrilha } = useAluno();
   const { trilhas, pegarTrilhaFiltroNome, pegarTrilha, pegarTrilhaPorPrograma, trilhasPorPrograma } = useTrilha();
   const { usuariosFiltro, pegarUsuariosLoginCargo } = useAuth();
@@ -29,8 +29,8 @@ export const FiltroFeedback = () => {
   const watchTodos = watch();
 
   useEffect(() => {
-    // pegarAluno();
-    // pegarTrilha();
+    pegarAluno();
+    pegarTrilha();
     pegarUsuariosLoginCargo();
     pegarProgramaAtivo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -43,6 +43,7 @@ export const FiltroFeedback = () => {
     if (data.nomeInstrutor) string += `&nomeInstrutor=${data.nomeInstrutor.trim()}`;
     if (data.situacao) string += `&situacao=${data.situacao.trim()}`;
     if (data.programa) string += `&idPrograma=${data.programa.id}`;
+    setFiltro(string);
     await pegarFeedbackFiltros(0, 10, string);
   }
 
@@ -53,6 +54,7 @@ export const FiltroFeedback = () => {
       nomeInstrutor: null,
       situacao: null
     })
+    setFiltro(null);
     await pegarFeedback();
     await pegarAluno();
     await pegarTrilha();

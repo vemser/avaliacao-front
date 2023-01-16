@@ -131,9 +131,7 @@ export const CadastrarFeedback = () => {
                 }} 
                 onChange={(e, values) => { if (values.length === 0) setModuloSelecionado([]); setModuloSelecionado(values.map((value) => value.id)); handleChangeModulo(); }}
                 isOptionEqualToValue={(option, value) => option.label === value.label}
-
                 options={moduloPorTrilha ? moduloPorTrilha.map((modulos) => ({ label: modulos.nome, id: modulos.idModulo }) ) : []}
-
                 renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
                 renderInput={(params) => <TextField {...params} label="Módulo" variant="filled" />} />
               )} />

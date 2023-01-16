@@ -1,6 +1,7 @@
 export interface ITecnologiaContext {
   pegarTecnologia: (pagina?: number, tamanho?: number) => Promise<void>,
   cadastrarTecnologia: (dadosTecnologia: object) => Promise<void>,
+  pegarTecnologiaPorNome: (nome: string, pagina?: number, tamanho?: number) => Promise<void>,
   tecnologias: ITecnologiasAPI | null
 }
 

@@ -32,8 +32,7 @@ export const CadastrarAvaliacao = () => {
     resolver: yupResolver(avalicaoSchema)
   });
   
-  const watchFilter = watch()
-  console.log(watchFilter)
+  const filtro = watch()
 
   const cadastrar = (data: ICadastrarAvalicao) => {
     data.idAluno = parseInt(data.idAluno.toString())
@@ -52,10 +51,19 @@ export const CadastrarAvaliacao = () => {
   }, [])
 
   useEffect(() => {
-    if(watchFilter.idPrograma) pegarTrilhaPorPrograma(watchFilter.idPrograma)
-    if(watchFilter.idTrilha) pegarAlunoPorTrilha(watchFilter.idPrograma,watchFilter.idTrilha)
+    if(filtro.idPrograma) pegarTrilhaPorPrograma(filtro.idPrograma)
+    if(filtro.idTrilha) pegarAlunoPorTrilha(filtro.idPrograma,filtro.idTrilha)
+
+    if(filtro.idPrograma) {
+      if(!filtro.idTrilha){
+        pegarAlunoPorTrilha(filtro.idPrograma)
+      } 
+      if(filtro.idTrilha) {
+        pegarAlunoPorTrilha(filtro.idPrograma,filtro.idTrilha)
+      }
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [watchFilter.idPrograma,watchFilter.idTrilha])
+  }, [filtro.idPrograma,filtro.idTrilha])
 
   return (
     <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "60px", paddingBottom: "50px" }}>
@@ -112,7 +120,7 @@ export const CadastrarAvaliacao = () => {
 
               <Autocomplete
                 disablePortal
-                disabled={!watchFilter.idPrograma ? true : false}
+                disabled={!filtro.idPrograma ? true : false}
                 onChange={(event, data) => onChange(data?.id)}
                 onInputChange={(event, value) => {
                   filtroDebounce(value, pegarTrilhaFiltroNome, pegarTrilha)
@@ -132,7 +140,7 @@ export const CadastrarAvaliacao = () => {
           <FormControl sx={{ width: "100%" }} >
             <Controller control={control} name="idAluno" render={({ field: { onChange } }) => (
               <Autocomplete disablePortal
-              disabled={!watchFilter.idPrograma ? true : false}
+              disabled={!filtro.idPrograma ? true : false}
               onInputChange={(event, value) => {
                 filtroDebounce(value, pegarAlunoDisponivelPorNome, pegarAlunoDisponivel)
               }}

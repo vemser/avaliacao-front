@@ -121,6 +121,7 @@ export const FiltroAvaliacao = ({ setFiltro }: any) => {
         <InputLabel id="selectFeedback">Situação</InputLabel>
         <Select size="small" label="Situacao" labelId="selectFeedback" value={watchTodos.tipoAvaliacao ? watchTodos.tipoAvaliacao : ""} id="situacao" {...register("tipoAvaliacao")}>
           <MenuItem value="initial-situacao" disabled><em>Selecione uma situação</em></MenuItem>
+          <MenuItem id="nenhum" value="">Nenhum</MenuItem>
           <MenuItem id="positivo" value="POSITIVO">Positivo</MenuItem>
           <MenuItem id="atencao" value="ATENCAO">Atenção</MenuItem>
         </Select>

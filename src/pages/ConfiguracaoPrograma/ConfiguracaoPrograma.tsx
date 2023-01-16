@@ -117,7 +117,7 @@ export const ConfiguracaoPrograma: React.FC = () => {
                             <StyledTableCell sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", userSelect: "none" }} component="td" scope="row">{data.nome}</StyledTableCell>
 
                             <StyledTableCell id="acoes" sx={{ display: "flex", justifyContent: "center", alignItems: "center", flexWrap: "nowrap" }}>
-                              <Button id="botao-editar-modulo" onClick={() => { navigate("/editar-modulo") }} title="Editar"><EditIcon /></Button>
+                              <Button id="botao-editar-modulo" onClick={() => { navigate("/editar-modulo", { state: data } )}} title="Editar"><EditIcon /></Button>
                               <Button id="botao-deletar-modulo" title="Deletar" onClick={() => { handleOpen(); setIdModuloDelete(data.idModulo) }}><DeleteForeverIcon /></Button>
                             </StyledTableCell>
                           </StyledTableRow>

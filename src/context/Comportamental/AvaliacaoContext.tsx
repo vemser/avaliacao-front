@@ -42,7 +42,7 @@ export const AvaliacaoProvider = ({ children }: IChildren) => {
     try {
       nProgress.start();
       console.log(filtros)
-      await API.get(`/avaliacao/listar-avaliacao-por-acompanhamento-aluno?pagina=${pagina}&tamanho=${tamanho}${filtros}`, { headers: { Authorization: localStorage.getItem("token") } }).then((response) => {
+      await API.get(`/avaliacao/listar?pagina=${pagina}&tamanho=${tamanho}${filtros}`, { headers: { Authorization: localStorage.getItem("token") } }).then((response) => {
         setAvaliacoes(response.data);
       })
     } catch (error: any) {

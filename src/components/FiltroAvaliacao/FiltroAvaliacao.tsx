@@ -15,7 +15,7 @@ interface IFiltro {
 }
 
 export const FiltroAvaliacao = ({ setFiltro }: any) => {
-  const { alunos, pegarAluno, pegarAlunoPorTrilha } = useAluno();
+  const { alunos, pegarAlunoPorTrilha, pegarAlunoDisponivel, pegarAlunoDisponivelPorNome } = useAluno();
   const { acompanhamentos, pegarAcompanhamentoTitulo, pegarAcompanhamentos } = useAcompanhamento();
   const { pegarAvaliacao } = useAvaliacao();
   const { programas, pegarProgramaAtivo, pegarProgramaPorNomeAtivo } = usePrograma();
@@ -24,7 +24,8 @@ export const FiltroAvaliacao = ({ setFiltro }: any) => {
   const watchTodos = watch();
 
   useEffect(() => {
-    pegarAcompanhamentos(0, 10);
+    pegarAlunoDisponivel();
+    pegarAcompanhamentos();
     pegarProgramaAtivo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -47,13 +48,14 @@ export const FiltroAvaliacao = ({ setFiltro }: any) => {
       tipoAvaliacao: null,
     })
     setFiltro(null);
-    await pegarAluno(0, 10);
-    await pegarAcompanhamentos(0, 10);
-    await pegarAvaliacao(0, 10);
+    await pegarAlunoDisponivel();
+    await pegarAcompanhamentos();
+    await pegarAvaliacao();
   }
 
   useEffect(() => {
     if (watchTodos.programa) pegarAlunoPorTrilha(watchTodos.programa.id);
+    if (!watchTodos.programa) pegarAlunoDisponivel();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watchTodos.programa]);
@@ -103,9 +105,12 @@ export const FiltroAvaliacao = ({ setFiltro }: any) => {
         <Autocomplete
           onChange={(event, data) => onChange(data)}
           size="small"
-          disabled={!watchTodos.programa ? true : false}
           disablePortal
           id="combo-box-demo"
+          onInputChange={(event, value) => {
+            if (!watchTodos.programa)
+              filtroDebounce(value, pegarAlunoDisponivelPorNome, pegarAlunoDisponivel);
+          }}
           value={watchTodos.nomeAluno ? { label: watchTodos.nomeAluno.label, id: watchTodos.nomeAluno.id } : null}
           getOptionLabel={(option) => option.label}
           isOptionEqualToValue={(option, value) => option.label === value.label}

@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { toastConfig } from "../../utils/toast";
 
 import { API } from "../../utils/api";
-import { IAlunosAPI, IChildren, IAluno, IAlunosElementos } from "../../utils/AlunoInterface/aluno";
+import { IAlunosAPI, IChildren, IAluno } from "../../utils/AlunoInterface/aluno";
 import { useNavigate } from "react-router-dom";
 
 import { ICadastroAlunoAPI } from "../../utils/interface";
@@ -80,10 +80,8 @@ export const AlunoProvider = ({ children }: IChildren) => {
   const pegarAlunoDisponivel = async (pagina: number = 0, tamanho: number = 10) => {
     try {
       nProgress.start();
-      const { data } = await API.get(`/aluno/listar-alunos?page=${pagina}&size=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") } });
-      let alunoDisponivel = data;
-      alunoDisponivel.elementos = alunoDisponivel.elementos.filter((aluno: any) => aluno.situacao === "DISPONIVEL");
-      setAlunos(alunoDisponivel);
+      const { data } = await API.get(`/aluno/disponiveis?page=${pagina}&size=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") } });
+      setAlunos(data);
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
       if (error.response.status === 403) {
@@ -100,10 +98,8 @@ export const AlunoProvider = ({ children }: IChildren) => {
   const pegarAlunoDisponivelPorNome = async (nome: string, pagina: number = 0, tamanho: number = 10) => {
     try {
       nProgress.start();
-      const { data } = await API.get(`/aluno/listar-alunos?page=${pagina}&size=${tamanho}&nome=${nome}`, { headers: { Authorization: localStorage.getItem("token") } });
-      let alunoDisponivel = data;
-      alunoDisponivel.elementos = alunoDisponivel.elementos.filter((aluno: any) => aluno.situacao === "DISPONIVEL");
-      setAlunos(alunoDisponivel);
+      const { data } = await API.get(`/aluno/disponiveis?page=${pagina}&size=${tamanho}&nome=${nome}`, { headers: { Authorization: localStorage.getItem("token") } });
+      setAlunos(data);
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
       if (error.response.status === 403) {

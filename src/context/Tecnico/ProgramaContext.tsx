@@ -156,7 +156,7 @@ export const ProgramaProvider = ({ children }: IChildren) => {
   const pegarProgramaPorNomeAtivo = async (nome: string, pagina: number = 0, tamanho: number = 10) => {
     try {
       nProgress.start();
-      const { data } = await API.get(`/programa/list-nome?page=${pagina}&size=${tamanho}&nome=${nome}`, { headers: { Authorization: localStorage.getItem("token") }});
+      const { data } = await API.get(`/programa?nomePrograma=${nome}&page=${pagina}&size=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") }});
       let programasAtivos = data;
       programasAtivos.elementos = programasAtivos.elementos.filter((programa: IProgramas) => programa.situacaoVagaPrograma === "ABERTO");
       setProgramas(programasAtivos);

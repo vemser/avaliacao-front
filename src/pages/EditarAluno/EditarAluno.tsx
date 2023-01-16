@@ -28,24 +28,26 @@ export const EditarAluno = () => {
 
   const { editarAluno } = useAluno();
   const { programas, pegarProgramaAtivo, pegarProgramaPorNomeAtivo } = usePrograma();
-  const { trilhas, pegarTrilha, pegarTrilhaFiltroNome } = useTrilha();
+  const { pegarTrilha, pegarTrilhaFiltroNome, pegarTrilhaPorPrograma, trilhasPorPrograma } = useTrilha();
   const { pegarTecnologia, cadastrarTecnologia, tecnologias } = useTecnologia();
 
   const [inputTecnologia, setInputTecnologia] = useState<string>('')
   const [tecnologiaSelecionada, setTecnologiaSelecionada] = useState<number[]>([]);
 
-  const initialState = () => {
-    let result = state.tecnologias.map((tecnologia: ITecnologiasAluno) => tecnologia.idTecnologia)
-    setTecnologiaSelecionada(result)
-  }
-
-  const { register, handleSubmit, formState: { errors }, control } = useForm<ICadastroAlunoForm>({
+  const { register, handleSubmit, formState: { errors }, control, watch } = useForm<ICadastroAlunoForm>({
     resolver: yupResolver(alunoSchema),
     defaultValues: {
       idPrograma: state.programa.idPrograma,
       idTrilha: state.trilha.idTrilha
     }
   });
+
+  const programa = watch('idPrograma');
+
+  const initialState = () => {
+    let result = state.tecnologias.map((tecnologia: ITecnologiasAluno) => tecnologia.idTecnologia)
+    setTecnologiaSelecionada(result)
+  }
 
   const editar = (data: ICadastroAlunoForm) => {
     const novoData = { ...data, idTrilha: parseInt(data.idTrilha), idPrograma: data.idPrograma ? parseInt(data.idPrograma) : state.programa.idPrograma, tecnologias: tecnologiaSelecionada }
@@ -59,6 +61,11 @@ export const EditarAluno = () => {
     initialState();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if(programa) pegarTrilhaPorPrograma(parseInt(programa))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [programa])
 
   return (
     <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "60px", paddingBottom: "50px" }}>
@@ -117,23 +124,6 @@ export const EditarAluno = () => {
             <Button id="botao-cadastrar-tecnologia" variant={"contained"} sx={{ width: '10%', fontSize: "20px" }} onClick={() => { if (inputTecnologia) cadastrarTecnologia({ nome: inputTecnologia }); setInputTecnologia('') }}>+</Button>
           </FormControl>
 
-          <FormControl variant="filled" sx={{ width: "100%" }}>
-            <Controller control={control} name="idTrilha" render={({ field: { onChange } }) => (
-              <Autocomplete noOptionsText="Nenhuma trilha encontrada" disablePortal id="trilha"
-                defaultValue={{ label: state.trilha.nome, id: state.trilha.idTrilha }}
-                onChange={(event, data) => onChange(data?.id)}
-                onInputChange={(event, value) => {
-                  filtroDebounce(value, pegarTrilhaFiltroNome, pegarTrilha)
-                }}
-                getOptionLabel={(option) => option.label}
-                isOptionEqualToValue={(option, value) => option.label === value.label}
-                options={trilhas ? trilhas.elementos.map((trilha) => ({ label: trilha.nome, id: trilha.idTrilha })) : []} 
-                renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
-                renderInput={(params) => <TextField key={params.id} {...params} label="Trilhas" variant="filled" />} />
-            )} />
-            {errors.idTrilha && <Typography id="erro-trilhaAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.idTrilha.message}</Typography>}
-          </FormControl>
-
           <FormControl sx={{ width: "100%" }} variant="filled">
             <Controller control={control} name="idPrograma" render={({ field: { onChange } }) => (
               <Autocomplete disablePortal onChange={(event, data) => onChange(data?.id)} id="programa" getOptionLabel={(option) => option.label}
@@ -147,6 +137,24 @@ export const EditarAluno = () => {
                 renderInput={(params) => <TextField {...params} label="Programa" variant="filled" />} />
             )} />
             {errors.idPrograma && <Typography id="erro-idPrograma" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.idPrograma.message}</Typography>}
+          </FormControl>
+
+          <FormControl variant="filled" sx={{ width: "100%" }}>
+            <Controller control={control} name="idTrilha" render={({ field: { onChange } }) => (
+              <Autocomplete noOptionsText="Nenhuma trilha encontrada" disablePortal id="trilha"
+                disabled={!programa ? true : false}
+                defaultValue={{ label: state.trilha.nome, id: state.trilha.idTrilha }}
+                onChange={(event, data) => onChange(data?.id)}
+                onInputChange={(event, value) => {
+                  filtroDebounce(value, pegarTrilhaFiltroNome, pegarTrilha)
+                }}
+                getOptionLabel={(option) => option.label}
+                isOptionEqualToValue={(option, value) => option.label === value.label}
+                options={trilhasPorPrograma ? trilhasPorPrograma.map((trilha) => ({ label: trilha.nome, id: trilha.idTrilha })) : []} 
+                renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
+                renderInput={(params) => <TextField key={params.id} {...params} label="Trilha" variant="filled" />} />
+            )} />
+            {errors.idTrilha && <Typography id="erro-trilhaAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.idTrilha.message}</Typography>}
           </FormControl>
 
           <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>

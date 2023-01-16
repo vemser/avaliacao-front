@@ -24,7 +24,6 @@ export const FiltroAvaliacao = ({ setFiltro }: any) => {
   const watchTodos = watch();
 
   useEffect(() => {
-    pegarAluno(0, 10);
     pegarAcompanhamentos(0, 10);
     pegarProgramaAtivo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -107,9 +106,6 @@ export const FiltroAvaliacao = ({ setFiltro }: any) => {
           disabled={!watchTodos.programa ? true : false}
           disablePortal
           id="combo-box-demo"
-          onInputChange={(event, value) => {
-            filtroDebounce(value, pegarAluno, pegarAluno, `&nome=${value}`)
-          }}
           value={watchTodos.nomeAluno ? { label: watchTodos.nomeAluno.label, id: watchTodos.nomeAluno.id } : null}
           getOptionLabel={(option) => option.label}
           isOptionEqualToValue={(option, value) => option.label === value.label}

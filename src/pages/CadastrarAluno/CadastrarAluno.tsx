@@ -27,7 +27,7 @@ export const CadastrarAluno = () => {
   const { cadastrarAluno } = useAluno();
   const { pegarTrilha, pegarTrilhaFiltroNome, pegarTrilhaPorPrograma, trilhasPorPrograma } = useTrilha();
   const { pegarProgramaAtivo, pegarProgramaPorNomeAtivo, programas } = usePrograma();
-  const { pegarTecnologia, cadastrarTecnologia, tecnologias } = useTecnologia();
+  const { pegarTecnologia, pegarTecnologiaPorNome, cadastrarTecnologia, tecnologias } = useTecnologia();
 
   const [inputTecnologia, setInputTecnologia] = useState<string>('')
   const [tecnologiaSelecionada, setTecnologiaSelecionada] = useState<number[]>([]);
@@ -46,7 +46,7 @@ export const CadastrarAluno = () => {
   useEffect(() => {
     pegarProgramaAtivo(0, 10);
     pegarTrilha(0, 10);
-    pegarTecnologia(0, tecnologias?.totalElementos);
+    pegarTecnologia(0, 10);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -95,12 +95,17 @@ export const CadastrarAluno = () => {
 
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: "end" }}>
           <FormControl sx={{ width: { xs: "100%", md: "100%" }, display: "flex", flexDirection: "row", gap: "10px" }}>
-            <Autocomplete sx={{ width: "90%" }}
-              multiple disablePortal id="tecnologias" noOptionsText="Tecnologia não encontrada, clique no + ao lado para cadastrar"
-              onChange={(e, values) => { if (values.length === 0) setTecnologiaSelecionada([]); setTecnologiaSelecionada(values.map((value) => value.id)) }}
-              isOptionEqualToValue={(option, value) => option.label === value.label}
-              options={tecnologias ? tecnologias.elementos.map((tecnologia) => ({ label: `${tecnologia.nome}`, id: tecnologia.idTecnologia })) : []} renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
-              renderInput={(params) => <TextField {...params} label="Tecnologias" variant="filled" onChange={(e) => setInputTecnologia(e.target.value)} />} />
+            <Controller control={control} name="tecnologias" render={({ field: { onChange } }) => ( 
+              <Autocomplete sx={{ width: "90%" }} multiple disablePortal id="tecnologias" 
+                noOptionsText="Tecnologia não encontrada, clique no + ao lado para cadastrar"
+                onChange={(e, values) => { if (values.length === 0) setTecnologiaSelecionada([]); setTecnologiaSelecionada(values.map((value) => value.id)) }}
+                onInputChange={(event, value) => {
+                  filtroDebounce(value, pegarTecnologiaPorNome, pegarTecnologia)
+                }} 
+                isOptionEqualToValue={(option, value) => option.label === value.label}
+                options={tecnologias ? tecnologias.elementos.map((tecnologia) => ({ label: `${tecnologia.nome}`, id: tecnologia.idTecnologia })) : []} renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
+                renderInput={(params) => <TextField {...params} label="Tecnologias" variant="filled" onChange={(e) => setInputTecnologia(e.target.value)} />} />
+            )} />
 
             <Button id="botao-cadastrar-tecnologia" variant={"contained"} sx={{ width: '10%', fontSize: "20px" }} onClick={() => { if (inputTecnologia) cadastrarTecnologia({ nome: inputTecnologia }); setInputTecnologia('') }}>+</Button>
           </FormControl>

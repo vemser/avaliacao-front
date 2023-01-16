@@ -14,8 +14,8 @@ interface IFiltro {
   tipoAvaliacao: string | null,
 }
 
-export const FiltroAvaliacao = () => {
-  const { alunos, pegarAluno } = useAluno();
+export const FiltroAvaliacao = ({ setFiltro }: any) => {
+  const { alunos, pegarAluno, pegarAlunoPorTrilha } = useAluno();
   const { acompanhamentos, pegarAcompanhamentoTitulo, pegarAcompanhamentos } = useAcompanhamento();
   const { pegarAvaliacao } = useAvaliacao();
   const { programas, pegarProgramaAtivo, pegarProgramaPorNomeAtivo } = usePrograma();
@@ -24,7 +24,6 @@ export const FiltroAvaliacao = () => {
   const watchTodos = watch();
 
   useEffect(() => {
-    pegarAluno(0, 10);
     pegarAcompanhamentos(0, 10);
     pegarProgramaAtivo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -35,7 +34,8 @@ export const FiltroAvaliacao = () => {
     if (data.tituloAcompanhamento) string += `&tituloAcompanhamento=${data.tituloAcompanhamento.trim()}`;
     if (data.nomeAluno) string += `&nomeAluno=${data.nomeAluno.label.trim()}`;
     if (data.tipoAvaliacao) string += `&tipoAvaliacao=${data.tipoAvaliacao.trim()}`;
-    //if (data.programa) string += `&nomePrograma=${data.programa.id}`;
+    if (data.programa) string += `&idPrograma=${data.programa.id}`;
+    setFiltro(string);
     await pegarAvaliacao(0, 10, string);
   }
 
@@ -46,10 +46,17 @@ export const FiltroAvaliacao = () => {
       nomeAluno: null,
       tipoAvaliacao: null,
     })
+    setFiltro(null);
     await pegarAluno(0, 10);
     await pegarAcompanhamentos(0, 10);
     await pegarAvaliacao(0, 10);
   }
+
+  useEffect(() => {
+    if (watchTodos.programa) pegarAlunoPorTrilha(watchTodos.programa.id);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watchTodos.programa]);
 
   return (
     <>
@@ -96,11 +103,9 @@ export const FiltroAvaliacao = () => {
         <Autocomplete
           onChange={(event, data) => onChange(data)}
           size="small"
+          disabled={!watchTodos.programa ? true : false}
           disablePortal
           id="combo-box-demo"
-          onInputChange={(event, value) => {
-            filtroDebounce(value, pegarAluno, pegarAluno, `&nome=${value}`)
-          }}
           value={watchTodos.nomeAluno ? { label: watchTodos.nomeAluno.label, id: watchTodos.nomeAluno.id } : null}
           getOptionLabel={(option) => option.label}
           isOptionEqualToValue={(option, value) => option.label === value.label}
@@ -116,6 +121,7 @@ export const FiltroAvaliacao = () => {
         <InputLabel id="selectFeedback">Situação</InputLabel>
         <Select size="small" label="Situacao" labelId="selectFeedback" value={watchTodos.tipoAvaliacao ? watchTodos.tipoAvaliacao : ""} id="situacao" {...register("tipoAvaliacao")}>
           <MenuItem value="initial-situacao" disabled><em>Selecione uma situação</em></MenuItem>
+          <MenuItem id="nenhum" value="">Nenhum</MenuItem>
           <MenuItem id="positivo" value="POSITIVO">Positivo</MenuItem>
           <MenuItem id="atencao" value="ATENCAO">Atenção</MenuItem>
         </Select>

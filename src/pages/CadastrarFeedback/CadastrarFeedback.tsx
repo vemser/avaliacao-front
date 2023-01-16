@@ -63,12 +63,16 @@ export const CadastrarFeedback = () => {
   }, [])
 
   useEffect(() => {
-    if(filtros.idPrograma) pegarProgramaPorTrilhaModulo(parseInt(filtros.idPrograma))
-    if(filtros.idTrilha) pegarModuloPorTrilha(parseInt(filtros.idTrilha))
-    if(filtros.idPrograma) {
-      pegarAlunoPorTrilha(parseInt(filtros.idPrograma))
-    } else if(filtros.idPrograma && filtros.idTrilha) {
-      pegarAlunoPorTrilha(parseInt(filtros.idPrograma), parseInt(filtros.idTrilha))
+    if (filtros.idPrograma) pegarProgramaPorTrilhaModulo(parseInt(filtros.idPrograma))
+    if (filtros.idTrilha) pegarModuloPorTrilha(parseInt(filtros.idTrilha))
+
+    if (filtros.idPrograma) {
+      if (!filtros.idTrilha) { // Filtra aluno pelo programa
+        pegarAlunoPorTrilha(parseInt(filtros.idPrograma))
+      }
+      if (filtros.idTrilha) { // Filtra aluno pelo programa e trilha
+        pegarAlunoPorTrilha(parseInt(filtros.idPrograma), parseInt(filtros.idTrilha))
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filtros.idPrograma, filtros.idTrilha])
@@ -93,7 +97,7 @@ export const CadastrarFeedback = () => {
                 }}
                 getOptionLabel={(option) => option.label}
                 isOptionEqualToValue={(option, value) => option.label === value.label}
-                options={programas ? programas.elementos.map((programa) => ({ label: programa.nome, id: programa.idPrograma })) : []} 
+                options={programas ? programas.elementos.map((programa) => ({ label: programa.nome, id: programa.idPrograma })) : []}
                 renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
                 renderInput={(params) => <TextField key={params.id} {...params} label="Programa" variant="filled" />} />
             )} />
@@ -110,39 +114,37 @@ export const CadastrarFeedback = () => {
                 }}
                 getOptionLabel={(option) => option.label}
                 isOptionEqualToValue={(option, value) => option.label === value.label}
-                options={programaTrilhaModulo ? programaTrilhaModulo.trilha.map((trilhas) => ({ label: trilhas.nome, id: trilhas.idTrilha })) : []} 
+                options={programaTrilhaModulo ? programaTrilhaModulo.trilha.map((trilhas) => ({ label: trilhas.nome, id: trilhas.idTrilha })) : []}
                 renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
                 renderInput={(params) => <TextField key={params.id} {...params} label="Trilha" variant="filled" />} />
             )} />
             {errors.idTrilha && <Typography id="erro-trilhaAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.idTrilha.message}</Typography>}
           </FormControl>
-          
+
           <FormControl sx={{ width: "100%" }}>
             <Controller control={control} name="modulo" render={({ field: { onChange } }) => (
               <Autocomplete sx={{ width: "100%" }}
-                multiple disablePortal id="modulo" noOptionsText="" 
+                multiple disablePortal id="modulo" noOptionsText=""
                 disabled={!filtros.idTrilha ? true : false}
                 onInputChange={(event, value) => {
                   filtroDebounce(value, pegarModuloPorFiltro, pegarModulo, `&nome=${value}`)
-                }} 
-                onChange={(e, values) => { if (values.length === 0) setModuloSelecionado([]); setModuloSelecionado(values.map((value) => value.id)); handleChangeModulo(); }}
+                }}
+                onChange={(event, data) => onChange(data?.map(item => { return item.id }))}
                 isOptionEqualToValue={(option, value) => option.label === value.label}
-
-                options={moduloPorTrilha ? moduloPorTrilha.map((modulos) => ({ label: modulos.nome, id: modulos.idModulo }) ) : []}
-
+                options={moduloPorTrilha ? moduloPorTrilha.map((modulos) => ({ label: modulos.nome, id: modulos.idModulo })) : []}
                 renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
                 renderInput={(params) => <TextField {...params} label="Módulo" variant="filled" />} />
-              )} />
-            {moduloErro && <Typography id="erro-vaga" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">Por favor, escolha um modulo</Typography>}
+            )} />
+            {errors.modulo && <Typography id="erro-trilhaAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.modulo.message}</Typography>}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
             <Controller control={control} name="idAluno" render={({ field: { onChange } }) => (
-              <Autocomplete disablePortal
-              disabled={!filtros.idPrograma ? true : false}
-              onInputChange={(event, value) => {
-                filtroDebounce(value, pegarAluno, pegarAluno, `&nome=${value}`)
-              }} onChange={(event, data) => onChange(data?.id)} id="aluno" isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: ` ${aluno.nome}`, id: aluno.idAluno })) : []} renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />
+              <Autocomplete disablePortal noOptionsText="Nenhum(a) aluno(a) encontrado(a)"
+                disabled={!filtros.idPrograma ? true : false}
+                onInputChange={(event, value) => {
+                  filtroDebounce(value, pegarAluno, pegarAluno, `&nome=${value}`)
+                }} onChange={(event, data) => onChange(data?.id)} id="aluno" isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: ` ${aluno.nome}`, id: aluno.idAluno })) : []} renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />
             )} />
             {errors.idAluno && <Typography id="erro-idAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.idAluno.message}</Typography>}
           </FormControl>

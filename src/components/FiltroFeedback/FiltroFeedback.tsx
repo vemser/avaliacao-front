@@ -18,9 +18,9 @@ interface IFiltro {
   nomeInstrutor: string | null,
 }
 
-export const FiltroFeedback = () => {
-  const { alunos, pegarAluno, pegarAlunoPorTrilha } = useAluno();
-  const { trilhas, pegarTrilhaFiltroNome, pegarTrilha, pegarTrilhaPorPrograma, trilhasPorPrograma } = useTrilha();
+export const FiltroFeedback = ({ setFiltro }: any) => {
+  const { alunos, pegarAluno, pegarAlunoPorTrilha, } = useAluno();
+  const { pegarTrilha, pegarTrilhaPorPrograma, trilhasPorPrograma } = useTrilha();
   const { usuariosFiltro, pegarUsuariosLoginCargo } = useAuth();
   const { handleSubmit, register, control, reset, watch } = useForm<IFiltro>();
   const { pegarFeedbackFiltros, pegarFeedback } = useFeedback();
@@ -29,8 +29,8 @@ export const FiltroFeedback = () => {
   const watchTodos = watch();
 
   useEffect(() => {
-    // pegarAluno();
-    // pegarTrilha();
+    pegarAluno();
+    pegarTrilha();
     pegarUsuariosLoginCargo();
     pegarProgramaAtivo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -39,10 +39,11 @@ export const FiltroFeedback = () => {
   const filtrar = async (data: IFiltro) => {
     var string = "";
     if (data.nomeAluno) string += `&nomeAluno=${data.nomeAluno.label.trim()}`;
-    if (data.trilha) string += `&trilha=${data.trilha.label.trim()}`;
+    if (data.trilha) string += `&idTrilha=${data.trilha.id}`;
     if (data.nomeInstrutor) string += `&nomeInstrutor=${data.nomeInstrutor.trim()}`;
     if (data.situacao) string += `&situacao=${data.situacao.trim()}`;
     if (data.programa) string += `&idPrograma=${data.programa.id}`;
+    setFiltro(string);
     await pegarFeedbackFiltros(0, 10, string);
   }
 
@@ -53,6 +54,7 @@ export const FiltroFeedback = () => {
       nomeInstrutor: null,
       situacao: null
     })
+    setFiltro(null);
     await pegarFeedback();
     await pegarAluno();
     await pegarTrilha();
@@ -60,11 +62,19 @@ export const FiltroFeedback = () => {
   }
 
   useEffect(() => {
-    if (watchTodos.programa) pegarTrilhaPorPrograma(watchTodos.programa.id);
+    if (watchTodos.programa) {
+      pegarAlunoPorTrilha(watchTodos.programa.id);
+      pegarTrilhaPorPrograma(watchTodos.programa.id)
+    };
 
-    if (watchTodos.programa && !watchTodos.trilha) pegarAlunoPorTrilha(watchTodos.programa.id);
+    if (!watchTodos.programa) {
+      reset({
+        nomeAluno: null,
+        trilha: null,
+      })
+    };
 
-    if (watchTodos.trilha && watchTodos.programa) pegarAlunoPorTrilha(watchTodos.programa.id, watchTodos.trilha.id);
+    if (watchTodos.trilha) if (watchTodos.programa) pegarAlunoPorTrilha(watchTodos.programa.id, watchTodos.trilha.id);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watchTodos.programa, watchTodos.trilha]);
@@ -97,11 +107,8 @@ export const FiltroFeedback = () => {
           size="small"
           disablePortal
           id="combo-box-demo"
-          // onInputChange={(event, value) => {
-          //   filtroDebounce(value, pegarTrilhaFiltroNome, pegarTrilha)
-          // }}
           disabled={!watchTodos.programa ? true : false}
-          value={watchTodos.trilha ? { label: watchTodos.trilha.label, id: watchTodos.trilha.id } : null}
+          value={watchTodos.trilha ? watchTodos.trilha : null}
           getOptionLabel={(option) => option.label || ""}
           isOptionEqualToValue={(option, value) => option.label === value.label}
           noOptionsText={""}
@@ -118,11 +125,8 @@ export const FiltroFeedback = () => {
           size="small"
           disablePortal
           id="combo-box-demo"
-          // onInputChange={(event, value) => {
-          //   filtroDebounce(value, pegarAluno, pegarAluno, `&nome=${value}`)
-          // }}
           disabled={!watchTodos.programa ? true : false}
-          value={watchTodos.nomeAluno ? { label: watchTodos.nomeAluno.label, id: watchTodos.nomeAluno.id } : null}
+          value={watchTodos.nomeAluno ? watchTodos.nomeAluno : null}
           getOptionLabel={(option) => option.label}
           isOptionEqualToValue={(option, value) => option.label === value.label}
           noOptionsText={""}
@@ -137,6 +141,7 @@ export const FiltroFeedback = () => {
         <InputLabel id="selectFeedback">Situação</InputLabel>
         <Select size="small" label="Situacao" labelId="selectFeedback" value={watchTodos.situacao ? watchTodos.situacao : ""} id="situacao" {...register("situacao")}>
           <MenuItem value="initial-situacao" disabled><em>Selecione uma situação</em></MenuItem>
+          <MenuItem id="nenhum" value="">Nenhum</MenuItem>
           <MenuItem id="positivo" value="POSITIVO">Positivo</MenuItem>
           <MenuItem id="atencao" value="ATENCAO">Atenção</MenuItem>
         </Select>

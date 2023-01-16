@@ -12,26 +12,15 @@ import { formatarTexto } from "../../utils/functions";
 
 export const ListarFeedback: React.FC = () => {
   const navigate = useNavigate();
-  const { pegarFeedback, feedback } = useContext(FeedbackContext);
-  const { deletarFeedback } = useContext(FeedbackContext);
-  const [inputFiltro, setInputFiltro] = useState<string>('');
+  const { pegarFeedback, feedback, pegarFeedbackFiltros, deletarFeedback } = useContext(FeedbackContext);
   const [estadoFiltro, setEstadoFiltro] = useState<boolean>(false);
+  const [filtro, setFiltro] = useState<string | null>(null);
 
   const handleChangePage = async (event: unknown, newPage: number) => {
-    if (inputFiltro) {
-      filtrarFeedback(inputFiltro, newPage)
+    if (filtro) {
+      await pegarFeedbackFiltros(newPage, 10, filtro);
     } else {
       await pegarFeedback(newPage)
-    }
-  }
-
-  const filtrarFeedback = async (valor: any, pagina: number = 0, tamanho: number = 10) => {
-    setInputFiltro(valor);
-
-    if (!isNaN(valor)) {
-      await pegarFeedback(pagina, tamanho, `&idFeedback=${valor}`)
-    } else {
-      await pegarFeedback(pagina, tamanho, `&nome=${valor}`)
     }
   }
 
@@ -103,7 +92,7 @@ export const ListarFeedback: React.FC = () => {
         {estadoFiltro &&
           <Box sx={{ display: "flex", gap: 3, flexDirection: "row", alignItems: "center", width: "100%", marginBottom: "10px", paddingInline: 2, marginTop: "10px", flexWrap: "wrap" }}>
 
-            <Componentes.FiltroFeedback />
+            <Componentes.FiltroFeedback setFiltro={setFiltro} />
 
             {/* <Autocomplete
               size="small"
@@ -175,7 +164,7 @@ export const ListarFeedback: React.FC = () => {
                       <StyledTableCell id="modulo" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }}>{feedback.moduloDTO.map((modulo) => modulo.nome).join(", ")}</StyledTableCell>
                     </Tooltip>
 
-                    <StyledTableCell id="stack" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", textTransform: "capitalize", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }}>{formatarTexto(feedback.situacao)}</StyledTableCell>
+                    <StyledTableCell id="stack" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", textTransform: "capitalize", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }}>{feedback.situacao === "POSITIVO" ? "Positivo" : "Atenção"}</StyledTableCell>
 
                     <StyledTableCell id="situacao" sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", textTransform: "capitalize", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }}>{feedback.data.replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")}</StyledTableCell>
 

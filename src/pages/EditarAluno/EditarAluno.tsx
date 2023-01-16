@@ -163,7 +163,7 @@ export const EditarAluno = () => {
               <MenuItem id="disponivel" value="DISPONIVEL">Disponível</MenuItem>
               <MenuItem id="reservado" value="RESERVADO">Reservado</MenuItem>
               <MenuItem id="alocado" value="ALOCADO">Alocado</MenuItem>
-              <MenuItem id="inativo" value="INATIVO">Inativo</MenuItem>
+              <MenuItem id="cancelado" value="CANCELADO">Cancelado</MenuItem>
             </Select>
             {errors.situacao && <Typography id="erro-situacaoAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.situacao.message}</Typography>}
           </FormControl>

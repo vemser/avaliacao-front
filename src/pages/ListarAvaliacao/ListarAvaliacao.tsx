@@ -135,8 +135,8 @@ export const ListarAvaliacao = () => {
                       <StyledTableCell id={`id-aluno-${avaliacao.aluno.idAluno}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }} >{avaliacao.aluno.nome}</StyledTableCell>
                     </Tooltip>
 
-                    <Tooltip title={avaliacao.tipoAvaliacao} PopperProps={{ sx: { marginTop: "-25px !important" } }} arrow>
-                      <StyledTableCell id={`tipo-${avaliacao.idAvaliacao}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }}>{avaliacao.tipoAvaliacao}</StyledTableCell>
+                    <Tooltip title={avaliacao.tipoAvaliacao === "POSITIVO" ? "Positivo" : "Atenção"} PopperProps={{ sx: { marginTop: "-25px !important" } }} arrow>
+                      <StyledTableCell id={`tipo-${avaliacao.idAvaliacao}`} sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "200px", cursor: "default" }}>{avaliacao.tipoAvaliacao === "POSITIVO" ? "Positivo" : "Atenção"}</StyledTableCell>
                     </Tooltip>
 
                     <StyledTableCell id="acoes" sx={{ justifyContent: "center", display: "flex", wrap: "nowrap" }}>

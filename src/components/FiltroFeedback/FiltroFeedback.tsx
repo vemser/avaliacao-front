@@ -44,7 +44,6 @@ export const FiltroFeedback = ({ setFiltro }: any) => {
     if (data.situacao) string += `&situacao=${data.situacao.trim()}`;
     if (data.programa) string += `&idPrograma=${data.programa.id}`;
     setFiltro(string);
-    console.log(string);
     await pegarFeedbackFiltros(0, 10, string);
   }
 
@@ -66,6 +65,13 @@ export const FiltroFeedback = ({ setFiltro }: any) => {
     if (watchTodos.programa) {
       pegarAlunoPorTrilha(watchTodos.programa.id);
       pegarTrilhaPorPrograma(watchTodos.programa.id)
+    };
+
+    if (!watchTodos.programa) {
+      reset({
+        nomeAluno: null,
+        trilha: null,
+      })
     };
 
     if (watchTodos.trilha) if (watchTodos.programa) pegarAlunoPorTrilha(watchTodos.programa.id, watchTodos.trilha.id);
@@ -101,11 +107,8 @@ export const FiltroFeedback = ({ setFiltro }: any) => {
           size="small"
           disablePortal
           id="combo-box-demo"
-          // onInputChange={(event, value) => {
-          //   filtroDebounce(value, pegarTrilhaFiltroNome, pegarTrilha)
-          // }}
           disabled={!watchTodos.programa ? true : false}
-          value={watchTodos.trilha ? { label: watchTodos.trilha.label, id: watchTodos.trilha.id } : null}
+          value={watchTodos.trilha ? watchTodos.trilha : null}
           getOptionLabel={(option) => option.label || ""}
           isOptionEqualToValue={(option, value) => option.label === value.label}
           noOptionsText={""}
@@ -122,11 +125,8 @@ export const FiltroFeedback = ({ setFiltro }: any) => {
           size="small"
           disablePortal
           id="combo-box-demo"
-          // onInputChange={(event, value) => {
-          //   filtroDebounce(value, pegarAluno, pegarAluno, `&nome=${value}`)
-          // }}
           disabled={!watchTodos.programa ? true : false}
-          value={watchTodos.nomeAluno ? { label: watchTodos.nomeAluno.label, id: watchTodos.nomeAluno.id } : null}
+          value={watchTodos.nomeAluno ? watchTodos.nomeAluno : null}
           getOptionLabel={(option) => option.label}
           isOptionEqualToValue={(option, value) => option.label === value.label}
           noOptionsText={""}

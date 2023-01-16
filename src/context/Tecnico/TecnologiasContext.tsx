@@ -34,6 +34,25 @@ export const TecnologiaProvider = ({ children }: IChildren) => {
     }
   };
 
+  const pegarTecnologiaPorNome = async (nome: string, pagina: number = 0, tamanho: number = 10) => {
+    try {
+      nProgress.start();     
+      await API.get(`/tecnologia/tecnologia-busca?nomeTecnologia=${nome}&page=${pagina}&size=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
+        setTecnologias(response.data)
+      })
+    } catch (error: any) {
+      let message = "Ops, algo deu errado!";
+      if (error.response.status === 403) {
+        message = "Você não tem permissão para acessar esse recurso"
+      } else if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message || error.response.data.errors[0];
+      }  
+      toast.error(message, toastConfig);
+    } finally {
+      nProgress.done();
+    }
+  };
+
   const cadastrarTecnologia = async (dadosTecnologia: object) => {
     try {
       nProgress.start();     
@@ -55,7 +74,7 @@ export const TecnologiaProvider = ({ children }: IChildren) => {
   }
 
   return (
-    <TecnologiaContext.Provider value={{ pegarTecnologia, cadastrarTecnologia, tecnologias }}>
+    <TecnologiaContext.Provider value={{ pegarTecnologia, pegarTecnologiaPorNome, cadastrarTecnologia, tecnologias }}>
       {children}
     </TecnologiaContext.Provider>
   );

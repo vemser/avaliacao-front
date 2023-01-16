@@ -38,8 +38,8 @@ export const CadastrarAvaliacao = () => {
   const cadastrar = (data: ICadastrarAvalicao) => {
     data.idAluno = parseInt(data.idAluno.toString())
     data.idAcompanhamento = parseInt(data.idAcompanhamento.toString())
-    console.log(data)
-    // cadastrarAvalicao(data)
+    const novaData = {idAcompanhamento: data.idAcompanhamento,idAluno: data.idAluno, descricao: data.descricao, tipoAvaliacao: data.tipoAvaliacao, dataCriacao: data.dataCriacao}
+    cadastrarAvalicao(novaData)
     
   }
 

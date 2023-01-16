@@ -10,14 +10,14 @@ import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
-import { IChildren, IAvaliacaoContext, ICadastrarAvalicao, IAvaliacaoAPI, IEditarAvaliacao } from "../../utils/AvaliacaoInterface/Avaliacao";
+import { IChildren, IAvaliacaoContext,  IAvaliacaoAPI, IEditarAvaliacao, ICadastrarAvalicaoContext } from "../../utils/AvaliacaoInterface/Avaliacao";
 
 export const AvaliacaoContext = createContext({} as IAvaliacaoContext);
 
 export const AvaliacaoProvider = ({ children }: IChildren) => {
   const navigate = useNavigate()
 
-  const cadastrarAvalicao = async (avalicao: ICadastrarAvalicao) => {
+  const cadastrarAvalicao = async (avalicao: ICadastrarAvalicaoContext) => {
     try {
       nProgress.start();
       await API.post("/avaliacao/create", avalicao, { headers: { Authorization: localStorage.getItem("token") } })

@@ -6,6 +6,7 @@ import { filtroDebounce } from "../../utils/functions";
 import { useForm, Controller } from "react-hook-form";
 import { useAvaliacao } from "../../context/Comportamental/AvaliacaoContext";
 import { usePrograma } from "../../context/Tecnico/ProgramaContext";
+import { debounce } from 'lodash';
 
 interface IFiltro {
   tituloAcompanhamento: string | null,
@@ -15,7 +16,7 @@ interface IFiltro {
 }
 
 export const FiltroAvaliacao = ({ setFiltro }: any) => {
-  const { alunos, pegarAlunoPorTrilha, pegarAlunoDisponivel, pegarAlunoDisponivelPorNome } = useAluno();
+  const { alunos, pegarAlunoFiltroProgramaTrilhaNome } = useAluno();
   const { acompanhamentos, pegarAcompanhamentoTitulo, pegarAcompanhamentos } = useAcompanhamento();
   const { pegarAvaliacao } = useAvaliacao();
   const { programas, pegarProgramaAtivo, pegarProgramaPorNomeAtivo } = usePrograma();
@@ -24,7 +25,7 @@ export const FiltroAvaliacao = ({ setFiltro }: any) => {
   const watchTodos = watch();
 
   useEffect(() => {
-    pegarAlunoDisponivel();
+    pegarAlunoFiltroProgramaTrilhaNome(watchTodos.programa ? watchTodos.programa.id : null, null, watchTodos.nomeAluno ? watchTodos.nomeAluno.label : null);
     pegarAcompanhamentos();
     pegarProgramaAtivo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -48,14 +49,22 @@ export const FiltroAvaliacao = ({ setFiltro }: any) => {
       tipoAvaliacao: null,
     })
     setFiltro(null);
-    await pegarAlunoDisponivel();
+    await pegarAlunoFiltroProgramaTrilhaNome();
     await pegarAcompanhamentos();
     await pegarAvaliacao();
   }
 
+  const filtrarAlunoDebounce = debounce((value, programa) => {
+    if (value) {
+      pegarAlunoFiltroProgramaTrilhaNome(programa, null, value)
+    } else {
+      pegarAlunoFiltroProgramaTrilhaNome(programa, null);
+    }
+  }, 500)
+
   useEffect(() => {
-    if (watchTodos.programa) pegarAlunoPorTrilha(watchTodos.programa.id);
-    if (!watchTodos.programa) pegarAlunoDisponivel();
+    if (watchTodos.programa) pegarAlunoFiltroProgramaTrilhaNome(watchTodos.programa ? watchTodos.programa.id : null, null, watchTodos.nomeAluno ? watchTodos.nomeAluno.label : null);
+    if (!watchTodos.programa) pegarAlunoFiltroProgramaTrilhaNome(null, null, watchTodos.nomeAluno ? watchTodos.nomeAluno.label : null);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watchTodos.programa]);
@@ -108,8 +117,7 @@ export const FiltroAvaliacao = ({ setFiltro }: any) => {
           disablePortal
           id="combo-box-demo"
           onInputChange={(event, value) => {
-            if (!watchTodos.programa)
-              filtroDebounce(value, pegarAlunoDisponivelPorNome, pegarAlunoDisponivel);
+            filtrarAlunoDebounce(value, watchTodos.programa ? watchTodos.programa.id : null)
           }}
           value={watchTodos.nomeAluno ? { label: watchTodos.nomeAluno.label, id: watchTodos.nomeAluno.id } : null}
           getOptionLabel={(option) => option.label}

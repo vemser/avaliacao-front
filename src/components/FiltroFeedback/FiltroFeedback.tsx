@@ -1,4 +1,5 @@
 import { Autocomplete, Button, TextField, Select, MenuItem, InputLabel, FormControl } from "@mui/material";
+import { debounce } from 'lodash';
 
 import { useEffect } from "react";
 import { useAluno } from "../../context/Comportamental/AlunoContext";
@@ -19,7 +20,7 @@ interface IFiltro {
 }
 
 export const FiltroFeedback = ({ setFiltro }: any) => {
-  const { alunos, pegarAlunoDisponivel, pegarAlunoPorTrilha, } = useAluno();
+  const { alunos, pegarAlunoFiltroProgramaTrilhaNome } = useAluno();
   const { pegarTrilha, pegarTrilhaPorPrograma, trilhasPorPrograma } = useTrilha();
   const { usuariosFiltro, pegarUsuariosLoginCargo } = useAuth();
   const { handleSubmit, register, control, reset, watch } = useForm<IFiltro>();
@@ -28,8 +29,18 @@ export const FiltroFeedback = ({ setFiltro }: any) => {
 
   const watchTodos = watch();
 
+  const filtrarAlunoDebounce = debounce((value, programa, trilha) => {
+    if (value) {
+      pegarAlunoFiltroProgramaTrilhaNome(programa, trilha, value)
+    } else {
+      pegarAlunoFiltroProgramaTrilhaNome(programa, trilha);
+    }
+  }, 500)
+
   useEffect(() => {
-    pegarAlunoDisponivel();
+    pegarAlunoFiltroProgramaTrilhaNome(watchTodos.programa ? watchTodos.programa.id : null,
+      watchTodos.trilha ? watchTodos.trilha.id : null,
+      watchTodos.nomeAluno ? watchTodos.nomeAluno.label : null);
     pegarTrilha();
     pegarUsuariosLoginCargo();
     pegarProgramaAtivo();
@@ -56,14 +67,16 @@ export const FiltroFeedback = ({ setFiltro }: any) => {
     })
     setFiltro(null);
     await pegarFeedback();
-    await pegarAlunoDisponivel();
+    await pegarAlunoFiltroProgramaTrilhaNome();
     await pegarTrilha();
     await pegarUsuariosLoginCargo();
   }
 
   useEffect(() => {
     if (watchTodos.programa) {
-      pegarAlunoPorTrilha(watchTodos.programa.id);
+      pegarAlunoFiltroProgramaTrilhaNome(watchTodos.programa ? watchTodos.programa.id : null,
+        watchTodos.trilha ? watchTodos.trilha.id : null,
+        watchTodos.nomeAluno ? watchTodos.nomeAluno.label : null);
       pegarTrilhaPorPrograma(watchTodos.programa.id)
     };
 
@@ -74,7 +87,9 @@ export const FiltroFeedback = ({ setFiltro }: any) => {
       })
     };
 
-    if (watchTodos.trilha) if (watchTodos.programa) pegarAlunoPorTrilha(watchTodos.programa.id, watchTodos.trilha.id);
+    if (watchTodos.trilha) if (watchTodos.programa) pegarAlunoFiltroProgramaTrilhaNome(watchTodos.programa ? watchTodos.programa.id : null,
+      watchTodos.trilha ? watchTodos.trilha.id : null,
+      watchTodos.nomeAluno ? watchTodos.nomeAluno.label : null);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watchTodos.programa, watchTodos.trilha]);
@@ -125,7 +140,9 @@ export const FiltroFeedback = ({ setFiltro }: any) => {
           size="small"
           disablePortal
           id="combo-box-demo"
-          disabled={!watchTodos.programa ? true : false}
+          onInputChange={(event, value) => {
+            filtrarAlunoDebounce(value, watchTodos.programa ? watchTodos.programa.id : null, watchTodos.trilha ? watchTodos.trilha.id : null)
+          }}
           value={watchTodos.nomeAluno ? watchTodos.nomeAluno : null}
           getOptionLabel={(option) => option.label}
           isOptionEqualToValue={(option, value) => option.label === value.label}

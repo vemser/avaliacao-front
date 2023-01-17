@@ -52,7 +52,10 @@ export const CadastrarAluno = () => {
 
   useEffect(() => {
     if(inputValor.idPrograma) pegarTrilhaPorPrograma(parseInt(inputValor.idPrograma))
-    if(!inputValor.idPrograma) reset({ idTrilha: null });
+    if(!inputValor.idPrograma) {
+      reset({ idTrilha: null })
+      pegarProgramaAtivo();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputValor.idPrograma])
 

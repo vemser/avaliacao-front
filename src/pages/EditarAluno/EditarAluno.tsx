@@ -64,7 +64,10 @@ export const EditarAluno = () => {
 
   useEffect(() => {
     if(inputValor.idPrograma) pegarTrilhaPorPrograma(parseInt(inputValor.idPrograma));
-    if(!inputValor.idPrograma) reset({ idTrilha: null, idPrograma: '' })
+    if(!inputValor.idPrograma) {
+      reset({ idTrilha: null, idPrograma: '' });
+      pegarProgramaAtivo();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputValor.idPrograma])
 

@@ -128,7 +128,7 @@ export interface ICadastroAlunoForm {
   email: string,
   situacao: string
   descricao: string,
-  idTrilha: string,
+  idTrilha: { label: string, id: number } | null,
   idPrograma: string,
   tecnologias: number[]
 }
@@ -141,7 +141,7 @@ export interface ICadastroAlunoAPI {
   email: string,
   situacao: string
   descricao: string,
-  idTrilha: number,
+  idTrilha: number | undefined,
   idPrograma: number,
   tecnologias: number[]
 }

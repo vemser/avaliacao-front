@@ -17,7 +17,7 @@ export const VagaProvider = ({ children }: IChildren) => {
   const cadastrarVaga = async (vaga: IVaga) => {
     try {
       nProgress.start();
-      await API.post(`/vaga`, vaga, { headers: { Authorization: localStorage.getItem("token") } });
+      await API.post(`/vaga`, vaga);
       toast.success("Vaga criado com sucesso!", toastConfig);
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
@@ -35,7 +35,7 @@ export const VagaProvider = ({ children }: IChildren) => {
   const pegarVagas = async (pagina: number = 0, tamanho: number = 10, filtros: string = '') => {
     try {
       nProgress.start();
-      const { data } = await API.get(`/vaga/listar-id-nome?pagina=${pagina}&tamanho=${tamanho}${filtros}`, { headers: { Authorization: localStorage.getItem("token") } });
+      const { data } = await API.get(`/vaga/listar-id-nome?pagina=${pagina}&tamanho=${tamanho}${filtros}`);
       setVagas(data);
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
@@ -53,7 +53,7 @@ export const VagaProvider = ({ children }: IChildren) => {
   const deletarVaga = async (id: number) => {
     try {
       nProgress.start();
-      await API.delete(`/vaga/desativar/${id}`, { headers: { Authorization: localStorage.getItem("token") } });
+      await API.delete(`/vaga/desativar/${id}`);
       toast.success("Vaga desativada com sucesso!", toastConfig);
       await pegarVagas();
     } catch (error: any) {
@@ -72,7 +72,7 @@ export const VagaProvider = ({ children }: IChildren) => {
   const editarVaga = async (vaga: IVaga, id: number) => {
     try {
       nProgress.start();
-      await API.put(`/vaga/${id}`, vaga, { headers: { Authorization: localStorage.getItem("token") } });
+      await API.put(`/vaga/${id}`, vaga);
       toast.success("Vaga atualizado com sucesso!", toastConfig);
     } catch (error: any) {
       let message = "Ops, algo deu errado!";

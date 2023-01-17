@@ -19,7 +19,7 @@ export const ClienteProvider = ({ children }: IChildren) => {
   const cadastrarCliente = async (cliente: ICadastrarCliente) => {
     try {
       nProgress.start();
-      await API.post("cliente", cliente, { headers: { Authorization: localStorage.getItem("token") }})
+      await API.post("cliente", cliente)
       toast.success("Cliente criado com sucesso!", toastConfig);
       navigate("/clientes")
     } catch (error: any) {
@@ -56,7 +56,7 @@ export const ClienteProvider = ({ children }: IChildren) => {
   const pegarClientePorNome = async (nome: string, pagina: number = 0, tamanho: number = 10) => {
     try {
       nProgress.start();
-      const { data } = await API.get(`/cliente/nome/${nome}?pagina=${pagina}&tamanho=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") }})
+      const { data } = await API.get(`/cliente/nome/${nome}?pagina=${pagina}&tamanho=${tamanho}`)
       setCliente(data)
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
@@ -75,7 +75,7 @@ export const ClienteProvider = ({ children }: IChildren) => {
   const pegarClientePorEmail = async (nome: string, pagina: number = 0, tamanho: number = 10) => {
     try {
       nProgress.start();
-      const { data } = await API.get(`/cliente/email/${nome}?pagina=${pagina}&tamanho=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") }})
+      const { data } = await API.get(`/cliente/email/${nome}?pagina=${pagina}&tamanho=${tamanho}`)
       setCliente(data)
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
@@ -94,7 +94,7 @@ export const ClienteProvider = ({ children }: IChildren) => {
   const editarCliente = async (cliente: ICadastrarCliente, id: number) => {
     try {
       nProgress.start();
-      await API.put(`/cliente/${id}`, cliente, { headers: { Authorization: localStorage.getItem("token") }})
+      await API.put(`/cliente/${id}`, cliente)
       navigate("/clientes")
       toast.success("Cliente editado com sucesso!", toastConfig);
     } catch (error: any) {
@@ -114,7 +114,7 @@ export const ClienteProvider = ({ children }: IChildren) => {
   const deletarCliente = async (id: number | undefined) => {
     try {
       nProgress.start();
-      await API.delete(`/cliente/${id}`, { headers: { Authorization: localStorage.getItem("token") }});
+      await API.delete(`/cliente/${id}`);
       toast.success("Cliente desativado com sucesso!", toastConfig);
       pegarCliente();
     } catch (error: any) {

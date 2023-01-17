@@ -53,9 +53,7 @@ export const AuthProvider = ({ children }: IChildren) => {
   const editarPerfil = async (imagem: FormData) => {
     try {
       nProgress.start()
-      await AuthAPI.put('/foto/upload-image-perfil', imagem, {
-        headers: { Authorization: localStorage.getItem("token"), 'Content-Type': 'multipart/form-data' }
-      }).then((response) => {
+      await AuthAPI.put('/foto/upload-image-perfil', imagem).then((response) => {
         setUsuarioLogado(response.data)
         toast.success("Foto atualizada com sucesso!", toastConfig);
       })
@@ -68,9 +66,7 @@ export const AuthProvider = ({ children }: IChildren) => {
 
   const pegarUsuarioLogado = async () => {
     try {
-      await AuthAPI.get("/usuario/logged-user", {
-        headers: { Authorization: localStorage.getItem("token") }
-      }).then((response) => {
+      await AuthAPI.get("/usuario/logged-user").then((response) => {
         setUsuarioLogado(response.data);
       })
     } catch (error) {
@@ -87,7 +83,7 @@ export const AuthProvider = ({ children }: IChildren) => {
   const pegarUsuariosLoginCargo = async (pagina: number = 0, tamanho: number = 10, login: string = "") => {
     try {
       nProgress.start();
-      const { data } = await AuthAPI.get(`/usuario/filtro-usuario-login-cargo?pagina=${pagina}&tamanho=${tamanho}&nomes=ROLE_INSTRUTOR&login=${login}`, { headers: { Authorization: localStorage.getItem("token") } });
+      const { data } = await AuthAPI.get(`/usuario/filtro-usuario-login-cargo?pagina=${pagina}&tamanho=${tamanho}&nomes=ROLE_INSTRUTOR&login=${login}`);
       setUsuariosFiltro(data);
     } catch (error: any) {
       let message = "Ops, algo deu errado!";

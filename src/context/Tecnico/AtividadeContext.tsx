@@ -23,7 +23,7 @@ export const AtividadeProvider = ({ children }: IChildren) => {
     try {
       nProgress.start();
       let novaData = { ...atividade, idPrograma: parseInt(atividade.idPrograma), nomeInstrutor: `${usuarioLogado.login.split(".")[0]} ${usuarioLogado.login.split(".")[1]}` }
-      await API.post(`/atividade`, novaData, { headers: { Authorization: localStorage.getItem("token") } });
+      await API.post(`/atividade`, novaData);
       toast.success("Atividade criada com sucesso!", toastConfig);
       navigate('/atividades');
     } catch (error: any) {
@@ -42,7 +42,7 @@ export const AtividadeProvider = ({ children }: IChildren) => {
   const pegarAtividade = async (pagina: number = 0, tamanho: number = 10) => {
     try {
       nProgress.start();
-      const { data } = await API.get(`/atividade/listar-paginado?page=${pagina}&size=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") } });
+      const { data } = await API.get(`/atividade/listar-paginado?page=${pagina}&size=${tamanho}`);
       setAtividades(data);
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
@@ -60,7 +60,7 @@ export const AtividadeProvider = ({ children }: IChildren) => {
   const pegarAtividadeAluno = async (situacao: string, pagina: number = 0, tamanho: number = 10) => {
     try {
       nProgress.start();
-      const { data } = await API.get(`/atividade/listar-por-situacao-paginada?page=${pagina}&size=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") } });
+      const { data } = await API.get(`/atividade/listar-por-situacao-paginada?page=${pagina}&size=${tamanho}`);
       setAtividades(data);
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
@@ -78,7 +78,7 @@ export const AtividadeProvider = ({ children }: IChildren) => {
   const pegarAtividadePorId = async (id: number) => {
     try {
       nProgress.start();
-      const { data } = await API.get(`/atividade/find-id-atividade?idAtividade=${id}`, { headers: { Authorization: localStorage.getItem("token") } });
+      const { data } = await API.get(`/atividade/find-id-atividade?idAtividade=${id}`);
       setAtividades({ totalElementos: 1, quantidadePaginas: 1, pagina: 0, tamanho: 1, elementos: [data] })
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
@@ -96,7 +96,7 @@ export const AtividadeProvider = ({ children }: IChildren) => {
   const deletarAtividade = async (id: number) => {
     try {
       nProgress.start();
-      await API.delete(`/atividade/deletar-atividade?idAtividade=${id}`, { headers: { Authorization: localStorage.getItem("token") } });
+      await API.delete(`/atividade/deletar-atividade?idAtividade=${id}`);
       await pegarAtividade();
       toast.success("Atividade desativada com sucesso!", toastConfig);
     } catch (error: any) {
@@ -116,7 +116,7 @@ export const AtividadeProvider = ({ children }: IChildren) => {
     try {
       nProgress.start();
       let novaData = { ...atividade, idPrograma: parseInt(atividade.idPrograma), nomeInstrutor: `${usuarioLogado.login.split(".")[0]} ${usuarioLogado.login.split(".")[1]}` };
-      await API.put(`/atividade/update/${id}`, novaData, { headers: { Authorization: localStorage.getItem("token") } });
+      await API.put(`/atividade/update/${id}`, novaData);
       toast.success("Atividade atualizado com sucesso!", toastConfig);
       navigate(-1);
     } catch (error: any) {

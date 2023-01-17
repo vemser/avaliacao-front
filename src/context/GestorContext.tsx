@@ -83,9 +83,7 @@ export const GestorProvider = ({children} : IChildren) =>{
   const editarAvaliacao = async (dadosEditados: IEditarAvaliacao, id: number) => {
     try {
       nProgress.start()
-      await API.put(`/avaliacao-acompanhamento/${id}`, dadosEditados, {
-        headers: { Authorization: localStorage.getItem("token") }
-      }).then((response) => {
+      await API.put(`/avaliacao-acompanhamento/${id}`, dadosEditados).then((response) => {
         toast.success("Avaliação editada com sucesso!", toastConfig);
         navigate("/alunos")
       })

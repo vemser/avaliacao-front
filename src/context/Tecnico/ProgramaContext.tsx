@@ -22,7 +22,7 @@ export const ProgramaProvider = ({ children }: IChildren) => {
   const cadastrarPrograma = async (programa: IProgramas) => {
     try {
       nProgress.start();
-      await API.post(`/programa`, programa, { headers: { Authorization: localStorage.getItem("token") }});
+      await API.post(`/programa`, programa);
       toast.success("Programa criado com sucesso!", toastConfig);
       navigate('/programas')
     } catch (error: any) {
@@ -62,7 +62,7 @@ export const ProgramaProvider = ({ children }: IChildren) => {
   const pegarPrograma = async (pagina: number = 0, tamanho: number = 10) => {
     try {
       nProgress.start();
-      const { data } = await API.get(`/programa?page=${pagina}&size=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") }});
+      const { data } = await API.get(`/programa?page=${pagina}&size=${tamanho}`);
       setProgramas(data);
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
@@ -80,7 +80,7 @@ export const ProgramaProvider = ({ children }: IChildren) => {
   const pegarProgramaFiltroID = async (id: string) => {
     try {
       nProgress.start();
-      await API.get(`/programa/${id}`, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
+      await API.get(`/programa/${id}`).then((response) => {
         setProgramas({ totalElementos: 1, quantidadePaginas: 1, pagina: 0, tamanho: 1, elementos: [response.data] })
       })
     } catch (error: any) {
@@ -99,7 +99,7 @@ export const ProgramaProvider = ({ children }: IChildren) => {
   const pegarProgramaAtivo = async (pagina: number = 0, tamanho: number = 10) => {
     try {
       nProgress.start();
-      const { data } = await API.get(`/programa?page=${pagina}&size=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") } });
+      const { data } = await API.get(`/programa?page=${pagina}&size=${tamanho}`);
       let programasAtivos = data;
       programasAtivos.elementos = programasAtivos.elementos.filter((programa: IProgramas) => programa.situacaoVagaPrograma === "ABERTO");
       setProgramas(programasAtivos);
@@ -119,7 +119,7 @@ export const ProgramaProvider = ({ children }: IChildren) => {
   const pegarProgramaPorNome = async (nome: string, pagina: number = 0, tamanho: number = 10) => {
     try {
       nProgress.start();
-      const { data } = await API.get(`/programa/list-nome?page=${pagina}&size=${tamanho}&nome=${nome}`, { headers: { Authorization: localStorage.getItem("token") }});
+      const { data } = await API.get(`/programa/list-nome?page=${pagina}&size=${tamanho}&nome=${nome}`);
       setProgramas(data);
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
@@ -137,7 +137,7 @@ export const ProgramaProvider = ({ children }: IChildren) => {
   const pegarProgramaPorTrilhaModulo = async (id: number) => {
     try {
       nProgress.start();
-      await API.get(`/programa/buscar-programa-trilha-modulo?idPrograma=${id}`, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
+      await API.get(`/programa/buscar-programa-trilha-modulo?idPrograma=${id}`).then((response) => {
         setProgramaTrilhaModulo(response.data);
       })
     } catch (error: any) {
@@ -156,7 +156,7 @@ export const ProgramaProvider = ({ children }: IChildren) => {
   const pegarProgramaPorNomeAtivo = async (nome: string, pagina: number = 0, tamanho: number = 10) => {
     try {
       nProgress.start();
-      const { data } = await API.get(`/programa?nomePrograma=${nome}&page=${pagina}&size=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") }});
+      const { data } = await API.get(`/programa?nomePrograma=${nome}&page=${pagina}&size=${tamanho}`);
       let programasAtivos = data;
       programasAtivos.elementos = programasAtivos.elementos.filter((programa: IProgramas) => programa.situacaoVagaPrograma === "ABERTO");
       setProgramas(programasAtivos);
@@ -176,7 +176,7 @@ export const ProgramaProvider = ({ children }: IChildren) => {
   const pegarProgramaCompleto = async (id: number) => {
     try {
       nProgress.start();
-      const { data } = await API.get(`/programa/buscar-programa-trilha-modulo?idPrograma=${id}`, { headers: { Authorization: localStorage.getItem("token") } });
+      const { data } = await API.get(`/programa/buscar-programa-trilha-modulo?idPrograma=${id}`);
       setProgramaCompleto(data);      
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
@@ -194,7 +194,7 @@ export const ProgramaProvider = ({ children }: IChildren) => {
   const deletarProgama = async (id: number) => {
     try {
       nProgress.start();
-      await API.delete(`/programa/${id}`, { headers: { Authorization: localStorage.getItem("token") }});
+      await API.delete(`/programa/${id}`);
       await pegarPrograma();
       toast.success("Programa desativado com sucesso!", toastConfig);
     } catch (error: any) {
@@ -213,7 +213,7 @@ export const ProgramaProvider = ({ children }: IChildren) => {
   const editarPrograma = async (programa: IProgramas, id: number) => {
     try {
       nProgress.start();
-      await API.put(`/programa/${id}`, programa, { headers: { Authorization: localStorage.getItem("token") }});
+      await API.put(`/programa/${id}`, programa);
       toast.success("Programa atualizado com sucesso!", toastConfig);
     } catch (error: any) {
       let message = "Ops, algo deu errado!";

@@ -19,7 +19,7 @@ export const FeedbackProvider = ({ children }: IChildren) => {
     const pegarFeedback = async (pagina: number = 0, tamanho: number = 10, filtros: string = '') => {
         try {
             nProgress.start()
-            const { data } = await API.get(`/feedback/listar-feedback?page=${pagina}&size=${tamanho}${filtros}`, { headers: { Authorization: localStorage.getItem("token") } })
+            const { data } = await API.get(`/feedback/listar-feedback?page=${pagina}&size=${tamanho}${filtros}`)
 
             setFeedback(data)
         } catch (error: any) {
@@ -38,7 +38,7 @@ export const FeedbackProvider = ({ children }: IChildren) => {
     const pegarFeedbackFiltros = async (pagina: number = 0, tamanho: number = 10, filtros: string = '') => {
         try {
             nProgress.start()
-            const { data } = await API.get(`/feedback/listar-feedbacks-com-filtro?page=${pagina}&size=${tamanho}${filtros}`, { headers: { Authorization: localStorage.getItem("token") } })
+            const { data } = await API.get(`/feedback/listar-feedbacks-com-filtro?page=${pagina}&size=${tamanho}${filtros}`)
             setFeedback(data)
         } catch (error: any) {
             let message = "Ops, algo deu errado!";
@@ -58,7 +58,7 @@ export const FeedbackProvider = ({ children }: IChildren) => {
         try {
             nProgress.start();
 
-            await API.post("/feedback/cadastrar-feedback", data, { headers: { Authorization: localStorage.getItem("token") } });
+            await API.post("/feedback/cadastrar-feedback", data);
 
             navigate("/feedbacks");
             toast.success("Feedback cadastrado com sucesso!", toastConfig);
@@ -97,7 +97,7 @@ export const FeedbackProvider = ({ children }: IChildren) => {
 
     const deletarFeedback = async (idFeedback: number | undefined) => {
         try {
-            await API.delete(`/feedback/desativar-feedback/${idFeedback}`, { headers: { Authorization: localStorage.getItem("token") } });
+            await API.delete(`/feedback/desativar-feedback/${idFeedback}`);
 
             pegarFeedback();
             toast.success('Feedback desativado com sucesso!', toastConfig);
@@ -115,7 +115,7 @@ export const FeedbackProvider = ({ children }: IChildren) => {
     const editarFeedback = async (feedback: IEditarFeedback, id: number) => {
         try {
             nProgress.start();
-            await API.put(`/feedback/editar-feedback/${id}`, feedback, { headers: { Authorization: localStorage.getItem("token") } })
+            await API.put(`/feedback/editar-feedback/${id}`, feedback)
             toast.success("Feedback editado com sucesso!", toastConfig);
             navigate("/feedbacks")
         } catch (error: any) {

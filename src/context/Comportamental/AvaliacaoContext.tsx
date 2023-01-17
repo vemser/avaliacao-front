@@ -20,7 +20,7 @@ export const AvaliacaoProvider = ({ children }: IChildren) => {
   const cadastrarAvalicao = async (avalicao: ICadastrarAvalicaoContext) => {
     try {
       nProgress.start();
-      await API.post("/avaliacao/create", avalicao, { headers: { Authorization: localStorage.getItem("token") } })
+      await API.post("/avaliacao/create", avalicao)
       toast.success("Avaliação criada com sucesso!", toastConfig);
       navigate("/avaliacoes")
     } catch (error: any) {
@@ -41,8 +41,7 @@ export const AvaliacaoProvider = ({ children }: IChildren) => {
   const pegarAvaliacao = async (pagina: number = 0, tamanho: number = 10, filtros: string = '') => {
     try {
       nProgress.start();
-      console.log(filtros)
-      await API.get(`/avaliacao/listar?pagina=${pagina}&tamanho=${tamanho}${filtros}`, { headers: { Authorization: localStorage.getItem("token") } }).then((response) => {
+      await API.get(`/avaliacao/listar?pagina=${pagina}&tamanho=${tamanho}${filtros}`).then((response) => {
         setAvaliacoes(response.data);
       })
     } catch (error: any) {
@@ -60,7 +59,7 @@ export const AvaliacaoProvider = ({ children }: IChildren) => {
 
   const deletarAvaliacao = async (idAluno: number | undefined) => {
     try {
-      await API.delete(`/avaliacao/desativar/${idAluno}`, { headers: { Authorization: localStorage.getItem("token") } });
+      await API.delete(`/avaliacao/desativar/${idAluno}`);
       toast.success('Avaliação desativada com sucesso!', toastConfig);
       pegarAvaliacao()
     } catch (error: any) {
@@ -77,7 +76,7 @@ export const AvaliacaoProvider = ({ children }: IChildren) => {
   const editarAvaliacao = async (avalicao: IEditarAvaliacao, id: number) => {
     try {
       nProgress.start();
-      await API.put(`/avaliacao/${id}`, avalicao, { headers: { Authorization: localStorage.getItem("token") } })
+      await API.put(`/avaliacao/${id}`, avalicao)
       toast.success("Avaliação editada com sucesso!", toastConfig);
       navigate("/avaliacoes")
     } catch (error: any) {

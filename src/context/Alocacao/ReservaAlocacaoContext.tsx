@@ -21,7 +21,7 @@ export const ReservaAlocacaoProvider = ({children} : IChildren) =>{
   const cadastrarReservaAlocacao = async (ReservaAlocacao: IResrevaAlocacao) => {
     try {
       nProgress.start()
-      await API.post("/reserva-alocacao", ReservaAlocacao, { headers: { Authorization: localStorage.getItem("token")}})
+      await API.post("/reserva-alocacao", ReservaAlocacao)
       navigate("/alocacao-reserva")
       toast.success("Reserva e Alocação criado com sucesso!", toastConfig);
     } catch (error: any) {
@@ -39,7 +39,7 @@ export const ReservaAlocacaoProvider = ({children} : IChildren) =>{
 
   const pegarReservaAlocacao = async (pagina: number = 0, tamanho: number = 10) => {
     try {
-      const {data} = await API.get(`reserva-alocacao?pagina=${pagina}&tamanho=${tamanho}`, { headers: { Authorization: localStorage.getItem("token")}})
+      const {data} = await API.get(`reserva-alocacao?pagina=${pagina}&tamanho=${tamanho}`)
       setReservaAlocacao(data)
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
@@ -57,7 +57,7 @@ export const ReservaAlocacaoProvider = ({children} : IChildren) =>{
   const filtroReservaAlocacao = async (nome: string, pagina: number = 0, tamanho: number = 10 ) => {
     try {
       nProgress.start();
-      const {data} = await API.get(`/reserva-alocacao?pagina=${pagina}&tamanho=${tamanho}&nome=${nome}`, { headers: { Authorization: localStorage.getItem("token") }})
+      const {data} = await API.get(`/reserva-alocacao?pagina=${pagina}&tamanho=${tamanho}&nome=${nome}`)
       setReservaAlocacao(data)
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
@@ -76,7 +76,7 @@ export const ReservaAlocacaoProvider = ({children} : IChildren) =>{
   const editarReservaAlocacao = async (reservaAlocacao: IEditarReservaAlocacao, id: number) => {
     try {
       nProgress.start();
-      await API.put(`/reserva-alocacao/${id}`, reservaAlocacao, { headers: { Authorization: localStorage.getItem("token") }})
+      await API.put(`/reserva-alocacao/${id}`, reservaAlocacao)
       navigate("/alocacao-reserva")
       toast.success("Reserva e Alocação editado com sucesso!", toastConfig);
     } catch (error: any) {

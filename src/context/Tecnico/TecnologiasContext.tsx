@@ -18,7 +18,7 @@ export const TecnologiaProvider = ({ children }: IChildren) => {
   const pegarTecnologia = async (pagina: number = 0, tamanho: number = 10) => {
     try {
       nProgress.start();     
-      await API.get(`/tecnologia?pagina=${pagina}&tamanho=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
+      await API.get(`/tecnologia?pagina=${pagina}&tamanho=${tamanho}`).then((response) => {
         setTecnologias(response.data)
       })
     } catch (error: any) {
@@ -37,7 +37,7 @@ export const TecnologiaProvider = ({ children }: IChildren) => {
   const pegarTecnologiaPorNome = async (nome: string, pagina: number = 0, tamanho: number = 10) => {
     try {
       nProgress.start();     
-      await API.get(`/tecnologia/tecnologia-busca?nomeTecnologia=${nome}&page=${pagina}&size=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
+      await API.get(`/tecnologia/tecnologia-busca?nomeTecnologia=${nome}&page=${pagina}&size=${tamanho}`).then((response) => {
         setTecnologias(response.data)
       })
     } catch (error: any) {
@@ -56,7 +56,7 @@ export const TecnologiaProvider = ({ children }: IChildren) => {
   const cadastrarTecnologia = async (dadosTecnologia: object) => {
     try {
       nProgress.start();     
-      await API.post('/tecnologia', dadosTecnologia, { headers: { Authorization: localStorage.getItem("token") }}).then((response) => {
+      await API.post('/tecnologia', dadosTecnologia).then((response) => {
         toast.success('Tecnologia cadastrada com sucesso!', toastConfig);
         pegarTecnologia();
       })

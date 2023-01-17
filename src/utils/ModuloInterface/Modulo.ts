@@ -8,6 +8,8 @@ export interface IModulo {
   clonarModulo: (id: number) => Promise<void>,
   pegarModuloPorFiltro: (pagina?: number, tamanho?: number, filtros?: string) => Promise<void>,
   pegarModuloPorTrilha: (id: number) => Promise<void>,
+  pegarModuloPorId: (id: string) => Promise<void>,
+  moduloPorId: IModuloTrilha | null
 }
 
 export interface IModuloAPI {
@@ -46,11 +48,26 @@ export interface IListProgramaDTO {
 
 export interface ICadastroModulo {
   nome: string,
-  idTrilha: number[],
-  listPrograma: number[]
+  trilha: number[]
 }
 
 export interface IModulosPorTrilha {
   idModulo: number,
   nome: string
+}
+
+export interface IEditarModulo {
+  idModulo: number,
+  nome: string,
+  trilha: number[]
+}
+
+export interface IModuloTrilha {
+  idModulo: number,
+  nome: string,
+  trilhas: [{
+    idTrilha: number,
+    nome: string,
+    descricao: string
+  }]
 }

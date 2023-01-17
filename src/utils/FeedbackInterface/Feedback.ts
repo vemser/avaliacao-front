@@ -6,7 +6,7 @@ export interface IFeedback {
     pegarFeedback: (pagina?: number, tamanho?: number, filtros?: string) => Promise<void>,
     deletarFeedback: (idFeedback: number | undefined) => Promise<void>,
     feedback: IFeedbackAPI | null,
-    cadastrarFeedback: (data: IFeedbackCadastro) => Promise<void>,
+    cadastrarFeedback: (data: iFeedbackCadastroContext) => Promise<void>,
     editarFeedback: (feedback: IEditarFeedback, id: number) => Promise<void>,
     pegarFeedbackFiltros: (pagina?: number, tamanho?: number, filtros?: string) => Promise<void>
 }
@@ -42,13 +42,19 @@ export interface IModuloDTO {
 }
 
 export interface IFeedbackCadastro {
-    idAluno: number,
+    idAluno: {label: string, id: number} | null,
     modulo: number[],
-    usuarioLogado: string,
     descricao: string,
     situacao: string,
     idPrograma: string
-    idTrilha: string
+    idTrilha: {label: string, id: number} | null
+}
+
+export interface iFeedbackCadastroContext {
+    idAluno: number | undefined,
+    modulo: number[],
+    descricao: string,
+    situacao: string,
 }
 
 export interface IEditarFeedback {

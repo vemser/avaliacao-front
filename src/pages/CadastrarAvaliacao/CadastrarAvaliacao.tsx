@@ -43,10 +43,10 @@ export const CadastrarAvaliacao = () => {
   }
 
   useEffect(() => {
-    pegarProgramaAtivo(0, 10);
-    pegarTrilha(0, 10);
-    pegarAlunoDisponivel(0, 10);
-    pegarAcompanhamentos(0, 10);
+    pegarProgramaAtivo();
+    pegarTrilha();
+    pegarAlunoDisponivel();
+    pegarAcompanhamentos();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -59,6 +59,7 @@ export const CadastrarAvaliacao = () => {
         idAluno: null,
         idTrilha: null,
       })
+      pegarProgramaAtivo()
     }
 
     if (filtro.idPrograma) {

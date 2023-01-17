@@ -30,7 +30,7 @@ export const CadastrarFeedback = () => {
   const [moduloErro, setModuloErro] = useState<boolean>(false);
   const [dataModulo, setDataModulo] = useState<string>();
 
-  const { register, handleSubmit, formState: { errors }, control, watch } = useForm<IFeedbackCadastro>({
+  const { register, handleSubmit, formState: { errors }, control, watch,reset } = useForm<IFeedbackCadastro>({
     resolver: yupResolver(feedbackSchema)
   });
 
@@ -50,9 +50,11 @@ export const CadastrarFeedback = () => {
   };
 
   const cadastrar = (data: IFeedbackCadastro) => {
-    const novaData = { ...data, modulo: moduloSelecionado }
-    setDataModulo(novaData.modulo.toString())
-    cadastrarFeedback(novaData)
+    if (data.idAluno) {
+      const novaData = {descricao: data.descricao, idAluno: data.idAluno?.id, modulo: data.modulo, situacao: data.situacao}
+      cadastrarFeedback(novaData)
+      // console.log(novaData)
+    }
   }
 
   useEffect(() => {
@@ -64,14 +66,22 @@ export const CadastrarFeedback = () => {
 
   useEffect(() => {
     if (filtros.idPrograma) pegarProgramaPorTrilhaModulo(parseInt(filtros.idPrograma))
-    if (filtros.idTrilha) pegarModuloPorTrilha(parseInt(filtros.idTrilha))
+    if (filtros.idTrilha) pegarModuloPorTrilha(filtros.idTrilha.id)
+
+    if (!filtros.idPrograma) {
+      reset({
+        idAluno: null,
+        idTrilha: null
+      })
+      pegarProgramaAtivo()
+    }
 
     if (filtros.idPrograma) {
       if (!filtros.idTrilha) { // Filtra aluno pelo programa
         pegarAlunoPorTrilha(parseInt(filtros.idPrograma))
       }
       if (filtros.idTrilha) { // Filtra aluno pelo programa e trilha
-        pegarAlunoPorTrilha(parseInt(filtros.idPrograma), parseInt(filtros.idTrilha))
+        pegarAlunoPorTrilha(parseInt(filtros.idPrograma), filtros.idTrilha.id)
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -108,10 +118,11 @@ export const CadastrarFeedback = () => {
             <Controller control={control} name="idTrilha" render={({ field: { onChange } }) => (
               <Autocomplete noOptionsText="Nenhuma trilha encontrada" disablePortal id="trilha"
                 disabled={!filtros.idPrograma ? true : false}
-                onChange={(event, data) => onChange(data?.id)}
+                onChange={(event, data) => onChange(data)}
                 onInputChange={(event, value) => {
                   filtroDebounce(value, pegarTrilhaFiltroNome, pegarTrilha)
                 }}
+                value={filtros.idTrilha ? filtros.idTrilha : null}
                 getOptionLabel={(option) => option.label}
                 isOptionEqualToValue={(option, value) => option.label === value.label}
                 options={programaTrilhaModulo ? programaTrilhaModulo.trilha.map((trilhas) => ({ label: trilhas.nome, id: trilhas.idTrilha })) : []}
@@ -144,7 +155,7 @@ export const CadastrarFeedback = () => {
                 disabled={!filtros.idPrograma ? true : false}
                 onInputChange={(event, value) => {
                   filtroDebounce(value, pegarAluno, pegarAluno, `&nome=${value}`)
-                }} onChange={(event, data) => onChange(data?.id)} id="aluno" isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: ` ${aluno.nome}`, id: aluno.idAluno })) : []} renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />
+                }} onChange={(event, data) => onChange(data)} id="aluno" value={filtros.idAluno ? filtros.idAluno : null} getOptionLabel={(option) => option.label} isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: ` ${aluno.nome}`, id: aluno.idAluno })) : []} renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />
             )} />
             {errors.idAluno && <Typography id="erro-idAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.idAluno.message}</Typography>}
           </FormControl>

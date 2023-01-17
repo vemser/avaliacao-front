@@ -8,7 +8,7 @@ import nProgress from 'nprogress';
 import { API } from "../../utils/api";
 import axios from "axios";
 
-import { IChildren, IEditarFeedback, IFeedback, IFeedbackAPI, IFeedbackCadastro, IFeedbackElementos } from "../../utils/FeedbackInterface/Feedback";
+import { IChildren, IEditarFeedback, IFeedback, IFeedbackAPI, IFeedbackCadastro, iFeedbackCadastroContext, IFeedbackElementos } from "../../utils/FeedbackInterface/Feedback";
 
 export const FeedbackContext = createContext({} as IFeedback);
 
@@ -54,7 +54,7 @@ export const FeedbackProvider = ({ children }: IChildren) => {
     }
 
 
-    const cadastrarFeedback = async (data: IFeedbackCadastro) => {
+    const cadastrarFeedback = async (data: iFeedbackCadastroContext) => {
         try {
             nProgress.start();
 

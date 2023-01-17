@@ -7,7 +7,7 @@ import { toastConfig } from "../../utils/toast";
 import { toast } from "react-toastify";
 import nProgress from "nprogress";
 
-import { ICadastroModulo, IModulo, IModuloAPI, IModulosPorTrilha } from "../../utils/ModuloInterface/Modulo";
+import { ICadastroModulo, IModuloTrilha, IModulo, IModuloAPI, IModulosPorTrilha } from "../../utils/ModuloInterface/Modulo";
 import { IChildren } from "../../utils/interface";
 import axios from "axios";
 
@@ -16,7 +16,7 @@ export const ModuloContext = createContext({} as IModulo);
 export const ModuloProvider = ({ children }: IChildren) => {
   const navigate = useNavigate();
   const [modulo, setModulo] = useState<IModuloAPI | null>(null);
-
+  const [moduloPorId, setModuloPorId] = useState<IModuloTrilha | null>(null);
   const [moduloPorTrilha, setModuloPorTrilha] = useState<IModulosPorTrilha[]>([]);
 
   const pegarModulo = async (pagina: number = 0, tamanho: number = 10) => {
@@ -30,7 +30,7 @@ export const ModuloProvider = ({ children }: IChildren) => {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      }  
+      }
       toast.error(message, toastConfig);
     } finally {
       nProgress.done()
@@ -49,7 +49,7 @@ export const ModuloProvider = ({ children }: IChildren) => {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      }  
+      }
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -68,7 +68,28 @@ export const ModuloProvider = ({ children }: IChildren) => {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      }  
+      }
+      toast.error(message, toastConfig);
+    } finally {
+      nProgress.done();
+    }
+  }
+
+  const pegarModuloPorId = async (id: string) => {
+    try {
+      nProgress.start();
+      API.defaults.headers.common["Authorization"] = localStorage.getItem("token");
+
+      const { data } = await API.get(`/modulo/find-id-modulo?idModulo=${id}`);      
+      setModuloPorId(data);
+      console.log(data)
+    } catch (error: any) {
+      let message = "Ops, algo deu errado!";
+      if (error.response.status === 403) {
+        message = "Você não tem permissão para acessar esse recurso"
+      } else if (axios.isAxiosError(error) && error?.response) {
+        message = error.response.data.message || error.response.data.errors[0];
+      }
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -87,7 +108,7 @@ export const ModuloProvider = ({ children }: IChildren) => {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      }  
+      }
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -106,7 +127,7 @@ export const ModuloProvider = ({ children }: IChildren) => {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      }  
+      }
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -126,7 +147,7 @@ export const ModuloProvider = ({ children }: IChildren) => {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      }  
+      }
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -137,15 +158,14 @@ export const ModuloProvider = ({ children }: IChildren) => {
     try {
       nProgress.start()
       await API.delete(`/modulo/desativar?idModulo=${id}`);
-      toast.success("Módulo desativado com sucesso!", toastConfig)
-      pegarModulo()
+      toast.success("Módulo desativado com sucesso!", toastConfig);
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
       if (error.response.status === 403) {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      } 
+      }
       toast.error(message, toastConfig);
     } finally {
       nProgress.done()
@@ -153,7 +173,7 @@ export const ModuloProvider = ({ children }: IChildren) => {
   }
 
   return (
-    <ModuloContext.Provider value={{ pegarModulo, modulo, deletarModulo, cadastrarModulo, editarModulo, pegarModuloPorFiltro, clonarModulo, pegarModuloPorTrilha, moduloPorTrilha }}>
+    <ModuloContext.Provider value={{ pegarModulo, modulo, deletarModulo, cadastrarModulo, editarModulo, pegarModuloPorFiltro, clonarModulo, pegarModuloPorTrilha, moduloPorTrilha, pegarModuloPorId, moduloPorId }}>
       {children}
     </ModuloContext.Provider>
   )

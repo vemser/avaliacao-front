@@ -38,7 +38,7 @@ export const ClienteProvider = ({ children }: IChildren) => {
   const pegarCliente = async (pagina: number = 0, tamanho: number = 10) => {
     try {
       nProgress.start();
-      const { data } = await API.get(`cliente?pagina=${pagina}&tamanho=${tamanho}`, { headers: { Authorization: localStorage.getItem("token") }})
+      const { data } = await API.get(`cliente?pagina=${pagina}&tamanho=${tamanho}`)
       setCliente(data)
     } catch (error: any) {
       let message = "Ops, algo deu errado!";

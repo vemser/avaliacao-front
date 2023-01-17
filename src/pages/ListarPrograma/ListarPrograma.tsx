@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { usePrograma } from "../../context/Tecnico/ProgramaContext";
 
 import * as Componentes from "../../components";
-import { formatarTexto } from "../../utils/functions";
 import { IProgramas } from "../../utils/programaInterface";
 
 import { Box, Button, Modal, Paper, styled, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableHead, TablePagination, TableRow, Tooltip, Typography } from "@mui/material";

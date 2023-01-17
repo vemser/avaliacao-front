@@ -30,7 +30,8 @@ export interface ITrilhasElementos {
 
 export interface IDadosTrilha {
   nome: string, 
-  descricao: string
+  descricao: string,
+  idPrograma: number
 }
 
 export interface ITrilhasPorPrograma {

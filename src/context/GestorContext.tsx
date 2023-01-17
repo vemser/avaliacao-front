@@ -53,9 +53,7 @@ export const GestorProvider = ({children} : IChildren) =>{
   const editarAcompanhamento = async (dadosEditados: IEditarAcompanhamento, id: number) => {
     try {
       nProgress.start()
-      await API.put(`/acompanhamento/editar-acompanhamento/${id}`, dadosEditados, {
-        headers: { Authorization: localStorage.getItem("token") }
-      }).then((response) => {
+      await API.put(`/acompanhamento/editar-acompanhamento/${id}`, dadosEditados).then((response) => {
         toast.success("Acompanhamento editado com sucesso!", toastConfig);
         navigate('/acompanhamentos')
       })

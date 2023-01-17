@@ -177,7 +177,19 @@ export const ProgramaProvider = ({ children }: IChildren) => {
     try {
       nProgress.start();
       const { data } = await API.get(`/programa/buscar-programa-trilha-modulo?idPrograma=${id}`);
-      setProgramaCompleto(data);      
+
+      data.trilha = data.trilha.sort((a: any, b: any) => {
+        if (a.nome < b.nome) {
+          return -1;
+        } if (a.nome > b.nome) {
+          return 1;
+        }
+        return 0
+      });
+
+      console.log(data)
+
+      setProgramaCompleto(data);
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
       if (error.response.status === 403) {

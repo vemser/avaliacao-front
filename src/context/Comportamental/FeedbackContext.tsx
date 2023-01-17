@@ -78,7 +78,7 @@ export const FeedbackProvider = ({ children }: IChildren) => {
     // const cadastrarAluno = async (dadosAluno: ICadastroAlunoAPI) => {
     //     try {
     //         nProgress.start();
-    //         await API.post('/aluno/cadastrar-aluno', dadosAluno, { headers: { Authorization: localStorage.getItem("token") } }).then((response) => {
+    //         await API.post('/aluno/cadastrar-aluno', dadosAluno).then((response) => {
     //             navigate('/alunos');
     //             toast.success('Aluno cadastrado com sucesso!', toastConfig);
     //         })

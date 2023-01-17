@@ -19,7 +19,7 @@ interface IFiltro {
 }
 
 export const FiltroFeedback = ({ setFiltro }: any) => {
-  const { alunos, pegarAluno, pegarAlunoPorTrilha, } = useAluno();
+  const { alunos, pegarAlunoDisponivel, pegarAlunoPorTrilha, } = useAluno();
   const { pegarTrilha, pegarTrilhaPorPrograma, trilhasPorPrograma } = useTrilha();
   const { usuariosFiltro, pegarUsuariosLoginCargo } = useAuth();
   const { handleSubmit, register, control, reset, watch } = useForm<IFiltro>();
@@ -29,7 +29,7 @@ export const FiltroFeedback = ({ setFiltro }: any) => {
   const watchTodos = watch();
 
   useEffect(() => {
-    pegarAluno();
+    pegarAlunoDisponivel();
     pegarTrilha();
     pegarUsuariosLoginCargo();
     pegarProgramaAtivo();
@@ -56,7 +56,7 @@ export const FiltroFeedback = ({ setFiltro }: any) => {
     })
     setFiltro(null);
     await pegarFeedback();
-    await pegarAluno();
+    await pegarAlunoDisponivel();
     await pegarTrilha();
     await pegarUsuariosLoginCargo();
   }

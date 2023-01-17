@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Titulo } from '../../components/Titulo/Titulo';
@@ -12,7 +12,7 @@ import { useTrilha } from '../../context/Tecnico/TrilhaContext';
 import { useModulo } from '../../context/Tecnico/ModuloContext';
 
 import { moduloSchema } from '../../utils/schemas';
-import { IEditarModulo } from '../../utils/ModuloInterface/Modulo';
+import { IEditarModulo, IModuloTrilha } from '../../utils/ModuloInterface/Modulo';
 import { filtroDebounce } from '../../utils/functions';
 
 const itemHeigth = 48;
@@ -32,19 +32,19 @@ export const EditarModulo = () => {
   const { trilhas, pegarTrilha, pegarTrilhaFiltroNome } = useTrilha();
   const { editarModulo, pegarModuloPorId, moduloPorId } = useModulo();
 
-  useEffect(() => {
-    pegarTrilha();
-    pegarModuloPorId(state.idModulo);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const { handleSubmit, register, control, formState: { errors } } = useForm<IEditarModulo>({
+  const { handleSubmit, register, control, reset, formState: { errors } } = useForm<IEditarModulo>({
     resolver: yupResolver(moduloSchema)
   });
 
   const editar = (data: IEditarModulo) => {
     editarModulo(data, state.idModulo);
   }
+
+  useEffect(() => {
+    pegarModuloPorId(state.idModulo);
+    pegarTrilha();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "60px", paddingBottom: "50px" }}>
@@ -60,8 +60,8 @@ export const EditarModulo = () => {
 
           <FormControl sx={{ width: "100%" }}>
             <Controller control={control} name="trilha" render={({ field: { onChange } }) => (
-              <Autocomplete sx={{ width: "100%" }}
-                defaultValue={moduloPorId ? moduloPorId.trilhas.map((trilha: any) => ({ label: trilha.nome, id: trilha.idTrilha })) : []}
+              <Autocomplete sx={{ width: "100%" }}                
+                defaultValue={moduloPorId?.trilhas.map((trilha: any) => ({ label: trilha.nome, id: trilha.idTrilha }))}
                 multiple disablePortal id="trilha"
                 noOptionsText="Nenhuma trilha encontrada"
                 onInputChange={(event, value) => {

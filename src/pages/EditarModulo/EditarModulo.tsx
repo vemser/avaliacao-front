@@ -1,17 +1,19 @@
+import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Titulo } from '../../components/Titulo/Titulo';
 
 import { Controller, useForm } from "react-hook-form";
-
-import { Box, Stack, FormControl, Button, InputLabel, Select, MenuItem, TextField, Checkbox, ListItemText, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { useTrilha } from '../../context/Tecnico/TrilhaContext';
-import { usePrograma } from '../../context/Tecnico/ProgramaContext';
-import { useModulo } from '../../context/Tecnico/ModuloContext';
 import { yupResolver } from '@hookform/resolvers/yup';
+
+import { Box, Stack, FormControl, Button, TextField, Typography, Autocomplete } from '@mui/material';
+
+import { useTrilha } from '../../context/Tecnico/TrilhaContext';
+import { useModulo } from '../../context/Tecnico/ModuloContext';
+
 import { moduloSchema } from '../../utils/schemas';
-import { ICadastroModulo, IListProgramaDTO, ITrilhaDTO } from '../../utils/ModuloInterface/Modulo';
+import { IEditarModulo } from '../../utils/ModuloInterface/Modulo';
+import { filtroDebounce } from '../../utils/functions';
 
 const itemHeigth = 48;
 const itemPaddingTop = 8;
@@ -27,20 +29,20 @@ const MenuProps = {
 export const EditarModulo = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { trilhas, pegarTrilha } = useTrilha();
-  const { editarModulo } = useModulo();
+  const { trilhas, pegarTrilha, pegarTrilhaFiltroNome } = useTrilha();
+  const { editarModulo, pegarModuloPorId, moduloPorId } = useModulo();
 
   useEffect(() => {
     pegarTrilha();
-    console.log(state)
+    pegarModuloPorId(state.idModulo);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const { handleSubmit, register, control, formState: { errors } } = useForm<ICadastroModulo>({
+  const { handleSubmit, register, control, formState: { errors } } = useForm<IEditarModulo>({
     resolver: yupResolver(moduloSchema)
   });
 
-  const editar = (data: any) => {
+  const editar = (data: IEditarModulo) => {
     editarModulo(data, state.idModulo);
   }
 
@@ -56,10 +58,12 @@ export const EditarModulo = () => {
             {errors.nome && <Typography id="erro-nomeModulo" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.nome.message}</Typography>}
           </FormControl>
 
-          {/* <FormControl sx={{ width: "100%" }}>
+          <FormControl sx={{ width: "100%" }}>
             <Controller control={control} name="trilha" render={({ field: { onChange } }) => (
               <Autocomplete sx={{ width: "100%" }}
-                multiple disablePortal id="trilha" noOptionsText="Nenhuma trilha encontrada"
+                defaultValue={moduloPorId ? moduloPorId.trilhas.map((trilha: any) => ({ label: trilha.nome, id: trilha.idTrilha })) : []}
+                multiple disablePortal id="trilha"
+                noOptionsText="Nenhuma trilha encontrada"
                 onInputChange={(event, value) => {
                   filtroDebounce(value, pegarTrilhaFiltroNome, pegarTrilha)
                 }}
@@ -70,7 +74,7 @@ export const EditarModulo = () => {
                 renderInput={(params) => <TextField {...params} label="Trilha" variant="filled" />} />
             )} />
             {errors.trilha && <Typography id="erro-trilha" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.trilha.message}</Typography>}
-          </FormControl> */}
+          </FormControl>
           
         </Stack>
         <Box sx={{ display: "flex", width: "100%", justifyContent: "center", alignItems: "center", bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>

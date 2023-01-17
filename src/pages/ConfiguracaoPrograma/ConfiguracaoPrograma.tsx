@@ -137,7 +137,7 @@ export const ConfiguracaoPrograma: React.FC = () => {
             )
           })} {
             programaCompleto?.trilha.length === 0 &&
-            <Box key={generateRandomId()} sx={{ width: "100%", display: "flex", justifyContent: "center", paddingTop: "40px", paddingBottom: "50px", fontSize: "1.2rem", fontWeight: 500, userSelect: "none", color: "gray", textAlign: "center" }}>
+            <Box key={generateRandomId()} sx={{ width: "100%", display: "flex", justifyContent: "center", paddingTop: "40px", paddingBottom: "60px", fontSize: "1.1rem", fontWeight: 500, userSelect: "none", color: "gray", textAlign: "center" }}>
               <span>Nenhuma trilha encontrada neste programa.</span>
             </Box>
           }

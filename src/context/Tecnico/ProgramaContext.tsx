@@ -13,12 +13,12 @@ import { useNavigate } from "react-router-dom";
 export const ProgramaContext = createContext({} as IProgramaContext);
 
 export const ProgramaProvider = ({ children }: IChildren) => {
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
   const [programas, setProgramas] = useState<IObjectProgramas | null>(null);
   const [programaCompleto, setProgramaCompleto] = useState<IProgramaCompleto | null>(null);
 
   const [programaTrilhaModulo, setProgramaTrilhaModulo] = useState<IProgramaTrilhaModulo | null>(null);
-  
+
   const cadastrarPrograma = async (programa: IProgramas) => {
     try {
       nProgress.start();
@@ -31,7 +31,7 @@ export const ProgramaProvider = ({ children }: IChildren) => {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      }  
+      }
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -52,7 +52,7 @@ export const ProgramaProvider = ({ children }: IChildren) => {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      }  
+      }
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -70,7 +70,7 @@ export const ProgramaProvider = ({ children }: IChildren) => {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      }  
+      }
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -89,7 +89,7 @@ export const ProgramaProvider = ({ children }: IChildren) => {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      }  
+      }
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -127,7 +127,7 @@ export const ProgramaProvider = ({ children }: IChildren) => {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      }  
+      }
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -146,7 +146,7 @@ export const ProgramaProvider = ({ children }: IChildren) => {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      }  
+      }
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -166,7 +166,7 @@ export const ProgramaProvider = ({ children }: IChildren) => {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      }  
+      }
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -187,7 +187,6 @@ export const ProgramaProvider = ({ children }: IChildren) => {
         return 0
       });
 
-      console.log(data)
 
       setProgramaCompleto(data);
     } catch (error: any) {
@@ -215,7 +214,7 @@ export const ProgramaProvider = ({ children }: IChildren) => {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      }  
+      }
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();
@@ -233,7 +232,7 @@ export const ProgramaProvider = ({ children }: IChildren) => {
         message = "Você não tem permissão para acessar esse recurso"
       } else if (axios.isAxiosError(error) && error?.response) {
         message = error.response.data.message || error.response.data.errors[0];
-      }  
+      }
       toast.error(message, toastConfig);
     } finally {
       nProgress.done();

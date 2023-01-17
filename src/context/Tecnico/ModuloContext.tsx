@@ -80,9 +80,8 @@ export const ModuloProvider = ({ children }: IChildren) => {
       nProgress.start();
       API.defaults.headers.common["Authorization"] = localStorage.getItem("token");
 
-      const { data } = await API.get(`/modulo/find-id-modulo?idModulo=${id}`);      
+      const { data } = await API.get(`/modulo/find-id-modulo?idModulo=${id}`);
       setModuloPorId(data);
-      console.log(data)
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
       if (error.response.status === 403) {

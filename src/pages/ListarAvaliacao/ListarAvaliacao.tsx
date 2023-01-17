@@ -67,13 +67,6 @@ export const ListarAvaliacao = () => {
     }
   };
 
-  // const filtrarAcompanhamento = async (valor: any, pagina: number = 0, tamanho: number = 10) => {
-  //   console.log(valor);
-  // }
-
-  // const resetFiltroAcompanhamento = async () => {
-  //   console.log("resetar");
-  // }
 
   useEffect(() => {
     pegarAvaliacao();

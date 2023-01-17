@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Box, Stack, FormControl, TextField, InputLabel, MenuItem, Select, Button, Autocomplete } from '@mui/material';
@@ -26,61 +26,48 @@ export const CadastrarFeedback = () => {
   const { pegarProgramaAtivo, pegarProgramaPorNomeAtivo, programas, pegarProgramaPorTrilhaModulo, programaTrilhaModulo } = usePrograma();
   const { pegarTrilhaFiltroNome, pegarTrilha } = useTrilha();
 
-  const [moduloSelecionado, setModuloSelecionado] = useState<number[]>([])
-  const [moduloErro, setModuloErro] = useState<boolean>(false);
-  const [dataModulo, setDataModulo] = useState<string>();
-
-  const { register, handleSubmit, formState: { errors }, control, watch,reset } = useForm<IFeedbackCadastro>({
-    resolver: yupResolver(feedbackSchema)
+  const { register, handleSubmit, formState: { errors }, control, watch, reset } = useForm<IFeedbackCadastro>({
+    resolver: yupResolver(feedbackSchema), defaultValues: {
+      modulo: null
+    }
   });
 
   const filtros = watch();
 
-  const erroModulo = () => {
-    if (dataModulo) {
-      setModuloErro(false)
-    } else {
-      setModuloErro(true)
-    }
-  }
-
-  const handleChangeModulo = () => {
-    setModuloErro(false)
-    setDataModulo('')
-  };
-
   const cadastrar = (data: IFeedbackCadastro) => {
-    if (data.idAluno) {
-      const novaData = {descricao: data.descricao, idAluno: data.idAluno?.id, modulo: data.modulo, situacao: data.situacao}
-      cadastrarFeedback(novaData)
-      // console.log(novaData)
+    if (data.idAluno && data.modulo) {
+      const novaData = { descricao: data.descricao, idAluno: data.idAluno?.id, modulo: data.modulo.map(item => parseInt(item.id.toString())), situacao: data.situacao }
+      cadastrarFeedback(novaData);
     }
   }
 
   useEffect(() => {
-    pegarProgramaAtivo(0, 10);
-    pegarModulo(0, 10);
-    pegarAluno(0, 10);
+    pegarProgramaAtivo();
+    pegarModulo();
+    pegarAluno();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
-    if (filtros.idPrograma) pegarProgramaPorTrilhaModulo(parseInt(filtros.idPrograma))
+    if (filtros.idPrograma) {
+      pegarProgramaPorTrilhaModulo(parseInt(filtros.idPrograma))
+    }
+
     if (filtros.idTrilha) pegarModuloPorTrilha(filtros.idTrilha.id)
 
     if (!filtros.idPrograma) {
       reset({
         idAluno: null,
-        idTrilha: null
+        idTrilha: null,
       })
       pegarProgramaAtivo()
     }
 
     if (filtros.idPrograma) {
-      if (!filtros.idTrilha) { // Filtra aluno pelo programa
+      if (!filtros.idTrilha) {
         pegarAlunoPorTrilha(parseInt(filtros.idPrograma))
       }
-      if (filtros.idTrilha) { // Filtra aluno pelo programa e trilha
+      if (filtros.idTrilha) {
         pegarAlunoPorTrilha(parseInt(filtros.idPrograma), filtros.idTrilha.id)
       }
     }
@@ -118,8 +105,12 @@ export const CadastrarFeedback = () => {
             <Controller control={control} name="idTrilha" render={({ field: { onChange } }) => (
               <Autocomplete noOptionsText="Nenhuma trilha encontrada" disablePortal id="trilha"
                 disabled={!filtros.idPrograma ? true : false}
-                onChange={(event, data) => onChange(data)}
+                onChange={(event, data) => {
+
+                  onChange(data)
+                }}
                 onInputChange={(event, value) => {
+                  if (!value) reset({ idPrograma: filtros.idPrograma, modulo: null, idAluno: filtros.idAluno })
                   filtroDebounce(value, pegarTrilhaFiltroNome, pegarTrilha)
                 }}
                 value={filtros.idTrilha ? filtros.idTrilha : null}
@@ -140,7 +131,8 @@ export const CadastrarFeedback = () => {
                 onInputChange={(event, value) => {
                   filtroDebounce(value, pegarModuloPorFiltro, pegarModulo, `&nome=${value}`)
                 }}
-                onChange={(event, data) => onChange(data?.map(item => { return item.id }))}
+                value={filtros.modulo ? filtros.modulo : []}
+                onChange={(event, data) => onChange(data?.map(item => ({ label: item.label, id: item.id })))}
                 isOptionEqualToValue={(option, value) => option.label === value.label}
                 options={moduloPorTrilha ? moduloPorTrilha.map((modulos) => ({ label: modulos.nome, id: modulos.idModulo })) : []}
                 renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
@@ -190,7 +182,7 @@ export const CadastrarFeedback = () => {
           <Box sx={{ display: "flex", width: "100%", justifyContent: { xs: "center", lg: "end" }, alignItems: { xs: "center", lg: "end" }, bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>
             <Button type="button" onClick={() => { navigate(-1) }} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d " }, textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cancelar</Button>
 
-            <Button type="submit" onClick={() => { erroModulo(); }} variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cadastrar</Button>
+            <Button type="submit" variant="contained" color="success" sx={{ textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cadastrar</Button>
           </Box>
         </Stack>
       </Box>

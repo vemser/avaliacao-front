@@ -1,4 +1,3 @@
-import { IProgramas } from "../programaInterface";
 import { IAlunosElementos } from "../AlunoInterface/aluno";
 import { ITrilhaDTO, IListProgramaDTO } from "../ModuloInterface/Modulo";
 
@@ -43,7 +42,7 @@ export interface IModuloDTO {
 
 export interface IFeedbackCadastro {
     idAluno: {label: string, id: number} | null,
-    modulo: number[],
+    modulo: {label: string, id: number}[] | null,
     descricao: string,
     situacao: string,
     idPrograma: string

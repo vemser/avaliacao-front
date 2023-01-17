@@ -21,9 +21,6 @@ export const EditarTrilha = () => {
 
   const { state } = useLocation();
 
-  useEffect(() => {
-    console.log(state)
-  }, [])
 
   const { register, handleSubmit, formState: { errors } } = useForm<IDadosTrilha>({
     resolver: yupResolver(trilhaSchema)
@@ -45,7 +42,7 @@ export const EditarTrilha = () => {
           <TextField id="editar-nome-trilha" {...register('nome')} label="Nome" placeholder='Digite um nome para a trilha' defaultValue={state.trilha.nome} variant="filled" />
           {errors.nome && <Typography id="erro-nome-trilha" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.nome.message}</Typography>}
         </FormControl>
-        
+
         <FormControl sx={{ width: "100%" }}>
           <TextField id="editar-descricao-trilha" {...register('descricao')} label="Descrição" placeholder='Digite uma descrição para a trilha' multiline rows={4} defaultValue={state.trilha.descricao} variant="filled" />
         </FormControl>

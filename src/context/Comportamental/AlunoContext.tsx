@@ -136,7 +136,6 @@ export const AlunoProvider = ({ children }: IChildren) => {
       nProgress.start();
       const { data } = await API.get(`/aluno/alunos-por-programa-trilha-nome?page=${pagina}&size=${tamanho}${idPrograma ? `&idPrograma=${idPrograma}` : ""}${idTrilha ? `&idTrilha=${idTrilha}` : ""}${nome ? `&nome=${nome}` : ""}`);
       setAlunos(data);
-      console.log(data)
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
       if (error.response.status === 403) {

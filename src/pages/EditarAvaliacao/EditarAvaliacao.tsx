@@ -22,15 +22,14 @@ import { useAvaliacao } from '../../context/Comportamental/AvaliacaoContext';
 
 export const EditarAvaliacao = () => {
   const navigate = useNavigate();
-  const {state} = useLocation()
+  const { state } = useLocation()
   const { pegarProgramaAtivo, programas } = usePrograma();
   const { pegarTrilha, trilhas } = useTrilha();
   const { pegarAluno, alunos } = useAluno();
   const { pegarAcompanhamentos, acompanhamentos } = useAcompanhamento();
-  const {editarAvaliacao} = useAvaliacao()
+  const { editarAvaliacao } = useAvaliacao()
   let data = moment()
   let novaData = data.format("YYYY-MM-DD")
-  console.log(state)
 
   useEffect(() => {
     pegarProgramaAtivo(0, 10);
@@ -71,7 +70,7 @@ export const EditarAvaliacao = () => {
               noOptionsText="Nenhum acompanhamento encontrado"
               disabled
               disablePortal
-              defaultValue={{label: state.acompanhamento.titulo}}
+              defaultValue={{ label: state.acompanhamento.titulo }}
 
               id="acompanhemnto"
               options={acompanhamentos ? acompanhamentos.elementos.map(item => ({ label: `${item.idAcompanhamento} - ${item.titulo}` })) : []}
@@ -84,7 +83,7 @@ export const EditarAvaliacao = () => {
               noOptionsText="Nenhum programa encontrado"
               disabled
               disablePortal
-              defaultValue={{label: state.acompanhamento.programa.nome}}
+              defaultValue={{ label: state.acompanhamento.programa.nome }}
               id="programa"
               isOptionEqualToValue={(option, value) => option.label === value.label}
               options={programas ? programas.elementos.map(item => ({ label: `${item.idPrograma} - ${item.nome}` })) : []}
@@ -97,7 +96,7 @@ export const EditarAvaliacao = () => {
               noOptionsText="Nenhuma trilha encontrada"
               disabled
               disablePortal
-              defaultValue={{label: state.aluno.trilha.nome}}
+              defaultValue={{ label: state.aluno.trilha.nome }}
               id="trilha"
               isOptionEqualToValue={(option, value) => option.label === value.label}
               options={trilhas ? trilhas.elementos.map(item => ({ label: `${item.idTrilha} - ${item.nome}` })) : []}
@@ -106,7 +105,7 @@ export const EditarAvaliacao = () => {
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
-            <Autocomplete noOptionsText="Nenhum aluno encontrado" disabled disablePortal defaultValue={{label: state.aluno.nome}}  id="aluno" isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: `${aluno.idAluno} - ${aluno.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />
+            <Autocomplete noOptionsText="Nenhum aluno encontrado" disabled disablePortal defaultValue={{ label: state.aluno.nome }} id="aluno" isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: `${aluno.idAluno} - ${aluno.nome}` })) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />
           </FormControl>
 
         </Stack>
@@ -130,8 +129,8 @@ export const EditarAvaliacao = () => {
 
           <FormControl sx={{ width: "100%" }}>
             <TextField
-              id="dataAvalicao" label="Data" type="date" defaultValue={novaData} sx={{ width: "100%" }} InputLabelProps={{ shrink: true }} variant="filled" {...register("dataCriacao")}/>
-              {errors.dataCriacao && <Typography id="erro-situacao" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.dataCriacao.message}</Typography>}
+              id="dataAvalicao" label="Data" type="date" defaultValue={novaData} sx={{ width: "100%" }} InputLabelProps={{ shrink: true }} variant="filled" {...register("dataCriacao")} />
+            {errors.dataCriacao && <Typography id="erro-situacao" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.dataCriacao.message}</Typography>}
           </FormControl>
 
           <FormControl variant="filled" sx={{ width: { xs: "100%", md: "100%" } }}>

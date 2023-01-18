@@ -106,8 +106,8 @@ export const CadastrarFeedback = () => {
               <Autocomplete noOptionsText="Nenhuma trilha encontrada" disablePortal id="trilha"
                 disabled={!filtros.idPrograma ? true : false}
                 onChange={(event, data) => {
-
-                  onChange(data)
+                  onChange(data);
+                  reset({ idPrograma: filtros.idPrograma, idTrilha: data, modulo: null, idAluno: filtros.idAluno });
                 }}
                 onInputChange={(event, value) => {
                   if (!value) reset({ idPrograma: filtros.idPrograma, modulo: null, idAluno: filtros.idAluno })

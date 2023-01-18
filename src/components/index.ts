@@ -1,4 +1,8 @@
 export  *  from "./RotasPrivadas/RotasPrivadas";
+export * from "./FiltroFeedback/FiltroFeedback";
+export * from "./FiltroAvaliacao/FiltroAvaliacao";
+export * from "./FiltroAluno/FiltroAluno";
+
 export { Intermediaria } from "./Intermediaria/Intermediaria";
 export { NotFound } from "./NotFound/NotFound";
 export { Loading } from "./Loading/Loading";
@@ -10,5 +14,3 @@ export { ListarTrilha } from "./ListarTrilha/ListarTrilha";
 export { CardAtividade } from "./CardAtividade/CardAtividade";
 export { CardFeedback } from './CardFeedback/CardFeedback';
 export {CardAtividadeAluno} from "./CardAtividadeAluno/CardAtividadeAluno";
-export * from "./FiltroFeedback/FiltroFeedback";
-export * from "./FiltroAvaliacao/FiltroAvaliacao";

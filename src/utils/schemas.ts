@@ -20,19 +20,13 @@ export const alunoSchema = yup.object().shape({
   idPrograma: yup.string().required("Por favor, escolha um programa"),
   situacao: yup.string().required("Por favor, escolha uma situação"),
   descricao: yup.string().required("Por favor, digite uma descrição"),
-  idTrilha: yup.string().required("Por favor, escolha uma trilha")
+  idTrilha: yup.object().shape({ label: yup.string(), id: yup.number() }).required("Por favor, escolha uma trilha").nullable()
 });
 
 export const trilhaSchema = yup.object().shape({
   nome: yup.string().required("Por favor, digite o nome da Trilha").min(3, "O nome deve conter no mínimo 3 caracteres").matches(regexNome, 'Por favor, digite apenas letras.'),
   descricao: yup.string()
 })
-
-export const editarAlunoSchema = yup.object().shape({
-  nome: yup.string().required("Por favor, digite o nome completo").min(3, "O nome deve conter no mínimo 3 caracteres").matches(regexNome, 'Por favor, digite apenas letras.'),
-  email: yup.string().required("Por favor, digite o e-mail").email("Por favor, digite um e-mail válido").matches(regexEmail, "Necessário ser e-mail @dbccompany.com.br"),
-  trilha: Object({ nome: yup.string().required("Edição é obrigatória!") })
-});
 
 // tirar
 export const editarNomePerfil = yup.object().shape({

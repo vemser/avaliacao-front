@@ -8,7 +8,6 @@ import * as Componentes from "../../components";
 
 import { Box, TablePagination, Button, Paper, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, tableCellClasses, Modal, styled, Tooltip, Typography } from "@mui/material";
 import { Edit, DeleteForever, ExpandMore, ExpandLess } from "@mui/icons-material";
-import { formatarTexto } from "../../utils/functions";
 
 export const ListarFeedback: React.FC = () => {
   const navigate = useNavigate();
@@ -91,49 +90,9 @@ export const ListarFeedback: React.FC = () => {
 
         {estadoFiltro &&
           <Box sx={{ display: "flex", gap: 3, flexDirection: "row", alignItems: "center", width: "100%", marginBottom: "10px", paddingInline: 2, marginTop: "10px", flexWrap: "wrap" }}>
-
             <Componentes.FiltroFeedback setFiltro={setFiltro} />
-
-            {/* <Autocomplete
-              size="small"
-              disablePortal
-              id="combo-box-demo"
-              options={top100Films}
-              sx={{ minWidth: 200, display: "flex" }}
-              renderInput={(params) => <TextField {...params} label="Movie" />}
-            />
-
-            <Autocomplete
-              size="small"
-              disablePortal
-              id="combo-box-demo"
-              options={top100Films}
-              sx={{ minWidth: 200, display: "flex" }}
-              renderInput={(params) => <TextField {...params} label="Movie" />}
-            />
-
-            <Autocomplete
-              size="small"
-              disablePortal
-              id="combo-box-demo"
-              options={top100Films}
-              sx={{ minWidth: 200, display: "flex" }}
-              renderInput={(params) => <TextField {...params} label="Movie" />}
-            />
-
-            <Autocomplete
-              size="small"
-              disablePortal
-              id="combo-box-demo"
-              options={top100Films}
-              sx={{ minWidth: 200, display: "flex" }}
-              renderInput={(params) => <TextField {...params} label="Movie" />}
-            />
-
-            <Button variant="outlined" sx={{ width: "auto", display: "flex", textTransform: "capitalize", fontSize: "1rem" }}>Resetar Filtro</Button>
-
-            <Button variant="contained" sx={{ width: "auto", display: "flex", textTransform: "capitalize", fontSize: "1rem" }}>Pesquisar</Button> */}
-          </Box>}
+          </Box>
+        }
 
         <Paper sx={{ width: "100%", borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px" }}>
           <TableContainer sx={{ maxHeight: 450 }}>

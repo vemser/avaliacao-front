@@ -1,4 +1,4 @@
-import { Autocomplete, Button, TextField, Select, MenuItem, InputLabel, FormControl } from "@mui/material";
+import { Autocomplete, Button, TextField } from "@mui/material";
 import { debounce } from 'lodash';
 
 import { useEffect } from "react";
@@ -7,8 +7,6 @@ import { useTrilha } from "../../context/Tecnico/TrilhaContext";
 import { useForm, Controller } from "react-hook-form";
 
 import { filtroDebounce } from "../../utils/functions";
-import { useAuth } from "../../context/AuthContext";
-import { useFeedback } from "../../context/Comportamental/FeedbackContext";
 import { usePrograma } from "../../context/Tecnico/ProgramaContext";
 
 interface IFiltro {
@@ -19,13 +17,12 @@ interface IFiltro {
   nomeInstrutor: string | null,
 }
 
-export const FiltroFeedback = ({ setFiltro }: any) => {
-  const { alunosFiltro, pegarAlunoFiltroProgramaTrilhaNome } = useAluno();
+export const FiltroAluno = ({ setFiltro }: any) => {
+  const { pegarAluno, alunosFiltro, pegarAlunoFiltroProgramaTrilhaNome } = useAluno();
   const { pegarTrilha, pegarTrilhaPorPrograma, trilhasPorPrograma } = useTrilha();
-  const { usuariosFiltro, pegarUsuariosLoginCargo } = useAuth();
-  const { handleSubmit, register, control, reset, watch } = useForm<IFiltro>();
-  const { pegarFeedbackFiltros, pegarFeedback } = useFeedback();
   const { programas, pegarProgramaAtivo, pegarProgramaPorNomeAtivo } = usePrograma();
+
+  const { handleSubmit, control, reset, watch } = useForm<IFiltro>();
 
   const watchTodos = watch();
 
@@ -42,7 +39,6 @@ export const FiltroFeedback = ({ setFiltro }: any) => {
       watchTodos.trilha ? watchTodos.trilha.id : null,
       watchTodos.nomeAluno ? watchTodos.nomeAluno.label : null);
     pegarTrilha();
-    pegarUsuariosLoginCargo();
     pegarProgramaAtivo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -50,26 +46,21 @@ export const FiltroFeedback = ({ setFiltro }: any) => {
   const filtrar = async (data: IFiltro) => {
     var string = "";
     if (data.nomeAluno) string += `&nomeAluno=${data.nomeAluno.label.trim()}`;
-    if (data.trilha) string += `&trilha=${data.trilha.label.trim()}`;
-    if (data.nomeInstrutor) string += `&nomeInstrutor=${data.nomeInstrutor.trim()}`;
-    if (data.situacao) string += `&situacao=${data.situacao.trim()}`;
+    if (data.trilha) string += `&trilha=${data.trilha.id}`;
     if (data.programa) string += `&idPrograma=${data.programa.id}`;
     setFiltro(string);
-    await pegarFeedbackFiltros(0, 10, string);
+    await pegarAluno(0, 10, string);
   }
 
   const resetar = async () => {
     reset({
       nomeAluno: null,
-      trilha: null,
-      nomeInstrutor: null,
-      situacao: null
+      trilha: null
     })
     setFiltro(null);
-    await pegarFeedback();
+    await pegarAluno();
     await pegarAlunoFiltroProgramaTrilhaNome();
     await pegarTrilha();
-    await pegarUsuariosLoginCargo();
   }
 
   useEffect(() => {
@@ -151,35 +142,6 @@ export const FiltroFeedback = ({ setFiltro }: any) => {
           renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
           sx={{ minWidth: 200, display: "flex" }}
           renderInput={(params) => <TextField {...params} label="Alunos" />}
-        />
-      )} />
-
-      <FormControl size="small" sx={{ minWidth: 200, display: "flex" }}>
-        <InputLabel id="selectFeedback">Situação</InputLabel>
-        <Select size="small" label="Situacao" labelId="selectFeedback" value={watchTodos.situacao ? watchTodos.situacao : ""} id="situacao" {...register("situacao")}>
-          <MenuItem value="initial-situacao" disabled><em>Selecione uma situação</em></MenuItem>
-          <MenuItem id="nenhum" value="">Nenhum</MenuItem>
-          <MenuItem id="positivo" value="POSITIVO">Positivo</MenuItem>
-          <MenuItem id="atencao" value="ATENCAO">Atenção</MenuItem>
-        </Select>
-      </FormControl>
-
-      <Controller control={control} name="nomeInstrutor" render={({ field: { onChange } }) => (
-        <Autocomplete
-          onChange={(event, data) => onChange(data?.label)}
-          size="small"
-          disablePortal
-          id="combo-box-demo"
-          onInputChange={(event, value) => {
-            filtroDebounce(value, pegarUsuariosLoginCargo, pegarUsuariosLoginCargo, `${value}`)
-          }}
-          value={watchTodos.nomeInstrutor ? { label: `${watchTodos.nomeInstrutor}` } : null}
-          getOptionLabel={(option) => option.label}
-          isOptionEqualToValue={(option, value) => option.label === value.label}
-          noOptionsText={""}
-          options={usuariosFiltro ? usuariosFiltro.elementos.map((usuario) => { return { label: usuario.login } }) : []}
-          sx={{ minWidth: 200, display: "flex" }}
-          renderInput={(params) => <TextField {...params} label="Usuários" />}
         />
       )} />
 

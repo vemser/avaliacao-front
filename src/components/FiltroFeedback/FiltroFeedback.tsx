@@ -50,7 +50,7 @@ export const FiltroFeedback = ({ setFiltro }: any) => {
   const filtrar = async (data: IFiltro) => {
     var string = "";
     if (data.nomeAluno) string += `&nomeAluno=${data.nomeAluno.label.trim()}`;
-    if (data.trilha) string += `&trilha=${data.trilha.id}`;
+    if (data.trilha) string += `&trilha=${data.trilha.label.trim()}`;
     if (data.nomeInstrutor) string += `&nomeInstrutor=${data.nomeInstrutor.trim()}`;
     if (data.situacao) string += `&situacao=${data.situacao.trim()}`;
     if (data.programa) string += `&idPrograma=${data.programa.id}`;

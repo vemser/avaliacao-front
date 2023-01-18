@@ -16,7 +16,7 @@ interface IFiltro {
 }
 
 export const FiltroAvaliacao = ({ setFiltro }: any) => {
-  const { alunos, pegarAlunoFiltroProgramaTrilhaNome } = useAluno();
+  const { alunosFiltro, pegarAlunoFiltroProgramaTrilhaNome } = useAluno();
   const { acompanhamentos, pegarAcompanhamentoTitulo, pegarAcompanhamentos } = useAcompanhamento();
   const { pegarAvaliacao } = useAvaliacao();
   const { programas, pegarProgramaAtivo, pegarProgramaPorNomeAtivo } = usePrograma();
@@ -124,7 +124,7 @@ export const FiltroAvaliacao = ({ setFiltro }: any) => {
           isOptionEqualToValue={(option, value) => option.label === value.label}
           noOptionsText={""}
           renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
-          options={alunos ? alunos.elementos.map((aluno) => { return { label: aluno.nome, id: aluno.idAluno } }) : []}
+          options={alunosFiltro ? alunosFiltro.elementos.map((aluno) => { return { label: aluno.nome, id: aluno.idAluno } }) : []}
           sx={{ minWidth: 200, display: "flex" }}
           renderInput={(params) => <TextField {...params} label="Alunos" />}
         />

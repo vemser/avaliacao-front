@@ -15,8 +15,9 @@ export const AlunoContext = createContext({} as IAluno);
 
 export const AlunoProvider = ({ children }: IChildren) => {
   const navigate = useNavigate();
-  const [alunos, setAlunos] = useState<IAlunosAPI | null>(null);
 
+  const [alunos, setAlunos] = useState<IAlunosAPI | null>(null);
+  const [alunosFiltro, setAlunosFiltro] = useState<IAlunosAPI | null>(null);
 
   const cadastrarAluno = async (dadosAluno: ICadastroAlunoAPI) => {
     try {
@@ -135,7 +136,7 @@ export const AlunoProvider = ({ children }: IChildren) => {
     try {
       nProgress.start();
       const { data } = await API.get(`/aluno/alunos-por-programa-trilha-nome?page=${pagina}&size=${tamanho}${idPrograma ? `&idPrograma=${idPrograma}` : ""}${idTrilha ? `&idTrilha=${idTrilha}` : ""}${nome ? `&nome=${nome}` : ""}`);
-      setAlunos(data);
+      setAlunosFiltro(data);
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
       if (error.response.status === 403) {
@@ -166,7 +167,7 @@ export const AlunoProvider = ({ children }: IChildren) => {
   }
 
   return (
-    <AlunoContext.Provider value={{ alunos, pegarAluno, deletarAluno, cadastrarAluno, editarAluno, pegarAlunoDisponivel, pegarAlunoDisponivelPorNome, pegarAlunoPorTrilha, pegarAlunoFiltroProgramaTrilhaNome }}>
+    <AlunoContext.Provider value={{ alunos, pegarAluno, deletarAluno, cadastrarAluno, editarAluno, pegarAlunoDisponivel, pegarAlunoDisponivelPorNome, pegarAlunoPorTrilha, pegarAlunoFiltroProgramaTrilhaNome, alunosFiltro }}>
       {children}
     </AlunoContext.Provider>
   );

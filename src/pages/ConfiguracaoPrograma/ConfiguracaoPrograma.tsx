@@ -71,6 +71,7 @@ export const ConfiguracaoPrograma: React.FC = () => {
 
   useEffect(() => {
     pegarProgramaCompleto(state.idPrograma);
+    
   }, [updateList])
 
   return (
@@ -101,7 +102,7 @@ export const ConfiguracaoPrograma: React.FC = () => {
 
                     <EditIcon onClick={() => { navigate("/editar-trilha", { state: { trilha, idPrograma: state.idPrograma, nomePrograma: state.nome } }) }} sx={{ cursor: "pointer", ":hover": { transform: "scale(1.1)", transition: "0.5s" } }} />
 
-                    <DeleteForeverIcon onClick={() => { handleOpen(); setIdTrilhaDelete(trilha.idTrilha) }} sx={{ cursor: "pointer", ":hover": { transform: "scale(1.1)", transition: "0.5s" } }} />
+                    <DeleteForeverIcon onClick={() => { handleOpen(); setIdTrilhaDelete(trilha.idTrilha); }} sx={{ cursor: "pointer", ":hover": { transform: "scale(1.1)", transition: "0.5s" } }} />
                   </Box>
                 </Box>
 

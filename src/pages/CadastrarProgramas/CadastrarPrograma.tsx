@@ -49,6 +49,7 @@ export const CadastrarPrograma: React.FC = () => {
               <MenuItem value="ABERTO" >Aberto</MenuItem>
               <MenuItem value="FECHADO">Fechado</MenuItem>
             </Select>
+            {errors.situacaoVagaPrograma && <Typography id="erro-situacao" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.situacaoVagaPrograma.message}</Typography>}
           </FormControl>
         </Stack>
 

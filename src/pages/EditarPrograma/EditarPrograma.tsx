@@ -49,10 +49,11 @@ export const EditarPrograma: React.FC = () => {
 
           <FormControl sx={{ width: "100%" }} variant="filled">
             <InputLabel>Situação</InputLabel>
-            <Select labelId="demo-simple-select-filled-label" defaultValue={state.situacao} id="situacao-programa" {...register("situacaoVagaPrograma")}  >
+            <Select labelId="demo-simple-select-filled-label" defaultValue={state.situacaoVagaPrograma} id="situacao-programa" {...register("situacaoVagaPrograma")}  >
               <MenuItem value="ABERTO" >Aberto</MenuItem>
               <MenuItem value="FECHADO">Fechado</MenuItem>
             </Select>
+            {errors.situacaoVagaPrograma && <Typography id="erro-situacao" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.situacaoVagaPrograma.message}</Typography>}
           </FormControl>
         </Stack>
 
@@ -61,10 +62,12 @@ export const EditarPrograma: React.FC = () => {
             <TextField id="dataInicioPrograma" label="Data inicial" type="date" sx={{ width: "100%" }} InputLabelProps={{ shrink: true }}  {...register("dataInicio")} variant="filled" />
             {errors.dataInicio && <Typography id="erro-dataInicioPrograma" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.dataInicio.message}</Typography>}
           </FormControl>
+
           <FormControl sx={{ width: "100%" }}>
             <TextField id="dataFimPrograma" label="Data final" type="date" sx={{ width: "100%" }} InputLabelProps={{ shrink: true }}  {...register("dataFim")} variant="filled" />
             {errors.dataFim && <Typography id="erro-dataFimPrograma" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.dataFim.message}</Typography>}
           </FormControl>
+
           <Box sx={{ display: "flex", width: "100%", justifyContent: { xs: "center", lg: "end" }, alignItems: { xs: "center", lg: "end" }, bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>
             <Button type="button" onClick={() => { navigate(-1) }} variant="contained" sx={{ backgroundColor: "#808080 ", ":hover": { backgroundColor: "#5f5d5d " }, textTransform: "capitalize", fontSize: "1rem", width: { xs: "200px", md: "160px" } }}>Cancelar</Button>
 

@@ -6,21 +6,16 @@ import { Titulo } from '../../components/Titulo/Titulo';
 
 import { useTrilha } from '../../context/Tecnico/TrilhaContext';
 
-import logo from '../../assets/dbc-logo.webp';
-
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { trilhaSchema } from '../../utils/schemas';
 import { IDadosTrilha } from '../../utils/TrilhaInterface/trilha';
-import { useEffect } from 'react';
 
 export const EditarTrilha = () => {
   const navigate = useNavigate()
   const { editarTrilha } = useTrilha();
-
   const { state } = useLocation();
-
 
   const { register, handleSubmit, formState: { errors } } = useForm<IDadosTrilha>({
     resolver: yupResolver(trilhaSchema)
@@ -37,6 +32,10 @@ export const EditarTrilha = () => {
           xs: 3, sm: 5
         }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: 3
       }}>
+
+        <Typography sx={{ width: "100%", textAlign: "center", display: "flex", justifyContent: "center", fontSize: "1.4rem", fontWeight: 600, userSelect: "none", color: "var(--azul-claro-dbc)", padding: "10px" }}>
+          {`Programa ${state.nomePrograma}`}
+        </Typography>
 
         <FormControl sx={{ width: "100%" }}>
           <TextField id="editar-nome-trilha" {...register('nome')} label="Nome" placeholder='Digite um nome para a trilha' defaultValue={state.trilha.nome} variant="filled" />

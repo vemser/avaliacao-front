@@ -75,13 +75,14 @@ export const ModuloProvider = ({ children }: IChildren) => {
     }
   }
 
-  const pegarModuloPorId = async (id: string) => {
+  const pegarModuloPorId = async (id: number) => {
     try {
       nProgress.start();
       API.defaults.headers.common["Authorization"] = localStorage.getItem("token");
 
       const { data } = await API.get(`/modulo/find-id-modulo?idModulo=${id}`);
-      setModuloPorId(data);
+
+      return data;
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
       if (error.response.status === 403) {
@@ -99,7 +100,7 @@ export const ModuloProvider = ({ children }: IChildren) => {
     try {
       nProgress.start();
       await API.post("/modulo/adicionar", dadosModulo);
-      navigate("/programas");
+      navigate(-1);
       toast.success("Módulo cadastrado com sucesso!", toastConfig);
     } catch (error: any) {
       let message = "Ops, algo deu errado!";
@@ -118,7 +119,7 @@ export const ModuloProvider = ({ children }: IChildren) => {
     try {
       nProgress.start();
       await API.put(`/modulo/editar?id=${id}`, dadosModulo);
-      navigate("/programas");
+      navigate(-1);
       toast.success("Módulo editado com sucesso!", toastConfig);
     } catch (error: any) {
       let message = "Ops, algo deu errado!";

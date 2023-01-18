@@ -94,7 +94,7 @@ export const ProgramaSchema = yup.object().shape({
 })
 
 export const moduloSchema = yup.object().shape({
-  nome: yup.string().required("Por favor, insira um nome para o módulo").matches(regexNome, 'Por favor, digite apenas letras'),
+  nome: yup.string().required("Por favor, insira um nome para o módulo"),
   trilha: yup.array().of(yup.number()).required("Por favor, selecione uma ou mais trilhas")
 })
 

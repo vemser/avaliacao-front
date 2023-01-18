@@ -8,7 +8,7 @@ export interface IModulo {
   clonarModulo: (id: number) => Promise<void>,
   pegarModuloPorFiltro: (pagina?: number, tamanho?: number, filtros?: string) => Promise<void>,
   pegarModuloPorTrilha: (id: number) => Promise<void>,
-  pegarModuloPorId: (id: string) => Promise<void>,
+  pegarModuloPorId: (id: number) => Promise<void>,
   moduloPorId: IModuloTrilha | null
 }
 

@@ -56,6 +56,7 @@ export const CadastrarAvaliacao = () => {
 
     if (!filtro.idPrograma) {
       reset({
+        idAcompanhamento: filtro.idAcompanhamento,
         idAluno: null,
         idTrilha: null,
       })

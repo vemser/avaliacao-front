@@ -53,6 +53,7 @@ export const ConfiguracaoPrograma: React.FC = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
   const { pegarProgramaCompleto, programaCompleto } = usePrograma();
+  const { pegarModuloPorId, moduloPorId } = useModulo();
   const { deletarTrilha } = useTrilha();
   const { deletarModulo } = useModulo();
   const [idTrilhaDelete, setIdTrilhaDelete] = useState<number | undefined>();
@@ -63,13 +64,19 @@ export const ConfiguracaoPrograma: React.FC = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const handleEdit = (idModulo: number, data: any) => {
+    pegarModuloPorId(idModulo).then((response) => {
+      navigate("/editar-modulo", { state: { data, trilhasDoModulo: response, nomePrograma: state.nome } })
+    })
+  }
+
   useEffect(() => {
     pegarProgramaCompleto(state.idPrograma);
   }, [updateList])
 
   return (
     <Box component="section" sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "60px", paddingBottom: "50px" }}>
-      <Componentes.Titulo texto={state.nome} />
+      <Componentes.Titulo texto={`Programa ${state.nome}`} />
 
       <Box component="div" sx={{ width: { xs: "95%", md: "90%" }, display: "flex", alignItems: "end", flexDirection: "column", padding: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
 
@@ -79,21 +86,21 @@ export const ConfiguracaoPrograma: React.FC = () => {
             <Button onClick={() => { navigate(-1) }} variant="outlined" sx={{ width: { xs: "170px", md: "160px" }, textTransform: "capitalize", fontSize: "1rem" }}>Voltar</Button>
 
             <Box sx={{ display: "flex", gap: 3, flexDirection: { xs: "column", md: "row" } }}>
-              <Button onClick={() => navigate("/cadastrar-trilha", { state: state.idPrograma })} variant="contained" sx={{ width: "170px", display: "flex", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Trilha</Button>
+              <Button onClick={() => navigate("/cadastrar-trilha", { state: { nomePrograma: state.nome, idPrograma: state.idPrograma } })} variant="contained" sx={{ width: "170px", display: "flex", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Trilha</Button>
 
-              <Button onClick={() => navigate("/cadastrar-modulo")} variant="contained" sx={{ width: "170px", display: "flex", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Módulo</Button>
+              <Button onClick={() => navigate("/cadastrar-modulo", { state: { nomePrograma: state.nome, idPrograma: state.idPrograma } })} variant="contained" sx={{ width: "170px", display: "flex", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Módulo</Button>
             </Box>
           </Box>
 
           {programaCompleto?.trilha && programaCompleto?.trilha.map((trilha: ITrilhas) => {
             return (
               <React.Fragment key={generateRandomId()}>
-                <Box sx={{ width: "100%", marginBottom: "-15px !important", display: "flex", gap: "15px", alignItems: "center", justifyContent: {sx: "space-between", sm: "left"} }}>
+                <Box sx={{ width: "100%", marginBottom: "-15px !important", display: "flex", gap: "15px", alignItems: "center", justifyContent: { sx: "space-between", sm: "left" } }}>
                   <Typography sx={{ display: "block", fontWeight: 700, color: "var(--azul-claro-dbc)", fontSize: "1.5rem", userSelect: "none" }}>Trilha {trilha.nome}</Typography>
 
                   <Box id="acoes-trilha" sx={{ display: "flex", gap: "15px", justifyContent: "center", alignItems: "center", flexWrap: "nowrap", color: "#1976d2", transition: "0.5s" }}>
 
-                    <EditIcon onClick={() => { navigate("/editar-trilha", { state: {trilha: trilha, id: state.idPrograma} }) }} sx={{ cursor: "pointer", ":hover": { transform: "scale(1.1)", transition: "0.5s" } }} />
+                    <EditIcon onClick={() => { navigate("/editar-trilha", { state: { trilha, idPrograma: state.idPrograma, nomePrograma: state.nome } }) }} sx={{ cursor: "pointer", ":hover": { transform: "scale(1.1)", transition: "0.5s" } }} />
 
                     <DeleteForeverIcon onClick={() => { handleOpen(); setIdTrilhaDelete(trilha.idTrilha) }} sx={{ cursor: "pointer", ":hover": { transform: "scale(1.1)", transition: "0.5s" } }} />
                   </Box>
@@ -117,7 +124,9 @@ export const ConfiguracaoPrograma: React.FC = () => {
                             <StyledTableCell sx={{ textAlign: "center", fontWeight: "600", fontSize: "1rem", userSelect: "none" }} component="td" scope="row">{data.nome}</StyledTableCell>
 
                             <StyledTableCell id="acoes" sx={{ display: "flex", justifyContent: "center", alignItems: "center", flexWrap: "nowrap" }}>
-                              <Button id="botao-editar-modulo" onClick={() => { navigate("/editar-modulo", { state: data } )}} title="Editar"><EditIcon /></Button>
+
+                              <Button id="botao-editar-modulo" onClick={() => { handleEdit(data.idModulo, data) }} title="Editar"><EditIcon /></Button>
+
                               <Button id="botao-deletar-modulo" title="Deletar" onClick={() => { handleOpen(); setIdModuloDelete(data.idModulo) }}><DeleteForeverIcon /></Button>
                             </StyledTableCell>
                           </StyledTableRow>

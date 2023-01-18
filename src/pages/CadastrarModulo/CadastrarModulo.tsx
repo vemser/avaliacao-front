@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Controller, useForm } from 'react-hook-form';
 
@@ -28,11 +28,12 @@ const MenuProps = {
 
 export const CadastrarModulo = () => {
   const navigate = useNavigate();
-  const { pegarTrilha, trilhas, pegarTrilhaFiltroNome } = useTrilha();
+  const { state } = useLocation();
+  const { pegarTrilhaFiltroNome, pegarTrilhaPorPrograma, trilhasPorPrograma } = useTrilha();
   const { cadastrarModulo } = useModulo();
 
   useEffect(() => {
-    pegarTrilha();
+    pegarTrilhaPorPrograma(state.idPrograma);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -51,6 +52,11 @@ export const CadastrarModulo = () => {
       <Box component="form" onSubmit={handleSubmit(cadastrar)} sx={{ display: "flex", flexDirection: "column", alignItems: "center", backgroundColor: "var(--branco)", width: { xs: "95%", md: "70%", lg: "60%", xl: "50%" }, borderRadius: "10px", padding: { xs: 3, sm: 5 }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: 3 }}>
 
         <Stack component="div" spacing={3} sx={{ width: "100%", display: "flex", alignItems: { xs: "start", md: "start" } }}>
+
+          <Typography sx={{ width: "100%", textAlign: "center", display: "flex", justifyContent: "center", fontSize: "1.4rem", fontWeight: 600, userSelect: "none", color: "var(--azul-claro-dbc)", padding: "10px" }}>
+            {`Programa ${state.nomePrograma}`}
+          </Typography>
+
           <FormControl sx={{ width: "100%" }}>
             <TextField id="nome-modulo" label="Nome" placeholder="Digite um nome para o módulo" multiline variant="filled" {...register("nome")} />
             {errors.nome && <Typography id="erro-nomeModulo" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.nome.message}</Typography>}
@@ -60,12 +66,9 @@ export const CadastrarModulo = () => {
             <Controller control={control} name="trilha" render={({ field: { onChange } }) => (
               <Autocomplete sx={{ width: "100%" }}
                 multiple disablePortal id="trilha" noOptionsText="Nenhuma trilha encontrada"
-                onInputChange={(event, value) => {
-                  filtroDebounce(value, pegarTrilhaFiltroNome, pegarTrilha)
-                }}
                 onChange={(event, data) => onChange(data?.map(item => { return item.id }))}
                 isOptionEqualToValue={(option, value) => option.label === value.label}
-                options={trilhas ? trilhas.elementos.map((trilha) => ({ label: trilha.nome, id: trilha.idTrilha })) : []}
+                options={trilhasPorPrograma ? trilhasPorPrograma.map((trilha) => ({ label: trilha.nome, id: trilha.idTrilha })) : []}
                 renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
                 renderInput={(params) => <TextField {...params} label="Trilha" variant="filled" />} />
             )} />

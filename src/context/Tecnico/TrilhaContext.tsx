@@ -16,7 +16,6 @@ export const TrilhaContext = createContext({} as ITrilha);
 export const TrilhaProvider = ({ children }: IChildren) => {
   const navigate = useNavigate();
   const [trilhas, setTrilhas] = useState<ITrilhasAPI | null>(null);
-
   const [trilhasPorPrograma, setTrilhasPorPrograma] = useState<ITrilhasPorPrograma[]>([]);
 
   const pegarTrilha = async (pagina: number = 0, tamanho: number = 10) => {
@@ -80,7 +79,7 @@ export const TrilhaProvider = ({ children }: IChildren) => {
     try {
       nProgress.start();
       await API.post('/trilha', dadosTrilha).then((response) => {
-        navigate('/programas');
+        navigate(-1);
         toast.success('Trilha cadastrada com sucesso!', toastConfig);
       })
     } catch (error: any) {
@@ -119,7 +118,7 @@ export const TrilhaProvider = ({ children }: IChildren) => {
     try {
       nProgress.start();
       await API.put(`/trilha/update/${idTrilha}`, dadosTrilha).then((response) => {
-        navigate('/programas');
+        navigate(-1);
         toast.success('Trilha editada com sucesso!', toastConfig);
       });
     } catch (error: any) {

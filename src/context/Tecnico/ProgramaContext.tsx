@@ -187,6 +187,16 @@ export const ProgramaProvider = ({ children }: IChildren) => {
         return 0
       });
 
+      data.trilha.map((trilha: any) => {
+        trilha.moduloDTOS = trilha.moduloDTOS.sort((a: any, b: any) => {
+          if (a.nome < b.nome) {
+            return -1;
+          } if (a.nome > b.nome) {
+            return 1;
+          }
+          return 0
+        });
+      })
 
       setProgramaCompleto(data);
     } catch (error: any) {

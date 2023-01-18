@@ -32,6 +32,10 @@ export const CadastrarTrilha = () => {
         }, boxShadow: "5px 5px 10px var(--azul-escuro-dbc)", gap: 3
       }}>
 
+        <Typography sx={{ width: "100%", textAlign: "center", display: "flex", justifyContent: "center", fontSize: "1.4rem", fontWeight: 600, userSelect: "none", color: "var(--azul-claro-dbc)", padding: "10px" }}>
+          {`Programa ${state.nomePrograma}`}
+        </Typography>
+
         <FormControl sx={{ width: "100%" }}>
           <TextField id="nome-trilha" label="Nome" placeholder="Digite um nome para a trilha" variant="filled" {...register('nome')} />
           {errors.nome && <Typography id="erro-nome-trilha" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.nome.message}</Typography>}
@@ -42,7 +46,7 @@ export const CadastrarTrilha = () => {
         </FormControl>
 
         <FormControl sx={{ display: "none" }}>
-          <TextField id="id-programa" defaultValue={state} {...register('idPrograma')} />
+          <TextField id="id-programa" defaultValue={state.idPrograma} {...register('idPrograma')} />
         </FormControl>
 
         <Box sx={{ display: "flex", width: "100%", justifyContent: "center", alignItems: "center", bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>

@@ -65,23 +65,18 @@ export const ListarProgramas = () => {
 
   const mudarPagina = async (event: unknown, newPage: number) => {
     if (inputFiltro) {
-      filtrosTrilha(inputFiltro, newPage)
+      pegarPrograma(newPage,10,`&nomePrograma=${inputFiltro}`)
     } else {
       await pegarPrograma(newPage);
     }
   };
 
-  const filtrosTrilha = async (valor: any, pagina: number = 0, tamanho: number = 10) => {
+  const filtroPorgrama = async (valor: any, pagina: number = 0, tamanho: number = 10) => {
     setInputFiltro(valor);
-
-    if (!isNaN(valor)) {
-      await pegarProgramaFiltroID(valor);
-    } else {
-      await pegarProgramaPorNome(valor, pagina, tamanho);
-    }
+    await pegarPrograma(pagina, tamanho, `&nomePrograma=${valor}`);
   }
 
-  const resetBuscaTrilha = async () => {
+  const resetBuscaprograma= async () => {
     await pegarPrograma();
   }
 
@@ -99,7 +94,7 @@ export const ListarProgramas = () => {
       <Box sx={{ width: { xs: "95%", md: "90%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
 
         <Box sx={{ display: "flex", gap: 3, flexDirection: { xs: "column", md: "row" }, justifyContent: "space-between", alignItems: "center", width: "100%", marginBottom: "10px", paddingInline: 2 }}>
-          <Componentes.CampoBusca label="Nome" buscar={filtrosTrilha} resetar={resetBuscaTrilha} />
+          <Componentes.CampoBusca label="Nome" buscar={filtroPorgrama} resetar={resetBuscaprograma} />
 
           <Button onClick={() => navigate("/cadastrar-programa")} variant="contained" sx={{ minWidth: { xs: "260px", md: "190px" }, display: "flex", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Programa</Button>
         </Box>

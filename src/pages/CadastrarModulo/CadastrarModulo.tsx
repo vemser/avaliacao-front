@@ -29,7 +29,7 @@ const MenuProps = {
 export const CadastrarModulo = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { pegarTrilhaFiltroNome, pegarTrilhaPorPrograma, trilhasPorPrograma } = useTrilha();
+  const { pegarTrilhaPorPrograma, trilhasPorPrograma } = useTrilha();
   const { cadastrarModulo } = useModulo();
 
   useEffect(() => {

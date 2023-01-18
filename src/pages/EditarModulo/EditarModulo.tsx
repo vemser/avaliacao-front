@@ -29,7 +29,7 @@ const MenuProps = {
 export const EditarModulo = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { trilhas, pegarTrilha, pegarTrilhaFiltroNome } = useTrilha();
+  const { pegarTrilhaPorPrograma, trilhasPorPrograma } = useTrilha();
   const { editarModulo } = useModulo();
 
   const { handleSubmit, register, control, reset, formState: { errors } } = useForm<IEditarModulo>({
@@ -44,8 +44,7 @@ export const EditarModulo = () => {
   }
 
   useEffect(() => {
-    pegarTrilha();
-    console.log(state.data, state.trilhasDoModulo)
+    pegarTrilhaPorPrograma(state.idPrograma);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -74,7 +73,7 @@ export const EditarModulo = () => {
                 noOptionsText="Nenhuma trilha encontrada"
                 onChange={(event, data) => onChange(data?.map(item => { return item.id }))}
                 isOptionEqualToValue={(option, value) => option.label === value.label}
-                options={trilhas ? trilhas.elementos.map((trilha) => ({ label: trilha.nome, id: trilha.idTrilha })) : []}
+                options={trilhasPorPrograma ? trilhasPorPrograma.map((trilha) => ({ label: trilha.nome, id: trilha.idTrilha })) : []}
                 renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
                 renderInput={(params) => <TextField {...params} label="Trilha" variant="filled" />} />
             )} />

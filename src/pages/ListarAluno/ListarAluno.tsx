@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Paper, TableContainer, Table, TableRow, TableCell, TableBody, Button, TablePagination, tableCellClasses, Box, Typography, Modal, styled, TableHead, Tooltip } from "@mui/material";
-import { Edit, DeleteForever } from "@mui/icons-material";
+import { Edit, DeleteForever, ExpandMore, ExpandLess } from "@mui/icons-material";
 
 import * as Componentes from "../../components";
 
@@ -55,7 +55,16 @@ export const ListarAluno: React.FC = () => {
   const navigate = useNavigate();
   const { pegarAluno, alunos, deletarAluno } = useAluno();
 
-  const [inputFiltro, setInputFiltro] = useState<string>('');
+  const [estadoFiltro, setEstadoFiltro] = useState<boolean>(false);
+  const [filtro, setFiltro] = useState<string | null>(null);
+
+  const handleChangePage = async (event: unknown, newPage: number) => {
+    if (filtro) {
+      await pegarAluno(newPage, 10, filtro);
+    } else {
+      await pegarAluno(newPage)
+    }
+  }
 
   useEffect(() => {
     pegarAluno();
@@ -68,30 +77,6 @@ export const ListarAluno: React.FC = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const handleChangePage = async (event: unknown, newPage: number) => {
-    if (inputFiltro) {
-      filtrosAluno(inputFiltro, newPage);
-    } else {
-      await pegarAluno(newPage);
-    }
-  };
-
-  const filtrosAluno = async (valor: any, pagina: number = 0, tamanho: number = 10) => {
-    setInputFiltro(valor);
-
-    if (valor.includes("@")) {
-      await pegarAluno(pagina, tamanho, `&email=${valor}`)
-    } else if (!isNaN(valor)) {
-      await pegarAluno(pagina, tamanho, `&idAluno=${valor}`)
-    } else {
-      await pegarAluno(pagina, tamanho, `&nome=${valor}`);
-    }
-  }
-
-  const resetFiltroAluno = async () => {
-    await pegarAluno();
-  }
-
   return (
     <Box sx={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", paddingTop: "60px", paddingBottom: "50px" }}>
       <Componentes.Titulo texto="Alunos" />
@@ -99,10 +84,16 @@ export const ListarAluno: React.FC = () => {
       <Box sx={{ width: { xs: "95%", md: "90%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
 
         <Box sx={{ display: "flex", gap: 3, flexDirection: { xs: "column", md: "row" }, justifyContent: "space-between", alignItems: "center", width: "100%", marginBottom: "10px", paddingInline: 2 }}>
-          <Componentes.CampoBusca label="Código, E-mail ou Nome" buscar={filtrosAluno} resetar={resetFiltroAluno} />
+          <Button onClick={() => { setEstadoFiltro(!estadoFiltro) }} id="botao-swap" variant='outlined' sx={{ width: "120px", display: "flex", textTransform: "capitalize", justifyContent: "space-between", fontSize: "1rem" }}>Filtros{estadoFiltro ? <ExpandLess /> : <ExpandMore />}</Button>
 
           <Button onClick={() => navigate("/cadastrar-aluno")} variant="contained" sx={{ width: "auto", paddingLeft: "15px", paddingRight: "15px", display: "flex", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Aluno</Button>
         </Box>
+
+        {estadoFiltro &&
+          <Box sx={{ display: "flex", gap: 3, flexDirection: "row", alignItems: "center", width: "100%", marginBottom: "10px", paddingInline: 2, marginTop: "10px", flexWrap: "wrap" }}>
+            <Componentes.FiltroAluno setFiltro={setFiltro} />
+          </Box>
+        }
 
         <Paper sx={{ width: "100%", borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px" }}>
           <TableContainer sx={{ maxHeight: 450 }}>

@@ -59,10 +59,10 @@ export const ProgramaProvider = ({ children }: IChildren) => {
     }
   }
 
-  const pegarPrograma = async (pagina: number = 0, tamanho: number = 10) => {
+  const pegarPrograma = async (pagina: number = 0, tamanho: number = 10, filtro: string = "") => {
     try {
       nProgress.start();
-      const { data } = await API.get(`/programa?page=${pagina}&size=${tamanho}`);
+      const { data } = await API.get(`/programa?page=${pagina}&size=${tamanho}${filtro}`);
       setProgramas(data);
     } catch (error: any) {
       let message = "Ops, algo deu errado!";

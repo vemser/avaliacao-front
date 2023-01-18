@@ -13,7 +13,7 @@ export interface IProgramaContext {
   programas: IObjectProgramas | null;
   programaTrilhaModulo: IProgramaTrilhaModulo | null;
   cadastrarPrograma: (programa: IProgramas) => Promise<void>;
-  pegarPrograma: (pagina?: number, tamanho?: number) => Promise<void>;
+  pegarPrograma: (pagina?: number, tamanho?: number, filtro?: string) => Promise<void>;
   pegarProgramaPorNome: (nome: string, pagina?: number, tamanho?: number) => Promise<void>;
   pegarProgramaFiltroID: (id: string) => Promise<void>;
   deletarProgama: (id: number) => Promise<void>;

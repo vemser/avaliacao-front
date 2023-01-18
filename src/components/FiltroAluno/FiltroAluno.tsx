@@ -46,7 +46,7 @@ export const FiltroAluno = ({ setFiltro }: any) => {
   const filtrar = async (data: IFiltro) => {
     var string = "";
     if (data.nomeAluno) string += `&nomeAluno=${data.nomeAluno.label.trim()}`;
-    if (data.trilha) string += `&trilha=${data.trilha.id}`;
+    if (data.trilha) string += `&trilha=${data.trilha.label.trim()}`;
     if (data.programa) string += `&idPrograma=${data.programa.id}`;
     setFiltro(string);
     await pegarAluno(0, 10, string);

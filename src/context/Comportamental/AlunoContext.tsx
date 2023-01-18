@@ -21,6 +21,7 @@ export const AlunoProvider = ({ children }: IChildren) => {
 
   const cadastrarAluno = async (dadosAluno: ICadastroAlunoAPI) => {
     try {
+      
       nProgress.start();
       await API.post('/aluno/cadastrar-aluno', dadosAluno).then((response) => {
         navigate('/alunos');

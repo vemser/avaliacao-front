@@ -47,7 +47,7 @@ export const EditarTrilha = () => {
         </FormControl>
 
         <FormControl sx={{ display: "none" }}>
-          <TextField id="id-trilha" {...register('idPrograma')} defaultValue={state.id} variant="filled" />
+          <TextField id="id-trilha" {...register('idPrograma')} defaultValue={state.idPrograma} variant="filled" />
         </FormControl>
 
         <Box sx={{ display: "flex", width: "100%", justifyContent: "center", alignItems: "center", bottom: 0, paddingTop: "20px", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>

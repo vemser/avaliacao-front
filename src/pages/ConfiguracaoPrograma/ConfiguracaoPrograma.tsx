@@ -53,14 +53,13 @@ export const ConfiguracaoPrograma: React.FC = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
   const { pegarProgramaCompleto, programaCompleto } = usePrograma();
-  const { pegarModuloPorId, moduloPorId } = useModulo();
+  const { pegarModuloPorId } = useModulo();
   const { deletarTrilha } = useTrilha();
   const { deletarModulo } = useModulo();
   const [idTrilhaDelete, setIdTrilhaDelete] = useState<number | undefined>();
   const [idModuloDelete, setIdModuloDelete] = useState<number | undefined>();
   const [open, setOpen] = useState(false);
   const [updateList, setUpdateList] = useState<boolean>(false);
-
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -158,13 +157,15 @@ export const ConfiguracaoPrograma: React.FC = () => {
             <Box sx={{ display: "flex", width: "100%", justifyContent: "center", alignItems: "center", bottom: 0, paddingTop: "20px", gap: 2, flexDirection: "column" }}>
               <Button type="button" onClick={() => {
                 if (idTrilhaDelete) {
-                  deletarTrilha(idTrilhaDelete);
-                  setUpdateList(!updateList);
+                  deletarTrilha(idTrilhaDelete).then(() => {
+                    setUpdateList(!updateList);
+                  })
                   setIdTrilhaDelete(undefined);
                   handleClose();
                 } if (idModuloDelete) {
-                  deletarModulo(idModuloDelete);
-                  setUpdateList(!updateList);
+                  deletarModulo(idModuloDelete).then(() => {
+                    setUpdateList(!updateList);
+                  })
                   setIdModuloDelete(undefined);
                   handleClose();
                 }

@@ -65,7 +65,7 @@ export const ListarProgramas = () => {
 
   const mudarPagina = async (event: unknown, newPage: number) => {
     if (inputFiltro) {
-      pegarPrograma(newPage,10,`&nomePrograma=${inputFiltro}`)
+      pegarPrograma(newPage, 10, `&nomePrograma=${inputFiltro}`)
     } else {
       await pegarPrograma(newPage);
     }
@@ -76,7 +76,7 @@ export const ListarProgramas = () => {
     await pegarPrograma(pagina, tamanho, `&nomePrograma=${valor}`);
   }
 
-  const resetBuscaprograma= async () => {
+  const resetBuscaprograma = async () => {
     await pegarPrograma();
   }
 
@@ -106,7 +106,7 @@ export const ListarProgramas = () => {
               <TableHead sx={{ backgroundColor: "#090F27" }}>
                 <TableRow>
                   {columns.map((column) => (
-                    <TableCell key={column.id} align={column.align} style={{ minWidth: "14.30%", fontWeight: "700", fontSize: "1rem", textAlign: "center", backgroundColor: "#090F27", color: "white" }}>{column.label}</TableCell>
+                    <TableCell key={column.id} align={column.align} style={{ minWidth: "14.30%", fontWeight: "700", fontSize: "1rem", textAlign: "center", backgroundColor: "#090F27", color: "white", userSelect: "none" }}>{column.label}</TableCell>
                   ))}
                 </TableRow>
               </TableHead>

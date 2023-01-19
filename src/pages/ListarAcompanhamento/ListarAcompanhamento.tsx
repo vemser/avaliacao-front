@@ -101,7 +101,7 @@ export const ListarAcompanhamento = () => {
                 <TableHead sx={{ backgroundColor: "#090F27" }} >
                   <TableRow>
                     {columns.map((column) => (
-                      <TableCell key={column.id} align={column.align} style={{ minWidth: "20%", fontWeight: "700", fontSize: "1rem", textAlign: "center", backgroundColor: "#090F27", color: "white" }}>{column.label}</TableCell>
+                      <TableCell key={column.id} align={column.align} style={{ minWidth: "20%", fontWeight: "700", fontSize: "1rem", textAlign: "center", backgroundColor: "#090F27", color: "white", userSelect: "none" }}>{column.label}</TableCell>
                     ))}
                   </TableRow>
                 </TableHead>

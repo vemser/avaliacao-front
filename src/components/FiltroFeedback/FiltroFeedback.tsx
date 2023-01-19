@@ -81,6 +81,7 @@ export const FiltroFeedback = ({ setFiltro }: any) => {
     };
 
     if (!watchTodos.programa) {
+      pegarAlunoFiltroProgramaTrilhaNome();
       reset({
         nomeAluno: null,
         trilha: null,
@@ -108,7 +109,7 @@ export const FiltroFeedback = ({ setFiltro }: any) => {
           value={watchTodos.programa ? { label: watchTodos.programa.label, id: watchTodos.programa.id } : null}
           getOptionLabel={(option) => option.label}
           isOptionEqualToValue={(option, value) => option.label === value.label}
-          noOptionsText={""}
+          noOptionsText={"Nenhum programa encontrado"}
           options={programas ? programas.elementos.map((programa) => { return { label: programa.nome, id: programa.idPrograma } }) : []}
           renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
           sx={{ minWidth: 200, display: "flex" }}
@@ -126,7 +127,7 @@ export const FiltroFeedback = ({ setFiltro }: any) => {
           value={watchTodos.trilha ? watchTodos.trilha : null}
           getOptionLabel={(option) => option.label || ""}
           isOptionEqualToValue={(option, value) => option.label === value.label}
-          noOptionsText={""}
+          noOptionsText={"Nenhuma trilha encontrada"}
           options={trilhasPorPrograma ? trilhasPorPrograma.map((trilha) => { return { label: trilha.nome, id: trilha.idTrilha } }) : []}
           renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
           sx={{ minWidth: 200, display: "flex" }}
@@ -146,7 +147,7 @@ export const FiltroFeedback = ({ setFiltro }: any) => {
           value={watchTodos.nomeAluno ? watchTodos.nomeAluno : null}
           getOptionLabel={(option) => option.label}
           isOptionEqualToValue={(option, value) => option.label === value.label}
-          noOptionsText={""}
+          noOptionsText={"Nenhum aluno encontrado"}
           options={alunosFiltro ? alunosFiltro.elementos.map((aluno) => { return { label: aluno.nome, id: aluno.idAluno } }) : []}
           renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
           sx={{ minWidth: 200, display: "flex" }}
@@ -176,10 +177,10 @@ export const FiltroFeedback = ({ setFiltro }: any) => {
           value={watchTodos.nomeInstrutor ? { label: `${watchTodos.nomeInstrutor}` } : null}
           getOptionLabel={(option) => option.label}
           isOptionEqualToValue={(option, value) => option.label === value.label}
-          noOptionsText={""}
+          noOptionsText={"Nenhum instrutor encontrado"}
           options={usuariosFiltro ? usuariosFiltro.elementos.map((usuario) => { return { label: usuario.login } }) : []}
           sx={{ minWidth: 200, display: "flex" }}
-          renderInput={(params) => <TextField {...params} label="Usuários" />}
+          renderInput={(params) => <TextField {...params} label="Instrutor" />}
         />
       )} />
 

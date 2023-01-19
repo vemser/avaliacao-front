@@ -51,8 +51,8 @@ export const CadastrarAluno = () => {
   }, [])
 
   useEffect(() => {
-    if(inputValor.idPrograma) pegarTrilhaPorPrograma(parseInt(inputValor.idPrograma))
-    if(!inputValor.idPrograma) {
+    if (inputValor.idPrograma) pegarTrilhaPorPrograma(parseInt(inputValor.idPrograma))
+    if (!inputValor.idPrograma) {
       reset({ idTrilha: null })
       pegarProgramaAtivo();
     };
@@ -99,13 +99,13 @@ export const CadastrarAluno = () => {
 
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: "end" }}>
           <FormControl sx={{ width: { xs: "100%", md: "100%" }, display: "flex", flexDirection: "row", gap: "10px" }}>
-            <Controller control={control} name="tecnologias" render={({ field: { onChange } }) => ( 
-              <Autocomplete sx={{ width: "90%" }} multiple disablePortal id="tecnologias" 
-                noOptionsText="Tecnologia não encontrada, clique no + ao lado para cadastrar"
+            <Controller control={control} name="tecnologias" render={({ field: { onChange } }) => (
+              <Autocomplete sx={{ width: "90%" }} multiple disablePortal id="tecnologias"
+                noOptionsText="Nenhuma opção encontrada. Cadastre a tecnologia"
                 onChange={(e, values) => { if (values.length === 0) setTecnologiaSelecionada([]); setTecnologiaSelecionada(values.map((value) => value.id)) }}
                 onInputChange={(event, value) => {
                   filtroDebounce(value, pegarTecnologiaPorNome, pegarTecnologia)
-                }} 
+                }}
                 isOptionEqualToValue={(option, value) => option.label === value.label}
                 options={tecnologias ? tecnologias.elementos.map((tecnologia) => ({ label: `${tecnologia.nome}`, id: tecnologia.idTecnologia })) : []} renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
                 renderInput={(params) => <TextField {...params} label="Tecnologias" variant="filled" onChange={(e) => setInputTecnologia(e.target.value)} />} />
@@ -123,7 +123,7 @@ export const CadastrarAluno = () => {
                 }}
                 getOptionLabel={(option) => option.label}
                 isOptionEqualToValue={(option, value) => option.label === value.label}
-                options={programas ? programas.elementos.map((programa) => ({ label: programa.nome, id: programa.idPrograma })) : []} 
+                options={programas ? programas.elementos.map((programa) => ({ label: programa.nome, id: programa.idPrograma })) : []}
                 renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
                 renderInput={(params) => <TextField key={params.id} {...params} label="Programa" variant="filled" />} />
             )} />
@@ -141,7 +141,7 @@ export const CadastrarAluno = () => {
                 }}
                 getOptionLabel={(option) => option.label}
                 isOptionEqualToValue={(option, value) => option.label === value.label}
-                options={trilhasPorPrograma ? trilhasPorPrograma.map((trilha) => ({ label: trilha.nome, id: trilha.idTrilha })) : []} 
+                options={trilhasPorPrograma ? trilhasPorPrograma.map((trilha) => ({ label: trilha.nome, id: trilha.idTrilha })) : []}
                 renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
                 renderInput={(params) => <TextField key={params.id} {...params} label="Trilha" variant="filled" />} />
             )} />

@@ -4,8 +4,6 @@ import { Avatar, Box, Button, Typography } from '@mui/material';
 
 import { Titulo } from '../../components/Titulo/Titulo';
 
-import logo from '../../assets/dbc-logo.webp';
-
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 

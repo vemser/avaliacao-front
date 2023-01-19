@@ -72,6 +72,7 @@ export const FiltroAluno = ({ setFiltro }: any) => {
     };
 
     if (!watchTodos.programa) {
+      pegarAlunoFiltroProgramaTrilhaNome();
       reset({
         nomeAluno: null,
         trilha: null,
@@ -99,7 +100,7 @@ export const FiltroAluno = ({ setFiltro }: any) => {
           value={watchTodos.programa ? { label: watchTodos.programa.label, id: watchTodos.programa.id } : null}
           getOptionLabel={(option) => option.label}
           isOptionEqualToValue={(option, value) => option.label === value.label}
-          noOptionsText={""}
+          noOptionsText={"Nenhum programa encontrado"}
           options={programas ? programas.elementos.map((programa) => { return { label: programa.nome, id: programa.idPrograma } }) : []}
           renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
           sx={{ minWidth: 200, display: "flex" }}
@@ -117,7 +118,7 @@ export const FiltroAluno = ({ setFiltro }: any) => {
           value={watchTodos.trilha ? watchTodos.trilha : null}
           getOptionLabel={(option) => option.label || ""}
           isOptionEqualToValue={(option, value) => option.label === value.label}
-          noOptionsText={""}
+          noOptionsText={"Nenhuma trilha encontrada"}
           options={trilhasPorPrograma ? trilhasPorPrograma.map((trilha) => { return { label: trilha.nome, id: trilha.idTrilha } }) : []}
           renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
           sx={{ minWidth: 200, display: "flex" }}
@@ -137,7 +138,7 @@ export const FiltroAluno = ({ setFiltro }: any) => {
           value={watchTodos.nomeAluno ? watchTodos.nomeAluno : null}
           getOptionLabel={(option) => option.label}
           isOptionEqualToValue={(option, value) => option.label === value.label}
-          noOptionsText={""}
+          noOptionsText={"Nenhum aluno encontrado"}
           options={alunosFiltro ? alunosFiltro.elementos.map((aluno) => { return { label: aluno.nome, id: aluno.idAluno } }) : []}
           renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
           sx={{ minWidth: 200, display: "flex" }}

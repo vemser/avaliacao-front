@@ -126,7 +126,7 @@ export const CadastrarFeedback = () => {
           <FormControl sx={{ width: "100%" }}>
             <Controller control={control} name="modulo" render={({ field: { onChange } }) => (
               <Autocomplete sx={{ width: "100%" }}
-                multiple disablePortal id="modulo" noOptionsText=""
+                multiple disablePortal id="modulo" noOptionsText="Nenhum módulo encontrado"
                 disabled={!filtros.idTrilha ? true : false}
                 onInputChange={(event, value) => {
                   filtroDebounce(value, pegarModuloPorFiltro, pegarModulo, `&nome=${value}`)
@@ -143,7 +143,7 @@ export const CadastrarFeedback = () => {
 
           <FormControl sx={{ width: "100%" }} >
             <Controller control={control} name="idAluno" render={({ field: { onChange } }) => (
-              <Autocomplete disablePortal noOptionsText="Nenhum(a) aluno(a) encontrado(a)"
+              <Autocomplete disablePortal noOptionsText="Nenhum aluno encontrado"
                 disabled={!filtros.idPrograma ? true : false}
                 onInputChange={(event, value) => {
                   filtroDebounce(value, pegarAluno, pegarAluno, `&nome=${value}`)

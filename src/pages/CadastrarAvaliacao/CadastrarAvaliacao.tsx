@@ -156,7 +156,7 @@ export const CadastrarAvaliacao = () => {
                   filtroDebounce(value, pegarAlunoDisponivelPorNome, pegarAlunoDisponivel)
                 }}
                 value={filtro.idAluno ? filtro.idAluno : null}
-                noOptionsText={"Nenhum aluno encontrado"} onChange={(event, data) => onChange(data)} id="aluno" renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)} getOptionLabel={(option) => option.label} isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: `${aluno.nome}`, id: aluno.idAluno })) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />
+                noOptionsText="Nenhum aluno encontrado" onChange={(event, data) => onChange(data)} id="aluno" renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)} getOptionLabel={(option) => option.label} isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: `${aluno.nome}`, id: aluno.idAluno })) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />
             )} />
             {errors.idAluno && <Typography id="erro-nome-aluno" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.idAluno.message}</Typography>}
           </FormControl>

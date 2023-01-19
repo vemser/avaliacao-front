@@ -83,7 +83,7 @@ export const FiltroAvaliacao = ({ setFiltro }: any) => {
           value={watchTodos.tituloAcompanhamento ? { label: `${watchTodos.tituloAcompanhamento}` } : null}
           getOptionLabel={(option) => option.label}
           isOptionEqualToValue={(option, value) => option.label === value.label}
-          noOptionsText={""}
+          noOptionsText={"Nenhum acompanhamento encontrado"}
           options={acompanhamentos ? acompanhamentos.elementos.map((acompanhamento) => { return { label: acompanhamento.titulo } }) : []}
           sx={{ minWidth: 200, display: "flex" }}
           renderInput={(params) => <TextField {...params} label="Acompanhamento" />}
@@ -102,7 +102,7 @@ export const FiltroAvaliacao = ({ setFiltro }: any) => {
           value={watchTodos.programa ? { label: watchTodos.programa.label, id: watchTodos.programa.id } : null}
           getOptionLabel={(option) => option.label}
           isOptionEqualToValue={(option, value) => option.label === value.label}
-          noOptionsText={""}
+          noOptionsText={"Nenhum programa encontrado"}
           options={programas ? programas.elementos.map((programa) => { return { label: programa.nome, id: programa.idPrograma } }) : []}
           renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
           sx={{ minWidth: 200, display: "flex" }}
@@ -122,7 +122,7 @@ export const FiltroAvaliacao = ({ setFiltro }: any) => {
           value={watchTodos.nomeAluno ? { label: watchTodos.nomeAluno.label, id: watchTodos.nomeAluno.id } : null}
           getOptionLabel={(option) => option.label}
           isOptionEqualToValue={(option, value) => option.label === value.label}
-          noOptionsText={""}
+          noOptionsText={"Nenhum aluno encontrado"}
           renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)}
           options={alunosFiltro ? alunosFiltro.elementos.map((aluno) => { return { label: aluno.nome, id: aluno.idAluno } }) : []}
           sx={{ minWidth: 200, display: "flex" }}

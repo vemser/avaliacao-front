@@ -1,5 +1,5 @@
 import { Box, Stack, FormControl, TextField, InputLabel, Select, MenuItem, Button, Autocomplete, Typography } from '@mui/material';
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { usePrograma } from '../../context/Tecnico/ProgramaContext';
 
@@ -13,12 +13,6 @@ import { editarAvalicaoSchema } from '../../utils/schemas';
 import { useAcompanhamento } from '../../context/Comportamental/AcompanhamentoContext';
 import { IEditarAvaliacao } from '../../utils/AvaliacaoInterface/Avaliacao';
 import { useAvaliacao } from '../../context/Comportamental/AvaliacaoContext';
-
-
-
-
-
-
 
 export const EditarAvaliacao = () => {
   const navigate = useNavigate();

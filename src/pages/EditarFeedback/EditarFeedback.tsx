@@ -71,7 +71,7 @@ export const EditarFeedback = () => {
         <Stack component="div" spacing={3} sx={{ width: { xs: "100%", lg: "50%" }, display: "flex", alignItems: "end" }}>
 
           <FormControl sx={{ width: "100%" }}>
-            <TextField id="data" label="Data" disabled defaultValue={state.data} type="date" sx={{ width: "100%" }} InputLabelProps={{ shrink: true }} />
+            <TextField variant="filled" id="data" label="Data" disabled defaultValue={state.data} type="date" sx={{ width: "100%" }} InputLabelProps={{ shrink: true }} />
           </FormControl>
 
           <FormControl sx={{ width: "100%" }}>

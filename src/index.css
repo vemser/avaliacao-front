@@ -40,7 +40,7 @@ code {
 
 #nprogress .bar {
   background: #ffffff !important;
-  padding: 0 10px !important;
+  padding: 0 4px !important;
   height: 4px !important;
 }
 

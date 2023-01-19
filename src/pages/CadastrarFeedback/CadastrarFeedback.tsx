@@ -16,12 +16,13 @@ import { feedbackSchema } from '../../utils/schemas';
 import Typography from '@mui/material/Typography';
 import { usePrograma } from '../../context/Tecnico/ProgramaContext';
 import { useTrilha } from '../../context/Tecnico/TrilhaContext';
+import { debounce } from 'lodash';
 
 export const CadastrarFeedback = () => {
   const navigate = useNavigate();
 
   const { cadastrarFeedback } = useFeedback();
-  const { pegarAluno, pegarAlunoPorTrilha, alunos } = useAluno();
+  const { pegarAlunoPorTrilha, alunos, pegarAlunoFiltroListagem } = useAluno();
   const { pegarModulo, pegarModuloPorFiltro, moduloPorTrilha, pegarModuloPorTrilha } = useModulo();
   const { pegarProgramaAtivo, pegarProgramaPorNomeAtivo, programas, pegarProgramaPorTrilhaModulo, programaTrilhaModulo } = usePrograma();
   const { pegarTrilhaFiltroNome, pegarTrilha } = useTrilha();
@@ -31,6 +32,14 @@ export const CadastrarFeedback = () => {
       modulo: null
     }
   });
+
+  const filtrarAlunoDebounce = debounce((value, programa, trilha) => {
+    if (value) {
+      pegarAlunoFiltroListagem(programa, trilha, `&nomeAluno=${value}`)
+    } else {
+      pegarAlunoFiltroListagem(programa, trilha);
+    }
+  }, 500)
 
   const filtros = watch();
 
@@ -43,8 +52,6 @@ export const CadastrarFeedback = () => {
 
   useEffect(() => {
     pegarProgramaAtivo();
-    pegarModulo();
-    pegarAluno();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -146,7 +153,7 @@ export const CadastrarFeedback = () => {
               <Autocomplete disablePortal noOptionsText="Nenhum aluno encontrado"
                 disabled={!filtros.idPrograma ? true : false}
                 onInputChange={(event, value) => {
-                  filtroDebounce(value, pegarAluno, pegarAluno, `&nome=${value}`)
+                  filtrarAlunoDebounce(value, filtros.idPrograma, filtros.idTrilha ? filtros.idTrilha : null)
                 }} onChange={(event, data) => onChange(data)} id="aluno" value={filtros.idAluno ? filtros.idAluno : null} getOptionLabel={(option) => option.label} isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: ` ${aluno.nome}`, id: aluno.idAluno })) : []} renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />
             )} />
             {errors.idAluno && <Typography id="erro-idAluno" sx={{ fontWeight: "500", display: "flex", marginTop: "5px" }} color="error">{errors.idAluno.message}</Typography>}

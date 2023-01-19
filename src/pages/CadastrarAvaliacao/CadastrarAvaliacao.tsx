@@ -1,5 +1,5 @@
 import { Box, Stack, FormControl, TextField, InputLabel, Select, MenuItem, Button, Autocomplete, Typography } from '@mui/material';
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { usePrograma } from '../../context/Tecnico/ProgramaContext';
 
@@ -8,25 +8,32 @@ import { useTrilha } from '../../context/Tecnico/TrilhaContext';
 import { useAluno } from '../../context/Comportamental/AlunoContext';
 import moment from 'moment';
 import { Controller, useForm } from 'react-hook-form';
-import { IAvaliacao, ICadastrarAvalicao } from '../../utils/AvaliacaoInterface/Avaliacao';
+import { ICadastrarAvalicao } from '../../utils/AvaliacaoInterface/Avaliacao';
 import { avalicaoSchema } from '../../utils/schemas';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useAcompanhamento } from '../../context/Comportamental/AcompanhamentoContext';
 import { filtroDebounce } from '../../utils/functions';
 import { useAvaliacao } from '../../context/Comportamental/AvaliacaoContext';
-
+import { debounce } from 'lodash';
 
 export const CadastrarAvaliacao = () => {
   const navigate = useNavigate();
 
   const { pegarProgramaAtivo, programas, pegarProgramaPorNomeAtivo } = usePrograma();
-  const { pegarTrilha, trilhas, pegarTrilhaFiltroNome, pegarTrilhaPorPrograma, trilhasPorPrograma } = useTrilha();
-  const { alunos, pegarAlunoDisponivel, pegarAlunoDisponivelPorNome, pegarAlunoPorTrilha } = useAluno();
+  const { pegarTrilha, pegarTrilhaFiltroNome, pegarTrilhaPorPrograma, trilhasPorPrograma } = useTrilha();
+  const { alunos, pegarAlunoPorTrilha, pegarAlunoFiltroListagem } = useAluno();
   const { pegarAcompanhamentos, acompanhamentos, pegarAcompanhamentoTitulo } = useAcompanhamento();
   const { cadastrarAvalicao } = useAvaliacao()
   let data = moment()
   let novaData = data.format("YYYY-MM-DD")
 
+  const filtrarAlunoDebounce = debounce((value, programa, trilha) => {
+    if (value) {
+      pegarAlunoFiltroListagem(programa, trilha, value)
+    } else {
+      pegarAlunoFiltroListagem(programa, trilha);
+    }
+  }, 500)
 
   const { register, handleSubmit, formState: { errors }, control, watch, reset } = useForm<ICadastrarAvalicao>({
     resolver: yupResolver(avalicaoSchema)
@@ -44,8 +51,6 @@ export const CadastrarAvaliacao = () => {
 
   useEffect(() => {
     pegarProgramaAtivo();
-    pegarTrilha();
-    pegarAlunoDisponivel();
     pegarAcompanhamentos();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -145,7 +150,6 @@ export const CadastrarAvaliacao = () => {
                 renderInput={(params) => <TextField {...params} label="Trilha" variant="filled" />}
               />
             )} />
-            {/* {errors.idTrilha && <Typography id="erro-nome-trilha" sx={{ fontWeight: "500", display: "inline-block", marginTop: "5px", whiteSpace: "nowrap" }} color="error">{errors.idTrilha.message}</Typography>} */}
           </FormControl>
 
           <FormControl sx={{ width: "100%" }} >
@@ -153,7 +157,7 @@ export const CadastrarAvaliacao = () => {
               <Autocomplete disablePortal
                 disabled={!filtro.idPrograma ? true : false}
                 onInputChange={(event, value) => {
-                  filtroDebounce(value, pegarAlunoDisponivelPorNome, pegarAlunoDisponivel)
+                  filtrarAlunoDebounce(value, filtro.idPrograma, filtro.idTrilha ? filtro.idTrilha : null)
                 }}
                 value={filtro.idAluno ? filtro.idAluno : null}
                 noOptionsText="Nenhum aluno encontrado" onChange={(event, data) => onChange(data)} id="aluno" renderOption={(props, option) => (<li {...props} key={option.id}>{option.label}</li>)} getOptionLabel={(option) => option.label} isOptionEqualToValue={(option, value) => option.label === value.label} options={alunos ? alunos.elementos.map((aluno) => ({ label: `${aluno.nome}`, id: aluno.idAluno })) : []} renderInput={(params) => <TextField {...params} label="Aluno" variant="filled" />} />

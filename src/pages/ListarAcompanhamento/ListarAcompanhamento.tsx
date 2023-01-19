@@ -74,6 +74,7 @@ export const ListarAcompanhamento = () => {
   }
 
   const resetFiltroAcompanhamento = async () => {
+    setInputFiltro("");
     pegarAcompanhamentos();
   }
 

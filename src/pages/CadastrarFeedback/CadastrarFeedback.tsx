@@ -95,7 +95,10 @@ export const CadastrarFeedback = () => {
           <FormControl sx={{ width: "100%" }} >
             <Controller control={control} name="idPrograma" render={({ field: { onChange } }) => (
               <Autocomplete noOptionsText="Nenhum programa encontrado" disablePortal id="programa"
-                onChange={(event, data) => onChange(data?.id)}
+                onChange={(event, data) => {
+                  onChange(data?.id);
+                  reset({ idPrograma: data ? data?.id.toString() : undefined, idTrilha: null, modulo: null, idAluno: null });
+                }}
                 onInputChange={(event, value) => {
                   filtroDebounce(value, pegarProgramaPorNomeAtivo, pegarProgramaAtivo)
                 }}

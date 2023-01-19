@@ -90,7 +90,7 @@ export const ListarAluno: React.FC = () => {
         </Box>
 
         {estadoFiltro &&
-          <Box sx={{ display: "flex", gap: 3, flexDirection: "row", alignItems: "center", width: "100%", marginBottom: "10px", paddingInline: 2, marginTop: "10px", flexWrap: "wrap" }}>
+          <Box sx={{ display: "flex", gap: 3, flexDirection: "row", alignItems: "center", width: "100%", marginBottom: "10px", paddingInline: 2, marginTop: "10px", flexWrap: "wrap", justifyContent: { xs: "center", sm: "left" } }}>
             <Componentes.FiltroAluno setFiltro={setFiltro} />
           </Box>
         }

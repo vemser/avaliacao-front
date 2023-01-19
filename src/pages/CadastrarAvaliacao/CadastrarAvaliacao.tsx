@@ -99,7 +99,10 @@ export const CadastrarAvaliacao = () => {
                 onInputChange={(event, value) => {
                   filtroDebounce(value, pegarAcompanhamentoTitulo, pegarAcompanhamentos)
                 }}
-                onChange={(event, data) => onChange(data?.id)}
+                onChange={(event, data) => {
+                  onChange(data?.id)
+
+                }}
                 id="acompanhemnto"
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 getOptionLabel={(option) => option.label}
@@ -116,7 +119,10 @@ export const CadastrarAvaliacao = () => {
               <Autocomplete
                 disablePortal
                 id="idPrograma"
-                onChange={(event, data) => onChange(data?.id)}
+                onChange={(event, data) => {
+                  onChange(data?.id)
+                  reset({ idPrograma: data ? data?.id : undefined, idTrilha: null, idAluno: null });
+                }}
                 onInputChange={(event, value) => {
                   filtroDebounce(value, pegarProgramaPorNomeAtivo, pegarProgramaAtivo)
                 }}

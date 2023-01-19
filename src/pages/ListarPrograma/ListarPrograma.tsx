@@ -55,7 +55,7 @@ export const ListarProgramas = () => {
   const navigate = useNavigate();
 
   const [inputFiltro, setInputFiltro] = useState<string>('');
-  const { pegarProgramaPorNome, pegarProgramaFiltroID, pegarPrograma, deletarProgama, programas, clonarPrograma } = usePrograma();
+  const { pegarPrograma, deletarProgama, programas, clonarPrograma } = usePrograma();
 
   // Funções Modal
   const [idDelete, setIdDelete] = useState<number | null>(null);
@@ -71,12 +71,13 @@ export const ListarProgramas = () => {
     }
   };
 
-  const filtroPorgrama = async (valor: any, pagina: number = 0, tamanho: number = 10) => {
+  const filtroPrograma = async (valor: any, pagina: number = 0, tamanho: number = 10) => {
     setInputFiltro(valor);
     await pegarPrograma(pagina, tamanho, `&nomePrograma=${valor}`);
   }
 
   const resetBuscaprograma= async () => {
+    setInputFiltro('')
     await pegarPrograma();
   }
 
@@ -94,7 +95,7 @@ export const ListarProgramas = () => {
       <Box sx={{ width: { xs: "95%", md: "90%" }, display: "flex", alignItems: "end", flexDirection: "column", paddingTop: "20px", background: "#FFF", borderRadius: "10px", boxShadow: "5px 5px 10px var(--azul</Box>-escuro-dbc)" }}>
 
         <Box sx={{ display: "flex", gap: 3, flexDirection: { xs: "column", md: "row" }, justifyContent: "space-between", alignItems: "center", width: "100%", marginBottom: "10px", paddingInline: 2 }}>
-          <Componentes.CampoBusca label="Nome" buscar={filtroPorgrama} resetar={resetBuscaprograma} />
+          <Componentes.CampoBusca label="Nome" buscar={filtroPrograma} resetar={resetBuscaprograma} />
 
           <Button onClick={() => navigate("/cadastrar-programa")} variant="contained" sx={{ minWidth: { xs: "260px", md: "190px" }, display: "flex", textTransform: "capitalize", fontSize: "1rem" }}>Cadastrar Programa</Button>
         </Box>

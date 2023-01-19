@@ -18,7 +18,7 @@ interface IFiltro {
 }
 
 export const FiltroAluno = ({ setFiltro }: any) => {
-  const { pegarAluno, alunosFiltro, pegarAlunoFiltroProgramaTrilhaNome } = useAluno();
+  const { pegarAluno, alunosFiltro, pegarAlunoFiltroListagem } = useAluno();
   const { pegarTrilha, pegarTrilhaPorPrograma, trilhasPorPrograma } = useTrilha();
   const { programas, pegarProgramaAtivo, pegarProgramaPorNomeAtivo } = usePrograma();
 
@@ -28,15 +28,15 @@ export const FiltroAluno = ({ setFiltro }: any) => {
 
   const filtrarAlunoDebounce = debounce((value, programa, trilha) => {
     if (value) {
-      pegarAlunoFiltroProgramaTrilhaNome(programa, trilha, value)
+      pegarAlunoFiltroListagem(programa, trilha, value)
     } else {
-      pegarAlunoFiltroProgramaTrilhaNome(programa, trilha);
+      pegarAlunoFiltroListagem(programa, trilha);
     }
   }, 500)
 
   useEffect(() => {
-    pegarAlunoFiltroProgramaTrilhaNome(watchTodos.programa ? watchTodos.programa.id : null,
-      watchTodos.trilha ? watchTodos.trilha.id : null,
+    pegarAlunoFiltroListagem(watchTodos.programa ? watchTodos.programa.id : null,
+      watchTodos.trilha ? watchTodos.trilha.label : null,
       watchTodos.nomeAluno ? watchTodos.nomeAluno.label : null);
     pegarTrilha();
     pegarProgramaAtivo();
@@ -59,28 +59,28 @@ export const FiltroAluno = ({ setFiltro }: any) => {
     })
     setFiltro(null);
     await pegarAluno();
-    await pegarAlunoFiltroProgramaTrilhaNome();
+    await pegarAlunoFiltroListagem();
     await pegarTrilha();
   }
 
   useEffect(() => {
     if (watchTodos.programa) {
-      pegarAlunoFiltroProgramaTrilhaNome(watchTodos.programa ? watchTodos.programa.id : null,
-        watchTodos.trilha ? watchTodos.trilha.id : null,
+      pegarAlunoFiltroListagem(watchTodos.programa ? watchTodos.programa.id : null,
+        watchTodos.trilha ? watchTodos.trilha.label : null,
         watchTodos.nomeAluno ? watchTodos.nomeAluno.label : null);
       pegarTrilhaPorPrograma(watchTodos.programa.id)
     };
 
     if (!watchTodos.programa) {
-      pegarAlunoFiltroProgramaTrilhaNome();
+      pegarAlunoFiltroListagem();
       reset({
         nomeAluno: null,
         trilha: null,
       })
     };
 
-    if (watchTodos.trilha) if (watchTodos.programa) pegarAlunoFiltroProgramaTrilhaNome(watchTodos.programa ? watchTodos.programa.id : null,
-      watchTodos.trilha ? watchTodos.trilha.id : null,
+    if (watchTodos.trilha) if (watchTodos.programa) pegarAlunoFiltroListagem(watchTodos.programa ? watchTodos.programa.id : null,
+      watchTodos.trilha ? watchTodos.trilha.label : null,
       watchTodos.nomeAluno ? watchTodos.nomeAluno.label : null);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

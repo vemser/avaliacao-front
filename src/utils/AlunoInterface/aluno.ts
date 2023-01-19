@@ -10,7 +10,8 @@ export interface IAluno {
   pegarAlunoDisponivel: (pagina?: number, tamanho?: number) => Promise<void>,
   pegarAlunoDisponivelPorNome: (nome: string, pagina?: number, tamanho?: number) => Promise<void>,
   pegarAlunoPorTrilha: (idPrograma: number, idTrilha?: number, pagina?: number, tamanho?: number) => Promise<void>,
-  pegarAlunoFiltroProgramaTrilhaNome: (idPrograma?: number | null, idTrilha?: number | null, nome?: string | null, pagina?: number, tamanho?: number) => Promise<void>
+  pegarAlunoFiltroProgramaTrilhaNome: (idPrograma?: number | null, idTrilha?: number | null, nome?: string | null, pagina?: number, tamanho?: number) => Promise<void>,
+  pegarAlunoFiltroListagem: (idPrograma?: number | null, trilha?: string | null, nomeAluno?: string | null, pagina?: number, tamanho?: number) => Promise<void>
 }
 
 export interface IChildren {

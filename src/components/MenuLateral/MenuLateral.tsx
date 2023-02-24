@@ -72,10 +72,10 @@ export const MenuLateral: React.FC<IProps> = ({ children }) => {
             padding="10px"
           >
             <img src={logo} alt="Logo DBC" width={100} style={{ marginBottom: theme.spacing(2) }} />
-            <Avatar sx={{ height: theme.spacing(14), width: theme.spacing(14) }} src={`data:image/jpeg;base64,${usuarioLogado.imagem}`}
+            <Avatar sx={{ height: theme.spacing(16), width: theme.spacing(16), border: "2px solid var(--azul-claro-dbc)" }} src={`data:image/jpeg;base64,${usuarioLogado.imagem}`}
             />
             <Typography sx={{ width: "100%", padding: "0 2rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", textAlign: "center", textTransform: "capitalize" }}>
-              <span style={{ fontWeight: "500", userSelect: "none" }}>Olá, </span> <strong style={{ color: "var(--azul-claro-dbc)", userSelect: "none" }}>{usuarioLogado.login.split('.')[0]}</strong>
+              <span style={{ fontWeight: "600", userSelect: "none" }}>Olá, </span> <strong style={{ color: "var(--azul-claro-dbc)", userSelect: "none", fontWeight: "600" }}>{usuarioLogado ? usuarioLogado.login.split(".").join(" ") : " ..."}</strong>
             </Typography>
           </Box>
 
